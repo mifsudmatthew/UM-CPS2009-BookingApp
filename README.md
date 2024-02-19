@@ -4,38 +4,33 @@
 
 Contributors
 ---
-
-<div align="center">
-    <p style="display: flex; flex-wrap: wrap; justify-content: center;">
-        <a href="https://github.com/mifsudmatthew" style="margin-right: 20px; text-align: center;">
-            Matthew Mifsud
-        </a>
-        <br>
-        <img src="https://avatars.githubusercontent.com/u/97695752?v=4" alt="Matthew" style="width: 70px; border-radius: 50%;">
-        <br><br>
-        <a href="https://github.com/KeithFarrugia" style="margin-right: 20px; text-align: center;">
-            Keith Farrugia
-        </a>
-        <br>
-        <img src="https://avatars.githubusercontent.com/u/148719589?v=4" alt="Keith" style="width: 70px; border-radius: 50%;">
-        <br><br>
-        <a href="https://github.com/lensil" style="margin-right: 20px; text-align: center;">
-            Lenise Silvio
-        </a>
-        <br>
-        <img src="https://avatars.githubusercontent.com/u/147991201?v=4" alt="Lenise" style="width: 70px; border-radius: 50%;">
-        <br><br>
-        <a href="https://github.com/FirePhoenixBro" style="margin-right: 20px; text-align: center;">
-            Luca Vella
-        </a>
-        <br>
-        <img src="https://avatars.githubusercontent.com/u/104022853?v=4" alt="Luca" style="width: 70px; border-radius: 50%;">
-    </p>
+<div style="margin-right: 20px; text-align: center; display: flex;">
+<figure align="center">
+    <img alt="Matthew Mifsud" style="width: 70px; border-radius: 50%;" src="https://avatars.githubusercontent.com/u/97695752?v=4"/>
+    <figcaption><a href="https://github.com/mifsudmatthew"  alt="Matthew Mifsud">Matthew Mifsud</a></figcaption>
+</figure>
+<figure align="center">
+    <img alt="Keith Farrugia" style="width: 70px; border-radius: 50%;"
+     src="https://avatars.githubusercontent.com/u/148719589?v=4"/>
+    <figcaption>
+    <a href="https://github.com/KeithFarrugia" alt="Keith Farrugia">Keith Farrugia</a>
+    </figcaption>
+</figure>
+<figure align="center">
+    <img alt="Lenise Silvio" style="width: 70px; border-radius: 50%;"
+     src="https://avatars.githubusercontent.com/u/147991201?v=4" />
+    <figcaption>
+    <a href="https://github.com/lensil" alt="Lenise Silvio">Lenise Silvio</a>
+    </figcaption>
+</figure>
+<figure align="center">
+    <img alt="Luca Vella" style="width: 70px; border-radius: 50%;"
+     src="https://avatars.githubusercontent.com/u/104022853?v=4"/>
+    <figcaption>
+    <a href="https://github.com/FirePhoenixBro" alt="Luca Vella">Luca Vella</a>
+    </figcaption>
+</figure>
 </div>
-
-
-
-
 
 Compilation Process
 -------------------
