@@ -28,6 +28,20 @@ mongoose.connect(mongoport)
         process.exit(1); 
     }
   });
+// Connection event handlers
+mongoose.connection.on('disconnected', () => {
+  console.log("Mongoose Disconnected: Lost connection to database");
+});
+
+mongoose.connection.on('close', () => {
+  console.log("Mongoose Connection Closed: Database connection closed");
+});
+
+// Error event handler
+mongoose.connection.on('error', err => {
+  console.log("Mongoose Connection Error:", err);
+  process.exit(1);
+});
 // ========================= MONGOOSE =================================
 
 // Have Node serve the files for our built React app
