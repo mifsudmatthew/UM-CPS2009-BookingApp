@@ -6,37 +6,31 @@ Contributors
 ---
 
 <p align="center">
-    <div style="display: flex; flex-wrap: wrap;">
-        <div style="margin-right: 20px;" align="center">
-            <a href="https://github.com/mifsudmatthew">
-            <img src="https://avatars.githubusercontent.com/u/97695752?v=4" alt="Matthew" style="width: 70px;">
-            </a>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+        <a href="https://github.com/mifsudmatthew" style="margin-right: 20px; text-align: center;">
+            <img src="https://avatars.githubusercontent.com/u/97695752?v=4" alt="Matthew" style="width: 70px; border-radius: 50%;">
             <br>
-            <a href="https://github.com/mifsudmatthew">Matthew Mifsud</a>
-        </div>
-        <div style="margin-right: 20px;" align="center">
-            <a href="https://github.com/KeithFarrugia">
-            <img src="https://avatars.githubusercontent.com/u/148719589?v=4" alt="Matthew" style="width: 70px;">
-            </a>
+            Matthew Mifsud
+        </a>
+        <a href="https://github.com/KeithFarrugia" style="margin-right: 20px; text-align: center;">
+            <img src="https://avatars.githubusercontent.com/u/148719589?v=4" alt="Keith" style="width: 70px; border-radius: 50%;">
             <br>
-            <a href="https://github.com/KeithFarrugia">Keith Farrugia</a>
-        </div>
-        <div style="margin-right: 20px;" align="center">
-            <a href="https://github.com/lensil">
-            <img src="https://avatars.githubusercontent.com/u/147991201?v=4" alt="Matthew" style="width: 70px;">
-            </a>
+            Keith Farrugia
+        </a>
+        <a href="https://github.com/lensil" style="margin-right: 20px; text-align: center;">
+            <img src="https://avatars.githubusercontent.com/u/147991201?v=4" alt="Lenise" style="width: 70px; border-radius: 50%;">
             <br>
-            <a href="https://github.com/lensil">Lenise Silvio</a>
-        </div>
-        <div style="margin-right: 20px;" align="center">
-            <a href="https://github.com/FirePhoenixBro">
-            <img src="https://avatars.githubusercontent.com/u/104022853?v=4" alt="Matthew" style="width: 70px;">
-            </a>
+            Lenise Silvio
+        </a>
+        <a href="https://github.com/FirePhoenixBro" style="margin-right: 20px; text-align: center;">
+            <img src="https://avatars.githubusercontent.com/u/104022853?v=4" alt="Luca" style="width: 70px; border-radius: 50%;">
             <br>
-            <a href="https://github.com/FirePhoenixBro">Luca Vella</a>
-        </div>
+            Luca Vella
+        </a>
     </div>
 </p>
+
+
 
 
 
