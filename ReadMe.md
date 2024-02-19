@@ -9,36 +9,28 @@ Contributors
     <div style="display: flex; flex-wrap: wrap;">
         <div style="margin-right: 20px;" align="center">
             <a href="https://github.com/mifsudmatthew">
-                <div style="width: 70px; height: 70px; overflow: hidden; border-radius: 50%;">
-                    <img src="https://avatars.githubusercontent.com/u/97695752?v=4" alt="Matthew" style="width: 100%;">
-                </div>
+            <img src="https://avatars.githubusercontent.com/u/97695752?v=4" alt="Matthew" style="width: 70px;">
             </a>
             <br>
             <a href="https://github.com/mifsudmatthew">Matthew Mifsud</a>
         </div>
         <div style="margin-right: 20px;" align="center">
             <a href="https://github.com/KeithFarrugia">
-                <div style="width: 70px; height: 70px; overflow: hidden; border-radius: 50%;">
-                    <img src="https://avatars.githubusercontent.com/u/148719589?v=4" alt="Keith" style="width: 100%;">
-                </div>
+            <img src="https://avatars.githubusercontent.com/u/148719589?v=4" alt="Matthew" style="width: 70px;">
             </a>
             <br>
             <a href="https://github.com/KeithFarrugia">Keith Farrugia</a>
         </div>
         <div style="margin-right: 20px;" align="center">
             <a href="https://github.com/lensil">
-                <div style="width: 70px; height: 70px; overflow: hidden; border-radius: 50%;">
-                    <img src="https://avatars.githubusercontent.com/u/147991201?v=4" alt="Lenise" style="width: 100%;">
-                </div>
+            <img src="https://avatars.githubusercontent.com/u/147991201?v=4" alt="Matthew" style="width: 70px;">
             </a>
             <br>
             <a href="https://github.com/lensil">Lenise Silvio</a>
         </div>
         <div style="margin-right: 20px;" align="center">
             <a href="https://github.com/FirePhoenixBro">
-                <div style="width: 70px; height: 70px; overflow: hidden; border-radius: 50%;">
-                    <img src="https://avatars.githubusercontent.com/u/104022853?v=4" alt="Luca" style="width: 100%;">
-                </div>
+            <img src="https://avatars.githubusercontent.com/u/104022853?v=4" alt="Matthew" style="width: 70px;">
             </a>
             <br>
             <a href="https://github.com/FirePhoenixBro">Luca Vella</a>
