@@ -1,11 +1,12 @@
 {
   "name": "bookingapp",
   "version": "1.0.0",
-  "description": "Tennis Booking App CPS2009",
+  "description": "Tennis Booking App CPS2009 Group 1",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "start_build": "cd ./client && npm run build && cd .. && node server.js"
+    "build_client": "cd ./client && npm run build && cd ..",
+    "start_build": "cd ./client && npm run build && cd .. && npm start"
   },
   "author": "Group 1",
   "license": "ISC",

@@ -1,8 +1,11 @@
 {
-  "name": "client",
+  "name": "bookingapp-client",
   "version": "0.1.0",
   "private": true,
   "proxy": "https://localhost:3001",
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": ""
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
