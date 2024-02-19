@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export function BookingForm() {
+function BookingForm() {
     const [count, setCount] = useState(0);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -78,3 +78,5 @@ export function BookingForm() {
             </div>
         </form>)
 }
+
+export default BookingForm
