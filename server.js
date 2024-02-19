@@ -1,27 +1,24 @@
-const path = require('path');
-const express = require('express'); // npm i express
-const env = require('dotenv').config()
+const path = require('path'); // Obtaining the path module
+const express = require('express'); // Obtaining the express module
 
-const PORT = process.env.PORT || 3001;
+// Defining PORT of the server to listen on, if PORT is not defined in .env then it will 
+// listen on 3001
+const PORT = process.env.PORT || 3001; 
+
+// Creating an ExpressJS application, by calling the variable express as a function.
 const app = express();
 
-let database_data = [];
+// Parsing incoming JSON requests and placing parsed data in req.body
 app.use(express.json());
 
-// ========================= MONGOOSE =================================
-
-// ========================= MONGOOSE =================================
-
-// Have Node serve the files for our built React app
+// Have Node serve static files located in the client/build directory when a m
+// matching route is requested
 app.use(express.static(path.resolve(__dirname, 'client/build')));
 
-
-//========================================= Request Handling
+//Request Handling
 
 // Handle GET requests to /api route
 app.post("/api", (req, res) => {
-    database_data.push(req.body);
-    console.log(database_data);
     res.json({ message: "Hello from server!" });
 });
 
@@ -30,8 +27,7 @@ app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client/build', 'index.html'));
 });
 
-// ================================ Listening
-
+// Listen on specified port
 app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
 });
