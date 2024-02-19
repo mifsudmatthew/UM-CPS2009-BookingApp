@@ -1,6 +1,9 @@
-const path = require('path');
-const express = require('express'); // npm i express
-const mongoose = require('./mongoose/mongoose');
+require('dotenv').config(); // Allowing files to use .env configurations
+const path = require('path'); // Obtaining the path module
+const express = require('express'); // Obtaining express module
+const mongoose = require('./database/mongoose'); // Running the database
+//const db = require('./database/database_functions');
+//db.saveTestCase()
 
 // Defining PORT of the server to listen on, if PORT is not defined in .env then it will 
 // listen on 3001
