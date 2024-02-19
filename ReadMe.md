@@ -5,37 +5,37 @@
 Contributors
 ---
 
-<p align="center">
-    <div style="display: flex; flex-wrap: wrap;">
-        <div style="margin-right: 20px;" align="center">
-            <a href="https://github.com/mifsudmatthew">
+<div style="display: flex; justify-content: center; align-items: center;">
+    <div style="margin: 0 20px; text-align: center;">
+        <a href="https://github.com/mifsudmatthew">
             <img src="https://avatars.githubusercontent.com/u/97695752?v=4" alt="Matthew" style="border-radius: 50%; width: 70px;">
-            </a>
-            <br>
-            <a href="https://github.com/mifsudmatthew">Matthew Mifsud</a>
-        </div>
-        <div style="margin-right: 20px;" align="center">
-            <a href="https://github.com/KeithFarrugia">
-            <img src="https://avatars.githubusercontent.com/u/148719589?v=4" alt="Matthew" style="border-radius: 50%; width: 70px;">
-            </a>
-            <br>
-            <a href="https://github.com/KeithFarrugia">Keith Farrugia</a>
-        </div>
-        <div style="margin-right: 20px;" align="center">
-            <a href="https://github.com/lensil">
-            <img src="https://avatars.githubusercontent.com/u/147991201?v=4" alt="Matthew" style="border-radius: 50%; width: 70px;">
-            </a>
-            <br>
-            <a href="https://github.com/lensil">Lenise Silvio</a>
-        </div>
-        <div style="margin-right: 20px;" align="center">
-            <a href="https://github.com/FirePhoenixBro">
-            <img src="https://avatars.githubusercontent.com/u/104022853?v=4" alt="Matthew" style="border-radius: 50%; width: 70px;">
-            </a>
-            <br>
-            <a href="https://github.com/FirePhoenixBro">Luca Vella</a>
-        </div>
+        </a>
+        <br>
+        <a href="https://github.com/mifsudmatthew">Matthew Mifsud</a>
     </div>
+    <div style="margin: 0 20px; text-align: center;">
+        <a href="https://github.com/KeithFarrugia">
+            <img src="https://avatars.githubusercontent.com/u/148719589?v=4" alt="Keith" style="border-radius: 50%; width: 70px;">
+        </a>
+        <br>
+        <a href="https://github.com/KeithFarrugia">Keith Farrugia</a>
+    </div>
+    <div style="margin: 0 20px; text-align: center;">
+        <a href="https://github.com/lensil">
+            <img src="https://avatars.githubusercontent.com/u/147991201?v=4" alt="Lenise" style="border-radius: 50%; width: 70px;">
+        </a>
+        <br>
+        <a href="https://github.com/lensil">Lenise Silvio</a>
+    </div>
+    <div style="margin: 0 20px; text-align: center;">
+        <a href="https://github.com/FirePhoenixBro">
+            <img src="https://avatars.githubusercontent.com/u/104022853?v=4" alt="Luca" style="border-radius: 50%; width: 70px;">
+        </a>
+        <br>
+        <a href="https://github.com/FirePhoenixBro">Luca Vella</a>
+    </div>
+</div>
+
 
 Compilation Process
 -------------------
