@@ -7,6 +7,29 @@ function App() {
   const [email, setEmail] = useState('');
   const [date, setDate] = useState('');
   
+  const incrementCount = () => {
+    setCount(prevCount => prevCount + 1);
+  };
+
+  const decrementCount = () => {
+    if (count === 0) {
+      return;
+    }
+    setCount(prevCount => prevCount - 1);
+  };
+
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handleDateChange = (event) => {
+    setDate(event.target.value);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault(); 
     const data = {
@@ -17,7 +40,7 @@ function App() {
     };
     console.log('Data:', data);
     try {
-      const response = await fetch('ENDPOINT', {
+      const response = await fetch('api', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -49,25 +72,18 @@ function App() {
       </div>
       <form onSubmit={handleSubmit}>
       <div className='userInfo'>
-        Enter your name: <input type="text" />
+        Enter your name: <input type="text" onChange={handleNameChange}/>
       </div>
       <div className='userInfo'>
-        Enter your email: <input type="email"/>
+        Enter your email: <input type="email" onChange={handleEmailChange}/>
       </div>
       <div className='userInfo'>
-        Enter your date: <input type="date" />
+        Enter your date: <input type="date" onChange={handleDateChange}/>
       </div>
       <div className="card">
-        Number of players: {count}
-        <button onClick={() => setCount((count) => count + 1)}>
-          +
-        </button>
-        <button onClick={() => setCount((count) => count - 1)}>
-          -
-        </button>
-        <p>
-          Testing Tennis Booking App
-        </p>
+        Number of players: {count} 
+        <button type="button" onClick={incrementCount}>+</button>
+        <button type="button" onClick={decrementCount}>-</button>
         <div><button type="submit">Submit Booking</button></div>
       </div>
       </form>
