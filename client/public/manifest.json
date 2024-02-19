@@ -5,7 +5,7 @@
     {
       "src": "maskable.png",
       "sizes": "512x512",
-      "type": "image/x-icon",
+      "type": "image/png",
       "purpose": "any maskable"
     },
     {
