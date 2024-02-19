@@ -1,16 +1,15 @@
-const schema = require("./schemas");
+const schema = require("./schemas"); // Importing the schemas created
 
-//============================================ Basic Functions ========
+//====================== Basic Functions ====================
 
-//---------------------------------- Basic Save Test
+//---------------------Basic Save Test------------------------
 async function saveTestCase(){ 
     let item = {"username":"Tester", "password":"testing"}
     const dbpush = new schema(item);
     await dbpush.save();
 }
 
-
-//============================================ Export ========
+//======================= Export ========
 module.exports = {
     save: save
 };

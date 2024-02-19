@@ -1,26 +1,30 @@
-//Port Changed or updated depending on the generated port
-const mongoose = require('mongoose');
-mongoose.set('strictQuery', false);
+const mongoose = require('mongoose'); // Obtaining the mongoose module
+
+// Configuring mongoose such that if you attempt to query a property that is not defined
+// in the schema, an error is thrown
+mongoose.set('strictQuery', true);
 
 
 //============================================ Port Setup =================
 /* This makes use of the .env file to get the mongodb
  * links and information
  */
+
 //--------------------------- Url Configuration
 const mongoUrl =  `mongodb://`+
                   `${process.env.COSMOSDB_HOST}:` +
                   `${process.env.COSMOSDB_PORT}/` +
                   `${process.env.COSMOSDB_DBNAME}`+
                   `?ssl=true&replicaSet=globaldb`;
+
 //--------------------------- Flags and Options Configuration
+
+// Configuring Mongo to connect with Azure CosmosDB
 const mongoOptions = {
   auth: {
     username: process.env.COSMOSDB_USER,
     password: process.env.COSMOSDB_PASSWORD
   },
-  //useNewUrlParser: true,
-  //useUnifiedTopology: true,
   retryWrites: false
 };
 
