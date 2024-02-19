@@ -22,10 +22,8 @@ mongoose.connect(mongoport)
     // All other errors should be outputed as normal
     if (err.name === 'MongooseServerSelectionError') {
         console.log("Mongoose Connection Error: Failed to connect to database");
-        process.exit(1);
     } else {
         console.log("Mongoose Connection Error:", err);
-        process.exit(1); 
     }
   });
 // Connection event handlers
