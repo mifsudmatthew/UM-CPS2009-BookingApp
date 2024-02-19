@@ -1,6 +1,5 @@
 //Port Changed or updated depending on the generated port
 const mongoose = require('mongoose');
-require('dotenv').config();
 mongoose.set('strictQuery', false);
 
 
