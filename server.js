@@ -1,11 +1,11 @@
 const path = require('path');
 const express = require('express'); // npm i express
+const mongoose = require('./mongoose/mongoose');
 const env = require('dotenv').config()
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-let database_data = [];
 app.use(express.json());
 
 // ========================= MONGOOSE =================================
