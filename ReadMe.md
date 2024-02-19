@@ -2,14 +2,40 @@
 
 <p align="center"><a href="https://oddfar.com/" target="_blank" rel="noopener noreferrer"><img width="180" src="https://static.vecteezy.com/system/resources/previews/027/504/381/original/a-tennis-ball-on-a-transparent-background-free-png.png" alt="logo"></a></p>
 
-<p align="center">
-  <a href="https://github.com/mifsudmatthew/UM-CPS2009-BookingApp/stargazers"><img src="https://img.shields.io/github/stars/mifsudmatthew/UM-CPS2009-BookingApp.svg"></a>
-  <a href="https://github.com/mifsudmatthew/UM-CPS2009-BookingApp/blob/main/LICENSE"><img src="https://img.shields.io/github/license/mifsudmatthew/UM-CPS2009-BookingApp.svg"></a>
-</p>
+Contributors
+---
 
-<a href="https://github.com/mifsudmatthew/UM-CPS2009-BookingApp/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=mifsudmatthew/UM-CPS2009-BookingApp" />
-</a>
+<div style="display: flex; justify-content: center; align-items: center;">
+    <div style="margin: 0 20px; text-align: center;">
+        <a href="https://github.com/mifsudmatthew">
+            <img src="https://avatars.githubusercontent.com/u/97695752?v=4" alt="Matthew" style="border-radius: 50%; width: 70px;">
+        </a>
+        <br>
+        <a href="https://github.com/mifsudmatthew">Matthew Mifsud</a>
+    </div>
+    <div style="margin: 0 20px; text-align: center;">
+        <a href="https://github.com/KeithFarrugia">
+            <img src="https://avatars.githubusercontent.com/u/148719589?v=4" alt="Keith" style="border-radius: 50%; width: 70px;">
+        </a>
+        <br>
+        <a href="https://github.com/KeithFarrugia">Keith Farrugia</a>
+    </div>
+    <div style="margin: 0 20px; text-align: center;">
+        <a href="https://github.com/lensil">
+            <img src="https://avatars.githubusercontent.com/u/147991201?v=4" alt="Lenise" style="border-radius: 50%; width: 70px;">
+        </a>
+        <br>
+        <a href="https://github.com/lensil">Lenise Silvio</a>
+    </div>
+    <div style="margin: 0 20px; text-align: center;">
+        <a href="https://github.com/FirePhoenixBro">
+            <img src="https://avatars.githubusercontent.com/u/104022853?v=4" alt="Luca" style="border-radius: 50%; width: 70px;">
+        </a>
+        <br>
+        <a href="https://github.com/FirePhoenixBro">Luca Vella</a>
+    </div>
+</div>
+
 
 Compilation Process
 -------------------
