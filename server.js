@@ -5,6 +5,9 @@ const env = require('dotenv').config()
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+let database_data = [];
+app.use(express.json());
+
 // ========================= MONGOOSE =================================
 
 // ========================= MONGOOSE =================================
@@ -16,7 +19,9 @@ app.use(express.static(path.resolve(__dirname, 'client/build')));
 //========================================= Request Handling
 
 // Handle GET requests to /api route
-app.get("/api", (req, res) => {
+app.post("/api", (req, res) => {
+    database_data.push(req.body);
+    console.log(database_data);
     res.json({ message: "Hello from server!" });
 });
 
