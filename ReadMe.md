@@ -5,30 +5,33 @@
 Contributors
 ---
 
-<p align="center">
-    <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+<div align="center">
+    <p style="display: flex; flex-wrap: wrap; justify-content: center;">
         <a href="https://github.com/mifsudmatthew" style="margin-right: 20px; text-align: center;">
-            <img src="https://avatars.githubusercontent.com/u/97695752?v=4" alt="Matthew" style="width: 70px; border-radius: 50%;">
-            <br>
             Matthew Mifsud
         </a>
+        <br>
+        <img src="https://avatars.githubusercontent.com/u/97695752?v=4" alt="Matthew" style="width: 70px; border-radius: 50%;">
+        <br><br>
         <a href="https://github.com/KeithFarrugia" style="margin-right: 20px; text-align: center;">
-            <img src="https://avatars.githubusercontent.com/u/148719589?v=4" alt="Keith" style="width: 70px; border-radius: 50%;">
-            <br>
             Keith Farrugia
         </a>
+        <br>
+        <img src="https://avatars.githubusercontent.com/u/148719589?v=4" alt="Keith" style="width: 70px; border-radius: 50%;">
+        <br><br>
         <a href="https://github.com/lensil" style="margin-right: 20px; text-align: center;">
-            <img src="https://avatars.githubusercontent.com/u/147991201?v=4" alt="Lenise" style="width: 70px; border-radius: 50%;">
-            <br>
             Lenise Silvio
         </a>
+        <br>
+        <img src="https://avatars.githubusercontent.com/u/147991201?v=4" alt="Lenise" style="width: 70px; border-radius: 50%;">
+        <br><br>
         <a href="https://github.com/FirePhoenixBro" style="margin-right: 20px; text-align: center;">
-            <img src="https://avatars.githubusercontent.com/u/104022853?v=4" alt="Luca" style="width: 70px; border-radius: 50%;">
-            <br>
             Luca Vella
         </a>
-    </div>
-</p>
+        <br>
+        <img src="https://avatars.githubusercontent.com/u/104022853?v=4" alt="Luca" style="width: 70px; border-radius: 50%;">
+    </p>
+</div>
 
 
 
