@@ -5,9 +5,8 @@ const mongoose = require('./database/mongoose'); // Running the database
 //const db = require('./database/database_functions');
 //db.saveTestCase()
 
-// Defining PORT of the server to listen on, if PORT is not defined in .env then it will 
-// listen on 3001
-const PORT = process.env.PORT || 3001; 
+// Defining PORT of the server to listen on, if PORT is not defined in .env then it will listen on 3001
+const PORT = process.env.PORT || 3001;
 
 // Creating an ExpressJS application, by calling the variable express as a function.
 const app = express();
@@ -15,17 +14,16 @@ const app = express();
 // Parsing incoming JSON requests and placing parsed data in req.body
 app.use(express.json());
 
-// Have Node serve static files located in the client/build directory when a m
-// matching route is requested
+// Have Node serve static files located in the client/build directory when a matching route is requested
 app.use(express.static(path.resolve(__dirname, 'client/build')));
 
 //Request Handling
-
-// Handle GET requests to /api route
-app.post("/api", (req, res) => {
-    res.json({ message: "Hello from server!" });
-    console.log("Request has been received!")
-});
+// Handle POST requests to /api route
+app.route("/api")
+    .post((req, res) => {
+        res.json({ message: "Hello from server!" });
+        console.log("Request has been received!")
+    });
 
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
