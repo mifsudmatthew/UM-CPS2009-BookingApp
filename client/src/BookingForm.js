@@ -1,3 +1,4 @@
+import './App.css'
 import { useState } from 'react'
 
 function BookingForm() {
@@ -76,7 +77,8 @@ function BookingForm() {
                 <button type="button" onClick={decrementCount}>-</button>
                 <div><button type="submit">Submit Booking</button></div>
             </div>
-        </form>)
+        </form>
+    )
 }
 
 export default BookingForm
