@@ -11,5 +11,5 @@ async function saveTestCase(){
 
 //======================= Export ========
 module.exports = {
-    save: save
+    saveTestCase: saveTestCase
 };
