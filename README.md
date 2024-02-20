@@ -1,6 +1,6 @@
 <h1 align="center"> Tennis Court Booking System</h1>
 
-<p align="center"><a target="_blank" rel="noopener noreferrer"><img width="180" src="https://static.vecteezy.com/system/resources/previews/027/504/381/original/a-tennis-ball-on-a-transparent-background-free-png.png" alt="logo"></a></p>
+<p align="center"><a target="_blank" rel="noopener noreferrer"><img width="180" src="logo.png" alt="logo"></a></p>
 
 Contributors
 ---

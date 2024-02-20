@@ -10,5 +10,5 @@ const loginSchema = new schema({
 });
 
 // Exporting created schemas to be used by database functions
-const modal = mongoose.model("login",loginSchema);
+const modal = mongoose.model("users",loginSchema);
 module.exports = modal;

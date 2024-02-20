@@ -11,25 +11,14 @@ mongoose.set('strictQuery', true);
  */
 
 //--------------------------- Url Configuration
-const mongoUrl =  `mongodb://`+
-                  `${process.env.COSMOSDB_HOST}:` +
-                  `${process.env.COSMOSDB_PORT}/` +
-                  `${process.env.COSMOSDB_DBNAME}`+
-                  `?ssl=true&replicaSet=globaldb`;
-
+const mongoUrl =  `mongodb+srv://`+ 
+                  `${process.env.USER}` + `:` + 
+                  `${process.env.PASSWORD}` + 
+                  `@production.vhjvw6m.mongodb.net/mainDB?retryWrites=true&w=majority`;
 //--------------------------- Flags and Options Configuration
 
-// Configuring Mongo to connect with Azure CosmosDB
-const mongoOptions = {
-  auth: {
-    username: process.env.COSMOSDB_USER,
-    password: process.env.COSMOSDB_PASSWORD
-  },
-  retryWrites: false
-};
-
 //============================================ Connection Setup =================
-mongoose.connect(mongoUrl, mongoOptions)
+mongoose.connect(mongoUrl)
 
   //---------------------------- Successful Creation
   .then(() => {
