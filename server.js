@@ -3,7 +3,7 @@ const path = require('path'); // Obtaining the path module
 const express = require('express'); // Obtaining express module
 const mongoose = require('./database/mongoose'); // Running the database
 const db = require('./database/database_functions');
-db.saveTestCase()
+//db.saveTestCase()
 
 // Defining PORT of the server to listen on, if PORT is not defined in .env then it will listen on 3001
 const PORT = process.env.PORT || 3001;
