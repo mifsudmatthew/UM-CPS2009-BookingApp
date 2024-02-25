@@ -1,12 +1,7 @@
-import Header from "../components/Header";
+import { Link } from "react-router-dom";
 
 function Home() {
-  return (
-    <>
-      <Header />
-      <a href="/booking">Booking</a>
-    </>
-  );
+  return <Link to="/booking">Booking</Link>;
 }
 
 export default Home;

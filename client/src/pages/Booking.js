@@ -1,13 +1,7 @@
-import Header from "../components/Header";
 import BookingForm from "../components/BookingForm";
 
 function Booking() {
-  return (
-    <>
-      <Header />
-      <BookingForm />
-    </>
-  );
+  return <BookingForm />;
 }
 
 export default Booking;
