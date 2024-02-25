@@ -1,15 +1,19 @@
-import './App.css'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import BookingForm from './BookingForm'
-import Header from './Header'
+import "./styles/App.css";
+
+import Home from "./pages/Home";
+import Booking from "./pages/Booking";
 
 function App() {
-    return (
-        <>
-            <Header />
-            <BookingForm />
-        </>
-    )
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" exact element={<Home />}></Route>
+        <Route path="/booking" element={<Booking />}></Route>
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
