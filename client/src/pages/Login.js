@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import {Link} from "react-router-dom";
 
-const Login = (props) => {
+const Login = () => {
 
   return (
     <div className={'mainContainer'}>
@@ -27,14 +26,14 @@ const Login = (props) => {
           type='password'
           required
         />
-        <a href="" className="forgot-password">Forgot password?</a>
+        <a href="/reset" className="forgot-password">Forgot password?</a>
       </div>
       <br />
       <div className={'inputContainer'}>
         <input className={'inputButton'} type="button" value={'Log in'} />
       </div>
       <div className="signup">
-        Not a member? <a href="#" className="signup-link">Sign up</a>
+        Not a member? <Link to="/register" className="signup-link">Sign up</Link>
       </div>
     </div>
   )
