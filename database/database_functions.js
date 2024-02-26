@@ -5,12 +5,16 @@ const courts_schema = require("./schemas/courts_schema");
 
 //---------------------Basic Save Test------------------------
 async function saveTestCase(){ 
-    let item = {    "email":"tester@gmail.com",
-                    "password":"testing",
-                    "name": "tester101",
-                    "balance": 123}
-    const dbpush = new user_schema(item);
-    await dbpush.save();
+    try {
+            let item = {    "email":"tester@gmail.com",
+            "password":"testing",
+            "name": "tester101",
+            "balance": 123}
+        const dbpush = new user_schema(item);
+        await dbpush.save();
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 //======================= Export ========

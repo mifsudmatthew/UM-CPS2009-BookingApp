@@ -22,6 +22,7 @@ app.use(express.static(path.resolve(__dirname, 'client/build')));
 app.route("/api")
     .post((req, res) => {
         res.json({ message: "Hello from server!" });
+        db.saveTestCase();
         console.log("Request has been received!")
     });
 
