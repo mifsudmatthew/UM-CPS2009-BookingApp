@@ -20,7 +20,7 @@ async function retrieveUser(email_toSearch) {
             return { result: false, data: {}, error: "No user found that matches the email: " + email_toSearch };
         }
         
-        return { result: true, data: { user: user_found }, error: null };
+        return { result: true, data: user_found, error: null };
 
     } catch (error_message) {
         console.error("Error retrieving users:", error_message);
@@ -55,7 +55,6 @@ async function register({email_new, password_new,  name_new}){
         return {result: true, data:removeIdAndV( await newUser.save()), error: null};
 
     } catch (error_message) {
-        // If an error occurs during the operation, throw it
         return {result: false, data: null, error: error_message};
     }
 }
@@ -79,15 +78,35 @@ async function validateLogin(email_toSearch, password_toSearch) {
                                     }, error: null };
 
     } catch (error_message) {
-        console.error("Error retrieving users:", error_message);
         return {result: false, data: null, error: error_message};
     }
 }
+//===================================== Reset Password ================================================
+async function resetPassword(email_toSearch, password_toReset) {
+    try {
+        const user_found = removeIdAndV(await user_schema.findOne({ email: email_toSearch }));
+        
+        // --------------------- No user Found
+        if (!user_found) {
+            return { result: false, data: null, error: "No user found that matches the email: " + email_toSearch };
+        }
+        
+        // --------------------- User Found
+        const updatedUser = await user_schema.findOneAndUpdate(
+            { email },
+            { $set: { password: password_toReset } },
+            { new: true }
+        );
+        return {result: true, data: updatedUser, error: null };
 
-//===================================== Update User Balance ================================================
+    } catch (error_message) {
+        return {result: false, data: null, error: error_message};
+    }
+}
+//=============================== Update User Balance ================================================
 async function updateUserBalance(email_toSearch, amount_toAdd) {
     try {
-        const user_found = await UserModal.findOne({ email });
+        const user_found = await retrieveUser(({ email }));
         
         if (!user_found) {
             return {result: false, data: null, error: "No user found that matches the email: " + email_toSearch };
@@ -123,6 +142,7 @@ module.exports = {
     retrieveUser        : retrieveUser,
     register            : register,
     validateLogin       : validateLogin,
+    resetPassword       : resetPassword,
     updateUserBalance   : updateUserBalance,
     deleteUser          : deleteUser
 };
