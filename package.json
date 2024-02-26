@@ -4,6 +4,7 @@
   "description": "Tennis Booking App CPS2009 Group 1",
   "main": "server.js",
   "scripts": {
+    "install_dep": "cd ./client && npm i && cd .. && npm i",
     "start": "node server.js",
     "build_client": "cd ./client && npm run build && cd ..",
     "start_build": "cd ./client && npm run build && cd .. && npm start"
