@@ -28,7 +28,6 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-
 }
 
 h1 {
@@ -68,9 +67,9 @@ button:focus-visible {
   }
 }
 
-input[type='button'] {
+input[type="button"] {
   border: none;
-  background: #3E4A36;
+  background: #3e4a36;
   color: white;
   padding: 15px 10vh;
   margin: 8px;
