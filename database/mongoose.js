@@ -19,7 +19,7 @@ const mongoUrl =
 //--------------------------- Flags and Options Configuration
 
 //============================================ Connection Setup =================
-await mongoose
+mongoose
   .connect(mongoUrl)
 
   //---------------------------- Successful Creation
