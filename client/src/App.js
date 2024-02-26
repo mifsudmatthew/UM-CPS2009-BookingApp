@@ -7,7 +7,6 @@ import Navbar from "./components/Navbar";
 
 import Home from "./pages/Home";
 import Booking from "./pages/Booking";
-import Account from "./pages/Account";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Reset from "./pages/Reset";
