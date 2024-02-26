@@ -17,7 +17,7 @@ app.use(express.json());
 // Have Node serve static files located in the client/build directory when a matching route is requested
 app.use(express.static(path.resolve(__dirname, "client/build")));
 
-//Request Handling
+// Request Handling
 // Handle POST requests to /api route
 app.route("/api").post((req, res) => {
   db.saveTestCase();
