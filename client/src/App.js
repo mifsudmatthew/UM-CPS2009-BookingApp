@@ -23,13 +23,12 @@ function App() {
       <Routes>
         <Route path="/" exact element={<Home />}></Route>
         <Route path="/booking" element={<Booking />}></Route>
-        <Route path="/account" exact element={<Account />}></Route>
-        <Route path="/account/login" element={<Login />}></Route>
-        <Route path="/account/register" element={<Register />}></Route>
-        <Route path="/account/reset" element={<Reset />}></Route>
-        <Route path="/account/profile" element={<Profile />}></Route>
-        <Route path="/account/profile/topup" element={<Topup />}></Route>
-        <Route path="/account/profile/changepw" element={<ChangePW />}></Route>
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/register" element={<Register />}></Route>
+        <Route path="/reset" element={<Reset />}></Route>
+        <Route path="/profile" exact element={<Profile/>}></Route>
+        <Route path="/profile/topup" element={<Topup />}></Route>
+        <Route path="/profile/changepassword" element={<ChangePW />}></Route>
       </Routes>
     </>
   );
