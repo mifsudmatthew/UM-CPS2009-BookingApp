@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import "./styles/App.css";
 
 import Header from "./components/Header";
+import Navbar from "./components/Navbar";
 
 import Home from "./pages/Home";
 import Booking from "./pages/Booking";
@@ -18,10 +19,11 @@ function App() {
   return (
     <>
       <Header />
+      <Navbar />
       <Routes>
         <Route path="/" exact element={<Home />}></Route>
         <Route path="/booking" element={<Booking />}></Route>
-        <Route path="/account" element={<Account />}></Route>
+        <Route path="/account" exact element={<Account />}></Route>
         <Route path="/account/login" element={<Login />}></Route>
         <Route path="/account/register" element={<Register />}></Route>
         <Route path="/account/reset" element={<Reset />}></Route>
