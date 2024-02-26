@@ -77,17 +77,8 @@ button:focus-visible {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-.card {
-  padding: 2em;
-}
-
-.userInfo {
-  padding: 0.5em;
-  font-family: monospace;
-}
-
-.read-the-docs {
-  color: #888;
+body {
+  background-color: #d8e7cb;
 }
 
 @keyframes logo-spin {
@@ -105,15 +96,67 @@ button:focus-visible {
   }
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.card {
+  padding: 2em;
+}
+
+.userInfo {
+  padding: 0.5em;
+  font-family: monospace;
+}
+
+.mainContainer {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+  font-size: 64px;
+  font-weight: bolder;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 260px;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.inputBox {
+  height: 48px;
+  width: 30vw;
+  font-size: large;
+  border-radius: 8px;
+  border: 1px solid grey;
+  padding-left: 8px;
+}
+
+.signup {
+  margin-top: 20px;
+}
+
+.signup-link {
+  color: #446732;
+  text-decoration: none;
+}
+
+.forgot-password {
+  display: inline-block;
+  color: #446732;
+  margin-top: 5px;
 }
