@@ -66,3 +66,14 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+input[type="button"] {
+  border: none;
+  background: #3e4a36;
+  color: white;
+  padding: 15px 10vh;
+  margin: 8px;
+  font-size: 20px;
+  border-radius: 15px;
+  cursor: pointer;
+}

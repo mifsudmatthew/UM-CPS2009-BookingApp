@@ -5,7 +5,7 @@ const Schema = mongoose.Schema; // Obtaining Mongoose Schema
 
 // Creating a new schema
 const booking_schema = new Schema({
-    date: String,
+    date: Date,
     time: Number,
     userID: String,
     courtID: String

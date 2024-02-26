@@ -25,7 +25,7 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/reset" element={<Reset />}></Route>
-        <Route path="/profile" exact element={<Profile/>}></Route>
+        <Route path="/profile" exact element={<Profile />}></Route>
         <Route path="/profile/topup" element={<Topup />}></Route>
         <Route path="/profile/changepassword" element={<ChangePW />}></Route>
       </Routes>

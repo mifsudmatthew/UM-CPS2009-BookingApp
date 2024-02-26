@@ -8,19 +8,19 @@ function Navbar() {
           <Link to="/booking">Booking</Link>
         </li>
         <li>
-          <Link to="/account">Account</Link>
+          <Link to="/profile">Profile</Link>
         </li>
         <li>
-          <Link to="/account/login">Login</Link>
+          <Link to="/login">Login</Link>
         </li>
         <li>
-          <Link to="/account/register">Register</Link>
+          <Link to="/register">Register</Link>
         </li>
         <li>
-          <Link to="/Topup">Topup</Link>
+          <Link to="/profile/topup">Topup</Link>
         </li>
         <li>
-          <Link to="/ChangePW">Change Password</Link>
+          <Link to="/profile/changepassword">Change Password</Link>
         </li>
       </ul>
     </>
