@@ -2,10 +2,8 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
-// import reportWebVitals from "./reportWebVitals";
-
-import "./styles/index.css";
 import App from "./App";
+// import reportWebVitals from "./reportWebVitals";
 
 const root = createRoot(document.getElementById("root"));
 root.render(
