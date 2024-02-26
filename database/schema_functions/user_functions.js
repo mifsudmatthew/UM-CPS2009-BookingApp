@@ -37,11 +37,10 @@ async function register({email_new, password_new,  name_new}){
     try {
 
         // ----------------------- Check if email is in use
-        ret = await retrieveUser(email)
-        if(ret.result == true){ // Error email found
+        user_found = removeIdAndV( await user_schema.findOne({ email: email_toSearch }));
+        
+        if(!user_found){ // Error email found
             return {result: false, data:null, error: "email already in use"};
-        }else if(ret.data == null){ // Error connection related
-            return {result: false, data:null, error: ret.error};
         }
 
         //-------------------------- Email is not in use
@@ -54,7 +53,7 @@ async function register({email_new, password_new,  name_new}){
         // Save the new user
         return {result: true, data:removeIdAndV( await newUser.save()), error: null};
 
-    } catch (error_message) {
+    }catch (error_message) {
         return {result: false, data: null, error: error_message};
     }
 }
@@ -106,7 +105,7 @@ async function resetPassword(email_toSearch, password_toReset) {
 //=============================== Update User Balance ================================================
 async function updateUserBalance(email_toSearch, amount_toAdd) {
     try {
-        const user_found = await retrieveUser(({ email }));
+        const user_found = removeIdAndV(await user_schema.findOne({ email: email_toSearch }));
         
         if (!user_found) {
             return {result: false, data: null, error: "No user found that matches the email: " + email_toSearch };
