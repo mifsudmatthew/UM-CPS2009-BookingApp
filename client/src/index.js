@@ -2,7 +2,6 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
-import Login from "./pages/Login";
 // import reportWebVitals from "./reportWebVitals";
 
 import "./styles/index.css";
@@ -12,7 +11,7 @@ const root = createRoot(document.getElementById("root"));
 root.render(
   <StrictMode>
     <BrowserRouter>
-      <Login />
+      <App />
     </BrowserRouter>
   </StrictMode>
 );
