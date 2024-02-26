@@ -37,32 +37,43 @@ app.route("/api/register").post((req, res) => {
 // All other GET requests not handled before will return our React app
 
 app.route("/").get((req, res, next) => {
-    next();
     console.log("Connected to home page");
+    next();
 });
 
-app.route("/booking").get((req, res) => {
+app.route("/booking").get((req, res, next) => {
     console.log("Connected to booking page");
+    next();
 });
 
-app.route("/account").get((req, res) => {
+app.route("/profile").get((req, res, next) => {
     console.log("Connected to account page");
+    next();
 });
 
-app.route("/account/reset").get((req, res) => {
+app.route("/profile/topup").get((req, res, next) => {
+    console.log("Connected to topup page");
+    next();
+});
+
+app.route("/profile/changepassword").get((req, res, next) => {
+    console.log("Connected to change password page");
+    next();
+});
+
+app.route("/reset").get((req, res, next) => {
     console.log("Connected to reset page");
+    next();
 });
 
-app.route("/account/profile").get((req, res) => {
-    console.log("Connected to profile page");
-});
-
-app.route("/register").get((req, res) => {
+app.route("/register").get((req, res, next) => {
     console.log("Connected to register page");
+    next();
 });
 
-app.route("/login").get((req, res) => {
+app.route("/login").get((req, res, next) => {
     console.log("Connected to login page");
+    next();
 });
 
 app.route("*").get((req, res) => {
