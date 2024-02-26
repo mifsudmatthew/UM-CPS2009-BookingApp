@@ -40,7 +40,7 @@ function BookingForm() {
     };
     console.log("Data:", data);
     try {
-      const response = await fetch("api", {
+      const response = await fetch("/api/booking", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -18,14 +18,55 @@ app.use(express.json());
 app.use(express.static(path.resolve(__dirname, "client/build")));
 
 //Request Handling
+
+
 // Handle POST requests to /api route
-app.route("/api").post((req, res) => {
+app.route("/api/booking").post((req, res) => {
   db.saveTestCase();
-  console.log("Request has been received!");
+  console.log("Booking request has been received!");
   res.json({ message: "Hello from server!" });
 });
 
+app.route("/api/login").post((req, res) => {
+    console.log("Login attempt");
+});
+
+app.route("/api/register").post((req, res) => {
+    console.log("Register attempt");
+});
+
+
 // All other GET requests not handled before will return our React app
+
+app.route("/").get((req, res, next) => {
+    next();
+    console.log("Connected to home page");
+});
+
+app.route("/booking").get((req, res) => {
+    console.log("Connected to booking page");
+});
+
+app.route("/account").get((req, res) => {
+    console.log("Connected to account page");
+});
+
+app.route("/account/reset").get((req, res) => {
+    console.log("Connected to reset page");
+});
+
+app.route("/account/profile").get((req, res) => {
+    console.log("Connected to profile page");
+});
+
+app.route("/register").get((req, res) => {
+    console.log("Connected to register page");
+});
+
+app.route("/login").get((req, res) => {
+    console.log("Connected to login page");
+});
+
 app.route("*").get((req, res) => {
   res.sendFile(path.resolve(__dirname, "client/build", "index.html"));
 });
