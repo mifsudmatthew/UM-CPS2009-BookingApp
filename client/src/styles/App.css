@@ -80,7 +80,7 @@ body {
 
 .inputBox {
   height: 48px;
-  width: 400px;
+  width: 30vw;
   font-size: large;
   border-radius: 8px;
   border: 1px solid grey;
