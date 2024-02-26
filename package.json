@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "build_client": "cd ./client && npm run build && cd ..",
+    "install": "npm i && cd ./client && npm i && cd .. ",
+    "build": "cd ./client && npm run build && cd ..",
     "start_build": "cd ./client && npm run build && cd .. && npm start"
   },
   "author": "Group 1",
