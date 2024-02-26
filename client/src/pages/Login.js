@@ -1,36 +1,43 @@
-import React from 'react';
-import "../styles/Login.css";
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-class Login extends React.Component {
-  render() {
+const Login = (props) => {
+
   return (
-    <> 
-    <div className="signin-container">
-    <h2>Sign in</h2>
-    <form>
-      <div>
-          <div className="input-group">
-            <label htmlFor="email">Email</label>
-            <br/>
-            <input type="email" placeholder="name@example.com" required/>
-          </div>
-          <div className="input-group">
-            <label htmlFor="password">Password</label>
-            <br/>
-            <input type="password" placeholder="password" required/>
-            <br/>
-            <a href="" className="forgot-password">Forgot password?</a>
-          </div>
+    <div className={'mainContainer'}>
+      <div className={'titleContainer'}>
+        <div>Login</div>
       </div>
-      <button type="submit" className="signin-button">Sign in</button>
-    </form>
-    <div className="signup">
-      Not a member? <a href="#" className="signup-link">Sign up</a>
+      <br />
+      <div className={'inputContainer'}>
+        <label>Email</label>
+        <input
+          placeholder="name@example.com"
+          className={'inputBox'}
+          type='email'
+          required
+        />
+      </div>
+      <br />
+      <div className={'inputContainer'}>
+        <label>Password</label>
+        <input
+          placeholder="password"
+          className={'inputBox'}
+          type='password'
+          required
+        />
+        <a href="" className="forgot-password">Forgot password?</a>
+      </div>
+      <br />
+      <div className={'inputContainer'}>
+        <input className={'inputButton'} type="button" value={'Log in'} />
+      </div>
+      <div className="signup">
+        Not a member? <a href="#" className="signup-link">Sign up</a>
+      </div>
     </div>
-  </div>
-  </>
-    );
-  }
+  )
 }
 
-export default Login;
+export default Login
