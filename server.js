@@ -4,6 +4,7 @@ const express = require("express"); // Obtaining express module
 const mongoose = require("./database/mongoose"); // Running the database
 const db = require("./database/test_functions");
 const serverFunctions = require("./server_functions");
+const queries = require("./database/schema_functions/user_functions");
 //db.saveTestCase()
 
 // Defining PORT of the server to listen on, if PORT is not defined in .env then it will listen on 3001
@@ -30,8 +31,8 @@ app.route("/api/login").post((req, res) => {
     console.log("Login attempt");
 });
 
-app.route("/api/register").post((req, res) => {
-    console.log("Register attempt" + res);
+app.route("/api/register").post(async (req, res) => {
+    console.log(await queries.registerUser({email_new: req.body.email, password_new: req.body.password, name_new: req.body.name}));
 });
 
 
