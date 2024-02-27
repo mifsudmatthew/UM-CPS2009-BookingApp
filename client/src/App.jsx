@@ -2,12 +2,14 @@
  * Main react page */
 
 /* React imports */
-import { Routes, Route } from "react-router-dom";
+import {Routes, Route  } from 'react-router-dom'
+
 /* CSS */
-import "./styles/App.css";
+import './styles/app.css'
+
 /* Components */
-import Header from "./components/Header";
-import Navbar from "./components/Navbar";
+import Navbar from './components/Navbar'
+
 /* Pages */
 import Home from "./pages/Home";
 import Booking from "./pages/Booking";
@@ -18,11 +20,12 @@ import Profile from "./pages/Profile";
 import Topup from "./pages/Topup";
 import ChangePW from "./pages/ChangePW";
 
+
+
 // Main react app
 function App() {
   return (
     <>
-      <Header />
       <Navbar />
       <Routes>
         <Route path="/" exact element={<Home />}></Route>
