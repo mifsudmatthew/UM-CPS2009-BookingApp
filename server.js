@@ -27,10 +27,9 @@ app.route("/api/booking").post((req, res) => {
   res.json({ message: "Hello from server!" });
 });
 
-app.route("/api/login").post((req, res) => {
+app.route("/api/login").post(async (req, res) => {
   console.log("Login attempt");
-  console.log(req.body);
-  res.json({ token: "1234" });
+  console.log(await queries.validateLogin(req.body.email, req.body.password));
 });
 
 app.route("/api/register").post(async (req, res) => {
