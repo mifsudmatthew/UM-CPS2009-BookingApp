@@ -11,7 +11,7 @@ apiRouter.use((req, res, next) => {
   next();
 });
 
-apiRouter.get("/reset", (req, res) => {
+apiRouter.post("/reset", (req, res) => {
   console.log("Connected to reset page");
   serverFunctions.sendPinByMail(res);
 });
@@ -29,6 +29,15 @@ apiRouter.post("/login", async (req, res, next) => {
   res.json({ token: "1234" });
 });
 
+apiRouter.post("/changepassword", async (req, res) => {
+  for(i = 0; i<serverFunctions.accountPins.length; i++){
+    if(serverFunctions.accountPins[i].pin == req.body.pin &&
+      serverFunctions.accountPins[i].email == req.body.email){
+        console.log(await queries.resetPassword(req.body.email, req.body.password));
+      }
+  }
+});
+
 apiRouter.post("/register", async (req, res, next) => {
   console.log(
     await queries.registerUser({
@@ -37,7 +46,7 @@ apiRouter.post("/register", async (req, res, next) => {
       name_new: req.body.name,
     })
   );
-  res.status(69).end();
+  // res.status(69).end();
 });
 
 module.exports = apiRouter;
