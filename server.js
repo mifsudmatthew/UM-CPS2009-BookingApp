@@ -2,9 +2,7 @@ require("dotenv").config(); // Allowing files to use .env configurations
 const path = require("path"); // Obtaining the path module
 const express = require("express"); // Obtaining express module
 const mongoose = require("./database/mongoose"); // Running the database
-const db = require("./database/database_functions");
-const serverFunctions = require("./server_functions");
-
+const db = require("./database/test_functions");
 //db.saveTestCase()
 
 // Defining PORT of the server to listen on, if PORT is not defined in .env then it will listen on 3001
@@ -32,11 +30,6 @@ app.route("/api/login").post((req, res) => {
 });
 
 app.route("/api/register").post((req, res) => {
-    console.log("Register attempt");
-});
-
-app.route("/api/resetConfirmation").post((req, res) => {
-
     console.log("Register attempt");
 });
 
@@ -68,10 +61,9 @@ app.route("/profile/changepassword").get((req, res, next) => {
     next();
 });
 
-app.route("/api/reset").get(async (req, res) => {
+app.route("/reset").get((req, res, next) => {
     console.log("Connected to reset page");
-    serverFunctions.sendPinByMail(res);
-
+    next();
 });
 
 app.route("/register").get((req, res, next) => {
