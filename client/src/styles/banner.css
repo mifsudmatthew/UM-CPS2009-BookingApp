@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:wght@400;700&display=swap');
+
+
+.background-container {
+  position: relative;
+  width: 100vw; 
+  height: 0;
+  padding-bottom: 56.05%; 
+  background-image: url('../assets/banner.jpg');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  }
+
+  
+  
+ .slogan-container {
+    color: white;
+  }
+  
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 7em;
+    font-weight: bold;
+    color:rgb(217 219 209);
+    margin: 0 0 0em 0; /* Adjust the margin as needed */
+    line-height: 100px;
+  }
+  
+  p {
+    font-family: 'DM Serif Display', serif;
+    color: rgb(213, 218, 201);
+    font-size: 4em; /* Adjust the size as needed */
+    margin: 0 0 1em 0; /* Adjust the margin as needed */
+  }
+
+  .textarea {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5em;
+    padding: 10px;
+    margin: 10px 0;
+    color: rgb(12, 51, 0);
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .login-button {
+    background-color: rgba(11, 48, 0, 1); /* Your desired button color */
+    color: rgb(222, 244, 209);
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 370x;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1.3em;
+    border-radius: 20px;
+    padding: 15px 60px;
+    scroll-padding-top: 100px;
+
+  }
+  
+  .login-button:hover {
+    background-color: rgba(7, 33, 0, 0.409); /* Darken button on hover for visual feedback */
+  }

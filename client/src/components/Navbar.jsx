@@ -4,6 +4,7 @@ import hamburger from '../assets/hamburger.png';
 import '../styles/navbar.css'
 import { useState } from 'react'
 
+
 const Navbar = () => {
   const [showNavbar, setShowNavbar] = useState(false)
 
@@ -12,6 +13,7 @@ const Navbar = () => {
   }
 
   return (
+    <>
     <nav className="navbar">
       <div className="container">
         <div className="navbar-logo">
@@ -38,6 +40,7 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
+    </>
   )
 }
 
