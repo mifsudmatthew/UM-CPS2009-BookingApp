@@ -75,5 +75,5 @@ async function sendPinByMail(res){
 }
 
 module.exports = {
-    sendPinByMail
+    accountPins , sendPinByMail
 };
