@@ -22,10 +22,10 @@ apiRouter.post("/booking", (req, res, next) => {
   res.json({ message: "Booking added" });
 });
 
-apiRouter.post("/login",async (req, res, next) => {
+apiRouter.post("/login", async (req, res, next) => {
   console.log("Login attempt");
-  console.log(req.body);
   console.log(await queries.validateLogin(req.body.email, req.body.password));
+  console.log(req.body);
   res.json({ token: "1234" });
 });
 
