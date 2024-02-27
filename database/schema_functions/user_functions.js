@@ -1,22 +1,5 @@
 const user_schema = require("../schemas/user_schema");
 
-
-/** ===================================== Utility Functions =============================
- * ------------ Removes Mongoose Generated Stuff
- * This should remove some of the more unwanted/ un-needed fields that mongodb
- * Removes the "_id" and "__v" properties from the given document object.
- */
-
-function removeIdAndV(document) {
-    // ---------------- Validation
-    if (document == null) { // Check if document is null or undefined
-        return null;
-    }
-
-    // ---------------- Cleaning
-    delete document._id; delete document.__v; return document;
-}
-
 /** ===================================== Retrieve User =================================
  * ------------ Retrieves a User given an email
  * Has validation for whether the query returns anything
@@ -26,7 +9,7 @@ function removeIdAndV(document) {
 async function retrieveUser(email_toSearch) {
     try {
         // -------------------- Run Query
-        const user_found = removeIdAndV( await user_schema.findOne({ email: email_toSearch }));
+        const user_found = await user_schema.findOne({ email: email_toSearch });
 
         // -------------------- Validation
         if (user_found == null) {
@@ -52,7 +35,7 @@ async function retrieveUser(email_toSearch) {
 async function registerUser({email_new, password_new, name_new}){
     try {
         // ----------------------- Check if email is in use
-        user_found = removeIdAndV( await user_schema.findOne({ email: email_new }));
+        user_found = await user_schema.findOne({ email: email_new });
         
         // ----------------------- validation of query
         if(user_found != null){ 
@@ -70,7 +53,7 @@ async function registerUser({email_new, password_new, name_new}){
                                             balance : 0 // default value
                                         });
         // Save the new user
-        return {result: true, data:removeIdAndV( await newUser.save()), error: null};
+        return {result: true, data:await newUser.save(), error: null};
 
     }catch (error_message) {
         return {result: false, data: null, error: error_message};
@@ -84,8 +67,8 @@ async function registerUser({email_new, password_new, name_new}){
  */
 async function validateLogin(email_toSearch, password_toSearch) {
     try {
-        const user_found = removeIdAndV(await user_schema.findOne({ email   : email_toSearch,
-                                                                    password: password_toSearch }));
+        const user_found = await user_schema.findOne({ email   : email_toSearch,
+                                                       password: password_toSearch });
         
         // --------------------- (Validation of Query) No user Found
         if (user_found == null) {
@@ -109,11 +92,10 @@ async function validateLogin(email_toSearch, password_toSearch) {
  */
 async function resetPassword(email_toSearch, password_toReset) {
     try {
-        const user_updated = removeIdAndV(await user_schema.findOneAndUpdate(
-                                                { email : email_toSearch },                 // Search by email
-                                                { $set  : { password: password_toReset } }, // Reset password
-                                                { new   : true }                            // Specify to return updated entry
-                                            ));
+        const user_updated = await user_schema.findOneAndUpdate({ email : email_toSearch },                 // Search by email
+                                                                { $set  : { password: password_toReset } }, // Reset password
+                                                                { new   : true }                            // Specify to return updated entry
+                                                               );
                                             
         // --------------------- No user Found (Cannot reset password)
         if (user_updated == null) {
@@ -138,10 +120,10 @@ async function resetPassword(email_toSearch, password_toReset) {
 async function updateUserBalance(email_toSearch, amount_toAdd) {
     try {
         // --------------------- Find User's Current Balance
-        const user_updated = removeIdAndV(await user_schema.findOneAndUpdate({ email : email_toSearch },            // Search by Email
-                                                                             { $inc  : { balance: amount_toAdd } }, // Increment value by amount
-                                                                             { new   : true }                       // Return updated
-                                                                            ));
+        const user_updated = await user_schema.findOneAndUpdate({ email : email_toSearch },            // Search by Email
+                                                                { $inc  : { balance: amount_toAdd } }, // Increment value by amount
+                                                                { new   : true }                       // Return updated
+                                                            );
 
         // --------------------- No user Found (Cannot update Balance)
         if (user_updated == null) {
