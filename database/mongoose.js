@@ -10,46 +10,57 @@ mongoose.set("strictQuery", true);
  */
 
 //--------------------------- Url Configuration
-const mongoUrl =
-  `mongodb+srv://` +
-  `${process.env.USER}` +
-  `:` +
-  `${process.env.PASSWORD}` +
-  `@production.vhjvw6m.mongodb.net/mainDB?retryWrites=true&w=majority`;
+const mongoose_Url =  `mongodb+srv://`             +
+                      `${process.env.USER}`        +  `:` +
+                      `${process.env.PASSWORD}`    +  `@` +
+                      `${process.env.CLUSTER}`     +  `/` +
+                      `${process.env.DATABASENAME}`;
 //--------------------------- Flags and Options Configuration
+const mongoose_Options = {
+                            retryWrites: true,
+                            w: 'majority'
+                          };
+/** ============================================ Connection Setup =================
+ * Connection Establishment
+ * Put into a funcgtion to be able to use await
+ */
+async function connectToDatabase() {
+  await mongoose.connect(mongoose_Url, mongoose_Options)
 
-//============================================ Connection Setup =================
-mongoose
-  .connect(mongoUrl)
+        //---------------------------- Successful Creation
+        .then(() => {
+          console.log("Mongoose Successfully Connected");
+        })
 
-  //---------------------------- Successful Creation
-  .then(() => {
-    console.log("Mongoose Successfully Connected");
-  })
-
-  //---------------------------- Error Handling
-  .catch((err) => {
-    if (err.name === "MongooseServerSelectionError") {
-      console.log("Mongoose Connection Error: Failed to connect to database");
-    } else {
-      console.log("Mongoose Connection Error:", err);
-    }
-  });
-
-//============================================ Connection Event Handlers ========
+        //---------------------------- Error Handling
+        .catch((err) => {
+          if (err.name === "MongooseServerSelectionError") {
+            console.log("Mongoose [Initialization] Error: Failed to connect to database");
+          } else {
+            console.log("Mongoose [Initialization]", err);
+          }
+        });
+}
+/**============================================ Connection Event Handlers ========
+ * Event Handlers
+ */
 
 //---------------------------- Disconnect Handling
 mongoose.connection.on("disconnected", () => {
-  console.log("Mongoose Disconnected: Lost connection to database");
+  console.log("Mongoose Disconnected [Callback]: Lost connection to database");
 });
 //---------------------------- Disconnect Handling
 mongoose.connection.on("close", () => {
-  console.log("Mongoose Connection Closed: Database connection closed");
+  console.log("Mongoose Connection Closed [Callback]: Database connection closed");
 });
 //---------------------------- Error Handling
 mongoose.connection.on("error", (err) => {
-  console.log("Mongoose Connection Error:", err);
+  console.log("Mongoose Connection [Callback]", err);
 });
 
-//============================================ Export ==============
+/**============================================ Export ==============
+ * Exportation of current Mongoose instance
+ */
+
+connectToDatabase();
 module.exports = mongoose;
