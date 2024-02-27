@@ -5,14 +5,11 @@
   position: relative;
   width: 100vw; 
   height: 0;
-  padding-bottom: 56.05%; 
+  padding-bottom: 47.18%; 
   background-image: url('../assets/banner.jpg');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
   }
 
   
@@ -21,13 +18,14 @@
     color: white;
   }
   
-  h1 {
+  h2 {
     font-family: 'DM Serif Display', serif;
-    font-size: 7em;
+    font-size: 120px;
     font-weight: bold;
     color:rgb(217 219 209);
     margin: 0 0 0em 0; /* Adjust the margin as needed */
     line-height: 100px;
+    padding-top: 200px;
   }
   
   p {
@@ -53,7 +51,7 @@
     color: rgb(222, 244, 209);
     border: none;
     font-family: 'Roboto', sans-serif;
-    font-weight: 370x;
+    font-weight: 370px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     font-size: 1.3em;
