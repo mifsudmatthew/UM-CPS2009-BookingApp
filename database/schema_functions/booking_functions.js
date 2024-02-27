@@ -8,10 +8,12 @@ const booking_schema = require("../schemas/booking_schema");
 
 function removeIdAndV(document) {
     // ---------------- Validation
-    if (!document == null ) {return null;}
+    if (document == null) { // Check if document is null or undefined
+        return null;
+    }
 
     // ---------------- Cleaning
-    const { _id, __v, ...cleanedDocument } = document; return cleanedDocument;
+    delete document._id; delete document.__v; return document;
 }
 
 /** ===================================== Query Future Bookings By Email =========================
@@ -139,7 +141,7 @@ async function addBooking(userID_toBook, courtID_toBook, date_toBook, time_toBoo
                                                     date: date_toBook,
                                                     time: time_toBook }));
 
-        if(courts_booked_at_date_time == null || courts_booked_at_date_time != []){
+        if(courts_booked_at_date_time != []){
             return { result: false, data: null, error: "Court is already booked at this time/date"};
         }
 
