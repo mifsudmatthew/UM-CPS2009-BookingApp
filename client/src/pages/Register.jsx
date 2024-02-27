@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+
 const Register = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -7,6 +9,7 @@ const Register = () => {
   const [emailMatch, setEmailMatch] = useState(true);
   const [passwordMatch, setPasswordMatch] = useState(true);
 
+  // Save registration details from form
   useEffect(() => {
     setEmailMatch(email === confirmEmail);
   }, [email, confirmEmail]);
@@ -14,6 +17,48 @@ const Register = () => {
   useEffect(() => {
     setPasswordMatch(password === confirmPassword);
   }, [password, confirmPassword]);
+
+  
+
+  // Send the registration details to the server
+  const handleSubmit = async (event) => {
+    // Check if the email and password fields are empty
+    if (!email || !password || !name) {
+      alert("Please fill in all fields.");
+      return;
+    }
+    // Check if the email is valid
+    if (!email.includes("@")) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+    event.preventDefault();
+    const data = {
+      email,
+      password,
+      name,
+    };
+    console.log("Data:", data);
+    try {
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        // Handle response
+        console.log("Success:", data);
+      } else {
+        // Handle errors
+        console.error("Error:", response);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <div className={"mainContainer"}>
@@ -27,6 +72,7 @@ const Register = () => {
           placeholder="name surname"
           className={"inputBox"}
           type="text"
+          onChange={(e) => setName(e.target.value)}
           required
         />
       </div>
@@ -86,7 +132,12 @@ const Register = () => {
       )}
       <br />
       <div className={"inputContainer"}>
-        <input className={"inputButton"} type="button" value={"Sign up"} />
+        <input 
+        className={"inputButton"} 
+        type="button" 
+        value={"Sign up"} 
+        onClick={handleSubmit}
+        />
       </div>
     </div>
   );
