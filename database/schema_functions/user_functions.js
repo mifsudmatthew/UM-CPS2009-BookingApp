@@ -10,9 +10,9 @@ const user_schema = require("../schemas/user_schema");
 function removeIdAndV(document) {
     // ---------------- Validation
     if (!document == null ) {return null;}
-
+    return document;
     // ---------------- Cleaning
-    const { _id, __v, ...cleanedDocument } = document; return cleanedDocument;
+    const { _id, __v, ...cleanedDocument } = document;
 }
 
 /** ===================================== Retrieve User =================================
@@ -50,10 +50,10 @@ async function retrieveUser(email_toSearch) {
 async function registerUser({email_new, password_new, name_new}){
     try {
         // ----------------------- Check if email is in use
-        user_found = removeIdAndV( await user_schema.findOne({ email: email_toSearch }));
+        user_found = removeIdAndV( await user_schema.findOne({ email: email_new }));
         
         // ----------------------- validation of query
-        if(user_found == null){ 
+        if(user_found != null){ 
             return { result: false,
                      data:null, 
                      error: "email already in use"
