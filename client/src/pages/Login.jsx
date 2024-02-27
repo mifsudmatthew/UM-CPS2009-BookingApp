@@ -1,57 +1,43 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
-function Login() {
+async function loginUser(data) {
+  return await fetch("/api/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+}
+
+function Login({ setToken }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // Save the email and password from the form
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
-  async function loginUser(data) {
-    const response = await fetch("/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    if (response.ok) {
-      return response.body.json();
-    } else {
-      console.log(`${response.status}: ${response.statusText}`);
-      return response;
-    }
-  }
-
   // Send the login details to the server
-  async function handleSubmit(event) {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     // Check if the email and password fields are empty
     if (!email || !password) {
       alert("Please fill in all fields.");
-      console.log("Email and password");
       return;
     }
     // Check if the email is valid
     if (!email.includes("@")) {
       alert("Please enter a valid email address.");
-      console.log("Valid email");
       return;
     }
-    event.preventDefault();
-    const data = {
-      email,
-      password,
-    };
-    console.log("Data:", data);
-    const token = await loginUser(data);
-  }
+
+    const token = await loginUser({ email, password });
+
+    if (token.ok) {
+      setToken(token);
+    } else {
+      console.log(`Error in login: Code ${token.status}: ${token.statusText}`);
+    }
+  };
 
   // Form to input login detils
   return (
@@ -66,7 +52,7 @@ function Login() {
           placeholder="name@example.com"
           className={"inputBox"}
           type="email"
-          onChange={handleEmailChange}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
       </div>
@@ -77,7 +63,7 @@ function Login() {
           placeholder="password"
           className={"inputBox"}
           type="password"
-          onChange={handlePasswordChange}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
         <Link to="/reset" className="forgot-password">
@@ -102,5 +88,9 @@ function Login() {
     </div>
   );
 }
+
+Login.propTypes = {
+  setToken: PropTypes.func.isRequired,
+};
 
 export default Login;
