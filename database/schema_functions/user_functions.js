@@ -76,6 +76,7 @@ async function registerUser({email_new, password_new, name_new}){
 }
 
 /** ===================================== Validate Login ================================================
+ * ------------ Validating login
  * Give it a username and password. It searches the database, if the username is foun
  * If a user is found then it returns the email name and balance.
  */
@@ -100,6 +101,7 @@ async function validateLogin(email_toSearch, password_toSearch) {
     }
 }
 /** ===================================== Reset Password ================================================
+ * ------------ Reset Password
  * Takes in an email and the new password and replaces it in the database
  * Should also return the user (email, name, balance) but not the password (security)
  */
@@ -127,6 +129,7 @@ async function resetPassword(email_toSearch, password_toReset) {
     }
 }
 /** =============================== Update User Balance ================================================
+ * ------------ Updating the user balance
  * Give an email and a quantity (+/-) by which to update the balance
  * Should also return the user (email, name, balance) but not the password (security)
  */
@@ -154,6 +157,7 @@ async function updateUserBalance(email_toSearch, amount_toAdd) {
     }
 }
 /**===================================== Delete User =====================================================
+ * ------------ Deliting a user
  * Should delete a user relating to the given email
  * returns true or false
  */
@@ -171,6 +175,7 @@ async function deleteUser(email_toSearch) {
 
 
 /** ===================================== Exporting ======================================================
+ * ------------ Exportation of functions
  * Export the functions
  * Can rename them
  */

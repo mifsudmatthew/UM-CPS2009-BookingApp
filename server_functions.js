@@ -35,7 +35,7 @@ function addPinEntry(email, pin) { // Parameters taken are the user email and th
 async function sendPinByMail(res){
 
 
-    var app_email = "sheila.flatley@ethereal.email"; // Address of account sending emails.
+    var app_email = "no.reply.servespot@gmail.com"; // Address of account requesting pin
     var generated_pin = getRandomPin(); // Generating a new pin
 
     // Variable storing all email details.
@@ -52,7 +52,7 @@ async function sendPinByMail(res){
         // Creating a transporter with the details of the mail service being used.
         const transporter = nodeMailer.createTransport({
             host: process.env.MAIL_HOST, // Host is set to be changed from .env file
-            port: 587,
+            port: 465,
             auth: {
                 user: process.env.MAIL_USER, // Username is set to be changed from .env file
                 pass: process.env.MAIL_PASS // Password is set to be changed from .env file

@@ -33,7 +33,7 @@ app.route("/api/login").post((req, res) => {
 });
 
 app.route("/api/register").post((req, res) => {
-  console.log("Register attempt");
+  console.log("Register attempt" + res);
 });
 
 // All other GET requests not handled before will return our React app
