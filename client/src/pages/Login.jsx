@@ -16,15 +16,15 @@ const Login = () => {
 
   // Send the login details to the server
   const handleSubmit = async (event) => {
-    // Check if the email is valid
-    if (!email.includes('@')) {
-      alert('Please enter a valid email address.');
-      return; 
-    }
     // Check if the email and password fields are empty
     if (!email || !password) {
       alert('Please fill in all fields.');
       return;
+    }
+    // Check if the email is valid
+    if (!email.includes('@')) {
+      alert('Please enter a valid email address.');
+      return; 
     }
     event.preventDefault();
     const data = {
