@@ -2,12 +2,14 @@
  * Main react page */
 
 /* React imports */
-import { Routes, Route } from "react-router-dom";
+import {Routes, Route  } from 'react-router-dom'
+
 /* CSS */
-import "./styles/App.css";
+import './styles/app.css'
+
 /* Components */
-import Header from "./components/Header";
-import Navbar from "./components/Navbar";
+import Navbar from './components/Navbar'
+
 /* Pages */
 import Home from "./pages/Home";
 import Booking from "./pages/Booking";
@@ -17,17 +19,23 @@ import Reset from "./pages/Reset";
 import Profile from "./pages/Profile";
 import Topup from "./pages/Topup";
 import ChangePW from "./pages/ChangePW";
+/* Hooks */
+import useToken from "./hooks/useToken";
+
+
 
 // Main react app
 function App() {
+  const { token, setToken } = useToken();
+  console.log(token);
+
   return (
     <>
-      <Header />
       <Navbar />
       <Routes>
         <Route path="/" exact element={<Home />}></Route>
         <Route path="/booking" element={<Booking />}></Route>
-        <Route path="/login" element={<Login />}></Route>
+        <Route path="/login" element={<Login setToken={setToken} />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/reset" element={<Reset />}></Route>
         <Route path="/profile" exact element={<Profile />}></Route>
