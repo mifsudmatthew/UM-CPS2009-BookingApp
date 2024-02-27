@@ -1,30 +1,30 @@
-import { Link } from "react-router-dom";
+import { NavLink } from 'react-router-dom'
+import logo from '../assets/racket.png';
+import '../styles/navbar.css'
 
-function Navbar() {
+const Navbar = () => {
   return (
-    <>
-      <ul>
-        <li>
-          <Link to="/booking">Booking</Link>
-        </li>
-        <li>
-          <Link to="/profile">Profile</Link>
-        </li>
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
-        <li>
-          <Link to="/register">Register</Link>
-        </li>
-        <li>
-          <Link to="/profile/topup">Topup</Link>
-        </li>
-        <li>
-          <Link to="/profile/changepassword">Change Password</Link>
-        </li>
-      </ul>
-    </>
-  );
+    <nav className="navbar">
+      <div className="container">
+      <div className="navbar-logo">
+        <img src={logo} alt="logo" />
+      </div>
+        <div className="nav-elements">
+          <ul>
+            <li>
+             <NavLink to="/">Home</NavLink>
+            </li>
+            <li>
+              <NavLink to="/login">Login</NavLink>
+            </li>
+            <li>
+              <NavLink to="/register">Register</NavLink>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  )
 }
 
-export default Navbar;
+export default Navbar
