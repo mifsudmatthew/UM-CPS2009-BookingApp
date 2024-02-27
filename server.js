@@ -28,59 +28,60 @@ app.route("/api/booking").post((req, res) => {
 });
 
 app.route("/api/login").post((req, res) => {
-    console.log("Login attempt");
+  console.log("Login attempt");
+  console.log(req.body);
+  res.json({ token: "1234" });
 });
 
 app.route("/api/register").post(async (req, res) => {
     console.log(await queries.registerUser({email_new: req.body.email, password_new: req.body.password, name_new: req.body.name}));
 });
 
-
 // All other GET requests not handled before will return our React app
 
 app.route("/").get((req, res, next) => {
-    console.log("Connected to home page");
-    next();
+  console.log("Connected to home page");
+  next();
 });
 
 app.route("/booking").get((req, res, next) => {
-    console.log("Connected to booking page");
-    next();
+  console.log("Connected to booking page");
+  next();
 });
 
 app.route("/profile").get((req, res, next) => {
-    console.log("Connected to account page");
-    next();
+  console.log("Connected to account page");
+  next();
 });
 
 app.route("/profile/topup").get((req, res, next) => {
-    console.log("Connected to topup page");
-    next();
+  console.log("Connected to topup page");
+  next();
 });
 
 app.route("/profile/changepassword").get((req, res, next) => {
-    console.log("Connected to change password page");
-    next();
+  console.log("Connected to change password page");
+  next();
 });
 
 app.route("/reset").get((req, res, next) => {
-    console.log("Connected to reset page");
-    next();
+  console.log("Connected to reset page");
+  next();
 });
 
 app.route("/api/reset").get((req, res) => {
-    console.log("Connected to reset page");
-    serverFunctions.sendPinByMail(res);
+  console.log("Connected to reset page");
+  serverFunctions.sendPinByMail(res);
 });
 
 app.route("/register").get((req, res, next) => {
-    console.log("Connected to register page");
-    next();
+  console.log("Connected to register page");
+  next();
 });
 
 app.route("/login").get((req, res, next) => {
-    console.log("Connected to login page");
-    next();
+  console.log("Connected to login page");
+  next();
 });
 
 app.route("*").get((req, res) => {
