@@ -21,6 +21,25 @@ export default function Reset() {
     console.log("Data:", data);
     try {
       const response = await fetch("/api/reset", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        // Handle response
+        console.log("Success:", data);
+      } else {
+        // Handle errors
+        console.error("Error:", response);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    try {
+      const response = await fetch("/api/reset", {
         method: "GET"
       });
 
