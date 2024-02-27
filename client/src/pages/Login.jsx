@@ -1,30 +1,48 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-const Login = () => {
+function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   // Save the email and password from the form
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
-  }
+  };
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
+  };
+
+  async function loginUser(data) {
+    const response = await fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    if (response.ok) {
+      return response.body.json();
+    } else {
+      console.log(`${response.status}: ${response.statusText}`);
+      return response;
+    }
   }
 
   // Send the login details to the server
-  const handleSubmit = async (event) => {
+  async function handleSubmit(event) {
     // Check if the email and password fields are empty
     if (!email || !password) {
-      alert('Please fill in all fields.');
+      alert("Please fill in all fields.");
+      console.log("Email and password");
       return;
     }
     // Check if the email is valid
-    if (!email.includes('@')) {
-      alert('Please enter a valid email address.');
-      return; 
+    if (!email.includes("@")) {
+      alert("Please enter a valid email address.");
+      console.log("Valid email");
+      return;
     }
     event.preventDefault();
     const data = {
@@ -32,27 +50,8 @@ const Login = () => {
       password,
     };
     console.log("Data:", data);
-    try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        // Handle response 
-        console.log("Success:", data);
-      } else {
-        // Handle errors 
-        console.error("Error:", response);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    const token = await loginUser(data);
   }
-
 
   // Form to input login detils
   return (
@@ -66,7 +65,7 @@ const Login = () => {
         <input
           placeholder="name@example.com"
           className={"inputBox"}
-          type='email'
+          type="email"
           onChange={handleEmailChange}
           required
         />
@@ -81,16 +80,17 @@ const Login = () => {
           onChange={handlePasswordChange}
           required
         />
-        <a href="/reset" className="forgot-password">
+        <Link to="/reset" className="forgot-password">
           Forgot password?
-        </a>
+        </Link>
       </div>
       <br />
       <div className={"inputContainer"}>
-        <input className={"inputButton"} 
-        type="button" 
-        value={"Log in"} 
-        onClick={handleSubmit}
+        <input
+          className={"inputButton"}
+          type="button"
+          value={"Log in"}
+          onClick={handleSubmit}
         />
       </div>
       <div className="signup">
@@ -101,6 +101,6 @@ const Login = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Login;
