@@ -1,5 +1,4 @@
-const user_schema = require("../schemas/user_schema");
-
+const courts_schema = require("../schemas/courts_schema");
 
 /** ===================================== Utility Functions =============================
  * ------------ Removes Mongoose Generated Stuff
@@ -52,7 +51,7 @@ async function retrieveUser(email_toSearch) {
 async function registerUser({email_new, password_new, name_new}){
     try {
         // ----------------------- Check if email is in use
-        user_found = removeIdAndV( await user_schema.findOne({ email: email_new }));
+        user_found = removeIdAndV( await user_schema.findOne({ email: email_toSearch }));
         
         // ----------------------- validation of query
         if(user_found != null){ 
