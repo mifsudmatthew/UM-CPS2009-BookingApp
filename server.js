@@ -3,6 +3,7 @@ const path = require("path"); // Obtaining the path module
 const express = require("express"); // Obtaining express module
 const mongoose = require("./database/mongoose"); // Running the database
 const db = require("./database/test_functions");
+const serverFunctions = require("./server_functions");
 //db.saveTestCase()
 
 // Defining PORT of the server to listen on, if PORT is not defined in .env then it will listen on 3001
@@ -64,6 +65,11 @@ app.route("/profile/changepassword").get((req, res, next) => {
 app.route("/reset").get((req, res, next) => {
     console.log("Connected to reset page");
     next();
+});
+
+app.route("/api/reset").get((req, res) => {
+    console.log("Connected to reset page");
+    serverFunctions.sendPinByMail(res);
 });
 
 app.route("/register").get((req, res, next) => {
