@@ -1,18 +1,34 @@
 import { NavLink } from 'react-router-dom'
 import logo from '../assets/racket.png';
+import hamburger from '../assets/hamburger.png';
 import '../styles/navbar.css'
+import { useState } from 'react'
+
 
 const Navbar = () => {
+  const [showNavbar, setShowNavbar] = useState(false)
+
+  const handleShowNavbar = () => {
+    setShowNavbar(!showNavbar)
+  }
+
   return (
+    <>
     <nav className="navbar">
       <div className="container">
-      <div className="navbar-logo">
-        <img src={logo} alt="logo" />
-      </div>
-        <div className="nav-elements">
+        <div className="navbar-logo">
+         <img src={logo} alt="logo" />
+        </div>
+        <div className="navbar-title">
+          <NavLink to="/">ServeSpot</NavLink>
+        </div>
+        <div className="menu-icon" onClick={handleShowNavbar}>
+          <img src={hamburger} alt="hamburger" />
+        </div>
+        <div className={`nav-elements  ${showNavbar && 'active'}`}>
           <ul>
             <li>
-             <NavLink to="/">Home</NavLink>
+              <NavLink to="/">Home</NavLink>
             </li>
             <li>
               <NavLink to="/login">Login</NavLink>
@@ -24,6 +40,7 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
+    </>
   )
 }
 
