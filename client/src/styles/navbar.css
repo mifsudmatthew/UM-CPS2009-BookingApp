@@ -60,9 +60,11 @@
     top: 60px;
     background-color: #cde2be;
     width: 0px;
-    height: calc(100vh - 60px);
+    height: 100vh;
     transition: all 0.3s ease-in;
     overflow: hidden;
+    z-index: 1000;
+    border-radius: 30px;
 }
 
 .nav-elements.active {
