@@ -1,21 +1,4 @@
 const booking_schema = require("../schemas/booking_schema");
-
-/** ===================================== Utility Functions =============================
- * ------------ Removes Mongoose Generated Stuff
- * This should remove some of the more unwanted/ un-needed fields that mongodb
- * Removes the "_id" and "__v" properties from the given document object.
- */
-
-function removeIdAndV(document) {
-    // ---------------- Validation
-    if (document == null) { // Check if document is null or undefined
-        return null;
-    }
-
-    // ---------------- Cleaning
-    delete document._id; delete document.__v; return document;
-}
-
 /** ===================================== Query Future Bookings By Email =========================
  * ------------ Recieving all future bookings By Email
  * Takes an email 
@@ -29,12 +12,11 @@ async function getFutureBookings_Email(userID_toSearch) {
         const currentTime = currentDate.getTime();
 
         // ---------------- Query Bookings from current date/time
-        const bookings = removeIdAndV( await booking_schema.find({
-                                        userID  : userID_toSearch,
-                                        date    : { $gt : currentDate }, // Return all bookings of dates greater then current date
-                                        $or     : { date: currentDate,  // Return all bookings of current date but future time
-                                                    time: { $gte: currentTime } } 
-                                    }));
+        const bookings =  await booking_schema.find({   userID  : userID_toSearch,
+                                                        date    : { $gt : currentDate }, // Return all bookings of dates greater then current date
+                                                        $or     : { date: currentDate,  // Return all bookings of current date but future time
+                                                                    time: { $gte: currentTime } } 
+                                                    });
         
         // ---------------- Validation of Query
         if(bookings == [] || bookings == null){ 
@@ -61,12 +43,11 @@ async function getFutureBookings_Courts(courtID_toSearch) {
         const currentTime = currentDate.getTime();
 
         // ---------------- Query Bookings from current date/time
-        const bookings = removeIdAndV( await booking_schema.find({
-                                        courtID : courtID_toSearch,
-                                        date    : { $gt : currentDate }, // Return all bookings of dates greater then current date
-                                        $or     : { date: currentDate,  // Return all bookings of current date but future time
-                                                    time: { $gte: currentTime } } 
-                                    }));
+        const bookings =  await booking_schema.find({courtID : courtID_toSearch,
+                                                    date    : { $gt : currentDate }, // Return all bookings of dates greater then current date
+                                                    $or     : { date: currentDate,  // Return all bookings of current date but future time
+                                                                time: { $gte: currentTime } } 
+                                                    });
         
         // ---------------- Validation of Query
         if(bookings == [] || bookings == null){ 
@@ -93,13 +74,12 @@ async function getFutureBookings_EmailCourt(userID_toSearch, courtID_toSearch) {
         const currentTime = currentDate.getTime();
 
         // Find bookings with userEmail from the current date and time onwards
-        const bookings = removeIdAndV( await booking_schema.find({
-                                        userID: userID_toSearch,
-                                        courtID: courtID_toSearch,
-                                        date    : { $gt : currentDate }, // Return all bookings of dates greater then current date
-                                        $or     : { date: currentDate,  // Return all bookings of current date but future time
-                                                    time: { $gte: currentTime } }
-                                    }));
+        const bookings =  await booking_schema.find({   userID: userID_toSearch,
+                                                        courtID: courtID_toSearch,
+                                                        date    : { $gt : currentDate }, // Return all bookings of dates greater then current date
+                                                        $or     : { date: currentDate,  // Return all bookings of current date but future time
+                                                                    time: { $gte: currentTime } }
+                                                    });
         
         // ---------------- Validation of Query
         if(bookings == [] || bookings == null){ 
@@ -136,10 +116,10 @@ async function addBooking(userID_toBook, courtID_toBook, date_toBook, time_toBoo
         
         
         // --------------------- Check if court has not already been booked at the date and time specified
-        courts_booked_at_date_time = removeIdAndV( await booking_schema.find({
-                                                    courtID: courtID_toBook,
-                                                    date: date_toBook,
-                                                    time: time_toBook }));
+        courts_booked_at_date_time =  await booking_schema.find({   courtID: courtID_toBook,
+                                                                    date: date_toBook,
+                                                                    time: time_toBook 
+                                                                });
 
         if(courts_booked_at_date_time != []){
             return { result: false, data: null, error: "Court is already booked at this time/date"};
@@ -154,7 +134,7 @@ async function addBooking(userID_toBook, courtID_toBook, date_toBook, time_toBoo
 
         
         // --------------------- Save and return
-        return {result: true, data:removeIdAndV( await newBooking.save()), error: null};
+        return {result: true, data: await newBooking.save(), error: null};
 
     }catch (error_message) {
         return {result: false, data: null, error: error_message};
@@ -167,11 +147,11 @@ async function addBooking(userID_toBook, courtID_toBook, date_toBook, time_toBoo
  */
 async function removeBooking(userID_toBook, courtID_toBook, date_toBook, time_toBook) {
     try {
-        await booking_schema.findOneAndDelete({  date: date_toBook,
-                                            time: time_toBook, 
-                                            userID: userID_toBook,
-                                            courtID: courtID_toBook 
-                                            });
+        await booking_schema.findOneAndDelete({ date: date_toBook,
+                                                time: time_toBook, 
+                                                userID: userID_toBook,
+                                                courtID: courtID_toBook 
+                                              });
 
         // --------------------- Deletion Successfull
         return {result: true, data: null, error: null };
