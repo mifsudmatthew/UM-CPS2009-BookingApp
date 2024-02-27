@@ -1,10 +1,14 @@
+/* App.jsx
+ * Main react page */
+
+/* React imports */
 import { Routes, Route } from "react-router-dom";
-
+/* CSS */
 import "./styles/App.css";
-
+/* Components */
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
-
+/* Pages */
 import Home from "./pages/Home";
 import Booking from "./pages/Booking";
 import Login from "./pages/Login";
@@ -14,6 +18,7 @@ import Profile from "./pages/Profile";
 import Topup from "./pages/Topup";
 import ChangePW from "./pages/ChangePW";
 
+// Main react app
 function App() {
   return (
     <>
