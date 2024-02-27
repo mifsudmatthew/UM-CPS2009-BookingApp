@@ -4,8 +4,8 @@ const mongoose = require("mongoose"); // Obtaining the mongoose module
 // in the schema, an error is thrown
 mongoose.set("strictQuery", true);
 
-//============================================ Port Setup =================
-/* This makes use of the .env file to get the mongodb
+/** ============================================ Port Setup =======================
+ * This makes use of the .env file to get the mongodb
  * links and information
  */
 

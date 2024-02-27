@@ -1,54 +1,71 @@
 const user_schema = require("../schemas/user_schema");
 
 
-//===================================== Utility Functions ================================================
-
-/** ------------ Removes Mongoose Generated Stuff
+/** ===================================== Utility Functions =============================
+ * ------------ Removes Mongoose Generated Stuff
+ * This should remove some of the more unwanted/ un-needed fields that mongodb
+ * Removes the "_id" and "__v" properties from the given document object.
  */
+
 function removeIdAndV(document) {
-    const { _id, __v, ...cleanedDocument } = document;
-    return cleanedDocument;
+    // ---------------- Validation
+    if (!document == null ) {return null;}
+
+    // ---------------- Cleaning
+    const { _id, __v, ...cleanedDocument } = document; return cleanedDocument;
 }
 
-/** ================================= Retrieves the User
+/** ===================================== Retrieve User =================================
+ * ------------ Retrieves a User given an email
+ * Has validation for whether the query returns anything
+ * It makes use of the findOne hence it will return an object and not an array
  */
+
 async function retrieveUser(email_toSearch) {
     try {
+        // -------------------- Run Query
         const user_found = removeIdAndV( await user_schema.findOne({ email: email_toSearch }));
 
-        if (!user_found) {
-            return { result: false, data: {}, error: "No user found that matches the email: " + email_toSearch };
+        // -------------------- Validation
+        if (user_found == null) {
+            return { result : false,
+                     data   : null,
+                     error  : "No user found that matches the email: " + email_toSearch
+                   };
         }
         
+        // -------------------- Succesfully returnig the found user
         return { result: true, data: user_found, error: null };
 
     } catch (error_message) {
-        console.error("Error retrieving users:", error_message);
         return {result: false, data: null, error: error_message};
     }
 }
 
-//===================================== Saving User ================================================
-/**
- * @param {{String, String, String}}
- * @returns Document
+/** ===================================== Register User =================================
+ * ------------ Registers a new user
+ * Has validation for whether the query returns anything
+ * It makes use of the findOne hence it will return an object and not an array list 
  */
-async function register({email_new, password_new,  name_new}){
+async function registerUser({email_new, password_new, name_new}){
     try {
-
         // ----------------------- Check if email is in use
         user_found = removeIdAndV( await user_schema.findOne({ email: email_toSearch }));
         
-        if(!user_found){ // Error email found
-            return {result: false, data:null, error: "email already in use"};
+        // ----------------------- validation of query
+        if(user_found == null){ 
+            return { result: false,
+                     data:null, 
+                     error: "email already in use"
+                    };
         }
 
         //-------------------------- Email is not in use
-        // Construct a new user document based on the schema
-        const newUser = new user_schema({   email: email_new,
+        // Construct Schema
+        const newUser = new user_schema({   email   : email_new,
                                             password: password_new, 
-                                            name: name_new,
-                                            balance:0 
+                                            name    : name_new,
+                                            balance : 0 // default value
                                         });
         // Save the new user
         return {result: true, data:removeIdAndV( await newUser.save()), error: null};
@@ -57,89 +74,111 @@ async function register({email_new, password_new,  name_new}){
         return {result: false, data: null, error: error_message};
     }
 }
-//===================================== Validate Login ================================================
 
+/** ===================================== Validate Login ================================================
+ * Give it a username and password. It searches the database, if the username is foun
+ * If a user is found then it returns the email name and balance.
+ */
 async function validateLogin(email_toSearch, password_toSearch) {
     try {
-        const user_found = removeIdAndV(await user_schema.findOne({ email: email_toSearch,
+        const user_found = removeIdAndV(await user_schema.findOne({ email   : email_toSearch,
                                                                     password: password_toSearch }));
         
-        // --------------------- No user Found
-        if (!user_found) {
+        // --------------------- (Validation of Query) No user Found
+        if (user_found == null) {
             return { result: false, data: null, error: "No user found that matches the email: " + email_toSearch };
         }
         
-        // --------------------- User Found
-        return { result: true, data:{ user:{    email: user_found.email,
-                                                name: user_found.name,
-                                                balance: user_found.balance
-                                            }
+        // --------------------- User Found (returning stuff)
+        return { result: true, data:{   email   : user_found.email,
+                                        name    : user_found.name,
+                                        balance : user_found.balance
                                     }, error: null };
 
     } catch (error_message) {
         return {result: false, data: null, error: error_message};
     }
 }
-//===================================== Reset Password ================================================
+/** ===================================== Reset Password ================================================
+ * Takes in an email and the new password and replaces it in the database
+ * Should also return the user (email, name, balance) but not the password (security)
+ */
 async function resetPassword(email_toSearch, password_toReset) {
     try {
-        const user_found = removeIdAndV(await user_schema.findOne({ email: email_toSearch }));
-        
-        // --------------------- No user Found
-        if (!user_found) {
+        const user_updated = removeIdAndV(await user_schema.findOneAndUpdate(
+                                                { email : email_toSearch },                 // Search by email
+                                                { $set  : { password: password_toReset } }, // Reset password
+                                                { new   : true }                            // Specify to return updated entry
+                                            ));
+                                            
+        // --------------------- No user Found (Cannot reset password)
+        if (user_updated == null) {
             return { result: false, data: null, error: "No user found that matches the email: " + email_toSearch };
         }
         
-        // --------------------- User Found
-        const updatedUser = await user_schema.findOneAndUpdate(
-            { email },
-            { $set: { password: password_toReset } },
-            { new: true }
-        );
-        return {result: true, data: updatedUser, error: null };
+        // --------------------- User Found (returning stuff)
+        return {result: true, data:{    email   : user_updated.email,
+                                        name    : user_updated.name,
+                                        balance : user_updated.balance
+                                    }, error: null };
 
     } catch (error_message) {
         return {result: false, data: null, error: error_message};
     }
 }
-//=============================== Update User Balance ================================================
+/** =============================== Update User Balance ================================================
+ * Give an email and a quantity (+/-) by which to update the balance
+ * Should also return the user (email, name, balance) but not the password (security)
+ */
 async function updateUserBalance(email_toSearch, amount_toAdd) {
     try {
-        const user_found = removeIdAndV(await user_schema.findOne({ email: email_toSearch }));
-        
-        if (!user_found) {
+        // --------------------- Find User's Current Balance
+        const user_updated = removeIdAndV(await user_schema.findOneAndUpdate({ email : email_toSearch },            // Search by Email
+                                                                             { $inc  : { balance: amount_toAdd } }, // Increment value by amount
+                                                                             { new   : true }                       // Return updated
+                                                                            ));
+
+        // --------------------- No user Found (Cannot update Balance)
+        if (user_updated == null) {
             return {result: false, data: null, error: "No user found that matches the email: " + email_toSearch };
         }
-        
-        // Calculate the new balance by adding the input amount to the current balance
-        const newBalance = user_found.balance + amount_toAdd;
 
-        // Update the user's balance using the $set operator to set the new balance
-        const updatedUser = await user_schema.findOneAndUpdate(
-            { email },
-            { $set: { balance: newBalance } },
-            { new: true }
-        );
-        
-        return {result: true, data: updatedUser, error: null };
+        // --------------------- User Found (returning stuff)
+        return {result: true, data:{    email   : user_updated.email,
+                                        name    : user_updated.name,
+                                        balance : user_updated.balance
+                                    }, error: null };
 
     } catch (error_message) {
         return {result: false, data: null, error: error_message };
     }
 }
-//===================================== Update User Balance ================================================
+/**===================================== Delete User =====================================================
+ * Should delete a user relating to the given email
+ * returns true or false
+ */
 async function deleteUser(email_toSearch) {
     try {
-        await UserModal.findOneAndDelete({ email_toSearch });
+        // --------------------- Deleting
+        await UserModal.findOneAndDelete({ email: email_toSearch });
+
+        // --------------------- Returning stuff
         return {result: true, data: null, error: null };
     } catch (error) {
         return {result: false, data: null, error: error_message };
     }
 }
 
+
+/** ===================================== Exporting ======================================================
+ * Export the functions
+ * Can rename them
+ */
+
+
 module.exports = {
     retrieveUser        : retrieveUser,
-    register            : register,
+    registerUser        : registerUser,
     validateLogin       : validateLogin,
     resetPassword       : resetPassword,
     updateUserBalance   : updateUserBalance,
