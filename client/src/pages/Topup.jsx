@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
-
-export default function Topup() {
+function Topup() {
   return (
     <>
       <h1>Top up</h1>
     </>
   );
 }
+
+export default Topup;

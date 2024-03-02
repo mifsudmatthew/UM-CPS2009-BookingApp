@@ -38,11 +38,6 @@ export default function Reset() {
   const handleChange = async (event) => {
     event.preventDefault();
 
-    if (pin.length !== 4) {
-      setPinValid(false);
-      return;
-    }
-
     const data = {
       email,
       password,

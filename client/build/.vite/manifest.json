@@ -1,18 +1,18 @@
 {
   "index.html": {
-    "file": "assets/index-dL1gOH8X.js",
+    "file": "assets/index-9NewbiVT.js",
     "src": "index.html",
     "isEntry": true,
     "css": [
-      "assets/index-BTIkbDZk.css"
+      "assets/index-BVxHvDyF.css"
     ],
     "assets": [
       "assets/racket-Dl6xEiXo.png",
-      "assets/banner-BUTIKkuZ.jpg"
+      "assets/banner-D_O1PRSu.jpg"
     ]
   },
   "src/assets/banner.jpg": {
-    "file": "assets/banner-BUTIKkuZ.jpg",
+    "file": "assets/banner-D_O1PRSu.jpg",
     "src": "src/assets/banner.jpg"
   },
   "src/assets/racket.png": {
