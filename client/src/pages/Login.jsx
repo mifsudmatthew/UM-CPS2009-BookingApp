@@ -1,18 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 
-async function loginUser(data) {
-  return await fetch("/api/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-}
+import { Post } from "../utils/ApiFunctions";
 
-function Login({ setToken }) {
+function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -30,12 +21,12 @@ function Login({ setToken }) {
       return;
     }
 
-    const token = await loginUser({ email, password });
+    try {
+      const token = await Post("/api/login", { email, password });
 
-    if (token.ok) {
-      setToken(token);
-    } else {
-      console.log(`Error in login: Code ${token.status}: ${token.statusText}`);
+      console.log(token);
+    } catch (error) {
+      console.error(`Error in ${error}`);
     }
   };
 
@@ -88,9 +79,5 @@ function Login({ setToken }) {
     </div>
   );
 }
-
-Login.propTypes = {
-  setToken: PropTypes.func.isRequired,
-};
 
 export default Login;

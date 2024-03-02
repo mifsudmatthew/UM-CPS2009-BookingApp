@@ -1,81 +1,81 @@
 import { useState } from "react";
 
+import { Post } from "../utils/ApiFunctions";
+
 function BookingForm() {
   const [count, setCount] = useState(0);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [date, setDate] = useState("");
 
-  const incrementCount = () => {
+  if (count < 0) {
+    setCount(0);
+  }
+
+  const incCount = () => {
     setCount((prevCount) => prevCount + 1);
   };
 
-  const decrementCount = () => {
-    if (count === 0) {
-      return;
-    }
+  const decCount = () => {
     setCount((prevCount) => prevCount - 1);
-  };
-
-  const handleNameChange = (event) => {
-    setName(event.target.value);
-  };
-
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handleDateChange = (event) => {
-    setDate(event.target.value);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     const data = {
       name,
       email,
       date,
       numberOfPlayers: count,
     };
-    console.log("Data:", data);
-    try {
-      const response = await fetch("/api/booking", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
 
-      if (response.ok) {
-        // Handle response here
-        console.log("Success:", data);
-      } else {
-        // Handle errors here
-        console.error("Error:", response);
-      }
+    console.log("Data:", data);
+
+    try {
+      const response = await Post("/api/booking", data);
+
+      console.log("Success:", response);
     } catch (error) {
-      console.error("Error:", error);
+      console.error(error);
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div className="userInfo">
-        Enter your name: <input type="text" onChange={handleNameChange} />
+        <label>Enter your name:</label>
+        <input
+          type="text"
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
+        />
       </div>
       <div className="userInfo">
-        Enter your email: <input type="email" onChange={handleEmailChange} />
+        <label>Enter your email:</label>
+        <input
+          type="email"
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+        />
       </div>
       <div className="userInfo">
-        Enter your date: <input type="date" onChange={handleDateChange} />
+        <label>Enter your date:</label>
+        <input
+          type="date"
+          onChange={(e) => {
+            setDate(e.target.value);
+          }}
+        />
       </div>
       <div className="card">
         Number of players: {count}
-        <button type="button" onClick={incrementCount}>
+        <button type="button" onClick={incCount}>
           +
         </button>
-        <button type="button" onClick={decrementCount}>
+        <button type="button" onClick={decCount}>
           -
         </button>
         <div>
