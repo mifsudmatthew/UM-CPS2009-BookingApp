@@ -6,7 +6,12 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
+      injectRegister: "auto",
       registerType: "prompt",
+      workbox: {
+        sourcemap: true,
+        globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
+      },
       devOptions: {
         enabled: true,
       },
@@ -40,5 +45,5 @@ export default defineConfig({
       },
     }),
   ],
-  build: { manifest: true, outDir: "build/" },
+  build: { manifest: true },
 });

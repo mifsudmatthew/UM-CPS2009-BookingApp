@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 3001;
 // Creating an ExpressJS application, by calling the variable express as a function.
 const app = express();
 // Have Node serve static files located in the client/build directory when a matching route is requested
-app.use(express.static(path.resolve(__dirname, "client/build")));
+app.use(express.static(path.resolve(__dirname, "client/dist")));
 // Parsing incoming JSON requests and placing parsed data in req.body
 app.use(express.json());
 
@@ -30,6 +30,6 @@ app.listen(PORT, () => {
 app.use("/api", apiRouter);
 
 // All other routes lead to static index.html
-app.route("*").get((req, res) => {
-  res.sendFile(path.resolve(__dirname, "client/build", "index.html"));
+app.route("*").get((_req, res) => {
+  res.sendFile(path.resolve(__dirname, "client/dist", "index.html"));
 });
