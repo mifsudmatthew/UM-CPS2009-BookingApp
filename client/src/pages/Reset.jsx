@@ -1,52 +1,43 @@
-import React, { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
+
+import { Post } from "../utils/ApiFunctions";
 
 export default function Reset() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [pin, setPin] = useState("");
-  const [passwordMatch, setPasswordMatch] = useState(true);
-  const [pinValid, setPinValid] = useState(true);
 
-  useEffect(() => {
-    setPasswordMatch(password === confirmPassword);
+  const passwordMatch = useMemo(() => {
+    return password === confirmPassword;
   }, [password, confirmPassword]);
+
+  const pinValid = useMemo(() => {
+    return pin.length == 4;
+  }, [pin]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (pin.length !== 4) {
-      setPinValid(false);
-      return;
-    }
 
     const data = {
       email,
       password,
-      pin
+      pin,
     };
 
     console.log("Data:", data);
     try {
-      const response = await fetch("/api/reset", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      });
+      const response = await Post("/api/reset", data);
 
-      if (response.ok) {
-        console.log("Success:", data);
-      } else {
-        console.error("Error:", response);
-      }
+      console.log("Success:", response);
     } catch (error) {
-      console.error("Error:", error);
+      console.error(error);
     }
   };
 
   const handleChange = async (event) => {
     event.preventDefault();
+
     if (pin.length !== 4) {
       setPinValid(false);
       return;
@@ -55,26 +46,16 @@ export default function Reset() {
     const data = {
       email,
       password,
-      pin
+      pin,
     };
 
     console.log("Data:", data);
     try {
-      const response = await fetch("/api/changepassword", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      });
+      const response = await Post("/api/changepassword", data);
 
-      if (response.ok) {
-        console.log("Success:", data);
-      } else {
-        console.error("Error:", response);
-      }
+      console.log("Success:", response);
     } catch (error) {
-      console.error("Error:", error);
+      console.error(error);
     }
   };
 
@@ -117,19 +98,20 @@ export default function Reset() {
             onChange={(event) => {
               const inputPin = event.target.value.replace(/\D/, ""); // Remove non-digit characters
               setPin(inputPin);
-              if (inputPin.length === 4) {
-                setPinValid(true);
-              }
             }}
           />
         </div>
-        {!pinValid && (
+        {pinValid ? (
+          <></>
+        ) : (
           <div style={{ color: "rgba(186, 26, 26, 1)" }}>
             PIN must be 4 digits.
           </div>
         )}
         <br />
-        {!passwordMatch && (
+        {passwordMatch ? (
+          <></>
+        ) : (
           <div style={{ color: "rgba(186, 26, 26, 1)" }}>
             Passwords do not match.
           </div>

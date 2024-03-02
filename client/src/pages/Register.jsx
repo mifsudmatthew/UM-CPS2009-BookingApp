@@ -1,27 +1,26 @@
-import React, { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 
-const Register = () => {
+import { Post } from "../utils/ApiFunctions";
+
+function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [confirmEmail, setConfirmEmail] = useState("");
-  const [emailMatch, setEmailMatch] = useState(true);
-  const [passwordMatch, setPasswordMatch] = useState(true);
 
   // Save registration details from form
-  useEffect(() => {
-    setEmailMatch(email === confirmEmail);
+  const emailMatch = useMemo(() => {
+    return email === confirmEmail;
   }, [email, confirmEmail]);
-
-  useEffect(() => {
-    setPasswordMatch(password === confirmPassword);
+  const passwordMatch = useMemo(() => {
+    return password === confirmPassword;
   }, [password, confirmPassword]);
-
-  
 
   // Send the registration details to the server
   const handleSubmit = async (event) => {
+    event.preventDefault();
+
     // Check if the email and password fields are empty
     if (!email || !password || !name) {
       alert("Please fill in all fields.");
@@ -32,31 +31,20 @@ const Register = () => {
       alert("Please enter a valid email address.");
       return;
     }
-    event.preventDefault();
+
     const data = {
       email,
       password,
       name,
     };
+
     console.log("Data:", data);
     try {
-      const response = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await Post("/api/register", data);
 
-      if (response.ok) {
-        // Handle response
-        console.log("Success:", data);
-      } else {
-        // Handle errors
-        console.error("Error:", response);
-      }
+      console.log("Success:", response);
     } catch (error) {
-      console.error("Error:", error);
+      console.error(error);
     }
   };
 
@@ -97,7 +85,9 @@ const Register = () => {
           type="email"
           required
         />
-        {!emailMatch && (
+        {emailMatch ? (
+          <></>
+        ) : (
           <div style={{ color: "rgba(186, 26, 26, 1)" }}>
             Emails do not match.
           </div>
@@ -125,22 +115,24 @@ const Register = () => {
           required
         />
       </div>
-      {!passwordMatch && (
+      {passwordMatch ? (
+        <></>
+      ) : (
         <div style={{ color: "rgba(186, 26, 26, 1)" }}>
           Passwords do not match.
         </div>
       )}
       <br />
       <div className={"inputContainer"}>
-        <input 
-        className={"inputButton"} 
-        type="button" 
-        value={"Sign up"} 
-        onClick={handleSubmit}
+        <input
+          className={"inputButton"}
+          type="button"
+          value={"Sign up"}
+          onClick={handleSubmit}
         />
       </div>
     </div>
   );
-};
+}
 
 export default Register;
