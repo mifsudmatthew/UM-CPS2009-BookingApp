@@ -2,6 +2,7 @@
  * Main react page */
 
 /* React imports */
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
 /* CSS */
@@ -20,21 +21,39 @@ import Profile from "./pages/Profile";
 import Topup from "./pages/Topup";
 import ChangePW from "./pages/ChangePW";
 
+import { Auth } from "./context/Authenication";
 // Main react app
 function App() {
+  const [token, setToken] = useState("");
+
+  localStorage.setItem("token", "hello");
+
+  useEffect(() => {
+    console.log("Retrieving token from localStorage");
+    const temp = localStorage.getItem("token");
+    if (temp) {
+      setToken(temp);
+      console.log(`Token = ${temp}`);
+    } else {
+      console.log("No Token");
+    }
+  }, []);
+
   return (
     <>
-      <Navbar />
-      <Routes>
-        <Route path="/" exact element={<Home />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/register" element={<Register />}></Route>
-        <Route path="/reset" element={<Reset />}></Route>
-        <Route path="/booking" element={<Booking />}></Route>
-        <Route path="/profile" exact element={<Profile />}></Route>
-        <Route path="/profile/topup" element={<Topup />}></Route>
-        <Route path="/profile/changepassword" element={<ChangePW />}></Route>
-      </Routes>
+      <Auth.Provider value={token}>
+        <Navbar />
+        <Routes>
+          <Route path="/" exact element={<Home />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/register" element={<Register />}></Route>
+          <Route path="/reset" element={<Reset />}></Route>
+          <Route path="/booking" element={<Booking />}></Route>
+          <Route path="/profile" exact element={<Profile />}></Route>
+          <Route path="/profile/topup" element={<Topup />}></Route>
+          <Route path="/profile/changepassword" element={<ChangePW />}></Route>
+        </Routes>
+      </Auth.Provider>
     </>
   );
 }
