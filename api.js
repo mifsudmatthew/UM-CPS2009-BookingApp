@@ -133,9 +133,10 @@ apiRouter.post("/register", async (req, res) => {
 });
 
 apiRouter.post("/topup", async (req, res) => {
+  const amount = req.body.amount;
+  const url = req.headers.host;
+  console.log(url)
   try {
-    const amount = req.body.amount;
-    const url = req.headers.host;
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
@@ -151,12 +152,11 @@ apiRouter.post("/topup", async (req, res) => {
       ],
       payment_method_types: ['card'],
       mode: 'payment',
-      success_url: `${url}/api/success?session_id={CHECKOUT_SESSION_ID}&${getToken}`,
-      cancel_url: `${url}/api/cancel?session_id={CHECKOUT_SESSION_ID}&${getToken}`,
+      success_url: `https://${url}/api/success?session_id={CHECKOUT_SESSION_ID}&${sf.getToken(req)}`,
+      cancel_url: `https://${url}/api/cancel?session_id={CHECKOUT_SESSION_ID}&${sf.getToken(req)}`,
     });
-    console.log(session)
 
-    res.redirect(303, session.url);
+    res.json({ url: session.url });
 
   } catch (error) {
     console.error('Error creating checkout session:', error);
@@ -171,12 +171,13 @@ apiRouter.get("/success", async (req, res) => {
 
     // Retrieve the session from Stripe
     const session = await stripe.checkout.sessions.retrieve(sessionId);
-
-    email = getEmail(req.query.token)
+    
+    email = sf.getEmail(req.query.token)
+    console.log("EMAIL: "+email)
     // Check if payment is successful
     if (session.payment_status === 'paid') {
       // Update the balance only if payment is successful
-      queries.updateUserBalance(session.amount_total / 100); // Convert amount to dollars
+      queries.updateUserBalance(email, session.amount_total / 100); // Convert amount to dollars
     }
 
     // Redirect or respond as needed
@@ -186,5 +187,15 @@ apiRouter.get("/success", async (req, res) => {
     res.status(500).json({ error: 'Failed to handle successful payment' });
   }
 });
+// Endpoint to handle successful payment
+apiRouter.get("/cancel", async (req, res) => {
+  try {
 
+    // Redirect or respond as needed
+    res.redirect(`${req.header.host}/profile/topup`); // Redirect to a success page
+  } catch (error) {
+    console.error('Error handling successful payment:', error);
+    res.status(500).json({ error: 'Failed to handle successful payment' });
+  }
+});
 module.exports = apiRouter;
