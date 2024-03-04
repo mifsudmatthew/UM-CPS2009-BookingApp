@@ -26,12 +26,12 @@ import { useToken } from "./hooks/useToken";
 import { useUser } from "./hooks/useUser";
 // Main react app
 function App() {
-  const { token } = useToken();
+  const { accessToken } = useToken();
   const { user } = useUser();
   return (
     <>
       <UserContext.Provider value={user}>
-        <AuthContext.Provider value={token}>
+        <AuthContext.Provider value={accessToken}>
           <Navbar />
           <Routes>
             <Route path="/" exact element={<Home />}></Route>

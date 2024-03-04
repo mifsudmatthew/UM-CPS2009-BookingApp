@@ -43,8 +43,8 @@ function Register() {
       const response = await Post("/api/register", data);
 
       console.log("Success:", response);
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -63,7 +63,7 @@ function Register() {
           onChange={(e) => setName(e.target.value)}
           required
         />
-      <br />
+        <br />
         <label>Email</label>
         <input
           onChange={(e) => setEmail(e.target.value)}
@@ -72,7 +72,7 @@ function Register() {
           type="email"
           required
         />
-      <br />
+        <br />
         <label>Re-enter email</label>
         <input
           onChange={(e) => setConfirmEmail(e.target.value)}
@@ -88,7 +88,7 @@ function Register() {
             Emails do not match.
           </div>
         )}
-      <br />
+        <br />
         <label>Password</label>
         <input
           onChange={(e) => setPassword(e.target.value)}

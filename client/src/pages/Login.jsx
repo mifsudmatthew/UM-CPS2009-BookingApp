@@ -9,13 +9,11 @@ function Login() {
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setToken } = useToken();
+  const { setTokens } = useToken();
   const { setUser } = useUser();
 
   // Send the login details to the server
   const handleSubmit = async (event) => {
-    // let navigate = useNavigate();
-
     event.preventDefault();
     // Check if the email and password fields are empty
     if (!email || !password) {
@@ -31,8 +29,11 @@ function Login() {
     try {
       const response = await Post("/api/login", { email, password });
 
-      setToken(response.accessToken, response.refreshToken);
-      setUser(response);
+      let { accessToken, refreshToken, ...userData } = response;
+
+      setTokens(accessToken, refreshToken);
+      setUser(userData);
+
       navigate("/reset");
     } catch (error) {
       console.error(`Error in ${error}`);
