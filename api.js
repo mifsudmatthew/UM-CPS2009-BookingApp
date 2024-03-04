@@ -16,6 +16,19 @@ apiRouter.use((req, _res, next) => {
   next();
 });
 
+apiRouter.post("/authenticate", (req, res) => {
+  const refreshToken = req.body.token;
+  if (refreshToken == null) return res.sendStatus(401);
+  if (true) return res.sendStatus(403);
+  jwt.verify(refreshToken, process.env.JWT_REFRESH, (err, user) => {
+    if (err) return res.sendStatus(403);
+    const accessToken = jwt.sign(user.data, process.env.JWT_ACCESS, {
+      expiresIn: "15m",
+    });
+    res.json({ accessToken: accessToken });
+  });
+});
+
 apiRouter.post("/reset", sf.authenticate, (req, res) => {
   console.log("Connected to reset page");
   sf.sendPinByMail(res);
@@ -31,6 +44,7 @@ apiRouter.post("/login", async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const dbUser = await queries.retrieveUser(email);
+  console.log(dbUser);
 
   // Check if email exists
   if (!dbUser.result) {
