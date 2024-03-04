@@ -11,7 +11,7 @@ export async function Post(url, data) {
   });
 
   if (response.ok) {
-    return JSON.parse(response.body);
+    return response.json();
   } else {
     throw new Error(`${url}: ${response.status} - ${response.statusText}`);
   }

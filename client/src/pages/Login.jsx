@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 import { Post } from "../utils/ApiFunctions";
 
 import { useToken } from "../hooks/useToken";
+import { useUser } from "../hooks/useUser";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setToken } = useToken();
+  const { setUser } = useUser();
 
   // Send the login details to the server
   const handleSubmit = async (event) => {
@@ -25,10 +27,10 @@ function Login() {
     }
 
     try {
-      const token = await Post("/api/login", { email, password });
+      const response = await Post("/api/login", { email, password });
 
-      console.log(token);
-      setToken(token);
+      setToken(response.accessToken, response.refreshToken);
+      setUser(response);
     } catch (error) {
       console.error(`Error in ${error}`);
     }
@@ -50,7 +52,7 @@ function Login() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-      <br />
+        <br />
         <label>Password</label>
         <input
           placeholder="password"
