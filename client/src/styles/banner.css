@@ -20,19 +20,19 @@
   
   h2 {
     font-family: 'DM Serif Display', serif;
-    font-size: 120px;
+    font-size: 8vw;
     font-weight: bold;
     color:rgb(217 219 209);
     margin: 0 0 0em 0; /* Adjust the margin as needed */
-    line-height: 100px;
-    padding-top: 200px;
+    line-height: 7vw;
+    padding-top: 11vw;
   }
   
   p {
     font-family: 'DM Serif Display', serif;
     color: rgb(213, 218, 201);
-    font-size: 4em; /* Adjust the size as needed */
-    margin: 0 0 1em 0; /* Adjust the margin as needed */
+    font-size: 5vw; /* Adjust the size as needed */
+    margin: 0 0 1vw 0; /* Adjust the margin as needed */
   }
 
   .textarea {
@@ -64,3 +64,11 @@
   .login-button:hover {
     background-color: rgba(7, 33, 0, 0.409); /* Darken button on hover for visual feedback */
   }
+
+@media (max-width: 674px) {
+  .login-button {
+    padding: 10px 40px;
+    font-size: 20px;
+    border-radius: 15px;
+  }
+}

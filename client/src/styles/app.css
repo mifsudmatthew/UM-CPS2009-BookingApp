@@ -65,7 +65,7 @@ body {
 
 .inputBox {
   height: 48px;
-  width: 30vw;
+  width: 50vw;
   font-size: large;
   border-radius: 8px;
   border: 1px solid grey;
@@ -85,4 +85,10 @@ body {
   display: inline-block;
   color: #446732;
   margin-top: 5px;
+}
+
+@media (max-width: 768px) {
+  .titleContainer {
+    font-size: 40px;
+  }
 }
