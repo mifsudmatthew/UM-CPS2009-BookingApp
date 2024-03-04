@@ -101,10 +101,8 @@ function authenticate(req, res, next) {
 }
 
 function getToken(req) {
-  const authHeader = req.headers.autherization;
+  const authHeader = req.headers.authorization;
 
-  // When autherization header is blank
-  if (!authHeader) return res.status(403).send("No Token attached").end();
   // When token exists
   return authHeader.split(" ")[1];
 }
