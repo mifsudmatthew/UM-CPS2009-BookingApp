@@ -13,8 +13,8 @@ export function useToken() {
   }
 
   function setTokens(accessToken, refreshToken) {
-    localStorage.setItem("accessToken", accessToken);
-    localStorage.setItem("refreshToken", refreshToken);
+    localStorage.setItem("accessToken", JSON.stringify(accessToken));
+    localStorage.setItem("refreshToken", JSON.stringify(refreshToken));
 
     _setAccessToken(accessToken);
     _setRefreshToken(refreshToken);
