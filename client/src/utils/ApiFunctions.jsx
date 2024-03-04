@@ -1,10 +1,11 @@
-const token = "Hello";
+import { useToken } from "../hooks/useToken";
 
 export async function Post(url, data) {
+  const { getToken } = useToken();
   const response = await fetch(url, {
     method: "POST",
     headers: {
-      Autherization: `Bearer ${token}`,
+      Authorization: `Bearer ${getToken}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),

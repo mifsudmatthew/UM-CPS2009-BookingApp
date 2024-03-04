@@ -1,6 +1,6 @@
 const express = require("express");
 const apiRouter = express.Router();
-const stripe = require('stripe')(process.env.STRIPE_KEY);
+const stripe = require("stripe")(process.env.STRIPE_KEY);
 
 // Authentication
 const jwt = require("jsonwebtoken");
@@ -11,7 +11,7 @@ const db = require("./database/test_functions");
 const queries = require("./database/schema_functions/user_functions");
 const sf = require("./server_functions");
 
-let currentUserEmail = ""
+let currentUserEmail = "";
 
 // Log the current URL that is accessed
 apiRouter.use((req, _res, next) => {
@@ -19,7 +19,7 @@ apiRouter.use((req, _res, next) => {
   next();
 });
 
-apiRouter.post("/authenticate", (req, res) => {
+apiRouter.post("/refreshtoken", (req, res) => {
   const refreshToken = req.body.token;
   if (refreshToken == null) return res.sendStatus(401);
   if (true) return res.sendStatus(403);
@@ -32,9 +32,13 @@ apiRouter.post("/authenticate", (req, res) => {
   });
 });
 
-apiRouter.post("/reset", (req,res) => {
+apiRouter.post("/test", sf.authenticate, (req, res) => {
+  res.json();
+});
+
+apiRouter.post("/reset", (req, res) => {
   console.log("Connected to reset page");
-  sf.sendPinByMail(currentUserEmail,res);
+  sf.sendPinByMail(currentUserEmail, res);
 });
 
 apiRouter.post("/booking", sf.authenticate, (req, res, next) => {
@@ -97,7 +101,10 @@ apiRouter.post("/changepassword", async (req, res) => {
       sf.accountPins[i].email == currentUserEmail
     ) {
       console.log(
-        await queries.resetPassword(currentUserEmail, await bcrypt.hash(req.body.password, 10))
+        await queries.resetPassword(
+          currentUserEmail,
+          await bcrypt.hash(req.body.password, 10)
+        )
       );
     }
   }
@@ -140,26 +147,25 @@ apiRouter.post("/topup", async (req, res) => {
       line_items: [
         {
           price_data: {
-            currency: 'eur',
+            currency: "eur",
             product_data: {
-              name: 'Balance Top-Up',
+              name: "Balance Top-Up",
             },
-            unit_amount: amount * 100, 
+            unit_amount: amount * 100,
           },
           quantity: 1,
         },
       ],
-      payment_method_types: ['card'],
-      mode: 'payment',
+      payment_method_types: ["card"],
+      mode: "payment",
       success_url: `${url}/api/success?session_id={CHECKOUT_SESSION_ID}&${getToken}`,
       cancel_url: `${url}/api/cancel?session_id={CHECKOUT_SESSION_ID}&${getToken}`,
     });
-    console.log(session)
+    console.log(session);
 
     res.redirect(303, session.url);
-
   } catch (error) {
-    console.error('Error creating checkout session:', error);
+    console.error("Error creating checkout session:", error);
     return res.status(500).send(/* Response when there's an error */);
   }
 });
@@ -172,9 +178,9 @@ apiRouter.get("/success", async (req, res) => {
     // Retrieve the session from Stripe
     const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-    email = getEmail(req.query.token)
+    email = getEmail(req.query.token);
     // Check if payment is successful
-    if (session.payment_status === 'paid') {
+    if (session.payment_status === "paid") {
       // Update the balance only if payment is successful
       queries.updateUserBalance(session.amount_total / 100); // Convert amount to dollars
     }
@@ -182,8 +188,8 @@ apiRouter.get("/success", async (req, res) => {
     // Redirect or respond as needed
     res.redirect(`${req.header.host}/profile/topup`); // Redirect to a success page
   } catch (error) {
-    console.error('Error handling successful payment:', error);
-    res.status(500).json({ error: 'Failed to handle successful payment' });
+    console.error("Error handling successful payment:", error);
+    res.status(500).json({ error: "Failed to handle successful payment" });
   }
 });
 

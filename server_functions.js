@@ -84,6 +84,7 @@ async function sendPinByMail(loggedInEmail, res) {
 }
 
 function authenticate(req, res, next) {
+  console.log(req.headers);
   const authHeader = req.headers.autherization;
 
   // When autherization header is blank
@@ -109,7 +110,7 @@ function getToken(req) {
 }
 
 function getEmail(token) {
-  return jwt.decode(token);
+  return jwt.decode(token).email;
 }
 
 module.exports = {
