@@ -63,7 +63,7 @@ apiRouter.post("/login", async (req, res) => {
         }
       );
       const refreshToken = jwt.sign(
-        { email: user.data.email },
+        { email: dbUser.data.email },
         process.env.JWT_REFRESH
       );
 
