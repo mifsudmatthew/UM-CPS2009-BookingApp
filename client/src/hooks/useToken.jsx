@@ -18,7 +18,7 @@ export function useToken() {
     console.log("Setting token in localStorage");
 
     localStorage.setItem("token", JSON.stringify(userToken));
-    setToken(userToken.token);
+    setToken(userToken.accessToken);
   };
 
   return {

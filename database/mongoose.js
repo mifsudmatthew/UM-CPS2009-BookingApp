@@ -10,11 +10,14 @@ mongoose.set("strictQuery", true);
  */
 
 //--------------------------- Url Configuration
+/*
 const mongoose_Url =  `mongodb+srv://`             +
                       `${process.env.USER}`        +  `:` +
                       `${process.env.PASSWORD}`    +  `@` +
                       `${process.env.CLUSTER}`     +  `/` +
                       `${process.env.DATABASENAME}`;
+                      */
+const mongoose_Url =  `mongodb+srv://${process.env.USER_TEST}:${process.env.PASS_TEST}@production.vhjvw6m.mongodb.net/mainDB?retryWrites=true&w=majority&appName=Production`;
 //--------------------------- Flags and Options Configuration
 const mongoose_Options = {
                             retryWrites: true,
@@ -25,7 +28,8 @@ const mongoose_Options = {
  * Put into a funcgtion to be able to use await
  */
 async function connectToDatabase() {
-  await mongoose.connect(mongoose_Url, mongoose_Options)
+  // await mongoose.connect(mongoose_Url, mongoose_Options)
+  await mongoose.connect(mongoose_Url)
 
         //---------------------------- Successful Creation
         .then(() => {
