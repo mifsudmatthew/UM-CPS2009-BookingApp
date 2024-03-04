@@ -161,10 +161,10 @@ apiRouter.post("/topup", async (req, res) => {
       ],
       payment_method_types: ["card"],
       mode: "payment",
-      success_url: `https://${url}/api/success?session_id={CHECKOUT_SESSION_ID}&${sf.getToken(
+      success_url: `https://${url}/api/success?session_id={CHECKOUT_SESSION_ID}&token=${sf.getToken(
         req
       )}`,
-      cancel_url: `https://${url}/api/cancel?session_id={CHECKOUT_SESSION_ID}&${sf.getToken(
+      cancel_url: `https://${url}/api/cancel?session_id={CHECKOUT_SESSION_ID}&token=${sf.getToken(
         req
       )}`,
     });
