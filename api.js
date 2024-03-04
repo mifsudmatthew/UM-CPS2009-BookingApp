@@ -1,5 +1,6 @@
 const express = require("express");
 const apiRouter = express.Router();
+const stripe = require('stripe')(process.env.STRIPE_KEY);
 
 // Authentication
 const jwt = require("jsonwebtoken");
@@ -127,5 +128,27 @@ apiRouter.post("/register", async (req, res) => {
     res.status(401).send(response.error).end();
   }
 });
+
+apiRouter.post("/checkout", async (req, res) => {
+  const session = await stripe.checkout.session.create({
+    line_items: [
+      {
+        price_data: {
+          product_data: {
+            name: 'Balance Top-Up',
+          },
+          unit_amount: amount * 100, 
+        },
+        quantity: 1,
+      },
+    ],
+
+    payment_method_types: ['card'],
+    mode: 'payment',
+    sucess_url: '',
+    cancel_url: '',
+  });
+});
+
 
 module.exports = apiRouter;

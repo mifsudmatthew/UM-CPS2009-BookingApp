@@ -8,7 +8,7 @@ export async function Post(url, data) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-  });
+  }).then((data)=>{console.log(`${JSON.parse(data)} post func`); return data.json()})
 
   if (response.ok) {
     return response.json();
