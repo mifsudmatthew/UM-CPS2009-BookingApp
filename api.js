@@ -28,7 +28,7 @@ apiRouter.use((req, _res, next) => {
 });
 
 // Testing
-apiRouter.post("/test", sf.authenticate, (req, res) => {
+apiRouter.post("/test", sf.authenticateToken, (req, res) => {
   res.json();
 });
 
@@ -133,12 +133,12 @@ apiRouter.post("/register", async (req, res) => {
   }
 });
 
-apiRouter.post("/reset", sf.authenticate, (req, res) => {
+apiRouter.post("/reset", sf.authenticateToken, (req, res) => {
   console.log("Connected to reset page");
   sf.sendPinByMail(req.body.user.email, res);
 });
 
-apiRouter.post("/booking", sf.authenticate, (req, res, next) => {
+apiRouter.post("/booking", sf.authenticateToken, (req, res, next) => {
   console.log("Booking request has been received!");
   db.saveTestCase();
   res.json({ message: "Booking added" });
