@@ -26,7 +26,7 @@ async function getFutureBookings_Email(userID_toSearch) {
         return { result: true, data: bookings, error: null };
 
     } catch (error_message) {
-        return { result: false, data: null, error: error_message };
+        throw new Error("Failed to Connect to Database");
     }
 }
 
@@ -57,7 +57,7 @@ async function getFutureBookings_Courts(courtID_toSearch) {
         return { result: true, data: bookings, error: null };
 
     } catch (error_message) {
-        return { result: false, data: null, error: error_message };
+        throw new Error("Failed to Connect to Database");
     }
 }
 
@@ -90,7 +90,7 @@ async function getFutureBookings_EmailCourt(userID_toSearch, courtID_toSearch) {
         return { result: true, data: bookings, error: null };
 
     } catch (error_message) {
-        return { result: false, data: null, error: error_message };
+        throw new Error("Failed to Connect to Database");
     }
 }
 /** ===================================== Add a new Booking =========================
@@ -137,7 +137,7 @@ async function addBooking(userID_toBook, courtID_toBook, date_toBook, time_toBoo
         return {result: true, data: await newBooking.save(), error: null};
 
     }catch (error_message) {
-        return {result: false, data: null, error: error_message};
+        throw new Error("Failed to Connect to Database");
     }
 
 }
@@ -157,7 +157,7 @@ async function removeBooking(userID_toBook, courtID_toBook, date_toBook, time_to
         return {result: true, data: null, error: null };
 
     } catch (error) {
-        return {result: false, data: null, error: error_message };
+        throw new Error("Failed to Connect to Database");
     }
 }
 

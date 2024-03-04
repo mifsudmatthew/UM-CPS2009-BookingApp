@@ -48,11 +48,11 @@ apiRouter.post("/login", async (req, res) => {
 
   // Check if email exists
   if (!dbUser.result) {
-    // Duplicate email
+    // Email no exist
     return res.status(400).send("Email not in use").end();
   }
-  // Email no exists
 
+  // Email Exists
   try {
     if (await bcrypt.compare(password, dbUser.data.password)) {
       const user = await queries.validateLogin(email, password);

@@ -23,7 +23,7 @@ async function retrieveUser(email_toSearch) {
         return { result: true, data: user_found, error: null };
 
     } catch (error_message) {
-        return {result: false, data: null, error: error_message};
+        throw new Error("Failed to Connect to Database");
     }
 }
 
@@ -56,7 +56,7 @@ async function registerUser({email_new, password_new, name_new}){
         return {result: true, data:await newUser.save(), error: null};
 
     }catch (error_message) {
-        return {result: false, data: null, error: error_message};
+        throw new Error("Failed to Connect to Database");
     }
 }
 
@@ -82,7 +82,7 @@ async function validateLogin(email_toSearch, password_toSearch) {
                                     }, error: null };
 
     } catch (error_message) {
-        return {result: false, data: null, error: error_message};
+        throw new Error("Failed to Connect to Database");
     }
 }
 /** ===================================== Reset Password ================================================
@@ -109,7 +109,7 @@ async function resetPassword(email_toSearch, password_toReset) {
                                     }, error: null };
 
     } catch (error_message) {
-        return {result: false, data: null, error: error_message};
+        throw new Error("Failed to Connect to Database");
     }
 }
 /** =============================== Update User Balance ================================================
@@ -137,7 +137,7 @@ async function updateUserBalance(email_toSearch, amount_toAdd) {
                                     }, error: null };
 
     } catch (error_message) {
-        return {result: false, data: null, error: error_message };
+        throw new Error("Failed to Connect to Database");
     }
 }
 /**===================================== Delete User =====================================================
@@ -153,7 +153,7 @@ async function deleteUser(email_toSearch) {
         // --------------------- Returning stuff
         return {result: true, data: null, error: null };
     } catch (error) {
-        return {result: false, data: null, error: error_message };
+        throw new Error("Failed to Connect to Database");
     }
 }
 
