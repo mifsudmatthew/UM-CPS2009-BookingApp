@@ -94,10 +94,10 @@ apiRouter.post("/changepassword", async (req, res) => {
   for (i = 0; i < sf.accountPins.length; i++) {
     if (
       sf.accountPins[i].pin == req.body.pin &&
-      sf.accountPins[i].email == req.body.email
+      sf.accountPins[i].email == currentUserEmail
     ) {
       console.log(
-        await queries.resetPassword(req.body.email, req.body.password)
+        await queries.resetPassword(currentUserEmail, req.body.password)
       );
     }
   }

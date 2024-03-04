@@ -1,9 +1,7 @@
 import { useState, useMemo } from "react";
-
 import { Post } from "../utils/ApiFunctions";
 
 export default function Reset() {
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [pin, setPin] = useState("");
@@ -13,14 +11,13 @@ export default function Reset() {
   }, [password, confirmPassword]);
 
   const pinValid = useMemo(() => {
-    return pin.length == 4;
+    return pin.length === 4;
   }, [pin]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const data = {
-      email,
       password,
       pin,
     };
@@ -39,7 +36,6 @@ export default function Reset() {
     event.preventDefault();
 
     const data = {
-      email,
       password,
       pin,
     };
@@ -57,15 +53,8 @@ export default function Reset() {
   return (
     <>
       <h1>Reset</h1>
-      <div className={"mainContainer"}>
-        <div className={"inputContainer"}>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-        </div>
+      <div className={"mainContainerReset"}>
+        <button onClick={handleSubmit}>RESET PASSWORD</button>
         <br />
         <div className={"inputContainer"}>
           <input
@@ -91,7 +80,7 @@ export default function Reset() {
             placeholder="PIN (4 digits)"
             value={pin}
             onChange={(event) => {
-              const inputPin = event.target.value.replace(/\D/, ""); // Remove non-digit characters
+              const inputPin = event.target.value.replace(/\D/g, ""); // Remove non-digit characters, corrected to global replacement
               setPin(inputPin);
             }}
           />
@@ -112,7 +101,6 @@ export default function Reset() {
           </div>
         )}
         <br />
-        <button onClick={handleSubmit}>RESET PASSWORD</button>
         <div className={"inputContainer"}>
           <button onClick={handleChange}>CHANGE PASSWORD</button>
         </div>
