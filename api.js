@@ -11,6 +11,8 @@ const db = require("./database/test_functions");
 const queries = require("./database/schema_functions/user_functions");
 const sf = require("./server_functions");
 
+let currentUserEmail = ""
+
 // Log the current URL that is accessed
 apiRouter.use((req, _res, next) => {
   console.log(`API on ${req.url}`);
@@ -30,9 +32,9 @@ apiRouter.post("/authenticate", (req, res) => {
   });
 });
 
-apiRouter.post("/reset", (res) => {
+apiRouter.post("/reset", (req,res) => {
   console.log("Connected to reset page");
-  sf.sendPinByMail(res);
+  sf.sendPinByMail(currentUserEmail,res);
 });
 
 apiRouter.post("/booking", sf.authenticate, (req, res, next) => {
@@ -43,6 +45,7 @@ apiRouter.post("/booking", sf.authenticate, (req, res, next) => {
 
 apiRouter.post("/login", async (req, res) => {
   const email = req.body.email;
+  currentUserEmail = email;
   const password = req.body.password;
   const dbUser = await queries.retrieveUser(email);
 
