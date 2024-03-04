@@ -67,8 +67,9 @@ apiRouter.post("/login", async (req, res) => {
     } else {
       return res.status(401).send("Not Allowed");
     }
-  } catch {
-    return res.status(500).send("Some kind of error in login");
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send(`Some kind of error in login ${err}`);
   }
 });
 
