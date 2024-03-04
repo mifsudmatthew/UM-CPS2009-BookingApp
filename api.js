@@ -168,6 +168,7 @@ apiRouter.post("/topup", async (req, res) => {
 });
 // Endpoint to handle successful payment
 apiRouter.get("/success", async (req, res) => {
+  
   try {
     // Extract the session ID from the query parameters
     const sessionId = req.query.session_id;
@@ -178,13 +179,14 @@ apiRouter.get("/success", async (req, res) => {
     email = sf.getEmail(req.query.token)
     console.log("EMAIL: "+email)
     // Check if payment is successful
+    console.log(session.payment_status);
     if (session.payment_status === 'paid') {
       // Update the balance only if payment is successful
       queries.updateUserBalance(email, session.amount_total / 100); // Convert amount to dollars
     }
 
     // Redirect or respond as needed
-    res.redirect(`${req.header.host}/profile/topup`); // Redirect to a success page
+    res.redirect(`http://${req.header.host}/profile/topup`); // Redirect to a success page
   } catch (error) {
     console.error('Error handling successful payment:', error);
     res.status(500).json({ error: 'Failed to handle successful payment' });
@@ -195,7 +197,7 @@ apiRouter.get("/cancel", async (req, res) => {
   try {
 
     // Redirect or respond as needed
-    res.redirect(`${req.header.host}/profile/topup`); // Redirect to a success page
+    res.redirect(`http://${req.header.host}/profile/topup`); // Redirect to a success page
   } catch (error) {
     console.error('Error handling successful payment:', error);
     res.status(500).json({ error: 'Failed to handle successful payment' });
