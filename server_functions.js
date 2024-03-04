@@ -1,4 +1,6 @@
 const nodeMailer = require("nodemailer"); // Obtaining the node mailer module
+const jwt = require("jsonwebtoken");
+
 var accountPins = []; // Creating an array to store pins generated and their corresponding emails.
 
 // Function to generate a new pin. By generating 4 random numbers (0-9) and concatenating them.
