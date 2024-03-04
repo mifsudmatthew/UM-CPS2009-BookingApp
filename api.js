@@ -36,7 +36,7 @@ apiRouter.post("/test", sf.authenticate, (req, res) => {
   res.json();
 });
 
-apiRouter.post("/reset", (req, res) => {
+apiRouter.post("/reset", sf.authenticate, (req, res) => {
   console.log("Connected to reset page");
   sf.sendPinByMail(currentUserEmail, res);
 });
