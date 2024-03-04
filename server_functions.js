@@ -1,4 +1,9 @@
-const nodeMailer = require("nodemailer"); // Obtaining the node mailer module
+/* server_functions.js
+ * Functions that are used in the routes of the server */
+
+// Obtaining the node mailer module
+const nodeMailer = require("nodemailer");
+// JSON Web Tokens for autherization
 const jwt = require("jsonwebtoken");
 
 var accountPins = []; // Creating an array to store pins generated and their corresponding emails.
@@ -20,7 +25,7 @@ function addPinEntry(email, pin) {
   // Parameters taken are the user email and the corresponding pin
   // Adding a new entry to the accountPins array with parameter data
   accountPins.push({ email: email, pin: pin });
-  console.log(accountPins);
+  console.log(`accountPins:${accountPins}`);
 
   // Applying a timer which removes the entry 5 minutes after it is pushed on the array.
   setTimeout(() => {
@@ -84,31 +89,53 @@ async function sendPinByMail(loggedInEmail, res) {
 }
 
 function authenticate(req, res, next) {
-  console.log(req.headers);
-  const authHeader = req.headers.autherization;
+  const authHeader = req.headers.authorization;
 
-  // When autherization header is blank
-  if (!authHeader) return res.status(403).send("Unautherized").end();
+  // When authorization header is blank
+  if (!authHeader) return res.status(403).send("Unauthorized").end();
   // When token exists
   const token = authHeader.split(" ")[1];
   // Verify
   jwt.verify(token, process.env.JWT_ACCESS, (err, decoded) => {
-    if (err) return res.status(403).send("Token").end();
-
-    console.log(decoded);
+    if (err) return res.status(403).send(`Token is invalid ${err}`).end();
     next();
   });
 }
 
 function getToken(req) {
+  if (!req) {
+    // Check if req is a valid object
+    throw new Error("Request object is malformed");
+  }
+
+  // Obtain authorization header
   const authHeader = req.headers.authorization;
 
-  // When token exists
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    // Check if header is valid and starts with 'Bearer '
+    return null;
+  }
+
+  // Return the token part of the authorization header
   return authHeader.split(" ")[1];
 }
 
 function getEmail(token) {
-  return jwt.decode(token).email;
+  if (!token) {
+    // If token is undefined
+    throw new Error("No token supplied to function");
+  }
+
+  // Obtain decoded object
+  const decoded = jwt.decode(token);
+
+  if (!decoded) {
+    // If decoded is not valid object
+    throw new Error("Failed to decode token");
+  }
+
+  // Return the email
+  return decoded.email;
 }
 
 module.exports = {
