@@ -76,7 +76,7 @@ apiRouter.post("/login", async (req, res) => {
   }
 });
 
-apiRouter.post("/changepassword", sf.authenticate, async (req, res) => {
+apiRouter.post("/changepassword", async (req, res) => {
   for (i = 0; i < sf.accountPins.length; i++) {
     if (
       sf.accountPins[i].pin == req.body.pin &&
