@@ -31,7 +31,7 @@ apiRouter.post("/authenticate", (req, res) => {
 
 apiRouter.post("/reset", (req, res) => {
   console.log("Connected to reset page");
-  sf.sendPinByMail(res);
+  sf.sendPinByMail(req,res);
 });
 
 apiRouter.post("/booking", sf.authenticate, (req, res, next) => {
