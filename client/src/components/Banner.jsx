@@ -6,7 +6,7 @@ function Banner() {
   let navigate = useNavigate();
 
   function handleLogin() {
-    navigate("/login"); // Replace '/login' with the path to your login page
+    navigate("/login"); 
   }
 
   return (
