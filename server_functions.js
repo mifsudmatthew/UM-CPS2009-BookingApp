@@ -88,16 +88,26 @@ async function sendPinByMail(loggedInEmail, res) {
   }
 }
 
-function authenticate(req, res, next) {
+function authenticateToken(req, res, next) {
   const authHeader = req.headers.authorization;
 
-  // When authorization header is blank
-  if (!authHeader) return res.status(403).send("Unauthorized").end();
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    // Check if header is exists and starts with 'Bearer '
+    return res.status(400).send("No authorization attached");
+  }
+
   // When token exists
   const token = authHeader.split(" ")[1];
+
+  if (!token) {
+    // When token is blank
+    return res.status(403).send("Unauthorized: No token supplied");
+  }
+
   // Verify
   jwt.verify(token, process.env.JWT_ACCESS, (err, decoded) => {
-    if (err) return res.status(403).send(`Token is invalid ${err}`).end();
+    if (err) return res.status(403).send(`Token is invalid ${err}`);
+    req.user = decoded;
     next();
   });
 }
@@ -138,10 +148,20 @@ function getEmail(token) {
   return decoded.email;
 }
 
+function generateAccessToken(payload) {
+  return jwt.sign(payload, process.env.JWT_ACCESS, { expiresIn: "15m" });
+}
+
+function generateRefreshToken(payload) {
+  return jwt.sign(payload, process.env.JWT_REFRESH);
+}
+
 module.exports = {
   accountPins,
   sendPinByMail,
-  authenticate,
+  authenticateToken,
   getToken,
   getEmail,
+  generateAccessToken,
+  generateRefreshToken,
 };
