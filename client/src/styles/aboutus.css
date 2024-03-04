@@ -1,8 +1,8 @@
 .aboutus-container {
-  max-width: 1200px;  
   margin: auto;
   padding: 20px;
   font-family: 'Roboto', sans-serif;
+  background-color: #ebeee2;
 }
 
  .aboutus-title{
