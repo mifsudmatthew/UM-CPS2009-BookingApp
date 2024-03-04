@@ -97,10 +97,13 @@ apiRouter.post("/changepassword", async (req, res) => {
       sf.accountPins[i].email == currentUserEmail
     ) {
       console.log(
-        await queries.resetPassword(currentUserEmail, req.body.password)
+        await queries.resetPassword(currentUserEmail, await bcrypt.hash(req.body.password, 10))
+        
       );
+      res.json({message:"Success"})
     }
   }
+  res.status(400).json({message:"Fail"})
 });
 
 apiRouter.post("/register", async (req, res) => {
