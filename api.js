@@ -1,5 +1,6 @@
 const express = require("express");
 const apiRouter = express.Router();
+const stripe = require('stripe')(process.env.STRIPE_KEY);
 
 // Authentication
 const jwt = require("jsonwebtoken");
@@ -66,13 +67,23 @@ apiRouter.post("/login", async (req, res) => {
         process.env.JWT_REFRESH
       );
 
-      res.json({ accessToken: accessToken, refreshToken: refreshToken });
+      res.json({
+        id: dbUser.data._id,
+        name: dbUser.data.name,
+        email: dbUser.data.email,
+        password: "",
+        balance: dbUser.data.balance,
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      });
     } else {
       return res.status(401).json({ message: "Not Allowed" });
     }
   } catch (err) {
     console.log(err);
-    return res.status(500).send(`Some kind of error in login ${err}`);
+    return res
+      .status(500)
+      .json({ message: "USERSome kind of error in login", error: err });
   }
 });
 
@@ -117,5 +128,27 @@ apiRouter.post("/register", async (req, res) => {
     res.status(401).send(response.error).end();
   }
 });
+
+apiRouter.post("/checkout", async (req, res) => {
+  const session = await stripe.checkout.session.create({
+    line_items: [
+      {
+        price_data: {
+          product_data: {
+            name: 'Balance Top-Up',
+          },
+          unit_amount: amount * 100, 
+        },
+        quantity: 1,
+      },
+    ],
+
+    payment_method_types: ['card'],
+    mode: 'payment',
+    sucess_url: '',
+    cancel_url: '',
+  });
+});
+
 
 module.exports = apiRouter;
