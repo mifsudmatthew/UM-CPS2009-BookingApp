@@ -37,6 +37,9 @@ function Navbar() {
               <li>
                 <NavLink to="/register">Register</NavLink>
               </li>
+              <li>
+                <NavLink to="/profile/topup">Top Up</NavLink>
+              </li>
             </ul>
           </div>
         </div>
