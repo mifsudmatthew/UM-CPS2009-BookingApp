@@ -56,16 +56,23 @@ apiRouter.post("/login", async (req, res) => {
   try {
     if (await bcrypt.compare(password, dbUser.data.password)) {
       const user = await queries.validateLogin(email, password);
-      const accessToken = jwt.sign(user.data, process.env.JWT_ACCESS, {
-        expiresIn: "15m",
-      });
-      const refreshToken = jwt.sign(user.data, process.env.JWT_REFRESH);
+      const accessToken = jwt.sign(
+        { email: user.data.email },
+        process.env.JWT_ACCESS,
+        {
+          expiresIn: "15m",
+        }
+      );
+      const refreshToken = jwt.sign(
+        { email: user.data.email },
+        process.env.JWT_REFRESH
+      );
 
       console.log(`${accessToken}\n\n${refreshToken}`);
 
       res.json({ accessToken: accessToken, refreshToken: refreshToken });
     } else {
-      return res.status(401).send("Not Allowed");
+      return res.status(401).json({ message: "Not Allowed" });
     }
   } catch (err) {
     console.log(err);
