@@ -2,7 +2,6 @@
  * Main react page */
 
 /* React imports */
-import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
 /* CSS */
@@ -21,27 +20,14 @@ import Profile from "./pages/Profile";
 import Topup from "./pages/Topup";
 import ChangePW from "./pages/ChangePW";
 
-import { Auth } from "./context/Authenication";
+import { AuthContext } from "./context/Authenication";
+import { useToken } from "./hooks/useToken";
 // Main react app
 function App() {
-  const [token, setToken] = useState("");
-
-  localStorage.setItem("token", "hello");
-
-  useEffect(() => {
-    console.log("Retrieving token from localStorage");
-    const temp = localStorage.getItem("token");
-    if (temp) {
-      setToken(temp);
-      console.log(`Token = ${temp}`);
-    } else {
-      console.log("No Token");
-    }
-  }, []);
-
+  const { token } = useToken();
   return (
     <>
-      <Auth.Provider value={token}>
+      <AuthContext.Provider value={token}>
         <Navbar />
         <Routes>
           <Route path="/" exact element={<Home />}></Route>
@@ -53,7 +39,7 @@ function App() {
           <Route path="/profile/topup" element={<Topup />}></Route>
           <Route path="/profile/changepassword" element={<ChangePW />}></Route>
         </Routes>
-      </Auth.Provider>
+      </AuthContext.Provider>
     </>
   );
 }

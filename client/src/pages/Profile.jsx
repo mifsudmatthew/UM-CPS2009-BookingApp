@@ -1,9 +1,9 @@
 import { useContext } from "react";
 
-import { Auth } from "../context/Authenication";
+import { AuthContext } from "../context/Authenication";
 
 function Profile() {
-  const authenication = useContext(Auth);
+  const authenication = useContext(AuthContext);
   return (
     <>
       <h1>Profile</h1>

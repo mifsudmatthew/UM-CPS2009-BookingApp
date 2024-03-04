@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 
 import { Post } from "../utils/ApiFunctions";
 
+import { useToken } from "../hooks/useToken";
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setToken } = useToken();
 
   // Send the login details to the server
   const handleSubmit = async (event) => {
@@ -25,6 +28,7 @@ function Login() {
       const token = await Post("/api/login", { email, password });
 
       console.log(token);
+      setToken(token);
     } catch (error) {
       console.error(`Error in ${error}`);
     }

@@ -35,7 +35,7 @@ apiRouter.post("/login", async (req, res) => {
   // Check if email exists
   if (!dbUser.result) {
     // Duplicate email
-    return res.status(401).send("Email not in use").end();
+    return res.status(400).send("Email not in use").end();
   }
   // Email no exists
 
@@ -51,10 +51,10 @@ apiRouter.post("/login", async (req, res) => {
 
       res.json({ accessToken: accessToken, refreshToken: refreshToken });
     } else {
-      res.status(403).send("Not Allowed");
+      return res.status(401).send("Not Allowed");
     }
   } catch {
-    res.status(500).send("Some kind of error in login");
+    return res.status(500).send("Some kind of error in login");
   }
 });
 
@@ -83,7 +83,7 @@ apiRouter.post("/register", async (req, res) => {
 
   const name = req.body.name;
   const password = await bcrypt.hash(req.body.password, 10);
-
+  console.log(password);
   // Register user on DB
   const response = await queries.registerUser({
     email_new: email,
