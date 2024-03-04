@@ -63,9 +63,7 @@ function Register() {
           onChange={(e) => setName(e.target.value)}
           required
         />
-      </div>
       <br />
-      <div className={"inputContainer"}>
         <label>Email</label>
         <input
           onChange={(e) => setEmail(e.target.value)}
@@ -74,9 +72,7 @@ function Register() {
           type="email"
           required
         />
-      </div>
       <br />
-      <div className={"inputContainer"}>
         <label>Re-enter email</label>
         <input
           onChange={(e) => setConfirmEmail(e.target.value)}
@@ -92,9 +88,7 @@ function Register() {
             Emails do not match.
           </div>
         )}
-      </div>
       <br />
-      <div className={"inputContainer"}>
         <label>Password</label>
         <input
           onChange={(e) => setPassword(e.target.value)}
