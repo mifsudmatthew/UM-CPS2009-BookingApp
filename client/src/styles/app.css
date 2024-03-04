@@ -39,6 +39,13 @@ body {
   height: 100vh;
 }
 
+.mainContainerReset{
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .titleContainer {
   display: flex;
   flex-direction: column;
