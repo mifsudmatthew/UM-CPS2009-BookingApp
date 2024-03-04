@@ -1,28 +1,28 @@
 import { useState } from "react";
 
 export function useToken() {
-  const getToken = () => {
-    const token = localStorage.getItem("token");
+  const [accessToken, _setAccessToken] = useState(getAccessToken());
+  const [refreshToken, _setRefreshToken] = useState(getRefreshToken());
 
-    if (token == null) {
-      return "";
-    } else {
-      return token;
-    }
-  };
+  function getAccessToken() {
+    return localStorage.getItem("accessToken") || "";
+  }
 
-  const [token, setToken] = useState(getToken());
+  function getRefreshToken() {
+    return localStorage.getItem("refreshToken") || "";
+  }
 
-  const saveToken = (accessToken, refreshToken) => {
-    console.log("Setting token in localStorage");
+  function setTokens(accessToken, refreshToken) {
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", refreshToken);
 
-    localStorage.setItem("accessToken", JSON.stringify(accessToken));
-    localStorage.setItem("refreshToken", JSON.stringify(refreshToken));
-    setToken(accessToken);
-  };
+    _setAccessToken(accessToken);
+    _setRefreshToken(refreshToken);
+  }
 
   return {
-    setToken: saveToken,
-    token,
+    setTokens,
+    accessToken,
+    refreshToken,
   };
 }
