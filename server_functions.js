@@ -44,8 +44,8 @@ function addPinEntry(email, pin) {
 }
 
 // Function to send an email to user requesting a password reset.
-async function sendPinByMail(res) {
-  var app_email = "no.reply.servespot@gmail.com"; // Address of account requesting pin
+async function sendPinByMail(loggedInEmail, res) {
+  var app_email = loggedInEmail; // Address of account requesting pin
   var generated_pin = getRandomPin(); // Generating a new pin
 
   // Variable storing all email details.
@@ -99,8 +99,23 @@ function authenticate(req, res, next) {
   });
 }
 
+function getToken(req) {
+  const authHeader = req.headers.autherization;
+
+  // When autherization header is blank
+  if (!authHeader) return res.status(403).send("No Token attached").end();
+  // When token exists
+  return authHeader.split(" ")[1];
+}
+
+function getEmail(token) {
+  return jwt.decode(token);
+}
+
 module.exports = {
   accountPins,
   sendPinByMail,
   authenticate,
+  getToken,
+  getEmail,
 };

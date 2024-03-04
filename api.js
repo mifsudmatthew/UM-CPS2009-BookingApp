@@ -11,6 +11,8 @@ const db = require("./database/test_functions");
 const queries = require("./database/schema_functions/user_functions");
 const sf = require("./server_functions");
 
+let currentUserEmail = ""
+
 // Log the current URL that is accessed
 apiRouter.use((req, _res, next) => {
   console.log(`API on ${req.url}`);
@@ -30,9 +32,9 @@ apiRouter.post("/authenticate", (req, res) => {
   });
 });
 
-apiRouter.post("/reset", (req, res) => {
+apiRouter.post("/reset", (req,res) => {
   console.log("Connected to reset page");
-  sf.sendPinByMail(res);
+  sf.sendPinByMail(currentUserEmail,res);
 });
 
 apiRouter.post("/booking", sf.authenticate, (req, res, next) => {
@@ -43,6 +45,7 @@ apiRouter.post("/booking", sf.authenticate, (req, res, next) => {
 
 apiRouter.post("/login", async (req, res) => {
   const email = req.body.email;
+  currentUserEmail = email;
   const password = req.body.password;
   const dbUser = await queries.retrieveUser(email);
 
@@ -67,13 +70,23 @@ apiRouter.post("/login", async (req, res) => {
         process.env.JWT_REFRESH
       );
 
-      res.json({ accessToken: accessToken, refreshToken: refreshToken });
+      res.json({
+        id: dbUser.data._id,
+        name: dbUser.data.name,
+        email: dbUser.data.email,
+        password: "",
+        balance: dbUser.data.balance,
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      });
     } else {
       return res.status(401).json({ message: "Not Allowed" });
     }
   } catch (err) {
     console.log(err);
-    return res.status(500).send(`Some kind of error in login ${err}`);
+    return res
+      .status(500)
+      .json({ message: "USERSome kind of error in login", error: err });
   }
 });
 
@@ -81,10 +94,10 @@ apiRouter.post("/changepassword", async (req, res) => {
   for (i = 0; i < sf.accountPins.length; i++) {
     if (
       sf.accountPins[i].pin == req.body.pin &&
-      sf.accountPins[i].email == req.body.email
+      sf.accountPins[i].email == currentUserEmail
     ) {
       console.log(
-        await queries.resetPassword(req.body.email, req.body.password)
+        await queries.resetPassword(currentUserEmail, req.body.password)
       );
     }
   }

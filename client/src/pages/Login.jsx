@@ -1,17 +1,21 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 import { Post } from "../utils/ApiFunctions";
 
 import { useToken } from "../hooks/useToken";
+import { useUser } from "../hooks/useUser";
 
 function Login() {
+  let navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setToken } = useToken();
+  const { setUser } = useUser();
 
   // Send the login details to the server
   const handleSubmit = async (event) => {
+    // let navigate = useNavigate();
+
     event.preventDefault();
     // Check if the email and password fields are empty
     if (!email || !password) {
@@ -25,10 +29,11 @@ function Login() {
     }
 
     try {
-      const token = await Post("/api/login", { email, password });
+      const response = await Post("/api/login", { email, password });
 
-      console.log(token);
-      setToken(token);
+      setToken(response.accessToken, response.refreshToken);
+      setUser(response);
+      navigate("/reset");
     } catch (error) {
       console.error(`Error in ${error}`);
     }
@@ -50,7 +55,7 @@ function Login() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-      <br />
+        <br />
         <label>Password</label>
         <input
           placeholder="password"
