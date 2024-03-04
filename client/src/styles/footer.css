@@ -1,0 +1,24 @@
+.footer {
+    background-color: #bbbbb9;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px 0;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+  }
+
+  .footer-content img {
+    width: 100px;
+    height: auto;
+  }
+  
+  @media (max-width: 600px) {
+    .footer-content {
+      flex-direction: column;
+    }
+  }
