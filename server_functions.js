@@ -105,7 +105,10 @@ function getToken(req) {
   // When autherization header is blank
   if (!authHeader) return res.status(403).send("No Token attached").end();
   // When token exists
-  const token = authHeader.split(" ")[1];
+  return authHeader.split(" ")[1];
+}
+
+function getEmail(token) {
   return jwt.decode(token);
 }
 
@@ -114,4 +117,5 @@ module.exports = {
   sendPinByMail,
   authenticate,
   getToken,
+  getEmail,
 };
