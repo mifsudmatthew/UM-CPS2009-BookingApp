@@ -1,0 +1,67 @@
+.aboutus-container {
+  max-width: 1200px;  
+  margin: auto;
+  padding: 20px;
+  font-family: 'Roboto', sans-serif;
+}
+
+ .aboutus-title{
+  font-weight: bold;
+  font-size: 2.5em; 
+  margin-bottom: 0.5em;
+}
+
+ .aboutus-text {
+  font-size: 1.2em;
+  line-height: 1.5;
+  margin-bottom: 1.5em;
+}
+
+.statistics {
+  display: flex;
+  justify-content: space-around; 
+  margin-top: 2em;
+}
+
+.stat-item {
+  text-align: center; 
+}
+
+.stat-count {
+  display: block;
+  font-size: 2em; 
+  font-weight: bold;
+}
+
+.stat-label {
+  display: block; 
+  font-size: 1em; 
+  color: #666; 
+}
+
+.stat-logo {
+  width: 50px; 
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .aboutus-title {
+    font-size: 2em; 
+  }
+
+  .aboutus-text {
+    font-size: 1em; 
+  }
+
+  .stat-logo {
+    width: 30px; 
+  }
+
+  .stat-count {
+    font-size: 1em; 
+  }
+
+  .stat-label {
+    font-size: 0.8em; 
+  }
+}
