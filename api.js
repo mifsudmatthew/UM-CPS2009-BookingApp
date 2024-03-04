@@ -55,9 +55,8 @@ apiRouter.post("/login", async (req, res) => {
   // Email Exists
   try {
     if (await bcrypt.compare(password, dbUser.data.password)) {
-      const user = await queries.validateLogin(email, password);
       const accessToken = jwt.sign(
-        { email: user.data.email },
+        { email: dbUser.data.email },
         process.env.JWT_ACCESS,
         {
           expiresIn: "15m",
