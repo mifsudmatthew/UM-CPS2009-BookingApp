@@ -97,7 +97,7 @@ apiRouter.post("/changepassword", async (req, res) => {
       sf.accountPins[i].email == currentUserEmail
     ) {
       console.log(
-        await queries.resetPassword(currentUserEmail, req.body.password)
+        await queries.resetPassword(currentUserEmail, await bcrypt.hash(req.body.password, 10))
       );
     }
   }

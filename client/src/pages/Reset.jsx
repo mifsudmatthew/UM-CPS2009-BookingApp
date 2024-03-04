@@ -102,7 +102,7 @@ export default function Reset() {
         )}
         <br />
         <div className={"inputContainer"}>
-          <button onClick={handleChange}>CHANGE PASSWORD</button>
+          <button onClick={handleChange} disabled={!passwordMatch || !pinValid}>CHANGE PASSWORD</button>
         </div>
       </div>
     </>
