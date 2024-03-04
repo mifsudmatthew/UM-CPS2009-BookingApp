@@ -29,7 +29,7 @@ apiRouter.post("/authenticate", (req, res) => {
   });
 });
 
-apiRouter.post("/reset", sf.authenticate, (req, res) => {
+apiRouter.post("/reset", (req, res) => {
   console.log("Connected to reset page");
   sf.sendPinByMail(res);
 });
