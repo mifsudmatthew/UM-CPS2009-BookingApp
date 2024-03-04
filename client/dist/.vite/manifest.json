@@ -5,14 +5,12 @@
     "isEntry": true,
     "css": [
       "assets/index-BP-3BBpS.css"
-      "assets/index-BP-3BBpS.css"
     ],
     "assets": [
       "assets/racket-Dl6xEiXo.png",
       "assets/grass-court-Ch3CFGZv.webp",
       "assets/clay-court-ChGvYgJv.webp",
       "assets/indoor-court-UFsrzs5m.webp",
-      "assets/logo-CuQNDwzK.png",
       "assets/logo-CuQNDwzK.png",
       "assets/banner-D_O1PRSu.jpg"
     ]
@@ -32,10 +30,6 @@
   "src/assets/indoor-court.webp": {
     "file": "assets/indoor-court-UFsrzs5m.webp",
     "src": "src/assets/indoor-court.webp"
-  },
-  "src/assets/logo.png": {
-    "file": "assets/logo-CuQNDwzK.png",
-    "src": "src/assets/logo.png"
   },
   "src/assets/logo.png": {
     "file": "assets/logo-CuQNDwzK.png",
