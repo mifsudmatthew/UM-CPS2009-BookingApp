@@ -1,7 +1,9 @@
 import { useState, useMemo } from "react";
 import { Post } from "../utils/ApiFunctions";
+import {useNavigate} from "react-router-dom";
 
 export default function Reset() {
+  let navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [pin, setPin] = useState("");
@@ -45,6 +47,7 @@ export default function Reset() {
       const response = await Post("/api/changepassword", data);
 
       console.log("Success:", response);
+      navigate("/");
     } catch (error) {
       console.error(error);
     }
