@@ -50,9 +50,7 @@ function Login() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-      </div>
       <br />
-      <div className={"inputContainer"}>
         <label>Password</label>
         <input
           placeholder="password"
