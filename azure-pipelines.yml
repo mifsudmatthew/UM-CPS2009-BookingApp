@@ -23,3 +23,8 @@ steps:
   - script: |
       npm run build
     displayName: "Building the frontend"
+
+  - script: |
+      cd ..
+      npm i
+    displayName: "Server Install"
