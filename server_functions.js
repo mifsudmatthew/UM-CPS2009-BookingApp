@@ -113,4 +113,5 @@ module.exports = {
   accountPins,
   sendPinByMail,
   authenticate,
+  getToken,
 };
