@@ -44,7 +44,7 @@ function addPinEntry(email, pin) {
 }
 
 // Function to send an email to user requesting a password reset.
-async function sendPinByMail(loggedInEmail,res) {
+async function sendPinByMail(loggedInEmail, res) {
   var app_email = loggedInEmail; // Address of account requesting pin
   var generated_pin = getRandomPin(); // Generating a new pin
 
@@ -97,6 +97,16 @@ function authenticate(req, res, next) {
     console.log(decoded);
     next();
   });
+}
+
+function getToken(req) {
+  const authHeader = req.headers.autherization;
+
+  // When autherization header is blank
+  if (!authHeader) return res.status(403).send("No Token attached").end();
+  // When token exists
+  const token = authHeader.split(" ")[1];
+  return jwt.decode(token);
 }
 
 module.exports = {
