@@ -44,7 +44,6 @@ apiRouter.post("/login", async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const dbUser = await queries.retrieveUser(email);
-  console.log(dbUser);
 
   // Check if email exists
   if (!dbUser.result) {
@@ -66,8 +65,6 @@ apiRouter.post("/login", async (req, res) => {
         { email: dbUser.data.email },
         process.env.JWT_REFRESH
       );
-
-      console.log(`${accessToken}\n\n${refreshToken}`);
 
       res.json({ accessToken: accessToken, refreshToken: refreshToken });
     } else {
