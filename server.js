@@ -11,7 +11,7 @@ const path = require("path");
 const express = require("express");
 // API Router
 const apiRouter = require("./api");
-
+const cors = require('cors');
 // Defining PORT of the server to listen on
 // if PORT is not defined in .env then it will listen on 3001
 const PORT = process.env.PORT || 3001;
@@ -26,6 +26,7 @@ app.use(express.static(static_files));
 // Parsing incoming JSON requests and placing parsed data in req.body
 app.use(express.json());
 
+app.use(cors());
 // Add api route
 app.use("/api", apiRouter);
 

@@ -12,7 +12,12 @@ function Topup() {
 
     try {
       console.log("Amount: ", numericAmount);
-      const data = await Post("/api/topup", { amount: numericAmount }, token);
+      const data = await Post("/api/topup", {amount: numericAmount}, token)
+      
+      if(data.url){
+        window.location.href = data.url
+      }
+      
       console.log(data);
     } catch (error) {
       console.error(`Error in top-up: ${error}`);
