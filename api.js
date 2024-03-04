@@ -3,7 +3,7 @@ const apiRouter = express.Router();
 
 // Authentication
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const mongoose = require("./database/mongoose"); // Running the database
 const db = require("./database/test_functions");
