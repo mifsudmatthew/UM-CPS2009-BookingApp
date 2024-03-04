@@ -21,7 +21,7 @@ async function retrieveCourt(courtID) {
         return { result: true, data: courts_found, error: null };
 
     } catch (error_message) {
-        return {result: false, data: null, error: error_message};
+        throw new Error("Failed to Connect to Database");
     }
 }
 
@@ -40,7 +40,7 @@ async function registerCourt({price_new, address_new, longitude_new, latitude_ne
         return {result: true, data: await newCourt.save(), error: null};
 
     }catch (error_message) {
-        return {result: false, data: null, error: error_message};
+        throw new Error("Failed to Connect to Database");
     }
 }
 
