@@ -37,4 +37,5 @@ app.route("*").get((_req, res) => {
 // Listen on specified port
 app.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`);
+  console.log("Please work");
 });
