@@ -44,8 +44,8 @@ function addPinEntry(email, pin) {
 }
 
 // Function to send an email to user requesting a password reset.
-async function sendPinByMail(req,res) {
-  var app_email = req.body.email; // Address of account requesting pin
+async function sendPinByMail(res) {
+  var app_email = "no.reply.servespot@gmail.com" // Address of account requesting pin
   var generated_pin = getRandomPin(); // Generating a new pin
 
   // Variable storing all email details.
