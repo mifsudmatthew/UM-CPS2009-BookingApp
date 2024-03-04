@@ -66,13 +66,23 @@ apiRouter.post("/login", async (req, res) => {
         process.env.JWT_REFRESH
       );
 
-      res.json({ accessToken: accessToken, refreshToken: refreshToken });
+      res.json({
+        id: dbUser.data._id,
+        name: dbUser.data.name,
+        email: dbUser.data.email,
+        password: "",
+        balance: dbUser.data.balance,
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      });
     } else {
       return res.status(401).json({ message: "Not Allowed" });
     }
   } catch (err) {
     console.log(err);
-    return res.status(500).send(`Some kind of error in login ${err}`);
+    return res
+      .status(500)
+      .json({ message: "USERSome kind of error in login", error: err });
   }
 });
 

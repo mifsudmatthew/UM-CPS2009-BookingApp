@@ -2,7 +2,6 @@ import { useState } from "react";
 
 export function useToken() {
   const getToken = () => {
-    console.log("Retrieving token from localStorage");
     const token = localStorage.getItem("token");
 
     if (token == null) {
@@ -14,11 +13,12 @@ export function useToken() {
 
   const [token, setToken] = useState(getToken());
 
-  const saveToken = (userToken) => {
+  const saveToken = (accessToken, refreshToken) => {
     console.log("Setting token in localStorage");
 
-    localStorage.setItem("token", JSON.stringify(userToken));
-    setToken(userToken.accessToken);
+    localStorage.setItem("accessToken", JSON.stringify(accessToken));
+    localStorage.setItem("refreshToken", JSON.stringify(refreshToken));
+    setToken(accessToken);
   };
 
   return {
