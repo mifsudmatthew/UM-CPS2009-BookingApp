@@ -1,4 +1,5 @@
 import defaultProfilePic from '../assets/default-pp.jpg';
+import { NavLink } from "react-router-dom";
 
 const ProfileSidebar = () => {
     return (
@@ -9,9 +10,21 @@ const ProfileSidebar = () => {
             <h3>Hello, Name!</h3>
         <nav>
           <ul>
-            <li>Account</li>
-            <li>Bookings</li>
-            <li>Balance</li>
+            <li>
+                <NavLink to="/profile">Profile</NavLink>
+            </li>
+            <li>
+                <NavLink to="/profile/bookings">Bookings</NavLink>
+            </li>
+            <li>
+                <NavLink to="/profile/balance">Balance</NavLink>
+            </li>
+            <li>
+                <NavLink to="/profile/topup">Top Up</NavLink>
+            </li>
+            <li>
+                <NavLink to="/reset">Change Password</NavLink>
+            </li>
           </ul>
         </nav>
       </aside>

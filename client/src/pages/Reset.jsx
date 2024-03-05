@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Post } from "../utils/ApiFunctions";
 import { useNavigate } from "react-router-dom";
 
@@ -8,6 +8,7 @@ export default function Reset() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [pin, setPin] = useState("");
+  const [isValid, setIsValid] = useState(false);
 
   const passwordMatch = useMemo(() => {
     return password === confirmPassword;
@@ -23,19 +24,22 @@ export default function Reset() {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }, [email]);
 
+  useEffect(() => {
+    if (isValid) {
+      alert("Email sent successfully!"); // This replaces your <p>Alert woop</p> with an actual alert box
+      setIsValid(false);
+    }
+  }, [isValid]); 
+
   const handleSubmit = async (event) => {
+
     event.preventDefault();
 
-    const data = {
-      email // Add email to the data sent to /reset
-    };
-
-    console.log("Data:", data);
     try {
-      const response = await Post("/api/reset", data);
-
-      console.log("Success:", response);
+      const response = await Post("/api/reset", { email: email });
+      setIsValid(true);
     } catch (error) {
+      alert("Error: Could not send reset email.");
       console.error(error);
     }
   };
@@ -54,8 +58,10 @@ export default function Reset() {
       const response = await Post("/api/resetpassword", data);
 
       console.log("Success:", response);
+
       navigate("/");
     } catch (error) {
+      alert("Error: Could not reset password.");
       console.error(error);
     }
   };
@@ -64,19 +70,26 @@ export default function Reset() {
     <>
       <h1>Reset</h1>
       <div className={"mainContainerReset"}>
+      <div className={"inputContainer"}>
+      <br /><br />
+        </div>
         <div className={"inputContainer"}>
           <input
+           className="inputBox"
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <br />
-        <button onClick={handleSubmit} disabled={!isEmailValid}>RESET PASSWORD</button>
+      <br></br>
+      <button onClick={handleSubmit} disabled={!isEmailValid}>
+          RESET PASSWORD
+      </button>
         <br />
         <div className={"inputContainer"}>
           <input
+            className="inputBox"
             type="password"
             placeholder="Password"
             value={password}
@@ -86,6 +99,7 @@ export default function Reset() {
         <br />
         <div className={"inputContainer"}>
           <input
+            className="inputBox"
             type="password"
             placeholder="Confirm Password"
             value={confirmPassword}
@@ -95,6 +109,7 @@ export default function Reset() {
         <br />
         <div className={"inputContainer"}>
           <input
+            className="inputBox"
             type="text"
             placeholder="PIN (4 digits)"
             value={pin}
@@ -104,12 +119,26 @@ export default function Reset() {
             }}
           />
         </div>
-        {pinValid ? <></> : <div style={{ color: "rgba(186, 26, 26, 1)" }}>PIN must be 4 digits.</div>}
+        {pinValid ? (
+          <></>
+        ) : (
+          <div style={{ color: "rgba(186, 26, 26, 1)" }}>
+            PIN must be 4 digits.
+          </div>
+        )}
         <br />
-        {passwordMatch ? <></> : <div style={{ color: "rgba(186, 26, 26, 1)" }}>Passwords do not match.</div>}
+        {passwordMatch ? (
+          <></>
+        ) : (
+          <div style={{ color: "rgba(186, 26, 26, 1)" }}>
+            Passwords do not match.
+          </div>
+        )}
         <br />
         <div className={"inputContainer"}>
-          <button onClick={handleChange} disabled={!passwordMatch || !pinValid}>CHANGE PASSWORD</button>
+        <button onClick={handleChange} disabled={!isEmailValid || !passwordMatch || !pinValid}>
+        CHANGE PASSWORD
+        </button>
         </div>
       </div>
     </>
