@@ -1,10 +1,6 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Post } from "../utils/ApiFunctions";
 import { useNavigate } from "react-router-dom";
-
-const alertUser = () => {
-  alert("Eamil sent");
-};
 
 export default function Reset() {
   let navigate = useNavigate();
@@ -28,14 +24,22 @@ export default function Reset() {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }, [email]);
 
+  useEffect(() => {
+    if (isValid) {
+      alert("Email sent successfully!"); // This replaces your <p>Alert woop</p> with an actual alert box
+      setIsValid(false);
+    }
+  }, [isValid]); 
+
   const handleSubmit = async (event) => {
+
     event.preventDefault();
 
     try {
       const response = await Post("/api/reset", { email: email });
-
       setIsValid(true);
     } catch (error) {
+      alert("Error: Could not send reset email.");
       console.error(error);
     }
   };
@@ -54,8 +58,10 @@ export default function Reset() {
       const response = await Post("/api/resetpassword", data);
 
       console.log("Success:", response);
+
       navigate("/");
     } catch (error) {
+      alert("Error: Could not reset password.");
       console.error(error);
     }
   };
@@ -123,12 +129,10 @@ export default function Reset() {
         )}
         <br />
         <div className={"inputContainer"}>
-          <button onClick={handleChange} disabled={!passwordMatch || !pinValid}>
-            CHANGE PASSWORD
-          </button>
+        <button onClick={handleChange} disabled={!isEmailValid || !passwordMatch || !pinValid}>
+        CHANGE PASSWORD
+        </button>
         </div>
-        <br />
-        {isValid ? <p>Alert woop</p> : <></>}
       </div>
     </>
   );
