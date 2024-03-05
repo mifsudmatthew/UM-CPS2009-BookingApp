@@ -20,7 +20,6 @@
   }
   
   .profile {
-    flex: 1;
     padding: 1em;
     display: flex;
     flex-direction: column; 
@@ -28,8 +27,11 @@
   }
 
   .profile .header-title {
-    font-size: 5em;
+
+    font-size: 2em;
     font-weight: bolder;
+    margin-left: 40px;
+    margin-bottom: 40px;
   }
   
   .profile-picture button {
@@ -43,19 +45,50 @@
   
   .profile-form label {
     display: block;
-    margin-bottom: 1em;
+    margin-bottom: 1px;
+    text-align: left;
+    margin-left: 40px;
   }
+
+  .profile-form input[type="text"]{
+    margin-left: 40px;
+    margin-top: 0.5em;
+    background-color: #e8e9e6; 
+    color: #fff; 
+    transition: background-color 0.3s; 
+    height: 30px;
+    width: 500px;
+    border-radius: 8px;
+    border: 1px solid grey;
+    margin-bottom: 30px;
+}
+
+.profile-form input[type="text"]:focus,
+.profile-form select:focus {
+  background-color: #ffffff; 
+  color: #fff;
+  border: 1px solid #777;
+}
   
   .profile-form input[type="text"],
   .profile-form select,
   .profile-form textarea {
-    width: 50%;
     padding: 0.5em;
     margin-top: 0.5em;
   }
   
   .profile-form textarea {
-    height: 100px; 
+    height: 100px;
+    background-color: #ffffff; 
+    color: #fff; 
+    border: 1px solid #555;
+    transition: background-color 0.3s;
+  }
+  
+  .profile-form textarea:focus {
+    background-color: #555; 
+    color: #fff;
+    border: 1px solid #777;
   }
   
   .profile-image {
