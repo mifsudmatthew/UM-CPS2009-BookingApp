@@ -15,7 +15,7 @@ const stripe = require("stripe")(process.env.STRIPE_KEY);
 const mongoose = require("./database/mongoose"); // Running the database
 const db = require("./database/test_functions");
 const queries = require("./database/schema_functions/user_functions");
-
+const stripe_queries = require("./database/schema_functions/stripe_functions");
 // Util functions
 const sf = require("./server_functions");
 
@@ -162,7 +162,7 @@ apiRouter.post("/changepassword", async (req, res) => {
   res.status(400).json({ message: "Fail" });
 });
 
-apiRouter.post("/topup", async (req, res) => {
+apiRouter.post("/topup", sf.authenticateToken, async (req, res) => {
   const amount = req.body.amount;
   const url = req.headers.host;
   console.log(url);
@@ -203,17 +203,26 @@ apiRouter.post("/success", sf.authenticateToken,async (req, res) => {
     const session = await stripe.checkout.sessions.retrieve(session_id);
 
     const email = req.user.email;
-    console.log("EMAIL: " + email);
 
+    try{
+      result_session = await stripe_queries.retrieveStripe(session_id);
+    }catch{
+      return res.status(500).json({ error: "Failed retrieve query" });
+    }
+    
     // Check if payment is successful
-    if (session.payment_status === "paid") {
-      console.log("SUCESS");
+    if (session.payment_status === "paid" && result_session.result == false) {
+      console.log("Successfull Payment");
       // Update the balance only if payment is successful
       queries.updateUserBalance(email, session.amount_total / 100); // Convert amount to euros
+      stripe_queries.registerStripe({session_id : session_id,
+                                     email_new  : email,
+                                     amount_new : session.amount_total / 100
+                                    });
       return res.json({ success: true });
     }
     
-    console.log("FAILED");
+    onsole.log("Failed Payment");
     // Payment not successful
     return res.json({ success: false });
   } catch (error) {
