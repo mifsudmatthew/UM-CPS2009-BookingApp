@@ -2,6 +2,7 @@
     display: flex;
     font-family: 'Roboto', sans-serif;
     min-height: 100vh;
+    border-top: 1px solid #ccc;
   }
 
   .sidebar {
@@ -98,3 +99,18 @@
     object-fit: cover; 
   }
   
+  .bookings-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.bookings-table th,
+.bookings-table td {
+  border: 1px solid #dde0d5; 
+  padding: 8px;
+  text-align: left;
+}
+
+.bookings-table th {
+  background-color: #e7f1e3; 
+}
