@@ -10,7 +10,7 @@ async function retrieveCourt(courtID) {
         const courts_found =  await courts_schema.findByID(courtID);
 
         // -------------------- Validation
-        if (user_found == null) {
+        if (courts_found == null) {
             return { result : false,
                      data   : null,
                      error  : "No courts found matching the ID: " + courtID
