@@ -1,15 +1,12 @@
-import { useContext } from "react";
+import '../styles/profile.css'; 
+import ProfileSidebar  from '../components/ProfileSidebar';
 
-import { AuthContext } from "../context/Authenication";
-
-function Profile() {
-  const authenication = useContext(AuthContext);
+const Profile = () => {
   return (
-    <>
-      <h1>Profile</h1>
-      {authenication ? <p>{authenication}</p> : <p>Not Auth</p>}
-    </>
+    <div className="profile-container">
+      <ProfileSidebar />
+    </div>
   );
-}
+};
 
 export default Profile;
