@@ -133,9 +133,9 @@ apiRouter.post("/register", async (req, res) => {
   }
 });
 
-apiRouter.post("/reset", sf.authenticateToken, (req, res) => {
+apiRouter.post("/reset", (req, res) => {
   console.log("Connected to reset page");
-  sf.sendPinByMail(req.user.email, res);
+  sf.sendPinByMail(req.body.email, res);
 });
 
 apiRouter.post("/booking", sf.authenticateToken, (req, res, next) => {
@@ -182,8 +182,8 @@ apiRouter.post("/topup", async (req, res) => {
       ],
       payment_method_types: ["card"],
       mode: "payment",
-      success_url: `https://${req.headers.host}/profile/topup?session_id={CHECKOUT_SESSION_ID}`, // Include token in success_url
-      cancel_url: `https://${req.headers.host}/profile/topup?session_id={CHECKOUT_SESSION_ID}`, // Include token in cancel_url
+      success_url: `http://${req.headers.host}/profile/topup?session_id={CHECKOUT_SESSION_ID}`, // Include token in success_url
+      cancel_url: `http://${req.headers.host}/profile/topup?session_id={CHECKOUT_SESSION_ID}`, // Include token in cancel_url
     });
 
     res.json({ url: session.url });
@@ -207,11 +207,13 @@ apiRouter.post("/success", sf.authenticateToken,async (req, res) => {
 
     // Check if payment is successful
     if (session.payment_status === "paid") {
+      console.log("SUCESS");
       // Update the balance only if payment is successful
       queries.updateUserBalance(email, session.amount_total / 100); // Convert amount to euros
       return res.json({ success: true });
     }
-
+    
+    console.log("FAILED");
     // Payment not successful
     return res.json({ success: false });
   } catch (error) {

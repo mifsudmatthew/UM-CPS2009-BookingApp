@@ -1,9 +1,10 @@
 import { useState, useMemo } from "react";
 import { Post } from "../utils/ApiFunctions";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Reset() {
   let navigate = useNavigate();
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [pin, setPin] = useState("");
@@ -16,12 +17,17 @@ export default function Reset() {
     return pin.length === 4;
   }, [pin]);
 
+  // Email validation logic
+  const isEmailValid = useMemo(() => {
+    // Simple regex for basic email validation
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }, [email]);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const data = {
-      password,
-      pin,
+      email // Add email to the data sent to /reset
     };
 
     console.log("Data:", data);
@@ -57,7 +63,16 @@ export default function Reset() {
     <>
       <h1>Reset</h1>
       <div className={"mainContainerReset"}>
-        <button onClick={handleSubmit}>RESET PASSWORD</button>
+        <div className={"inputContainer"}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <br />
+        <button onClick={handleSubmit} disabled={!isEmailValid}>RESET PASSWORD</button>
         <br />
         <div className={"inputContainer"}>
           <input
@@ -83,26 +98,14 @@ export default function Reset() {
             placeholder="PIN (4 digits)"
             value={pin}
             onChange={(event) => {
-              const inputPin = event.target.value.replace(/\D/g, ""); // Remove non-digit characters, corrected to global replacement
+              const inputPin = event.target.value.replace(/\D/g, "");
               setPin(inputPin);
             }}
           />
         </div>
-        {pinValid ? (
-          <></>
-        ) : (
-          <div style={{ color: "rgba(186, 26, 26, 1)" }}>
-            PIN must be 4 digits.
-          </div>
-        )}
+        {pinValid ? <></> : <div style={{ color: "rgba(186, 26, 26, 1)" }}>PIN must be 4 digits.</div>}
         <br />
-        {passwordMatch ? (
-          <></>
-        ) : (
-          <div style={{ color: "rgba(186, 26, 26, 1)" }}>
-            Passwords do not match.
-          </div>
-        )}
+        {passwordMatch ? <></> : <div style={{ color: "rgba(186, 26, 26, 1)" }}>Passwords do not match.</div>}
         <br />
         <div className={"inputContainer"}>
           <button onClick={handleChange} disabled={!passwordMatch || !pinValid}>CHANGE PASSWORD</button>
