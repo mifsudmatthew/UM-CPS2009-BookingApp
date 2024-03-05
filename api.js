@@ -216,7 +216,7 @@ apiRouter.get("/success", async (req, res) => {
     }
 
     // Redirect or respond as needed
-    res.redirect(`http://${req.header.host}/profile/topup`); // Redirect to a success page
+    res.redirect(`http://${req.headers.host}/profile/topup`); // Redirect to a success page
   } catch (error) {
     console.error("Error handling successful payment:", error);
     res.status(500).json({ error: "Failed to handle successful payment" });
