@@ -44,13 +44,14 @@ export default function Reset() {
     event.preventDefault();
 
     const data = {
+      email,
       password,
       pin,
     };
 
     console.log("Data:", data);
     try {
-      const response = await Post("/api/changepassword", data);
+      const response = await Post("/api/resetpassword", data);
 
       console.log("Success:", response);
       navigate("/");
