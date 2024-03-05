@@ -183,14 +183,8 @@ apiRouter.post("/topup", async (req, res) => {
       ],
       payment_method_types: ["card"],
       mode: "payment",
-      success_url: `https:/${req.header.host}/profile/topup?success=true`, // Include token in success_url
-      cancel_url: `https://${req.header.host}/profile/topup?success=false`, // Include token in cancel_url
-      payment_intent_data: {
-        metadata: {
-          webhook_endpoint: `https://${url}/webhook`,
-          token: token, // Pass token as metadata
-        },
-      },
+      success_url: `https://${req.headers.host}/profile/topup?session_id={CHECKOUT_SESSION_ID}`, // Include token in success_url
+      cancel_url: `https://${req.headers.host}/profile/topup?session_id={CHECKOUT_SESSION_ID}`, // Include token in cancel_url
     });
 
     res.json({ url: session.url });
@@ -200,20 +194,29 @@ apiRouter.post("/topup", async (req, res) => {
   }
 });
 
-// Endpoint to handle webhook events from Stripe
-apiRouter.post("/webhook", async (req, res) => {
-  const event = req.body;
-  console.log("Send Help Please")
-  // Handle the event
-  if (event.type === "checkout.session.completed") {
-    const session = event.data.object;
-    const customerId = session.customer;
-    const amount = session.amount_total / 100; // Convert amount to dollars
-    const token = session.payment_intent.metadata.token; // Retrieve token from metadata
+// Endpoint to handle successful payment
+apiRouter.post("/success", async (req, res) => {
+  try {
+    // Extract the session ID from the request body
+    const { session_id } = req.body;
 
-    // Update user balance or perform other actions based on successful payment
-    queries.updateUserBalance(customerId, amount, token);
+    // Retrieve the session from Stripe
+    const session = await stripe.checkout.sessions.retrieve(session_id);
+
+    const email = sf.getEmail(req.query.token);
+    console.log("EMAIL: " + email);
+
+    // Check if payment is successful
+    if (session.payment_status === "paid") {
+      // Update the balance only if payment is successful
+      queries.updateUserBalance(email, session.amount_total / 100); // Convert amount to euros
+      return res.json({ success: true });
+    }
+
+    // Payment not successful
+    return res.json({ success: false });
+  } catch (error) {
+    console.error("Error handling successful payment:", error);
+    return res.status(500).json({ error: "Failed to handle successful payment" });
   }
-
-  res.status(200).end();
-});
+})
