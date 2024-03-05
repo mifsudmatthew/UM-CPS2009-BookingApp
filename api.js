@@ -182,12 +182,8 @@ apiRouter.post("/topup", async (req, res) => {
       ],
       payment_method_types: ["card"],
       mode: "payment",
-      success_url: `https://${url}/api/success?session_id={CHECKOUT_SESSION_ID}&token=${sf.getToken(
-        req
-      )}`,
-      cancel_url: `https://${url}/api/cancel?session_id={CHECKOUT_SESSION_ID}&token=${sf.getToken(
-        req
-      )}`,
+      success_url: `https://${req.headers.host}/profile/topup?session_id={CHECKOUT_SESSION_ID}`, // Include token in success_url
+      cancel_url: `https://${req.headers.host}/profile/topup?session_id={CHECKOUT_SESSION_ID}`, // Include token in cancel_url
     });
 
     res.json({ url: session.url });
@@ -198,39 +194,29 @@ apiRouter.post("/topup", async (req, res) => {
 });
 
 // Endpoint to handle successful payment
-apiRouter.get("/success", async (req, res) => {
+apiRouter.post("/success", sf.authenticateToken,async (req, res) => {
   try {
-    // Extract the session ID from the query parameters
-    const sessionId = req.query.session_id;
+    // Extract the session ID from the request body
+    const { session_id } = req.body;
 
     // Retrieve the session from Stripe
-    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    const session = await stripe.checkout.sessions.retrieve(session_id);
 
-    email = sf.getEmail(req.query.token);
+    const email = req.user.email;
     console.log("EMAIL: " + email);
+
     // Check if payment is successful
-    console.log(session.payment_status);
     if (session.payment_status === "paid") {
       // Update the balance only if payment is successful
-      queries.updateUserBalance(email, session.amount_total / 100); // Convert amount to dollars
+      queries.updateUserBalance(email, session.amount_total / 100); // Convert amount to euros
+      return res.json({ success: true });
     }
 
-    // Redirect or respond as needed
-    res.redirect(`http://${req.headers.host}/profile/topup`); // Redirect to a success page
+    // Payment not successful
+    return res.json({ success: false });
   } catch (error) {
     console.error("Error handling successful payment:", error);
-    res.status(500).json({ error: "Failed to handle successful payment" });
+    return res.status(500).json({ error: "Failed to handle successful payment" });
   }
-});
-
-// Endpoint to handle successful payment
-apiRouter.get("/cancel", async (req, res) => {
-  try {
-    // Redirect or respond as needed
-    res.redirect(`http://${req.header.host}/profile/topup`); // Redirect to a success page
-  } catch (error) {
-    console.error("Error handling successful payment:", error);
-    res.status(500).json({ error: "Failed to handle successful payment" });
-  }
-});
+})
 module.exports = apiRouter;
