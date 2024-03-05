@@ -9,6 +9,8 @@ import "./styles/app.css";
 
 /* Components */
 import Navbar from "./components/Navbar";
+import Bookings  from './components/Bookings';
+import Balance  from './components/Balance';
 
 /* Pages */
 import Home from "./pages/Home";
@@ -40,6 +42,10 @@ function App() {
             <Route path="/reset" element={<Reset />}></Route>
             <Route path="/booking" element={<Booking />}></Route>
             <Route path="/profile" exact element={<Profile />}></Route>
+            <Route path="/profile" element={<Profile />}>
+              <Route path="bookings" element={<Bookings />}></Route>
+              <Route path="balance" element={<Balance />}></Route>
+            </Route>
             <Route path="/profile/topup" element={<Topup />}></Route>
             <Route
               path="/profile/changepassword"
