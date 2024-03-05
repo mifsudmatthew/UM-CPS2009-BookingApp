@@ -133,9 +133,27 @@ apiRouter.post("/register", async (req, res) => {
   }
 });
 
-apiRouter.post("/reset", sf.authenticateToken, (req, res) => {
+apiRouter.post("/reset", (req, res) => {
   console.log("Connected to reset page");
-  sf.sendPinByMail(req.user.email, res);
+  sf.sendPinByMail(req.body.email, res);
+});
+
+apiRouter.post("/resetpassword", async (req, res) => {
+  for (i = 0; i < sf.accountPins.length; i++) {
+    if (
+      sf.accountPins[i].pin == req.body.pin &&
+      sf.accountPins[i].email == req.body.email
+    ) {
+      console.log(
+        await queries.resetPassword(
+          currentUserEmail,
+          await bcrypt.hash(req.body.password, 10)
+        )
+      );
+      return res.json({ message: "Success" });
+    }
+  }
+  res.status(400).json({ message: "Fail" });
 });
 
 apiRouter.post("/booking", sf.authenticateToken, (req, res, next) => {
@@ -144,11 +162,11 @@ apiRouter.post("/booking", sf.authenticateToken, (req, res, next) => {
   res.json({ message: "Booking added" });
 });
 
-apiRouter.post("/changepassword", async (req, res) => {
+apiRouter.post("/changepassword", sf.authenticateToken, async (req, res) => {
   for (i = 0; i < sf.accountPins.length; i++) {
     if (
       sf.accountPins[i].pin == req.body.pin &&
-      sf.accountPins[i].email == currentUserEmail
+      sf.accountPins[i].email == req.body.email
     ) {
       console.log(
         await queries.resetPassword(
@@ -156,7 +174,7 @@ apiRouter.post("/changepassword", async (req, res) => {
           await bcrypt.hash(req.body.password, 10)
         )
       );
-      res.json({ message: "Success" });
+      return res.json({ message: "Success" });
     }
   }
   res.status(400).json({ message: "Fail" });
