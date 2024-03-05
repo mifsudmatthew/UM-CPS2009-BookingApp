@@ -133,9 +133,9 @@ apiRouter.post("/register", async (req, res) => {
   }
 });
 
-apiRouter.post("/reset", sf.authenticateToken, (req, res) => {
+apiRouter.post("/reset", (req, res) => {
   console.log("Connected to reset page");
-  sf.sendPinByMail(req.user.email, res);
+  sf.sendPinByMail(req.body.email, res);
 });
 
 apiRouter.post("/booking", sf.authenticateToken, (req, res, next) => {
