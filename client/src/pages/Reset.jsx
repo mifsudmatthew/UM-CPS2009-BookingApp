@@ -70,8 +70,15 @@ export default function Reset() {
     <>
       <h1>Reset</h1>
       <div className={"mainContainerReset"}>
+      <div className={"inputContainer"}>
+      <button onClick={handleSubmit} disabled={!isEmailValid}>
+          RESET PASSWORD
+        </button>
+        <br /><br />
+        </div>
         <div className={"inputContainer"}>
           <input
+           className="inputBox"
             type="email"
             placeholder="Email"
             value={email}
@@ -79,12 +86,9 @@ export default function Reset() {
           />
         </div>
         <br />
-        <button onClick={handleSubmit} disabled={!isEmailValid}>
-          RESET PASSWORD
-        </button>
-        <br />
         <div className={"inputContainer"}>
           <input
+            className="inputBox"
             type="password"
             placeholder="Password"
             value={password}
@@ -94,6 +98,7 @@ export default function Reset() {
         <br />
         <div className={"inputContainer"}>
           <input
+            className="inputBox"
             type="password"
             placeholder="Confirm Password"
             value={confirmPassword}
@@ -103,6 +108,7 @@ export default function Reset() {
         <br />
         <div className={"inputContainer"}>
           <input
+            className="inputBox"
             type="text"
             placeholder="PIN (4 digits)"
             value={pin}
