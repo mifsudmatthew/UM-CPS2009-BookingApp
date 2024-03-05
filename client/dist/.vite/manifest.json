@@ -1,10 +1,10 @@
 {
   "index.html": {
-    "file": "assets/index-BNUrXBFW.js",
+    "file": "assets/index-C-JS9cZJ.js",
     "src": "index.html",
     "isEntry": true,
     "css": [
-      "assets/index-D0tLHuOb.css"
+      "assets/index-mcjDmm6K.css"
     ],
     "assets": [
       "assets/racket-Dl6xEiXo.png",
@@ -12,6 +12,7 @@
       "assets/clay-court-ChGvYgJv.webp",
       "assets/indoor-court-UFsrzs5m.webp",
       "assets/logo-CuQNDwzK.png",
+      "assets/default-pp-CgVj1ebl.jpg",
       "assets/banner-D_O1PRSu.jpg"
     ]
   },
@@ -22,6 +23,10 @@
   "src/assets/clay-court.webp": {
     "file": "assets/clay-court-ChGvYgJv.webp",
     "src": "src/assets/clay-court.webp"
+  },
+  "src/assets/default-pp.jpg": {
+    "file": "assets/default-pp-CgVj1ebl.jpg",
+    "src": "src/assets/default-pp.jpg"
   },
   "src/assets/grass-court.webp": {
     "file": "assets/grass-court-Ch3CFGZv.webp",
