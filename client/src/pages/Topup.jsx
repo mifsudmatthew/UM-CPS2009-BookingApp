@@ -1,10 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Post } from "../utils/ApiFunctions";
 import { useToken } from "../hooks/useToken";
+import { useParams } from "react-router-dom";
 
 function Topup() {
   const [amount, setAmount] = useState("");
   const { accessToken } = useToken();
+
+  useEffect(async () => {
+    // Get the session_id
+    let { session_id } = useParams();
+    if (session_id) {
+      try {
+        const response = await Post("/api/success", { session_id: session_id });
+
+        console.log(response);
+      } catch (err) {
+        console.error(`Error in top-up with session_id: ${error}`);
+      }
+    }
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
