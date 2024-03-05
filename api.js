@@ -167,7 +167,6 @@ apiRouter.post("/topup", async (req, res) => {
   const url = req.headers.host;
   console.log(url);
   try {
-    const token = sf.getToken(req); // Retrieve token
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
@@ -195,7 +194,7 @@ apiRouter.post("/topup", async (req, res) => {
 });
 
 // Endpoint to handle successful payment
-apiRouter.post("/success", async (req, res) => {
+apiRouter.post("/success", sf.authenticateToken,async (req, res) => {
   try {
     // Extract the session ID from the request body
     const { session_id } = req.body;
@@ -203,7 +202,7 @@ apiRouter.post("/success", async (req, res) => {
     // Retrieve the session from Stripe
     const session = await stripe.checkout.sessions.retrieve(session_id);
 
-    const email = sf.getEmail(req.query.token);
+    const email = req.user.email;
     console.log("EMAIL: " + email);
 
     // Check if payment is successful
@@ -220,3 +219,4 @@ apiRouter.post("/success", async (req, res) => {
     return res.status(500).json({ error: "Failed to handle successful payment" });
   }
 })
+module.exports = apiRouter;
