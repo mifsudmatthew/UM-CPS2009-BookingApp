@@ -64,11 +64,13 @@ export default function Reset() {
     <>
       <h1>Reset</h1>
       <div className={"mainContainerReset"}>
+      <div className={"inputContainer"}>
       <button onClick={handleSubmit} disabled={!isEmailValid}>
           RESET PASSWORD
         </button>
+        <br /><br />
+        </div>
         <div className={"inputContainer"}>
-          
           <input
            className="inputBox"
             type="email"
@@ -77,7 +79,6 @@ export default function Reset() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <br />
         <br />
         <div className={"inputContainer"}>
           <input
