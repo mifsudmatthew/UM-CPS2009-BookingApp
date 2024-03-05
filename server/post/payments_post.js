@@ -12,7 +12,7 @@ const server_functions  = require("./server_functions");
  * After the checkout session is done the user is sent to /topup 
  * together with the session id
  */
-apiRouter.post("/topup", sf.authenticateToken, async (req, res) => {
+payment_router.post("/topup", server_functions.authenticateToken, async (req, res) => {
     try {
         const amount    = req.body.amount;
         const session   = await stripe.checkout.sessions.create({
@@ -46,7 +46,7 @@ apiRouter.post("/topup", sf.authenticateToken, async (req, res) => {
  * Makes sure session is not used twice.
  * Adds session to Database.
  */
-apiRouter.post("/success", sf.authenticateToken, async (req, res) => {
+payment_router.post("/success", server_functions.authenticateToken, async (req, res) => {
     try {
 
         const session_id    = req.body;
@@ -69,7 +69,7 @@ apiRouter.post("/success", sf.authenticateToken, async (req, res) => {
             });
             
             // ------------------ Update Balance
-            queries.updateUserBalance(email, session.amount_total / 100); 
+            user_queries.updateUserBalance(email, session.amount_total / 100); 
             
             return res.json({ success: true });
 
