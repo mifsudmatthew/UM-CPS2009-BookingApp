@@ -10,17 +10,22 @@ function Topup() {
   const session_id = new URLSearchParams(useLocation().search).get(
     "session_id"
   );
-  useEffect(async () => {
-    // Get the session_id
-    if (session_id) {
-      try {
-        const response = await Post("/api/success", { session_id: session_id });
+  useEffect(() => {
+    async function fetchData() {
+      // Get the session_id
+      if (session_id) {
+        try {
+          const response = await Post("/api/success", {
+            session_id: session_id,
+          });
 
-        console.log(response);
-      } catch (err) {
-        console.error(`Error in top-up with session_id: ${error}`);
+          console.log(response);
+        } catch (err) {
+          console.error(`Error in top-up with session_id: ${error}`);
+        }
       }
     }
+    fetchData();
   }, [session_id]);
 
   const handleSubmit = async (event) => {
