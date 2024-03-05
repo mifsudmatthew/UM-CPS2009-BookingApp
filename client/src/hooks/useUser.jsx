@@ -1,25 +1,19 @@
 import { useState } from "react";
 
 export function useUser() {
-  const getUser = () => {
-    const user = localStorage.getItem("user");
+  const [user, _setUser] = useState(getUser());
 
-    if (user == null) {
-      return {};
-    } else {
-      return user;
-    }
-  };
+  function getUser() {
+    return localStorage.getItem("user") || "";
+  }
 
-  const [user, setUser] = useState(getUser());
-
-  const saveUser = (user) => {
-    localStorage.setItem("user", JSON.stringify(user.email));
-    setUser(user.accessToken);
-  };
+  function setUser(user) {
+    localStorage.setItem("user", JSON.stringify(user));
+    _setUser(user.accessToken);
+  }
 
   return {
-    setUser: saveUser,
-    user: user,
+    setUser,
+    user,
   };
 }

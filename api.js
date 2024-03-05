@@ -1,14 +1,22 @@
+/* api.js
+ * Holds the routes that fall under '/api/*' */
+
 const express = require("express");
 const apiRouter = express.Router();
-const stripe = require("stripe")(process.env.STRIPE_KEY);
 
 // Authentication
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
+// Payment
+const stripe = require("stripe")(process.env.STRIPE_KEY);
+
+// Database
 const mongoose = require("./database/mongoose"); // Running the database
 const db = require("./database/test_functions");
 const queries = require("./database/schema_functions/user_functions");
+
+// Util functions
 const sf = require("./server_functions");
 
 let currentUserEmail = "";
@@ -19,79 +27,121 @@ apiRouter.use((req, _res, next) => {
   next();
 });
 
-apiRouter.post("/refreshtoken", (req, res) => {
-  const refreshToken = req.body.token;
-  if (refreshToken == null) return res.sendStatus(401);
-  if (true) return res.sendStatus(403);
-  jwt.verify(refreshToken, process.env.JWT_REFRESH, (err, user) => {
-    if (err) return res.sendStatus(403);
-    const accessToken = jwt.sign(user.data, process.env.JWT_ACCESS, {
-      expiresIn: "15m",
-    });
-    res.json({ accessToken: accessToken });
-  });
-});
-
-apiRouter.post("/test", sf.authenticate, (req, res) => {
+// Testing
+apiRouter.post("/test", sf.authenticateToken, (req, res) => {
   res.json();
 });
 
-apiRouter.post("/reset", (req, res) => {
-  console.log("Connected to reset page");
-  sf.sendPinByMail(currentUserEmail, res);
-});
+// To refresh the token
+apiRouter.post("/refresh", (req, res) => {
+  const refreshToken = req.body.refreshToken;
 
-apiRouter.post("/booking", sf.authenticate, (req, res, next) => {
-  console.log("Booking request has been received!");
-  db.saveTestCase();
-  res.json({ message: "Booking added" });
+  if (!refreshToken) {
+    // Check if refresh token is sent in request
+    return res.status(401).json({ error: "No refresh token attached" });
+  }
+
+  // Verify refreshToken
+  jwt.verify(refreshToken, process.env.JWT_REFRESH, (err, user) => {
+    if (err) {
+      // When error occurs
+      return res.sendStatus(403).json({ error: "Invalid refresh token" });
+    }
+
+    // Generate the two new tokens
+    const accessToken = sf.generateAccessToken(user);
+    const newRefreshToken = sf.generateRefreshToken(user);
+
+    // Send tokens back
+    res.json({ accessToken: accessToken, refreshToken: newRefreshToken });
+  });
 });
 
 apiRouter.post("/login", async (req, res) => {
   const email = req.body.email;
-  currentUserEmail = email;
   const password = req.body.password;
-  const dbUser = await queries.retrieveUser(email);
 
-  // Check if email exists
-  if (!dbUser.result) {
-    // Email no exist
-    return res.status(400).send("Email not in use").end();
-  }
+  // TEMP
+  // Temporary gloabl email for testing
+  currentUserEmail = email;
+  // TEMP
 
-  // Email Exists
   try {
+    const dbUser = await queries.retrieveUser(email);
+
+    // Check if email exists
+    if (!dbUser.result) {
+      // Email no exist
+      return res.status(400).send("Email not in use");
+    }
+
+    // Email exists
     if (await bcrypt.compare(password, dbUser.data.password)) {
-      const accessToken = jwt.sign(
-        { email: dbUser.data.email },
-        process.env.JWT_ACCESS,
-        {
-          expiresIn: "15m",
-        }
-      );
-      const refreshToken = jwt.sign(
-        { email: dbUser.data.email },
-        process.env.JWT_REFRESH
-      );
+      const user = {
+        id: dbUser.data._id,
+        email: dbUser.data.email,
+        name: dbUser.data.name,
+        balance: dbUser.data.balance,
+      };
+
+      const accessToken = sf.generateAccessToken(user);
+      const refreshToken = sf.generateRefreshToken(user);
 
       res.json({
-        id: dbUser.data._id,
-        name: dbUser.data.name,
-        email: dbUser.data.email,
-        password: "",
-        balance: dbUser.data.balance,
+        ...user,
         accessToken: accessToken,
         refreshToken: refreshToken,
       });
     } else {
-      return res.status(401).json({ message: "Not Allowed" });
+      return res.status(400).json({ error: "Passwords do not match" });
     }
   } catch (err) {
-    console.log(err);
-    return res
-      .status(500)
-      .json({ message: "USERSome kind of error in login", error: err });
+    return res.status(500).json({ error: `Failed to login user: ${err}` });
   }
+});
+
+apiRouter.post("/register", async (req, res) => {
+  const name = req.body.name;
+  const email = req.body.email;
+  const password = req.body.password;
+
+  try {
+    const dbUser = await queries.retrieveUser(email);
+
+    // Check if email exists
+    if (dbUser.result) {
+      // Email no exist
+      return res.status(400).send("Email already in use");
+    }
+
+    // Email exists
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    /* No need to check result of registerUser as it throws error now */
+
+    // Register user on DB
+    await queries.registerUser({
+      name_new: name,
+      email_new: email,
+      password_new: hashedPassword,
+    });
+
+    // User added to DB
+    return res.status(200).json({ message: "User successfully registered" });
+  } catch (err) {
+    return res.status(500).json({ error: `Failed to register user: ${err}` });
+  }
+});
+
+apiRouter.post("/reset", sf.authenticateToken, (req, res) => {
+  console.log("Connected to reset page");
+  sf.sendPinByMail(req.body.user.email, res);
+});
+
+apiRouter.post("/booking", sf.authenticateToken, (req, res, next) => {
+  console.log("Booking request has been received!");
+  db.saveTestCase();
+  res.json({ message: "Booking added" });
 });
 
 apiRouter.post("/changepassword", async (req, res) => {
@@ -111,36 +161,6 @@ apiRouter.post("/changepassword", async (req, res) => {
   }
   res.status(400).json({ message: "Fail" });
 });
-
-apiRouter.post("/register", async (req, res) => {
-  const email = req.body.email;
-
-  // Check if email exists
-  if (await queries.retrieveUser(email).result) {
-    // Duplicate email
-    return res.status(401).send("Email already in use").end();
-  }
-  // Email no exists
-
-  const name = req.body.name;
-  const password = await bcrypt.hash(req.body.password, 10);
-  console.log(password);
-  // Register user on DB
-  const response = await queries.registerUser({
-    email_new: email,
-    password_new: password,
-    name_new: name,
-  });
-
-  if (response.result) {
-    // User added to DB
-    res.status(200).send("User Registered").end();
-  } else {
-    // Failed to add User to DB
-    res.status(401).send(response.error).end();
-  }
-});
-
 
 apiRouter.post("/topup", async (req, res) => {
   const amount = req.body.amount;
