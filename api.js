@@ -227,7 +227,7 @@ apiRouter.post("/success", sf.authenticateToken,async (req, res) => {
     }catch{
       return res.status(500).json({ error: "Failed retrieve query" });
     }
-    
+
     // Check if payment is successful
     if (session.payment_status === "paid" && result_session.result == false) {
       console.log("Successfull Payment");
@@ -240,7 +240,7 @@ apiRouter.post("/success", sf.authenticateToken,async (req, res) => {
       return res.json({ success: true });
     }
     
-    onsole.log("Failed Payment");
+    console.log("Failed Payment");
     // Payment not successful
     return res.json({ success: false });
   } catch (error) {
