@@ -28,7 +28,8 @@ steps:
     displayName: "Install Node dependencies in frontend and build"
 
   - script: |
-      echo '$(appRoot)'
+      pwd
+      ls
       npm i
     displayName: "Server Install"
 
@@ -45,5 +46,5 @@ steps:
       azureSubscription: 'Azure for Students (ddc1cb0e-7021-43ee-88f7-3f7c9cda3828)'
       appType: 'webApp'
       appName: 'ServeSpot'
-      package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+      package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
       deploymentMethod: 'auto'
