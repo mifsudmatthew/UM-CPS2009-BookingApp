@@ -1,0 +1,25 @@
+.time-slot-container {
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+  }
+  
+  .date-navigator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .date-navigator span {
+    font-weight: bold;
+    font-size: 1.5em;
+    color: #0d2e0e;
+    margin: 0 10px; 
+  }
+  
+  .arrow {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
