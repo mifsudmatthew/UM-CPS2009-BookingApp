@@ -31,16 +31,3 @@ steps:
   - script: |
       npm i
     displayName: "Server Install"
-  - task: ArchiveFiles@2
-    inputs:
-      rootFolderOrFile: 'client/dist'
-      includeRootFolder: false
-      archiveType: 'zip'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-      replaceExistingArchive: true
-
-  - task: PublishBuildArtifacts@1
-    inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      ArtifactName: 'drop'
-      publishLocation: 'Container'
