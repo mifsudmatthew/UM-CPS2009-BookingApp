@@ -28,7 +28,7 @@ steps:
     displayName: "Install Node dependencies in frontend and build"
 
   - script: |
-      echo $(appRoot)
+      echo '$(appRoot)'
       npm i
     displayName: "Server Install"
 
