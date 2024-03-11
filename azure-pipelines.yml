@@ -19,9 +19,11 @@ steps:
       pushd './client'
       cd ./client
       npm install
+      popd
     displayName: "Install Node dependencies in frontend"
 
   - script: |
+      pushd './client'
       npm run build
       popd
     displayName: "Building the frontend"
