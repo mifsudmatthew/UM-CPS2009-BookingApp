@@ -51,5 +51,5 @@ steps:
       azureSubscription: 'Azure for Students (ddc1cb0e-7021-43ee-88f7-3f7c9cda3828)'
       appType: 'webApp'
       appName: 'ServeSpot'
-      package: '$(System.DefaultWorkingDirectory)/Web_App/drop/*.zip'
+      package: '$(System.DefaultWorkingDirectory)/**.zip'
       deploymentMethod: 'auto'
