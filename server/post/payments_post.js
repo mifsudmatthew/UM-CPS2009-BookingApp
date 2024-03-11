@@ -86,3 +86,5 @@ payment_router.post("/success", server_functions.authenticateToken, async (req, 
         return res.status(500).json({ error: "Failed to handle successful payment" });
     }
 });
+
+module.exports = payment_router;

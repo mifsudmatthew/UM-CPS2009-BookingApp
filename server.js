@@ -9,9 +9,12 @@ const path = require("path");
 // Express server
 const express = require("express");
 // API Router
-const apiRouter = require("./api");
+const apiRouter = require("./server/api");
+const paymentRouter = require("./server/post/payments_post");
 // CORS because pain
 const cors = require("cors");
+// Running the database
+const mongoose = require("./database/mongoose");
 
 // Creating an ExpressJS application, by calling the variable express as a function.
 const app = express();
@@ -38,6 +41,7 @@ app.use(express.json());
 
 // Api routes
 app.use("/api", apiRouter);
+app.use("/api", paymentRouter);
 
 // Serve the main app on all other routes
 app.route("*").get((_req, res) => {
