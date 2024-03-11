@@ -50,5 +50,5 @@ steps:
       appType: 'webApp'
       appName: 'ServeSpot'
       package: '$(Build.ArtifactStagingDirectory)/**.zip'
-      deploymentMethod: 'auto'
+      deploymentMethod: 'zipDeploy'
   
