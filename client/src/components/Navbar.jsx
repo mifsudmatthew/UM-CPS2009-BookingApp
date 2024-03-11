@@ -1,3 +1,4 @@
+import { useUser } from "../hooks/useUser"; 
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
@@ -8,10 +9,12 @@ import "../styles/navbar.css";
 
 function Navbar() {
   const [showNavbar, setShowNavbar] = useState(false);
+  const {user} = useUser(); 
 
   const handleShowNavbar = () => {
     setShowNavbar(!showNavbar);
   };
+  const isLoggedIn = user && user.balance !== undefined;
 
   return (
     <>
@@ -26,23 +29,34 @@ function Navbar() {
           <div className="menu-icon" onClick={handleShowNavbar}>
             <img src={hamburger} alt="hamburger" />
           </div>
-          <div className={`nav-elements  ${showNavbar && "active"}`}>
+          <div className={`nav-elements ${showNavbar ? "active" : ""}`}>
             <ul>
               <li>
                 <NavLink to="/">Home</NavLink>
               </li>
-              <li>
-                <NavLink to="/login">Login</NavLink>
-              </li>
-              <li>
-                <NavLink to="/register">Register</NavLink>
-              </li>
-              <li>
-                <NavLink to="/profile">Profile</NavLink>
-              </li>
-              <li>
-                <NavLink to="/profile/topup">Top Up</NavLink>
-              </li>
+              {!isLoggedIn && (
+                <>
+                  <li>
+                    <NavLink to="/login">Login</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/register">Register</NavLink>
+                  </li>
+                </>
+              )}
+              {isLoggedIn && (
+                <>
+                  <li>
+                    <NavLink to="/profile">Profile</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/profile/topup">Top Up</NavLink>
+                  </li>
+                  <li className="navbar-balance">
+                    Balance: {user.balance}
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>

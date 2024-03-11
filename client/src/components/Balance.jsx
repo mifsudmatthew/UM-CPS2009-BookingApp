@@ -1,7 +1,10 @@
 import { Link} from "react-router-dom";
+import { useUser } from "../hooks/useUser"; 
 
 const Balance = () => {
-    const currentBalance = 1250.75;
+    const { user } = useUser();
+    const currentBalance = user.balance || "Balance not available"; 
+
     return (
     <main className="profile">
         <div className="header-title">Balance</div> 
