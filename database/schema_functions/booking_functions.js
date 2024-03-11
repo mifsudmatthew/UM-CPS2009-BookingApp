@@ -161,6 +161,34 @@ async function removeBooking(userID_toBook, courtID_toBook, date_toBook, time_to
     }
 }
 
+/** ===================================== Query Available Courts =========================
+ * ------------ Retrieve a list of courts available at a specific date and time
+ * Takes a date and time
+ * Retrieves all courts that are not booked at the specified date and time
+ */
+async function getAvailableCourts(date_toCheck, time_toCheck) {
+    try {
+        // Find all bookings at the specified date and time
+        const bookedCourts = await booking_schema.find({
+            date: date_toCheck,
+            time: time_toCheck
+        });
+
+        // --------------------- Extract court IDs from bookedCourts
+        const bookedCourtIDs = bookedCourts.map(booking => booking.courtID);
+
+        // --------------------- Find all courts that are not in bookedCourtIDs
+        const availableCourts = await courts_modal.find({
+            _id: { $nin: bookedCourtIDs }
+        });
+
+        return { result: true, data: availableCourts, error: null };
+    } catch (error_message) {
+        throw new Error("Failed to Connect to Database");
+    }
+}
+
+
 /** ===================================== Exporting ======================================================
  * ------------ Exportation of functions
  * Export the functions
@@ -168,9 +196,10 @@ async function removeBooking(userID_toBook, courtID_toBook, date_toBook, time_to
  */
 
 module.exports = {
-    addBooking: addBooking,
-    getFutureBookings_EmailCourt: getFutureBookings_EmailCourt,
-    getFutureBookings_Courts: getFutureBookings_Courts,
-    getFutureBookings_Email: getFutureBookings_Email,
-    removeBooking: removeBooking,
+    addBooking                      : addBooking,
+    getFutureBookings_EmailCourt    : getFutureBookings_EmailCourt,
+    getFutureBookings_Courts        : getFutureBookings_Courts,
+    getFutureBookings_Email         : getFutureBookings_Email,
+    removeBooking                   : removeBooking,
+    getAvailableCourts              : getAvailableCourts,
 };

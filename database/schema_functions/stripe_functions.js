@@ -1,7 +1,9 @@
 const stripe_schema = require("../schemas/stripe_schema");
 
-/** ===================================== Retrieve Court =================================
- * ------------ 
+/** ===================================== Retrieve Stripe =================================
+ * ------------ Retrieve Stripe 
+ * Given a session ID it will return the stripe entry 
+ * that matches it
  */
 async function retrieveStripe(session_id) {
     try {
@@ -24,8 +26,11 @@ async function retrieveStripe(session_id) {
     }
 }
 
-/** ===================================== Register Court =================================
- * ------------ 
+/** ===================================== Register Stripe =================================
+ * ------------ Add new Stripe Session Entry
+ * Adds a new Stripe Session if 
+ * an entry with that session id has not already been
+ * Added
  */
 async function registerStripe({session_id, email_new, amount_new}){
     try {

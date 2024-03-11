@@ -1,9 +1,9 @@
 const express           = require("express");
 const stripe            = require("stripe")(process.env.STRIPE_KEY);
 const payment_router    = express.Router();
-const user_queries      = require("./database/schema_functions/user_functions"  );
-const stripe_queries    = require("./database/schema_functions/stripe_functions");
-const server_functions  = require("./server_functions");
+const user_queries      = require("../database/schema_functions/user_functions"  );
+const stripe_queries    = require("../database/schema_functions/stripe_functions");
+const server_functions  = require("../server_functions");
 
 
 /** ==================================== Topup =====================================================
