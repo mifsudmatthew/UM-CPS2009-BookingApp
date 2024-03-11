@@ -1,0 +1,47 @@
+{
+  "index.html": {
+    "file": "assets/index-Bh3WJM2l.js",
+    "src": "index.html",
+    "isEntry": true,
+    "css": [
+      "assets/index-BCx0Fai0.css"
+    ],
+    "assets": [
+      "assets/racket-Dl6xEiXo.png",
+      "assets/grass-court-Ch3CFGZv.webp",
+      "assets/clay-court-ChGvYgJv.webp",
+      "assets/indoor-court-UFsrzs5m.webp",
+      "assets/logo-CuQNDwzK.png",
+      "assets/default-pp-CgVj1ebl.jpg",
+      "assets/banner-D_O1PRSu.jpg"
+    ]
+  },
+  "src/assets/banner.jpg": {
+    "file": "assets/banner-D_O1PRSu.jpg",
+    "src": "src/assets/banner.jpg"
+  },
+  "src/assets/clay-court.webp": {
+    "file": "assets/clay-court-ChGvYgJv.webp",
+    "src": "src/assets/clay-court.webp"
+  },
+  "src/assets/default-pp.jpg": {
+    "file": "assets/default-pp-CgVj1ebl.jpg",
+    "src": "src/assets/default-pp.jpg"
+  },
+  "src/assets/grass-court.webp": {
+    "file": "assets/grass-court-Ch3CFGZv.webp",
+    "src": "src/assets/grass-court.webp"
+  },
+  "src/assets/indoor-court.webp": {
+    "file": "assets/indoor-court-UFsrzs5m.webp",
+    "src": "src/assets/indoor-court.webp"
+  },
+  "src/assets/logo.png": {
+    "file": "assets/logo-CuQNDwzK.png",
+    "src": "src/assets/logo.png"
+  },
+  "src/assets/racket.png": {
+    "file": "assets/racket-Dl6xEiXo.png",
+    "src": "src/assets/racket.png"
+  }
+}
