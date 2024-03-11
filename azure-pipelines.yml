@@ -29,7 +29,7 @@ steps:
     displayName: "Server Install"
   - task: ArchiveFiles@2
     inputs:
-      rootFolderOrFile: '$(uiBuild)'
+      rootFolderOrFile: 'client/dist'
       includeRootFolder: false
       archiveType: 'zip'
       archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
