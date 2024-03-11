@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { Post } from "../utils/ApiFunctions";
 import { useToken } from "../hooks/useToken";
-import { useLocation } from "react-router-dom";
+import { useLocation, Navigate } from "react-router-dom";
+
+const isLoggedIn = () => {
+  return !!localStorage.getItem('accessToken'); // Example check
+};
 
 function Topup() {
   const [amount, setAmount] = useState("");
@@ -49,6 +53,10 @@ function Topup() {
       console.error(`Error in top-up: ${error}`);
     }
   };
+
+  if (!isLoggedIn()) {
+    return <Navigate to="/login" replace />;
+  }
 
   return (
     <div className="mainContainer">

@@ -8,14 +8,9 @@ const apiRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
-// Payment
-const stripe = require("stripe")(process.env.STRIPE_KEY);
-
 // Database
-const mongoose = require("./database/mongoose"); // Running the database
-const db = require("./database/test_functions");
-const queries = require("./database/schema_functions/user_functions");
-const stripe_queries = require("./database/schema_functions/stripe_functions");
+const db = require("../database/test_functions");
+const queries = require("../database/schema_functions/user_functions");
 // Util functions
 const sf = require("./server_functions");
 
@@ -180,72 +175,4 @@ apiRouter.post("/changepassword", sf.authenticateToken, async (req, res) => {
   res.status(400).json({ message: "Fail" });
 });
 
-apiRouter.post("/topup", sf.authenticateToken, async (req, res) => {
-  const amount = req.body.amount;
-  const url = req.headers.host;
-  console.log(url);
-  try {
-    const session = await stripe.checkout.sessions.create({
-      line_items: [
-        {
-          price_data: {
-            currency: "eur",
-            product_data: {
-              name: "Balance Top-Up",
-            },
-            unit_amount: amount * 100,
-          },
-          quantity: 1,
-        },
-      ],
-      payment_method_types: ["card"],
-      mode: "payment",
-      success_url: `http://${req.headers.host}/profile/topup?session_id={CHECKOUT_SESSION_ID}`, // Include token in success_url
-      cancel_url: `http://${req.headers.host}/profile/topup?session_id={CHECKOUT_SESSION_ID}`, // Include token in cancel_url
-    });
-
-    res.json({ url: session.url });
-  } catch (error) {
-    console.error("Error creating checkout session:", error);
-    return res.status(500).send(/* Response when there's an error */);
-  }
-});
-
-// Endpoint to handle successful payment
-apiRouter.post("/success", sf.authenticateToken,async (req, res) => {
-  try {
-    // Extract the session ID from the request body
-    const { session_id } = req.body;
-
-    // Retrieve the session from Stripe
-    const session = await stripe.checkout.sessions.retrieve(session_id);
-
-    const email = req.user.email;
-
-    try{
-      result_session = await stripe_queries.retrieveStripe(session_id);
-    }catch{
-      return res.status(500).json({ error: "Failed retrieve query" });
-    }
-
-    // Check if payment is successful
-    if (session.payment_status === "paid" && result_session.result == false) {
-      console.log("Successfull Payment");
-      // Update the balance only if payment is successful
-      queries.updateUserBalance(email, session.amount_total / 100); // Convert amount to euros
-      stripe_queries.registerStripe({session_id : session_id,
-                                     email_new  : email,
-                                     amount_new : session.amount_total / 100
-                                    });
-      return res.json({ success: true });
-    }
-    
-    console.log("Failed Payment");
-    // Payment not successful
-    return res.json({ success: false });
-  } catch (error) {
-    console.error("Error handling successful payment:", error);
-    return res.status(500).json({ error: "Failed to handle successful payment" });
-  }
-})
 module.exports = apiRouter;
