@@ -1,7 +1,8 @@
 const courts_schema = require("../schemas/courts_schema");
 
 /** ===================================== Retrieve Court =================================
- * ------------ 
+ * ------------ Retrieve Court
+ * Retrieves a court given a courtID
  */
 
 async function retrieveCourt(courtID) {
@@ -26,7 +27,9 @@ async function retrieveCourt(courtID) {
 }
 
 /** ===================================== Register Court =================================
- * ------------ 
+ * ------------ Register a Court
+ * Registers a new court
+ * Does not check if court is already created.
  */
 async function registerCourt({price_new, address_new, longitude_new, latitude_new}){
     try {
