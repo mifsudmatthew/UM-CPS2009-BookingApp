@@ -41,6 +41,11 @@ steps:
       archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
       replaceExistingArchive: true
 
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
   - task: AzureWebApp@1
     inputs:
       azureSubscription: 'Azure for Students (ddc1cb0e-7021-43ee-88f7-3f7c9cda3828)'
