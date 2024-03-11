@@ -9,6 +9,7 @@ trigger:
 variables:
   uiSource: 'client'
   uiBuild: '$(uiSource)/dist'
+  appRoot: ''
 
 pool:
   vmImage: ubuntu-latest
@@ -27,6 +28,7 @@ steps:
     displayName: "Install Node dependencies in frontend and build"
 
   - script: |
+      echo $(appRoot)
       npm i
     displayName: "Server Install"
 
@@ -38,9 +40,10 @@ steps:
       archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
       replaceExistingArchive: true
 
-  - task: PublishBuildArtifacts@1
+  - task: AzureWebApp@1
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      ArtifactName: 'drop'
-      publishLocation: 'Container'
-
+      azureSubscription: 'Azure for Students (ddc1cb0e-7021-43ee-88f7-3f7c9cda3828)'
+      appType: 'webApp'
+      appName: 'ServeSpot'
+      package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+      deploymentMethod: 'auto'
