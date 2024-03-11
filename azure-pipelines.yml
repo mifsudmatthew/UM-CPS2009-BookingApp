@@ -21,21 +21,21 @@ steps:
     displayName: "Install Node.js"
 
   - script: |
+      pwd
+      ls
+      npm i
+    displayName: "Server Install"
+
+  - script: |
       pushd $(uiSource)
       npm install
       npm run build
       popd
     displayName: "Install Node dependencies in frontend and build"
 
-  - script: |
-      pwd
-      ls
-      npm i
-    displayName: "Server Install"
-
   - task: ArchiveFiles@2
     inputs:
-      rootFolderOrFile: '$(uiBuild)'
+      rootFolderOrFile: './'
       includeRootFolder: false
       archiveType: 'zip'
       archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
