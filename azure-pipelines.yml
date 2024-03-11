@@ -16,12 +16,14 @@ steps:
     displayName: "Install Node.js"
 
   - script: |
+      pushd './client'
       cd ./client
       npm install
     displayName: "Install Node dependencies in frontend"
 
   - script: |
       npm run build
+      popd
     displayName: "Building the frontend"
 
   - script: |
