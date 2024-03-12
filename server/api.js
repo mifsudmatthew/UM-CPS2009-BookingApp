@@ -24,7 +24,6 @@ apiRouter.use((req, _res, next) => {
   next();
 });
 
-// Testing
 apiRouter.post("/test", sf.authenticateToken, (req, res) => {
   res.json();
 });
