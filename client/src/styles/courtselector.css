@@ -1,0 +1,86 @@
+.court-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    padding: 20px;
+    
+  }
+
+  .bottom-court-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+  .court-option {
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #A2B798;
+    color: #3E493B;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
+  
+
+  
+  .selected {
+    background-color: #A0CFD0; 
+  }
+  
+  /* Court Availability colour key*/
+  .court-availability {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  /* Color key */
+  .court-availability span {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    margin-left: 10px;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  /* Avaliable court colour */
+  .available {
+    background-color: #A2B798; 
+  }
+  
+  /* Not available court colour*/
+  .not-available {
+    background-color: #f4e1e2; 
+  }
+  
+  /* Selected court colour */
+  .selected-indicator {
+    background-color: #A0CFD0; 
+  }
+  
+
+  .indoor-court {
+    width: 310px;
+    height: 100px;
+  }
+  
+  .clay-court {
+    width: 100px;
+    height: 110px;
+  }
+  
+  .grass-court {
+    width: 150px;
+    height: 110px;
+  }
+  
