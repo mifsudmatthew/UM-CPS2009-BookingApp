@@ -6,12 +6,13 @@ import Bookings from '../components/Bookings';
 import Balance from '../components/Balance';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-const isLoggedIn = () => {
-  return !!localStorage.getItem('accessToken'); // Example check
-};
+import { useToken } from "../hooks/useToken";
+
 
 const Profile = () => {
-  if (!isLoggedIn()) {
+  const { accessToken } = useToken()
+
+  if (accessToken == "") {
     return <Navigate to="/login" replace />;
   }
 

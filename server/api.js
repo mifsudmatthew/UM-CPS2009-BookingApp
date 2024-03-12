@@ -152,6 +152,9 @@ apiRouter.post("/resetpassword", async (req, res) => {
 });
 
 apiRouter.post("/booking", sf.authenticateToken, (req, res, next) => {
+  court = req.body.court;
+  user = req.body.user.userID;
+  
   console.log("Booking request has been received!");
   db.saveTestCase();
   res.json({ message: "Booking added" });

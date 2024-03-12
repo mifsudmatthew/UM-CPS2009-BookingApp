@@ -22,8 +22,8 @@ import Profile from "./pages/Profile";
 import Topup from "./pages/Topup";
 import ChangePW from "./pages/ChangePW";
 
-import { AuthContext } from "./context/Authenication";
-import { UserContext } from "./context/User";
+import { UserProvider } from "./context/User";
+import { AuthProvider } from "./context/Authenication";
 import { useToken } from "./hooks/useToken";
 import { useUser } from "./hooks/useUser";
 // Main react app
@@ -32,8 +32,8 @@ function App() {
   const { user } = useUser();
   return (
     <>
-      <UserContext.Provider value={user}>
-        <AuthContext.Provider value={accessToken}>
+      <UserProvider value={user}>
+        <AuthProvider value={accessToken}>
           <Navbar />
           <Routes>
             <Route path="/" exact element={<Home />}></Route>
@@ -51,8 +51,8 @@ function App() {
               path="/profile/changepassword"
               element={<ChangePW />}></Route>
           </Routes>
-        </AuthContext.Provider>
-      </UserContext.Provider>
+        </AuthProvider>
+      </UserProvider>
     </>
   );
 }
