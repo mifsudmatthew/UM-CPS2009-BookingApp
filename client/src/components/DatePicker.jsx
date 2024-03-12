@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { format, addDays, subDays } from 'date-fns';
-import '../styles/datepicker.css';
 import TimePicker from './TimePicker';
+import CourtSelection from './SelectCourt';
+
 
 const DatePicker = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -30,17 +31,11 @@ const DatePicker = () => {
       <h4>
           Pick a court
       </h4>
-      <div className="court-container">
-        <label for="courtType">Choose a court type: </label>
-        <select name="courtType" id="courtType" class="custom-dropdown">
-          <option value="clay">Clay Court</option>
-          <option value="grass">Grass Court</option>
-          <option value="indoor">Indoor Court</option>
-        </select>      
-      </div>
+      < CourtSelection />
       <br />
       <button type="submit" className="inputButton">Submit Booking</button>
     </>
+    
   );
 };
 
