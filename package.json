@@ -2,7 +2,6 @@
   "name": "bookingapp",
   "version": "1.0.0",
   "description": "Tennis Booking App CPS2009 Group 1",
-  "main": "server.js",
   "engines": {
     "npm": "^10.0.0",
     "node": "^20.0.0"
