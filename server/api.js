@@ -130,9 +130,17 @@ apiRouter.post("/register", async (req, res) => {
   }
 });
 
-apiRouter.post("/reset", (req, res) => {
+// Route for sending an email to reset password.
+apiRouter.post("/reset", async (req, res) => {
   console.log("Connected to reset page");
-  sf.sendPinByMail(req.body.email, res);
+  try{ // Attempting to send an email
+    let result = await sf.sendPinByMail(req.body.email);
+    // If result is obtained, response success.
+    res.status(200).json(result);
+  }catch(error){
+    // Response failure
+    res.status(500).json({message: "Error sending email"});
+  }
 });
 
 // Route to for changing password when resetting thus not logged in.
@@ -142,7 +150,7 @@ apiRouter.post("/resetpassword", async (req, res) => {
   let matchedIndex = sf.accountPins.findIndex(entry => entry.pin === req.body.pin 
   && entry.email === req.body.email);
 
-  // If entry was not found
+  // If entry was found
   if(matchedIndex!=-1){
 
     // Set a new password to the account of the given email, after encrypting it.
@@ -168,7 +176,7 @@ apiRouter.post("/changepassword", sf.authenticateToken, async (req, res) => {
   let matchedIndex = sf.accountPins.findIndex(entry => entry.pin === req.body.pin 
     && entry.email === req.body.email);
   
-    // If entry was not found
+    // If entry was found
     if(matchedIndex!=-1){
   
       // Set a new password to the account of the given email, after encrypting it.

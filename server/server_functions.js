@@ -49,7 +49,7 @@ function addPinEntry(email, pin) {
 }
 
 // Function to send an email to user requesting a password reset.
-async function sendPinByMail(loggedInEmail, res) {
+async function sendPinByMail(loggedInEmail) {
   var app_email = loggedInEmail; // Address of account requesting pin
   var generated_pin = getRandomPin(); // Generating a new pin
 
@@ -61,8 +61,6 @@ async function sendPinByMail(loggedInEmail, res) {
     text: "Enter the code: " + generated_pin + " to reset your password.", // Email content.
   };
 
-  // Attempting to send the email to the user.
-  try {
     // Creating a transporter with the details of the mail service being used.
     const transporter = nodeMailer.createTransport({
       host: process.env.MAIL_HOST, // Host is set to be changed from .env file
@@ -81,11 +79,8 @@ async function sendPinByMail(loggedInEmail, res) {
     addPinEntry(app_email, generated_pin);
 
     // Sending a response on success
-    res.status(200).send("Email sent successfully");
-  } catch (error) {
-    console.error("Error occurred:", error);
-    res.status(500).send("Error sending email");
-  }
+    return {message: "Email sent successfully" };
+  
 }
 
 function authenticateToken(req, res, next) {
