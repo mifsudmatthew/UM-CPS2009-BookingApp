@@ -11,9 +11,11 @@ const bcrypt = require("bcryptjs");
 // Database
 const db = require("../database/test_functions");
 const queries = require("../database/schema_functions/user_functions");
+
 // Util functions
 const sf = require("./server_functions");
 
+// Variable to store 
 let currentUserEmail = "";
 
 // Log the current URL that is accessed
@@ -128,26 +130,35 @@ apiRouter.post("/register", async (req, res) => {
   }
 });
 
-apiRouter.post("/reset", (req, res) => {
+// Route for sending an email to reset password.
+apiRouter.post("/reset", async (req, res) => {
   console.log("Connected to reset page");
-  sf.sendPinByMail(req.body.email, res);
+  try{ // Attempting to send an email
+    let result = await sf.sendPinByMail(req.body.email);
+    // If result is obtained, response success.
+    res.status(200).json(result);
+  }catch(error){
+    // Response failure
+    res.status(500).json({message: "Error sending email"});
+  }
 });
 
+// Route to for changing password when resetting thus not logged in.
 apiRouter.post("/resetpassword", async (req, res) => {
-  for (i = 0; i < sf.accountPins.length; i++) {
-    if (
-      sf.accountPins[i].pin == req.body.pin &&
-      sf.accountPins[i].email == req.body.email
-    ) {
-      console.log(
-        await queries.resetPassword(
-          currentUserEmail,
-          await bcrypt.hash(req.body.password, 10)
-        )
-      );
-      return res.json({ message: "Success" });
-    }
+
+  // Obtain the index of the element that matches the same pin and email, otherwise return -1
+  let matchedIndex = sf.accountPins.findIndex(entry => entry.pin === req.body.pin 
+  && entry.email === req.body.email);
+
+  // If entry was found
+  if(matchedIndex!=-1){
+
+    // Set a new password to the account of the given email, after encrypting it.
+    console.log(await queries.resetPassword(currentUserEmail, await bcrypt.hash(req.body.password, 10)));
+    // Success Response
+    return res.json({ message: "Success" });
   }
+  // Failure Response
   res.status(400).json({ message: "Fail" });
 });
 
@@ -160,22 +171,24 @@ apiRouter.post("/booking", sf.authenticateToken, (req, res, next) => {
   res.json({ message: "Booking added" });
 });
 
+
+// Route to for changing password both when logged and when resetting.
 apiRouter.post("/changepassword", sf.authenticateToken, async (req, res) => {
-  for (i = 0; i < sf.accountPins.length; i++) {
-    if (
-      sf.accountPins[i].pin == req.body.pin &&
-      sf.accountPins[i].email == req.body.email
-    ) {
-      console.log(
-        await queries.resetPassword(
-          currentUserEmail,
-          await bcrypt.hash(req.body.password, 10)
-        )
-      );
+  
+  // Obtain the index of the element that matches the same pin and email, otherwise return -1
+  let matchedIndex = sf.accountPins.findIndex(entry => entry.pin === req.body.pin 
+    && entry.email === req.body.email);
+  
+    // If entry was found
+    if(matchedIndex!=-1){
+  
+      // Set a new password to the account of the given email, after encrypting it.
+      console.log(await queries.resetPassword(currentUserEmail, await bcrypt.hash(req.body.password, 10)));
+      // Success Response
       return res.json({ message: "Success" });
     }
-  }
-  res.status(400).json({ message: "Fail" });
+    // Failure Response
+    res.status(400).json({ message: "Fail" });
 });
 
 module.exports = apiRouter;

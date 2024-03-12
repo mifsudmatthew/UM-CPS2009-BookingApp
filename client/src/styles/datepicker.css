@@ -1,0 +1,54 @@
+.time-slot-container {
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+  }
+  
+  .date-navigator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .date-navigator span {
+    font-weight: bold;
+    font-size: 1.5em;
+    color: #0d2e0e;
+    margin: 0 10px; 
+  }
+  
+  .arrow {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  .court-container {
+    justify-content: space-between;
+    position: relative;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 20px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  }
+
+  select.custom-dropdown {
+    font-family: Arial, sans-serif;
+    font-size: 1rem;
+    padding: 8px;
+    margin: 5px;
+    border: 1px solid #7d7f79;
+    border-radius: 15px;
+    background-color: white;
+    appearance: none; 
+    -webkit-appearance: none; 
+    -moz-appearance: none; 
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px 20px;
+  }
+  
+  select.custom-dropdown option {
+    padding: 5px;
+  }

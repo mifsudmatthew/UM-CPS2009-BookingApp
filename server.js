@@ -31,6 +31,9 @@ const static_files = path.resolve(__dirname, "client/dist");
 // Node knows which directory to serve static files from
 app.use(express.static(static_files));
 
+/* God help us
+ */
+
 // IDK
 app.use(cors());
 

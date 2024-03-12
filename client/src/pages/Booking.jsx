@@ -1,7 +1,7 @@
-import BookingForm from "../components/BookingForm";
+import DatePicker from "../components/DatePicker";
 
 function Booking() {
-  return <BookingForm />;
+  return <DatePicker />;
 }
 
 export default Booking;
