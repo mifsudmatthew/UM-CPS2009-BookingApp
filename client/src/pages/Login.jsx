@@ -34,7 +34,7 @@ function Login() {
       setTokens(accessToken, refreshToken);
       setUser(userData);
 
-      navigate("/reset");
+      navigate("/profile");
     } catch (error) {
       console.error(`Error in ${error}`);
     }
