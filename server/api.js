@@ -171,23 +171,18 @@ apiRouter.post("/booking", sf.authenticateToken, (req, res, next) => {
 });
 
 
-// Route to for changing password both when logged and when resetting.
+// Route to for changing password both when logged in.
 apiRouter.post("/changepassword", sf.authenticateToken, async (req, res) => {
-  
-  // Obtain the index of the element that matches the same pin and email, otherwise return -1
-  let matchedIndex = sf.accountPins.findIndex(entry => entry.pin === req.body.pin 
-    && entry.email === req.body.email);
-  
-    // If entry was found
-    if(matchedIndex!=-1){
-  
-      // Set a new password to the account of the given email, after encrypting it.
-      console.log(await queries.resetPassword(currentUserEmail, await bcrypt.hash(req.body.password, 10)));
-      // Success Response
-      return res.json({ message: "Success" });
+    
+    try{
+      // Attempt to  a new password to the account of the given email, after encrypting it.
+      console.log(await queries.resetPassword(req.user.email, await bcrypt.hash(req.body.password, 10)));
+      // Response Success
+      res.status(200).json({message: "Password Changed!"});
+    }catch(error){
+      // Response Fail
+      res.status(500).json({message: "Password Change Failed!"});
     }
-    // Failure Response
-    res.status(400).json({ message: "Fail" });
 });
 
 module.exports = apiRouter;

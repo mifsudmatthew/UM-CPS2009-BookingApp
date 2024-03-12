@@ -23,7 +23,7 @@ function ChangePW() {
     try {
       const response = await Post("/api/changepassword", data); // Adjust the endpoint as per your API's specification
       console.log("Password change successful:", response);
-      navigate("/login"); // Navigate to login or any other page as required
+      navigate("/profile"); // Navigate to login or any other page as required
     } catch (error) {
       alert("Error changing password.");
       console.error("Change password error:", error);
