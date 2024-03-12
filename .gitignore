@@ -1,2 +1,5 @@
+# Normal Build ignores
 *node_modules/
 *package-lock.json
+# Server Request Testing
+*.http
