@@ -82,4 +82,10 @@ Formats
     <td>&lt;location&gt; [Cln] : &lt;description&gt;</td>
     <td>Clean up code or adding/removing comments</td>
   </tr>
+
+  <tr>
+    <td><b>Change</b></td>
+    <td>&lt;location&gt; [Chg] : &lt;description&gt;</td>
+    <td>Changed an item</td>
+  </tr>
 </table>
