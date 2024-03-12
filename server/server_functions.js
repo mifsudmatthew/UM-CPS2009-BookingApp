@@ -84,6 +84,7 @@ async function sendPinByMail(loggedInEmail) {
 }
 
 function authenticateToken(req, res, next) {
+  
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
