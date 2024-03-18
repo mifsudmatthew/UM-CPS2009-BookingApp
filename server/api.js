@@ -15,7 +15,7 @@ const queries = require("../database/schema_functions/user_functions");
 // Util functions
 const sf = require("./server_functions");
 
-// Variable to store 
+// Variable to store
 let currentUserEmail = "";
 
 // Log the current URL that is accessed
@@ -29,6 +29,7 @@ apiRouter.post("/test", sf.authenticateToken, (req, res) => {
 });
 
 // To refresh the token
+// NOT USED
 apiRouter.post("/refresh", (req, res) => {
   const refreshToken = req.body.refreshToken;
 
@@ -81,12 +82,14 @@ apiRouter.post("/login", async (req, res) => {
       };
 
       const accessToken = sf.generateAccessToken(user);
-      const refreshToken = sf.generateRefreshToken(user);
+      // NOT USED
+      // const refreshToken = sf.generateRefreshToken(user);
 
       res.json({
         ...user,
         accessToken: accessToken,
-        refreshToken: refreshToken,
+        // NOTE USED
+        // refreshToken: refreshToken,
       });
     } else {
       return res.status(400).json({ error: "Passwords do not match" });
@@ -132,28 +135,33 @@ apiRouter.post("/register", async (req, res) => {
 // Route for sending an email to reset password.
 apiRouter.post("/reset", async (req, res) => {
   console.log("Connected to reset page");
-  try{ // Attempting to send an email
+  try {
+    // Attempting to send an email
     let result = await sf.sendPinByMail(req.body.email);
     // If result is obtained, response success.
     res.status(200).json(result);
-  }catch(error){
+  } catch (error) {
     // Response failure
-    res.status(500).json({message: "Error sending email"});
+    res.status(500).json({ message: "Error sending email" });
   }
 });
 
 // Route to for changing password when resetting thus not logged in.
 apiRouter.post("/resetpassword", async (req, res) => {
-
   // Obtain the index of the element that matches the same pin and email, otherwise return -1
-  let matchedIndex = sf.accountPins.findIndex(entry => entry.pin === req.body.pin 
-  && entry.email === req.body.email);
+  let matchedIndex = sf.accountPins.findIndex(
+    (entry) => entry.pin === req.body.pin && entry.email === req.body.email
+  );
 
   // If entry was found
-  if(matchedIndex!=-1){
-
+  if (matchedIndex != -1) {
     // Set a new password to the account of the given email, after encrypting it.
-    console.log(await queries.resetPassword(currentUserEmail, await bcrypt.hash(req.body.password, 10)));
+    console.log(
+      await queries.resetPassword(
+        currentUserEmail,
+        await bcrypt.hash(req.body.password, 10)
+      )
+    );
     // Success Response
     return res.json({ message: "Success" });
   }
@@ -164,30 +172,28 @@ apiRouter.post("/resetpassword", async (req, res) => {
 apiRouter.post("/booking", sf.authenticateToken, (req, res, next) => {
   court = req.body.court;
   user = req.body.user.userID;
-  
+
   console.log("Booking request has been received!");
   db.saveTestCase();
   res.json({ message: "Booking added" });
 });
 
-
-// Route to for changing password both when logged and when resetting.
+// Route to for changing password both when logged in.
 apiRouter.post("/changepassword", sf.authenticateToken, async (req, res) => {
-  
-  // Obtain the index of the element that matches the same pin and email, otherwise return -1
-  let matchedIndex = sf.accountPins.findIndex(entry => entry.pin === req.body.pin 
-    && entry.email === req.body.email);
-  
-    // If entry was found
-    if(matchedIndex!=-1){
-  
-      // Set a new password to the account of the given email, after encrypting it.
-      console.log(await queries.resetPassword(currentUserEmail, await bcrypt.hash(req.body.password, 10)));
-      // Success Response
-      return res.json({ message: "Success" });
-    }
-    // Failure Response
-    res.status(400).json({ message: "Fail" });
+  try {
+    // Attempt to  a new password to the account of the given email, after encrypting it.
+    console.log(
+      await queries.resetPassword(
+        req.user.email,
+        await bcrypt.hash(req.body.password, 10)
+      )
+    );
+    // Response Success
+    res.status(200).json({ message: "Password Changed!" });
+  } catch (error) {
+    // Response Fail
+    res.status(500).json({ message: "Password Change Failed!" });
+  }
 });
 
 module.exports = apiRouter;
