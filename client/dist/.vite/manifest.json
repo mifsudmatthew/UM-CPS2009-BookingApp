@@ -1,10 +1,17 @@
 {
   "index.html": {
+<<<<<<< HEAD
     "file": "assets/index-DS1s6uP9.js",
+=======
+    "file": "assets/index-QuhNwngj.js",
+>>>>>>> 573a6341e6923f1a97d878cc93b6399da77cf8bb
     "src": "index.html",
     "isEntry": true,
+    "dynamicImports": [
+      "node_modules/workbox-window/build/workbox-window.prod.es5.mjs"
+    ],
     "css": [
-      "assets/index-5fVN9Viv.css"
+      "assets/index-NoN9h9B5.css"
     ],
     "assets": [
       "assets/grass-court-Ch3CFGZv.webp",
@@ -14,8 +21,14 @@
       "assets/default-pp-CgVj1ebl.jpg",
       "assets/logo-CuQNDwzK.png",
       "assets/bookingform-B4mP9RhM.jpg",
+      "assets/login_reg_background-BqW03Y6F.jpg",
       "assets/banner-D_O1PRSu.jpg"
     ]
+  },
+  "node_modules/workbox-window/build/workbox-window.prod.es5.mjs": {
+    "file": "assets/workbox-window.prod.es5-DFjpnwFp.js",
+    "src": "node_modules/workbox-window/build/workbox-window.prod.es5.mjs",
+    "isDynamicEntry": true
   },
   "src/assets/banner.jpg": {
     "file": "assets/banner-D_O1PRSu.jpg",
@@ -40,6 +53,10 @@
   "src/assets/indoor-court.webp": {
     "file": "assets/indoor-court-UFsrzs5m.webp",
     "src": "src/assets/indoor-court.webp"
+  },
+  "src/assets/login_reg_background.jpg": {
+    "file": "assets/login_reg_background-BqW03Y6F.jpg",
+    "src": "src/assets/login_reg_background.jpg"
   },
   "src/assets/logo.png": {
     "file": "assets/logo-CuQNDwzK.png",

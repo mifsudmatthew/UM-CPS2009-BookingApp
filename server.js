@@ -14,6 +14,8 @@ const paymentRouter = require("./server/post/payments_post");
 const bookingRounter = require("./server/post/bookings_post");
 // CORS because pain
 const cors = require("cors");
+// Compression incoming and outgoing requests
+const compression = require("compression");
 // Running the database
 const mongoose = require("./database/mongoose");
 
@@ -29,17 +31,14 @@ const PORT = process.env.PORT || 3001;
 // Static files located in the 'client/build' directory
 const static_files = path.resolve(__dirname, "client/dist");
 
-// Node knows which directory to serve static files from
-app.use(express.static(static_files));
-
-/* God help us
- */
-
-// IDK
+// Cross origin requests
 app.use(cors());
-
+// Compressing In/Out requests
+app.use(compression());
 // Parsing incoming JSON requests and placing parsed data in req.body
 app.use(express.json());
+// Node knows which directory to serve static files from
+app.use(express.static(static_files));
 
 /* ROUTES */
 

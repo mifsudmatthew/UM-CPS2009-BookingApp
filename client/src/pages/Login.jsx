@@ -5,6 +5,11 @@ import { Post } from "../utils/ApiFunctions";
 import Auth from "../context/Auth";
 import User from "../context/User";
 
+import React from 'react';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function Login() {
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -17,12 +22,12 @@ function Login() {
     event.preventDefault();
     // Check if the email and password fields are empty
     if (!email || !password) {
-      alert("Please fill in all fields.");
+      toast.error("Please fill all fields.");
       return;
     }
     // Check if the email is valid
     if (!email.includes("@")) {
-      alert("Please enter a valid email address.");
+      toast.error("Invalid e-mail format deteced.");
       return;
     }
 
@@ -34,15 +39,19 @@ function Login() {
         setUser(userData);
       } finally {
         navigate("/profile");
+        
       }
     } catch (error) {
-      console.error(`Error in ${error}`);
+      console.error(`Error in: ${error}`);
+      toast.error("Login failed. Please check your credentials and try again.");
     }
   };
 
   // Form to input login detils
   return (
     <div className={"mainContainer"}>
+      <ToastContainer />
+      <div className="innerContainer">
       <div className={"titleContainer"}>
         <div>Login</div>
       </div>
@@ -84,8 +93,10 @@ function Login() {
           Sign up
         </Link>
       </div>
+      </div>
     </div>
   );
 }
 
 export default Login;
+
