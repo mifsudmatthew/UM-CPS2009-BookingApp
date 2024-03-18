@@ -61,30 +61,28 @@ async function sendPinByMail(loggedInEmail) {
     text: "Enter the code: " + generated_pin + " to reset your password.", // Email content.
   };
 
-    // Creating a transporter with the details of the mail service being used.
-    const transporter = nodeMailer.createTransport({
-      host: process.env.MAIL_HOST, // Host is set to be changed from .env file
-      port: 465,
-      auth: {
-        user: process.env.MAIL_USER, // Username is set to be changed from .env file
-        pass: process.env.MAIL_PASS, // Password is set to be changed from .env file
-      },
-    });
+  // Creating a transporter with the details of the mail service being used.
+  const transporter = nodeMailer.createTransport({
+    host: process.env.MAIL_HOST, // Host is set to be changed from .env file
+    port: 465,
+    auth: {
+      user: process.env.MAIL_USER, // Username is set to be changed from .env file
+      pass: process.env.MAIL_PASS, // Password is set to be changed from .env file
+    },
+  });
 
-    // Sending the email with the details created.
-    let sentMessage = await transporter.sendMail(emailDetails);
-    console.log("Email sent:", sentMessage.response);
+  // Sending the email with the details created.
+  let sentMessage = await transporter.sendMail(emailDetails);
+  console.log("Email sent:", sentMessage.response);
 
-    // Pushing the pin and corresponding email to 'accountPins' array
-    addPinEntry(app_email, generated_pin);
+  // Pushing the pin and corresponding email to 'accountPins' array
+  addPinEntry(app_email, generated_pin);
 
-    // Sending a response on success
-    return {message: "Email sent successfully" };
-  
+  // Sending a response on success
+  return { message: "Email sent successfully" };
 }
 
 function authenticateToken(req, res, next) {
-  
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -145,9 +143,10 @@ function getEmail(token) {
 }
 
 function generateAccessToken(payload) {
-  return jwt.sign(payload, process.env.JWT_ACCESS, { expiresIn: "15m" });
+  return jwt.sign(payload, process.env.JWT_ACCESS);
 }
 
+// Not used
 function generateRefreshToken(payload) {
   return jwt.sign(payload, process.env.JWT_REFRESH);
 }
