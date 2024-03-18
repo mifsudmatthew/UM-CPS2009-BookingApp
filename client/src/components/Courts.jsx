@@ -58,9 +58,6 @@ const Courts = () => {
         <div className="text-content">
           <div className="court-title ">{title}</div>
           <div className="court-desc">{description}</div>
-          <button className="book-button" onClick={handleBook}>
-            Book
-          </button>
         </div>
       </div>
       <div className="right-arrow" onClick={handleNextClick}>
