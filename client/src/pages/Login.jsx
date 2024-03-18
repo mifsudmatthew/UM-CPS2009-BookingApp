@@ -34,13 +34,10 @@ function Login() {
 
     try {
       const response = await Post("/api/login", { email, password });
-      try {
-        const { accessToken, ...userData } = response;
-        setToken(accessToken);
-        setUser(userData);
-      } finally {
-        navigate("/profile");
-      }
+      const { accessToken, ...userData } = response;
+      setToken(accessToken);
+      setUser(userData);
+      return <Navigate to="/profile" replace={true} />;
     } catch (error) {
       console.error(`Error in: ${error}`);
       toast.error("Login failed. Please check your credentials and try again.");
@@ -52,48 +49,48 @@ function Login() {
     <div className={"mainContainer"}>
       <ToastContainer />
       <div className="innerContainer">
-      <div className={"titleContainer"}>
-        <div>Login</div>
-      </div>
-      <br />
-      <div className={"inputContainer"}>
-        <label>Email</label>
-        <input
-          placeholder="name@example.com"
-          className={"inputBox"}
-          type="email"
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        <div className={"titleContainer"}>
+          <div>Login</div>
+        </div>
         <br />
-        <label>Password</label>
-        <input
-          placeholder="password"
-          className={"inputBox"}
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <Link to="/reset" className="forgot-password">
-          Forgot password?
-        </Link>
-      </div>
-      <br />
-      <div className={"inputContainer"}>
-        <input
-          className={"inputButton"}
-          type="button"
-          value={"Log in"}
-          onClick={handleSubmit}
-          disabled={isButtonDisabled} // Add the disabled attribute here
-        />
-      </div>
-      <div className="signup">
-        Not a member?{" "}
-        <Link to="/register" className="signup-link">
-          Sign up
-        </Link>
-      </div>
+        <div className={"inputContainer"}>
+          <label>Email</label>
+          <input
+            placeholder="name@example.com"
+            className={"inputBox"}
+            type="email"
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <br />
+          <label>Password</label>
+          <input
+            placeholder="password"
+            className={"inputBox"}
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <Link to="/reset" className="forgot-password">
+            Forgot password?
+          </Link>
+        </div>
+        <br />
+        <div className={"inputContainer"}>
+          <input
+            className={"inputButton"}
+            type="button"
+            value={"Log in"}
+            onClick={handleSubmit}
+            disabled={isButtonDisabled} // Add the disabled attribute here
+          />
+        </div>
+        <div className="signup">
+          Not a member?{" "}
+          <Link to="/register" className="signup-link">
+            Sign up
+          </Link>
+        </div>
       </div>
     </div>
   );
