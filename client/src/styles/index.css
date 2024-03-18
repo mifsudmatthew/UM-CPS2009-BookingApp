@@ -64,3 +64,10 @@ input[type="button"] {
   border-radius: 15px;
   cursor: pointer;
 }
+
+@media (max-width: 864px) {
+  input[type="button"] {
+    padding: 15px 10vw;
+    font-size: 15px;
+  }
+}

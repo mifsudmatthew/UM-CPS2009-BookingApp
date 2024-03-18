@@ -34,6 +34,9 @@ const ProfileSidebar = () => {
             <NavLink to="/profile/topup">Top Up</NavLink>
           </li>
           <li>
+            <NavLink to="/booking">Book Court</NavLink>
+          </li>
+          <li>
             <NavLink to="/profile/changepassword">Change Password</NavLink>
           </li>
           <li>

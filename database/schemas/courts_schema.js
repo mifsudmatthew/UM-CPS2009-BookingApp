@@ -5,6 +5,7 @@ const Schema = mongoose.Schema; // Obtaining Mongoose Schema
 
 // Creating a new schema
 const courts_schema = new Schema({
+    court_name: String,
     price: Number,
     address: String,
     longitude: Number,

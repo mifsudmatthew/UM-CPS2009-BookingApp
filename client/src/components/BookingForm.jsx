@@ -16,7 +16,8 @@ function BookingForm() {
       const postData = { date, time };
       try {
         const response = await Post("/api/getAvailableCourts", postData);
-        setCourts(response.courts);
+        console.log(response);
+        setCourts(response);
       } catch (error) {
         console.error("Error fetching courts: ", error);
       }
@@ -32,7 +33,7 @@ function BookingForm() {
     const booking = { date, time, court };
     console.log(booking);
     try {
-      const response = await Post("/api/booking", booking);
+      const response = await Post("/api/booking", {booking}, token);
       console.log(response);
     } catch (error) {
       console.error("Error submitting booking: ", error);
@@ -64,8 +65,8 @@ function BookingForm() {
               <select onChange={(e) => setCourt(e.target.value)}>
                 <option value="">Select a court</option>
                 {courts.map((court, index) => (
-                  <option key={index} value={court.value}>
-                    {court.label}
+                  <option key={index} value={court._id}>
+                    {court.court_name}
                   </option>
                 ))}
               </select>
