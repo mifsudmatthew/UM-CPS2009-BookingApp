@@ -2,13 +2,15 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Post } from "../utils/ApiFunctions";
 
-import { setToken } from "../context/Auth";
-import { setUser } from "../context/User";
+import Auth from "../context/Auth";
+import User from "../context/User";
 
 function Login() {
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setToken } = Auth();
+  const { setUser } = User();
 
   // Send the login details to the server
   const handleSubmit = async (event) => {

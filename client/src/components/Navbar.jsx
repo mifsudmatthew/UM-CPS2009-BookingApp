@@ -5,11 +5,15 @@ import "../styles/navbar.css";
 
 import { hamburger, logo } from "../components/Icons";
 
-import { useUser } from "../context/User";
-import { useAuth } from "../context/Auth";
+import User from "../context/User";
+import Auth from "../context/Auth";
 
 function Navbar() {
   const [showNavbar, setShowNavbar] = useState(false);
+
+  const { useUser } = User();
+  const { useAuth } = Auth();
+
   const token = useAuth();
   const user = useUser();
 

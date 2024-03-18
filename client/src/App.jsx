@@ -23,10 +23,12 @@ import Profile from "./pages/Profile";
 import Topup from "./pages/Topup";
 import ChangePW from "./pages/ChangePW";
 
-import { UserProvider } from "./context/User";
-import { AuthProvider } from "./context/Auth";
+import User from "./context/User";
+import Auth from "./context/Auth";
 // Main react app
 function App() {
+  const { AuthProvider } = Auth();
+  const { UserProvider } = User();
   return (
     <>
       <UserProvider>

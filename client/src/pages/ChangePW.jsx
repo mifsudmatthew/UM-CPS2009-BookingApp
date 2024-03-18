@@ -35,8 +35,8 @@ function ChangePW() {
 
   return (
     <>
-      <h1>Change Password</h1>
-      <div className={"mainContainerReset"}>
+      <main className="profile">
+        <h1 className="header-title">Change Password</h1>
         <div className={"inputContainer"}>
           <input
             className="inputBox"
@@ -57,9 +57,11 @@ function ChangePW() {
           </button>
         </div>
         {!passwordMatch && (
-          <p style={{ color: "red" }}>Passwords do not match.</p>
+          <div style={{ color: "rgba(186, 26, 26, 1)" }}>
+            Passwords do not match.
+          </div>
         )}
-      </div>
+      </main>
     </>
   );
 }
