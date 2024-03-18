@@ -33,8 +33,8 @@ function App() {
         <AuthProvider>
           <Navbar />
           <Routes>
-            <Route path="/" exact element={<Home />}></Route>
-            <Route path="/login" element={<Login />}></Route>
+            <Route path="/" exact   element={<Home />}></Route>
+            <Route path="/login"    element={<Login />}></Route>
             <Route path="/register" element={<Register />}></Route>
             <Route path="/reset" element={<Reset />}></Route>
             <Route path="/booking" element={<Booking />}></Route>
