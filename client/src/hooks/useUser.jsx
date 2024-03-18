@@ -4,12 +4,14 @@ export function useUser() {
   const [user, _setUser] = useState(getUser());
 
   function getUser() {
-    return localStorage.getItem("user") || "";
+    let user = JSON.parse(localStorage.getItem("user"));
+    return user || {};
   }
 
   function setUser(user) {
-    localStorage.setItem("user", JSON.stringify(user));
-    _setUser(user.accessToken);
+    let _user = JSON.stringify(user);
+    localStorage.setItem("user", _user);
+    _setUser(_user);
   }
 
   return {

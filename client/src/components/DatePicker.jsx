@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { format, addDays, subDays } from 'date-fns';
 import TimePicker from './TimePicker';
 import CourtSelection from './SelectCourt';

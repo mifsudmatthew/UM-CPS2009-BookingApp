@@ -9,8 +9,8 @@ import "./styles/app.css";
 
 /* Components */
 import Navbar from "./components/Navbar";
-import Bookings  from './components/Bookings';
-import Balance  from './components/Balance';
+import Bookings from "./components/Bookings";
+import Balance from "./components/Balance";
 
 /* Pages */
 import Home from "./pages/Home";
@@ -24,16 +24,12 @@ import ChangePW from "./pages/ChangePW";
 
 import { UserProvider } from "./context/User";
 import { AuthProvider } from "./context/Authenication";
-import { useToken } from "./hooks/useToken";
-import { useUser } from "./hooks/useUser";
 // Main react app
 function App() {
-  const { accessToken } = useToken();
-  const { user } = useUser();
   return (
     <>
-      <UserProvider value={user}>
-        <AuthProvider value={accessToken}>
+      <UserProvider>
+        <AuthProvider>
           <Navbar />
           <Routes>
             <Route path="/" exact element={<Home />}></Route>
