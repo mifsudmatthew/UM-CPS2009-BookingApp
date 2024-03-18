@@ -1,23 +1,14 @@
-import React, { createContext, useState, useContext } from "react";
+import { createContext, useContext } from "react";
+import { useUser } from "../hooks/useUser";
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(getUser());
+  const { user } = useUser();
 
-  function getUser() {
-    return JSON.parse(localStorage.getItem("user")) || {};
-  }
-
-  function updateUser(newUser) {
-    localStorage.setItem("user", JSON.stringify(newUser));
-    setUser(newUser);
-  }
-
-  return (
-    <UserContext.Provider value={{ user, updateUser }}>
-      {children}
-    </UserContext.Provider>
-  );
+  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
 };
 
+export function useUserContext() {
+  return useContext(UserContext);
+}
