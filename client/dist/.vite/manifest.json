@@ -1,18 +1,10 @@
 {
   "index.html": {
-<<<<<<< HEAD
-    "file": "assets/index-CeJkXRSt.js",
-=======
-<<<<<<< HEAD
-    "file": "assets/index-BaoRZ3X8.js",
-=======
-    "file": "assets/index-BMlq_pia.js",
->>>>>>> d513a6b29480a2b181c305a8d1b7b369c09fcce8
->>>>>>> b30295d02ee90074918c70e63aad7848d896c537
+    "file": "assets/index-B8_ChUaf.js",
     "src": "index.html",
     "isEntry": true,
     "css": [
-      "assets/index-BAMsV2Fl.css"
+      "assets/index-CiQPoi_k.css"
     ],
     "assets": [
       "assets/grass-court-Ch3CFGZv.webp",
