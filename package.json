@@ -8,6 +8,7 @@
   },
   "scripts": {
     "start": "node server.js",
+    "build": "cd ./client && npm run build && cd ..",
     "start_build": "cd ./client && npm run build && cd .. && npm start"
   },
   "author": "Group 1",
