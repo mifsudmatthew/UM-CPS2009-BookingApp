@@ -4,16 +4,15 @@ import "../styles/banner.css";
 
 function Banner() {
   const navigate = useNavigate();
-
-  function handleLogin() {
-    navigate("/login");
-  }
+  const toLogin = () => {
+    navigate("login", { replace: true });
+  };
 
   return (
     <div className="background-container">
       <h2>“Your best tennis game”</h2>
       <p>Having the best equipment</p>
-      <button className="login-button" onClick={handleLogin}>
+      <button className="login-button" onClick={toLogin}>
         Login
       </button>
     </div>
