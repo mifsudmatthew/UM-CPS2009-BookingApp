@@ -38,7 +38,7 @@ payment_router.post(
       // ------------------ Send user to session
       res.json({ url: session.url });
     } catch (error) {
-      console.error("Error creating checkout session:", error);
+      console.error("Error creating checkout session");
       return res.status(500).send({ error: "Error creating checkout session" });
     }
   }
@@ -85,7 +85,7 @@ payment_router.post(
         return res.json({ success: false });
       }
     } catch (error) {
-      console.error("Error handling successful payment:", error);
+      console.error("Error handling successful payment");
       return res
         .status(500)
         .json({ error: "Failed to handle successful payment" });

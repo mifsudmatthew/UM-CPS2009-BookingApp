@@ -80,7 +80,7 @@ Formats
   <tr>
     <td><b>Cleanup</b></td>
     <td>&lt;location&gt; [Cln] : &lt;description&gt;</td>
-    <td>Clean up code or adding/removing comments</td>
+    <td>Clean up code or add/remove comments</td>
   </tr>
 
   <tr>
