@@ -1,13 +1,15 @@
 import "../styles/profile.css";
 import ProfileSidebar from "../components/ProfileSidebar";
-import { Outlet, Navigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
-import { useAuth } from "../context/Authenication";
+import Auth from "../context/Auth";
+
 const Profile = () => {
+  const navigate = useNavigate();
+  const { useAuth } = Auth();
   const auth = useAuth();
   if (auth == "") {
-    setTimeout(1000);
-    return <Navigate to="/login" replace />;
+    navigate("/login");
   }
 
   return (

@@ -31,14 +31,14 @@ const courts = [
   },
 ];
 
-function Courts() {
-  let navigate = useNavigate();
+const Courts = () => {
+  const navigate = useNavigate();
+  const [current, setCurrent] = useState(0);
+  const { image, title, description } = courts[current];
 
   function handleBook() {
     navigate("/booking");
   }
-
-  const [current, setCurrent] = useState(0);
 
   const handlePrevClick = () => {
     setCurrent((prev) => (prev - 1 + courts.length) % courts.length);
@@ -47,8 +47,6 @@ function Courts() {
   const handleNextClick = () => {
     setCurrent((prev) => (prev + 1) % courts.length);
   };
-
-  const { image, title, description } = courts[current];
 
   return (
     <div className="feature-card">
@@ -70,6 +68,6 @@ function Courts() {
       </div>
     </div>
   );
-}
+};
 
 export default Courts;

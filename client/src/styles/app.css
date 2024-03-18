@@ -28,7 +28,7 @@ body {
 
 .userInfo {
   padding: 0.5em;
-  font-family: monospace;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .mainContainer {
@@ -73,6 +73,15 @@ body {
 .inputBox {
   height: 48px;
   width: 50vw;
+  font-size: large;
+  border-radius: 8px;
+  border: 1px solid grey;
+  padding-left: 8px;
+}
+
+.change_inputBox {
+  height: 48px;
+  width: 50vmin;
   font-size: large;
   border-radius: 8px;
   border: 1px solid grey;

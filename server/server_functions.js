@@ -84,9 +84,10 @@ async function sendPinByMail(loggedInEmail) {
   return { message: "Email sent successfully" };
 }
 
+// Function to send a confirmation to the user that the payment was successfull.
 async function sendPaymentSuccessMail(user_email, amount){
 
-  user_data = await user_queries.retrieveUser(user_email);
+  user_data = await user_queries.retrieveUser(user_email); // Obtaining data associated with the email inputted.
 
     if(user_data.result){
 
