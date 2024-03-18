@@ -9,7 +9,7 @@ function ChangePW() {
 
   // This checks if the passwords entered match and are not empty
   const canChangePassword = useMemo(
-    () => password === confirmPassword && password.length > 0 && confirmPassword.length > 0,
+    () => password.length > 0 && confirmPassword.length > 0 && password === confirmPassword,
     [password, confirmPassword]
   );
 
