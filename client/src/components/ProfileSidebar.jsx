@@ -1,5 +1,6 @@
-import defaultProfilePic from "../assets/default-pp.jpg";
 import { NavLink, useNavigate } from "react-router-dom";
+
+import { defaultProfilePic } from "../components/Icons";
 
 import { useToken } from "../hooks/useToken";
 

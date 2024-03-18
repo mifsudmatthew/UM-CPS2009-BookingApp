@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import logo from "../assets/racket.png";
-import hamburger from "../assets/hamburger.png";
 
+import { hamburger, logo } from "../components/Icons";
 import "../styles/navbar.css";
 import { useUserContext } from "../context/User";
 import { useAuth } from "../context/Authenication";
