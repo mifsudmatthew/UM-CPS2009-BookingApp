@@ -21,6 +21,7 @@ steps:
     displayName: "Install Node dependencies in frontend"
 
   - script: |
+      cd ./client
       npm run build
     displayName: "Building the frontend"
 
