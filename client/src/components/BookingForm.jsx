@@ -13,8 +13,9 @@ function BookingForm() {
   const fetchCourts = async () => {
     const postData = { date, time };
     try {
-      const response = await Post("/api/getCourts", postData);
-      setCourts(response.courts);
+      const response = await Post("/api/getAvailableCourts", postData);
+      console.log(response);
+      setCourts(response.data);
     } catch (error) {
       console.error("Error fetching courts: ", error);
     }
