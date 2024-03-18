@@ -1,99 +1,71 @@
 import { useState } from "react";
-
 import { Post } from "../utils/ApiFunctions";
 
+import '../styles/bookingform.css';
+
 function BookingForm() {
-  const [count, setCount] = useState(0);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [court, setCourt] = useState("");
+  const [courts, setCourts] = useState([]);
 
-  if (count < 0) {
-    setCount(0);
-  }
+  const showCourtSelection = date && time;
 
-  const incCount = () => {
-    setCount((prevCount) => prevCount + 1);
+  const fetchCourts = async (date, time) => {
+    const postData = { date, time };
+    try {
+      const response = await Post("/getCcourts", postData);
+      setCourts(response.courts);
+    } catch (error) {
+      console.error("Error fetching courts: ", error);
+    }
   };
 
-  const decCount = () => {
-    setCount((prevCount) => prevCount - 1);
+  const handleDateTimeChange = (newDate, newTime) => {
+    setDate(newDate);
+    setTime(newTime);
+    if (newDate && newTime) {
+      fetchCourts(newDate, newTime);
+    }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const data = {
-      name,
-      email,
+    const booking = {
       date,
-      numberOfPlayers: count,
+      time,
+      court,
     };
-
-    console.log("Data:", data);
-
-    try {
-      const response = await Post("/api/booking", data);
-
-      console.log("Success:", response);
-    } catch (error) {
-      console.error(error);
-    }
+    console.log(booking);
+    const response = await Post("/bookings", booking);
+    console.log(response);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className={"mainContainer"}>
-      <div className={"titleContainer"}>
-        <div>Book a Court</div>
+    <div className="booking-form">
+      <h1>Book a Tennis Court</h1>
+      <div className="form-section">
+        <label>Pick a Time & Date</label>
+        <input type="date" placeholder="Date"
+        onChange={(e) => setDate(e.target.value)}/>
+        <input type="time" placeholder="Time" 
+         onChange={(e) => setTime(e.target.value)}/>
       </div>
-      <div className="inputContainer">
-        <label>Enter your name</label>
-        <input
-          type="text"
-          onChange={(e) => {
-            setName(e.target.value);
-          }
-        }
-        className={"inputBox"}
-        placeholder="name surname"
-        />
-      </div>
-      <div className="inputContainer">
-        <label>Enter your email:</label>
-        <input
-          placeholder="name@email.com"
-          type="email"
-          className={"inputBox"}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-        />
-      </div>
-      <div className="inputContainer">
-        <label>Enter your date:</label>
-        <input
-          className={"inputBox"}
-          type="date"
-          onChange={(e) => {
-            setDate(e.target.value);
-          }}
-        />
-      </div>
-      <div className="card">
-        Number of players: {count}
-        <button type="button" onClick={decCount}>
-          -
-        </button>
-        <button type="button" onClick={incCount}>
-          +
-        </button>
-        <div>
-          <button type="submit" className={"inputButton"}>Submit Booking</button>
-        </div>
-      </div>
-      </div>
-    </form>
+      {showCourtSelection && (
+          <div className="form-section">
+            <label>Choose a Court</label>
+            <select onChange={(e) => setCourt(e.target.value)}>
+              <option value="">Select a court</option>
+                {courts.map((courtItem, index) => (
+                <option key={index} value={courtItem.value}>
+                  {courtItem.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+      <button type="submit" onClick={handleSubmit}>Proceed</button>
+    </div>
   );
 }
 
