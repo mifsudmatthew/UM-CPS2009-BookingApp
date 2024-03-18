@@ -1,7 +1,7 @@
 import "../styles/aboutus.css";
 import { happy, tennis, players } from "./Icons";
 
-function AboutUs() {
+const AboutUs = () => {
   return (
     <div className="aboutus-container">
       <div className="aboutus-title">About Us</div>
@@ -39,6 +39,6 @@ function AboutUs() {
       </div>
     </div>
   );
-}
+};
 
 export default AboutUs;

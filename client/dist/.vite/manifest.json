@@ -1,10 +1,14 @@
 {
   "index.html": {
+<<<<<<< HEAD
     "file": "assets/index-BaoRZ3X8.js",
+=======
+    "file": "assets/index-BMlq_pia.js",
+>>>>>>> d513a6b29480a2b181c305a8d1b7b369c09fcce8
     "src": "index.html",
     "isEntry": true,
     "css": [
-      "assets/index-Cd4Y9OS0.css"
+      "assets/index-BAMsV2Fl.css"
     ],
     "assets": [
       "assets/grass-court-Ch3CFGZv.webp",
@@ -13,12 +17,17 @@
       "assets/racket-Dl6xEiXo.png",
       "assets/default-pp-CgVj1ebl.jpg",
       "assets/logo-CuQNDwzK.png",
+      "assets/bookingform-B4mP9RhM.jpg",
       "assets/banner-D_O1PRSu.jpg"
     ]
   },
   "src/assets/banner.jpg": {
     "file": "assets/banner-D_O1PRSu.jpg",
     "src": "src/assets/banner.jpg"
+  },
+  "src/assets/bookingform.jpg": {
+    "file": "assets/bookingform-B4mP9RhM.jpg",
+    "src": "src/assets/bookingform.jpg"
   },
   "src/assets/clay-court.webp": {
     "file": "assets/clay-court-ChGvYgJv.webp",

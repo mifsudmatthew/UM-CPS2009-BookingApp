@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import "../styles/banner.css";
 
 function Banner() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   function handleLogin() {
-    navigate("/login"); 
+    navigate("/login");
   }
 
   return (
