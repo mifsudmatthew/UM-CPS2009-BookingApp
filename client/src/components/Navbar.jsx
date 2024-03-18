@@ -1,26 +1,19 @@
-import { useUser } from "../hooks/useUser"; 
-import { useState , useEffect } from "react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useToken } from "../hooks/useToken";
-import logo from "../assets/racket.png";
-import hamburger from "../assets/hamburger.png";
 
+import { hamburger, logo } from "../components/Icons";
 import "../styles/navbar.css";
+import { useUserContext } from "../context/User";
+import { useAuth } from "../context/Authenication";
 
 function Navbar() {
   const [showNavbar, setShowNavbar] = useState(false);
-  const [refresh, setRefresh] = useState(false);
-  const {accessToken} = useToken()
-  const {user} = useUser();
+  const accessToken = useAuth();
+  const user = useUserContext();
 
   const handleShowNavbar = () => {
     setShowNavbar(!showNavbar);
   };
-  // Effect to trigger refresh when user or access token changes
-  useEffect(() => {
-    console.log("useEffect triggered");
-    setRefresh(prevRefresh => !prevRefresh); // Toggle refresh state to trigger re-render
-  }, [user, accessToken]);
 
   return (
     <>
@@ -34,7 +27,7 @@ function Navbar() {
           </div>
           <div>
             <ul className="navbar-balance">
-              {accessToken != "" ?(<>Balance: {user.balance}</>):(<></>)}
+              {accessToken != "" ? <>Balance: {user.balance}</> : <></>}
             </ul>
           </div>
           <div className="menu-icon" onClick={handleShowNavbar}>
@@ -45,7 +38,7 @@ function Navbar() {
               <li>
                 <NavLink to="/">Home</NavLink>
               </li>
-              {accessToken == ""? (
+              {accessToken == "" ? (
                 <>
                   <li>
                     <NavLink to="/login">Login</NavLink>
@@ -54,7 +47,7 @@ function Navbar() {
                     <NavLink to="/register">Register</NavLink>
                   </li>
                 </>
-              ): (
+              ) : (
                 <>
                   <li>
                     <NavLink to="/profile">Profile</NavLink>
@@ -62,7 +55,6 @@ function Navbar() {
                   <li>
                     <NavLink to="/profile/topup">Top Up</NavLink>
                   </li>
-                  
                 </>
               )}
             </ul>
