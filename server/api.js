@@ -24,9 +24,7 @@ apiRouter.use((req, _res, next) => {
   next();
 });
 
-apiRouter.post("/test", sf.authenticateToken, (req, res) => {
-  res.json();
-});
+apiRouter.post("/authenticate", sf.authenticateToken);
 
 // To refresh the token
 // NOT USED

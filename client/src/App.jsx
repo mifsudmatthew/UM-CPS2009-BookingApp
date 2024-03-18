@@ -11,6 +11,7 @@ import "./styles/app.css";
 import Navbar from "./components/Navbar";
 import Bookings from "./components/Bookings";
 import Balance from "./components/Balance";
+import AccountDetails from "./components/AccountDetails";
 
 /* Pages */
 import Home from "./pages/Home";
@@ -24,33 +25,26 @@ import ChangePW from "./pages/ChangePW";
 
 import { UserProvider } from "./context/User";
 import { AuthProvider } from "./context/Authenication";
-import { useToken } from "./hooks/useToken";
-import { useUser } from "./hooks/useUser";
 // Main react app
 function App() {
-  const { accessToken } = useToken();
-  const { user } = useUser();
   return (
     <>
-      <UserProvider value={user}>
-        <AuthProvider value={accessToken}>
+      <UserProvider>
+        <AuthProvider>
           <Navbar />
           <Routes>
             <Route path="/" exact   element={<Home />}></Route>
             <Route path="/login"    element={<Login />}></Route>
             <Route path="/register" element={<Register />}></Route>
-            <Route path="/reset"    element={<Reset />}></Route>
-            <Route path="/booking"  element={<Booking />}></Route>
-            <Route path="/profile"  exact element={<Profile />}></Route>
-            <Route path="/profile"    element={<Profile />}>
-              <Route path="bookings"  element={<Bookings />}></Route>
-              <Route path="balance"   element={<Balance />}></Route>
-              <Route path="topup"     element={<Topup />}></Route>
+            <Route path="/reset" element={<Reset />}></Route>
+            <Route path="/booking" element={<Booking />}></Route>
+            <Route path="/profile" element={<Profile />}>
+              <Route path="" element={<AccountDetails />} />
+              <Route path="bookings" element={<Bookings />}></Route>
+              <Route path="balance" element={<Balance />}></Route>
+              <Route path="topup" element={<Topup />}></Route>
+              <Route path="changepassword" element={<ChangePW />}></Route>
             </Route>
-            <Route
-              path="/profile/changepassword"
-              element={<ChangePW />}
-            ></Route>
           </Routes>
         </AuthProvider>
       </UserProvider>

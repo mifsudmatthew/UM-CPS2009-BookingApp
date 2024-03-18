@@ -9,7 +9,7 @@ function Login() {
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setTokens } = useToken();
+  const { setAccessToken } = useToken();
   const { setUser } = useUser();
 
   // Send the login details to the server
@@ -29,12 +29,14 @@ function Login() {
     try {
       const response = await Post("/api/login", { email, password });
 
-      let { accessToken, refreshToken, ...userData } = response;
-
-      setTokens(accessToken, refreshToken);
-      setUser(userData);
-
-      navigate("/profile");
+      let { accessToken, ...userData } = response;
+      try {
+        setAccessToken(accessToken);
+        setUser(userData);
+      } finally {
+        setTimeout(1000);
+        navigate("/profile");
+      }
     } catch (error) {
       console.error(`Error in ${error}`);
     }
