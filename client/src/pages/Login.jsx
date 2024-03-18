@@ -2,15 +2,13 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Post } from "../utils/ApiFunctions";
 
-import { useToken } from "../hooks/useToken";
-import { useUser } from "../hooks/useUser";
+import { setToken } from "../context/Auth";
+import { setUser } from "../context/User";
 
 function Login() {
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setAccessToken } = useToken();
-  const { setUser } = useUser();
 
   // Send the login details to the server
   const handleSubmit = async (event) => {
@@ -28,13 +26,11 @@ function Login() {
 
     try {
       const response = await Post("/api/login", { email, password });
-
-      let { accessToken, ...userData } = response;
       try {
-        setAccessToken(accessToken);
+        const { accessToken, ...userData } = response;
+        setToken(accessToken);
         setUser(userData);
       } finally {
-        setTimeout(1000);
         navigate("/profile");
       }
     } catch (error) {

@@ -29,14 +29,13 @@ export default function Reset() {
       alert("Email sent successfully!"); // This replaces your <p>Alert woop</p> with an actual alert box
       setIsValid(false);
     }
-  }, [isValid]); 
+  }, [isValid]);
 
   const handleSubmit = async (event) => {
-
     event.preventDefault();
 
     try {
-      const response = await Post("/api/reset", { email: email });
+      await Post("/api/reset", { email: email });
       setIsValid(true);
     } catch (error) {
       alert("Error: Could not send reset email.");
@@ -70,22 +69,23 @@ export default function Reset() {
     <>
       <h1>Reset</h1>
       <div className={"mainContainerReset"}>
-      <div className={"inputContainer"}>
-      <br /><br />
+        <div className={"inputContainer"}>
+          <br />
+          <br />
         </div>
         <div className={"inputContainer"}>
           <input
-           className="inputBox"
+            className="inputBox"
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-      <br></br>
-      <button onClick={handleSubmit} disabled={!isEmailValid}>
+        <br></br>
+        <button onClick={handleSubmit} disabled={!isEmailValid}>
           RESET PASSWORD
-      </button>
+        </button>
         <br />
         <div className={"inputContainer"}>
           <input
@@ -136,9 +136,11 @@ export default function Reset() {
         )}
         <br />
         <div className={"inputContainer"}>
-        <button onClick={handleChange} disabled={!isEmailValid || !passwordMatch || !pinValid}>
-        CHANGE PASSWORD
-        </button>
+          <button
+            onClick={handleChange}
+            disabled={!isEmailValid || !passwordMatch || !pinValid}>
+            CHANGE PASSWORD
+          </button>
         </div>
       </div>
     </>

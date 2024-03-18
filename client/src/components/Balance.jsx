@@ -1,15 +1,18 @@
 import { Link } from "react-router-dom";
-import { useUser } from "../hooks/useUser";
+import { useUser } from "../context/User";
 
 const Balance = () => {
-  const { user } = useUser();
-  const currentBalance = user.balance || "Balance not available";
+  const user = useUser();
 
   return (
     <main className="profile">
       <div className="header-title">Balance</div>
       <section>
-        <h4>Your current balance is: {currentBalance}</h4>
+        {user.balance == undefined ? (
+          <h4>Balance not available</h4>
+        ) : (
+          <h4>Your current balance is: {user.balance}</h4>
+        )}
       </section>
       <section>
         <div className="signup">

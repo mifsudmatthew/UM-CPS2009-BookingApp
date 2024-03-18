@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
-import { hamburger, logo } from "../components/Icons";
 import "../styles/navbar.css";
-import { useUserContext } from "../context/User";
-import { useAuth } from "../context/Authenication";
+
+import { hamburger, logo } from "../components/Icons";
+
+import { useUser } from "../context/User";
+import { useAuth } from "../context/Auth";
 
 function Navbar() {
   const [showNavbar, setShowNavbar] = useState(false);
-  const accessToken = useAuth();
-  const user = useUserContext();
+  const token = useAuth();
+  const user = useUser();
 
   const handleShowNavbar = () => {
     setShowNavbar(!showNavbar);
@@ -27,7 +29,7 @@ function Navbar() {
           </div>
           <div>
             <ul className="navbar-balance">
-              {accessToken != "" ? <>Balance: {user.balance}</> : <></>}
+              {token != "" ? <>Balance: {user.balance}</> : <></>}
             </ul>
           </div>
           <div className="menu-icon" onClick={handleShowNavbar}>
@@ -38,7 +40,7 @@ function Navbar() {
               <li>
                 <NavLink to="/">Home</NavLink>
               </li>
-              {accessToken == "" ? (
+              {token == "" ? (
                 <>
                   <li>
                     <NavLink to="/login">Login</NavLink>

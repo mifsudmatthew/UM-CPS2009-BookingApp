@@ -24,7 +24,7 @@ import Topup from "./pages/Topup";
 import ChangePW from "./pages/ChangePW";
 
 import { UserProvider } from "./context/User";
-import { AuthProvider } from "./context/Authenication";
+import { AuthProvider } from "./context/Auth";
 // Main react app
 function App() {
   return (
@@ -33,8 +33,8 @@ function App() {
         <AuthProvider>
           <Navbar />
           <Routes>
-            <Route path="/" exact   element={<Home />}></Route>
-            <Route path="/login"    element={<Login />}></Route>
+            <Route path="/" exact element={<Home />}></Route>
+            <Route path="/login" element={<Login />}></Route>
             <Route path="/register" element={<Register />}></Route>
             <Route path="/reset" element={<Reset />}></Route>
             <Route path="/booking" element={<Booking />}></Route>
