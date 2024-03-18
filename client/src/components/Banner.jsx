@@ -1,12 +1,13 @@
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import "../styles/banner.css";
 
-function toLogin() {
-  return <Navigate to="login" replace={true} />;
-}
-
 function Banner() {
+  const navigate = useNavigate();
+  const toLogin = () => {
+    navigate("login", { replace: true });
+  };
+
   return (
     <div className="background-container">
       <h2>“Your best tennis game”</h2>
