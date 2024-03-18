@@ -18,7 +18,6 @@ steps:
   - script: |
       cd ./client
       npm install
-      cd ..
     displayName: "Install Node dependencies in frontend"
 
   - script: |
