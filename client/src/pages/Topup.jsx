@@ -4,7 +4,7 @@ import { useToken } from "../hooks/useToken";
 import { useLocation, Navigate } from "react-router-dom";
 
 const isLoggedIn = () => {
-  return !!localStorage.getItem('accessToken'); // Example check
+  return !!localStorage.getItem("accessToken"); // Example check
 };
 
 function Topup() {
@@ -59,27 +59,27 @@ function Topup() {
   }
 
   return (
-    <div className="mainContainer">
-      <h1 className="titleContainer">Top Up</h1>
-      <form onSubmit={handleSubmit} className="inputContainer">
-        <label>Amount</label>
-        <input
-          placeholder="€1000"
-          className="inputBox"
-          type="number"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          required
-        />
-        <br />
-        <input
-          className={"inputButton"}
-          type="button"
-          value={"Top Up"}
-          onClick={handleSubmit}
-        />
-      </form>
-    </div>
+    <main className="profile">
+        <h1 className="header-title">Top Up</h1>
+        <form onSubmit={handleSubmit} className="inputContainer">
+          <label>Amount</label>
+          <input
+            placeholder="€1000"
+            className="inputBox"
+            type="number"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            required
+          />
+          <br />
+          <input
+            className={"inputButton"}
+            type="button"
+            value={"Top Up"}
+            onClick={handleSubmit}
+          />
+        </form>
+    </main>
   );
 }
 

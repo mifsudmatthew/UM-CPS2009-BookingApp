@@ -1,6 +1,14 @@
 {
   "index.html": {
+<<<<<<< HEAD
     "file": "assets/index-DRygHlSf.js",
+=======
+<<<<<<< HEAD
+    "file": "assets/index-DO9WdgkG.js",
+=======
+    "file": "assets/index-CXbyumuV.js",
+>>>>>>> 6139a3a63ec6c4eb30192b8594f5b17ae6c170bf
+>>>>>>> 1270a00cbf2b485f29afe7de9ddb2bdfba40cb65
     "src": "index.html",
     "isEntry": true,
     "css": [
