@@ -7,6 +7,9 @@ import User from "../context/User";
 
 import React from 'react';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function Login() {
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -39,13 +42,15 @@ function Login() {
         
       }
     } catch (error) {
-      console.error(`Error in:: ${error}`);
+      console.error(`Error in: ${error}`);
+      toast.error("Login failed. Please check your credentials and try again.");
     }
   };
 
   // Form to input login detils
   return (
     <div className={"mainContainer"}>
+      <ToastContainer />
       <div className="innerContainer">
       <div className={"titleContainer"}>
         <div>Login</div>
