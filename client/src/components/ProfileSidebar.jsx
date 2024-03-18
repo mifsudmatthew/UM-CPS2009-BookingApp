@@ -2,14 +2,13 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 import { defaultProfilePic } from "../components/Icons";
 
-import { useToken } from "../hooks/useToken";
+import { setToken } from "../context/Auth";
 
 const ProfileSidebar = () => {
-  const { setAccessToken } = useToken();
   const navigate = useNavigate();
 
   const logOut = () => {
-    setAccessToken("");
+    setToken("");
     navigate("/");
   };
 

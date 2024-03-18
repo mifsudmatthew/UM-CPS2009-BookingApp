@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Post } from "../utils/ApiFunctions";
-import '../styles/bookingform.css';
+import "../styles/bookingform.css";
 
 function BookingForm() {
   const [date, setDate] = useState("");
@@ -10,17 +10,17 @@ function BookingForm() {
 
   const showCourtSelection = date && time;
 
-  const fetchCourts = async () => {
-    const postData = { date, time };
-    try {
-      const response = await Post("/api/getCourts", postData);
-      setCourts(response.courts);
-    } catch (error) {
-      console.error("Error fetching courts: ", error);
-    }
-  };
-
   useEffect(() => {
+    const fetchCourts = async () => {
+      const postData = { date, time };
+      try {
+        const response = await Post("/api/getCourts", postData);
+        setCourts(response.courts);
+      } catch (error) {
+        console.error("Error fetching courts: ", error);
+      }
+    };
+
     if (date && time) {
       fetchCourts();
     }
@@ -33,7 +33,6 @@ function BookingForm() {
     try {
       const response = await Post("/api/booking", booking);
       console.log(response);
-
     } catch (error) {
       console.error("Error submitting booking: ", error);
     }
@@ -42,13 +41,19 @@ function BookingForm() {
   return (
     <div className="booking-form">
       <h1>Book a Tennis Court</h1>
-      <form onSubmit={handleSubmit}> 
+      <form onSubmit={handleSubmit}>
         <div className="form-section">
           <label>Pick a Time & Date</label>
-          <input type="date" placeholder="Date"
-            onChange={(e) => setDate(e.target.value)}/>
-          <input type="time" placeholder="Time" 
-            onChange={(e) => setTime(e.target.value)}/>
+          <input
+            type="date"
+            placeholder="Date"
+            onChange={(e) => setDate(e.target.value)}
+          />
+          <input
+            type="time"
+            placeholder="Time"
+            onChange={(e) => setTime(e.target.value)}
+          />
         </div>
         {showCourtSelection && (
           <div className="form-section">
