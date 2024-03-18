@@ -7,6 +7,7 @@ import Balance from '../components/Balance';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import { useToken } from "../hooks/useToken";
+import Topup from './Topup';
 
 
 const Profile = () => {
@@ -23,6 +24,7 @@ const Profile = () => {
         <Route path="/" element={<AccountDetails />} />
         <Route path="/bookings" element={<Bookings />} />
         <Route path="/balance" element={<Balance />} />
+        <Route path="/topup" element={<Topup />} />
       </Routes>
     </div>
   );
