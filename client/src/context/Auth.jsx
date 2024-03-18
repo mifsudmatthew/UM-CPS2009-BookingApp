@@ -27,5 +27,5 @@ export default function Auth() {
     return useContext(AuthContext);
   };
 
-  return { useAuth, AuthProvider, setToken };
+  return { AuthProvider, useAuth, setToken };
 }

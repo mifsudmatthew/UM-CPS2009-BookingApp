@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import { useUser } from "../context/User";
+import User from "../context/User";
 
 const Balance = () => {
+  const { useUser } = User();
   const user = useUser();
 
   return (

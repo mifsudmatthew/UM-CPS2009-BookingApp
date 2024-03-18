@@ -2,10 +2,11 @@ import "../styles/profile.css";
 import ProfileSidebar from "../components/ProfileSidebar";
 import { Outlet, useNavigate } from "react-router-dom";
 
-import { useAuth } from "../context/Auth";
+import Auth from "../context/Auth";
 
 const Profile = () => {
   const navigate = useNavigate();
+  const { useAuth } = Auth();
   const auth = useAuth();
 
   if (auth == "") {

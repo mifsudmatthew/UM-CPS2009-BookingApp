@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import { Post } from "../utils/ApiFunctions";
 import { useLocation, Navigate } from "react-router-dom";
 
-import { useAuth } from "../context/Auth";
+import Auth from "../context/Auth";
 
 function Topup() {
   const [amount, setAmount] = useState("");
+  const { useAuth } = Auth();
   const token = useAuth();
 
   const isLoggedIn = () => {
