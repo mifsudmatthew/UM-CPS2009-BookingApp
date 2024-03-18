@@ -7,16 +7,16 @@ function ChangePW() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  // This checks if the passwords entered match
-  const passwordMatch = useMemo(
-    () => password === confirmPassword,
+  // This checks if the passwords entered match and are not empty
+  const canChangePassword = useMemo(
+    () => password === confirmPassword && password.length > 0 && confirmPassword.length > 0,
     [password, confirmPassword]
   );
 
   const handleChangePassword = async (event) => {
     event.preventDefault();
-    if (!passwordMatch) {
-      alert("Passwords do not match.");
+    if (!canChangePassword) {
+      alert("Passwords do not match or fields are empty.");
       return;
     }
 
@@ -52,11 +52,11 @@ function ChangePW() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-          <button onClick={handleChangePassword} disabled={!passwordMatch}>
+          <button onClick={handleChangePassword} disabled={!canChangePassword}>
             Change Password
           </button>
         </div>
-        {!passwordMatch && (
+        {!canChangePassword && password.length > 0 && confirmPassword.length > 0 && (
           <div style={{ color: "rgba(186, 26, 26, 1)" }}>
             Passwords do not match.
           </div>
