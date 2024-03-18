@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Post } from "../utils/ApiFunctions";
+import bookingImage from '../assets/bookingform.jpg'; 
 import '../styles/bookingform.css';
 
 function BookingForm() {
@@ -13,7 +14,7 @@ function BookingForm() {
   const fetchCourts = async () => {
     const postData = { date, time };
     try {
-      const response = await Post("/api/getCourts", postData);
+      const response = await Post("/api/getAvailableCourts", postData);
       setCourts(response.courts);
     } catch (error) {
       console.error("Error fetching courts: ", error);
@@ -40,11 +41,13 @@ function BookingForm() {
   };
 
   return (
-    <div className="booking-form">
-      <h1>Book a Tennis Court</h1>
+    <div className="booking-container">
+      <img src={bookingImage} alt="Tennis court" className="booking-image" />
+      <div className="booking-form">
+      <div className="booking-form-title">Book a Tennis Court</div>
       <form onSubmit={handleSubmit}> 
         <div className="form-section">
-          <label>Pick a Time & Date</label>
+          <label className="booking-form-subtitle">Pick a Time & Date</label>
           <input type="date" placeholder="Date"
             onChange={(e) => setDate(e.target.value)}/>
           <input type="time" placeholder="Time" 
@@ -52,7 +55,7 @@ function BookingForm() {
         </div>
         {showCourtSelection && (
           <div className="form-section">
-            <label>Choose a Court</label>
+            <label className="booking-form-subtitle">Choose a Court</label>
             <select onChange={(e) => setCourt(e.target.value)}>
               <option value="">Select a court</option>
               {courts.map((court, index) => (
@@ -63,9 +66,10 @@ function BookingForm() {
             </select>
           </div>
         )}
-        <button type="submit">Proceed</button>
+        <button className="booking-button" type="submit">Proceed</button>
       </form>
     </div>
+  </div>
   );
 }
 
