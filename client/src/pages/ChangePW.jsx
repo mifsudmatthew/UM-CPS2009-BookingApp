@@ -7,16 +7,16 @@ function ChangePW() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  // This checks if the passwords entered match
-  const passwordMatch = useMemo(
-    () => password === confirmPassword,
+  // This checks if the passwords entered match and are not empty
+  const canChangePassword = useMemo(
+    () => password.length > 0 && confirmPassword.length > 0 && password === confirmPassword,
     [password, confirmPassword]
   );
 
   const handleChangePassword = async (event) => {
     event.preventDefault();
-    if (!passwordMatch) {
-      alert("Passwords do not match.");
+    if (!canChangePassword) {
+      alert("Passwords do not match or fields are empty.");
       return;
     }
 
@@ -38,25 +38,29 @@ function ChangePW() {
       <main className="profile">
         <h1 className="header-title">Change Password</h1>
         <div className={"inputContainer"}>
+          <label>New Password</label>
           <input
-            className="inputBox"
+            className="change_inputBox"
             type="password"
             placeholder="New Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <br></br>
+          <label>Confirm New Password</label>
           <input
-            className="inputBox"
+            className="change_inputBox"
             type="password"
             placeholder="Confirm New Password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-          <button onClick={handleChangePassword} disabled={!passwordMatch}>
+          <br></br>
+          <button className="inputButton" onClick={handleChangePassword} disabled={!canChangePassword}>
             Change Password
           </button>
         </div>
-        {!passwordMatch && (
+        {!canChangePassword && password.length > 0 && confirmPassword.length > 0 && (
           <div style={{ color: "rgba(186, 26, 26, 1)" }}>
             Passwords do not match.
           </div>
