@@ -1,99 +1,71 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import { Post } from "../utils/ApiFunctions";
+import '../styles/bookingform.css';
 
 function BookingForm() {
-  const [count, setCount] = useState(0);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [court, setCourt] = useState("");
+  const [courts, setCourts] = useState([]);
 
-  if (count < 0) {
-    setCount(0);
-  }
+  const showCourtSelection = date && time;
 
-  const incCount = () => {
-    setCount((prevCount) => prevCount + 1);
+  const fetchCourts = async () => {
+    const postData = { date, time };
+    try {
+      const response = await Post("/api/getCourts", postData);
+      setCourts(response.courts);
+    } catch (error) {
+      console.error("Error fetching courts: ", error);
+    }
   };
 
-  const decCount = () => {
-    setCount((prevCount) => prevCount - 1);
-  };
+  useEffect(() => {
+    if (date && time) {
+      fetchCourts();
+    }
+  }, [date, time]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const data = {
-      name,
-      email,
-      date,
-      numberOfPlayers: count,
-    };
-
-    console.log("Data:", data);
-
+    const booking = { date, time, court };
+    console.log(booking);
     try {
-      const response = await Post("/api/booking", data);
+      const response = await Post("/api/booking", booking);
+      console.log(response);
 
-      console.log("Success:", response);
     } catch (error) {
-      console.error(error);
+      console.error("Error submitting booking: ", error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className={"mainContainer"}>
-      <div className={"titleContainer"}>
-        <div>Book a Court</div>
-      </div>
-      <div className="inputContainer">
-        <label>Enter your name</label>
-        <input
-          type="text"
-          onChange={(e) => {
-            setName(e.target.value);
-          }
-        }
-        className={"inputBox"}
-        placeholder="name surname"
-        />
-      </div>
-      <div className="inputContainer">
-        <label>Enter your email:</label>
-        <input
-          placeholder="name@email.com"
-          type="email"
-          className={"inputBox"}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-        />
-      </div>
-      <div className="inputContainer">
-        <label>Enter your date:</label>
-        <input
-          className={"inputBox"}
-          type="date"
-          onChange={(e) => {
-            setDate(e.target.value);
-          }}
-        />
-      </div>
-      <div className="card">
-        Number of players: {count}
-        <button type="button" onClick={decCount}>
-          -
-        </button>
-        <button type="button" onClick={incCount}>
-          +
-        </button>
-        <div>
-          <button type="submit" className={"inputButton"}>Submit Booking</button>
+    <div className="booking-form">
+      <h1>Book a Tennis Court</h1>
+      <form onSubmit={handleSubmit}> 
+        <div className="form-section">
+          <label>Pick a Time & Date</label>
+          <input type="date" placeholder="Date"
+            onChange={(e) => setDate(e.target.value)}/>
+          <input type="time" placeholder="Time" 
+            onChange={(e) => setTime(e.target.value)}/>
         </div>
-      </div>
-      </div>
-    </form>
+        {showCourtSelection && (
+          <div className="form-section">
+            <label>Choose a Court</label>
+            <select onChange={(e) => setCourt(e.target.value)}>
+              <option value="">Select a court</option>
+              {courts.map((court, index) => (
+                <option key={index} value={court.value}>
+                  {court.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+        <button type="submit">Proceed</button>
+      </form>
+    </div>
   );
 }
 

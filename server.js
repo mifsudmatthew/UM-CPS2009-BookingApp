@@ -11,6 +11,7 @@ const express = require("express");
 // API Router
 const apiRouter = require("./server/api");
 const paymentRouter = require("./server/post/payments_post");
+const bookingRounter = require("./server/post/bookings_post");
 // CORS because pain
 const cors = require("cors");
 // Running the database
@@ -45,7 +46,7 @@ app.use(express.json());
 // Api routes
 app.use("/api", apiRouter);
 app.use("/api", paymentRouter);
-
+app.use("/api", bookingRounter);
 // Serve the main app on all other routes
 app.route("*").get((_req, res) => {
   res.sendFile(path.resolve(static_files, "index.html"));
