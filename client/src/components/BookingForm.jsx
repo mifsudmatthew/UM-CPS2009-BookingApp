@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Post } from "../utils/ApiFunctions";
 import bookingImage from "../assets/bookingform.jpg";
 import "../styles/bookingform.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function BookingForm() {
   const [date, setDate] = useState("");
@@ -30,11 +32,20 @@ function BookingForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!date || !time || !court) {
+      console.error("Please fill all fields");
+      toast.error("Please fill all fields.");
+      return;
+    }
     const booking = { date, time, court};
-    console.log(booking);
     try {
       const response = await Post("/api/booking", booking);
       console.log(response);
+      if(response.result != true){
+        toast.error(response.error);
+      }else{
+        toast.success("Court Successfully Booked, Have Fun  😀")
+      }
     } catch (error) {
       console.error("Error submitting booking: ", error);
     }
@@ -49,7 +60,8 @@ function BookingForm() {
   };
 
   return (
-    <div className="booking-container">
+    <div className="booking-container" >
+      <ToastContainer />
       <img src={bookingImage} alt="Tennis court" className="booking-image" />
       <div className="booking-form">
         <div className="booking-form-title">Book a Tennis Court</div>
