@@ -79,6 +79,15 @@ body {
   padding-left: 8px;
 }
 
+.change_inputBox {
+  height: 48px;
+  width: 50vmin;
+  font-size: large;
+  border-radius: 8px;
+  border: 1px solid grey;
+  padding-left: 8px;
+}
+
 .signup {
   margin-top: 20px;
 }
