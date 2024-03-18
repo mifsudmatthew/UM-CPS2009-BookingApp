@@ -9,6 +9,8 @@ const Profile = () => {
   const { useAuth } = Auth();
   const auth = useAuth();
 
+  console.log(`Auth: '${auth}'`);
+
   if (auth == "") {
     navigate("/login");
   }

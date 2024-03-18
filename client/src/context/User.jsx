@@ -1,21 +1,19 @@
-import { useState, useEffect, createContext, useContext } from "react";
+import { useState, createContext, useContext } from "react";
+
+const UserContext = createContext();
 
 export default function User() {
-  const UserContext = createContext();
-  const [user, setUser] = useState({});
+  const [user, _setUser] = useState(getUser());
 
-  useEffect(() => {
-    const _user = JSON.parse(localStorage.getItem("user"));
-    setUser(_user);
-    console.log("Empty Dependency useEffect ran");
-  }, []);
+  function getUser() {
+    return localStorage.getItem("user") || {};
+  }
 
-  useEffect(() => {
-    const _user = JSON.stringify(user);
+  function setUser(userData) {
+    const _user = JSON.stringify(userData);
     localStorage.setItem("user", _user);
-    setUser(_user);
-    console.log("User Dependency useEffect ran");
-  }, [user]);
+    _setUser(_user);
+  }
 
   const UserProvider = ({ children }) => {
     return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
