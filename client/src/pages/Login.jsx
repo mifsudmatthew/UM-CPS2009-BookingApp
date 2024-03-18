@@ -5,6 +5,8 @@ import { Post } from "../utils/ApiFunctions";
 import Auth from "../context/Auth";
 import User from "../context/User";
 
+import React from 'react';
+
 function Login() {
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -34,15 +36,17 @@ function Login() {
         setUser(userData);
       } finally {
         navigate("/profile");
+        
       }
     } catch (error) {
-      console.error(`Error in ${error}`);
+      console.error(`Error in:: ${error}`);
     }
   };
 
   // Form to input login detils
   return (
     <div className={"mainContainer"}>
+      <ToastContainer />
       <div className={"titleContainer"}>
         <div>Login</div>
       </div>
