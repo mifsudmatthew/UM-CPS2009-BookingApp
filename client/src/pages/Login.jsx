@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Post } from "../utils/ApiFunctions";
 
 import Auth from "../context/Auth";
 import User from "../context/User";
 
 function Login() {
-  let navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setToken } = Auth();
@@ -28,13 +27,10 @@ function Login() {
 
     try {
       const response = await Post("/api/login", { email, password });
-      try {
-        const { accessToken, ...userData } = response;
-        setToken(accessToken);
-        setUser(userData);
-      } finally {
-        navigate("/profile");
-      }
+      const { accessToken, ...userData } = response;
+      setToken(accessToken);
+      setUser(userData);
+      return <Navigate to="/profile" replace={true} />;
     } catch (error) {
       console.error(`Error in ${error}`);
     }
