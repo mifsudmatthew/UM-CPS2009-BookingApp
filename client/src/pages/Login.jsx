@@ -14,12 +14,16 @@ function Login() {
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false); // Add this line
   const { setToken } = Auth();
   const { setUser } = User();
 
   // Send the login details to the server
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsButtonDisabled(true); // Disable the button when the form is submitted
+    setTimeout(() => setIsButtonDisabled(false), 2000); // Re-enable the button after 2 seconds
+
     // Check if the email and password fields are empty
     if (!email || !password) {
       toast.error("Please fill all fields.");
@@ -27,7 +31,7 @@ function Login() {
     }
     // Check if the email is valid
     if (!email.includes("@")) {
-      toast.error("Invalid e-mail format deteced.");
+      toast.error("Invalid e-mail format detected.");
       return;
     }
 
@@ -39,7 +43,6 @@ function Login() {
         setUser(userData);
       } finally {
         navigate("/profile");
-        
       }
     } catch (error) {
       console.error(`Error in: ${error}`);
@@ -47,7 +50,7 @@ function Login() {
     }
   };
 
-  // Form to input login detils
+  // Form to input login details
   return (
     <div className={"mainContainer"}>
       <ToastContainer />
@@ -85,6 +88,7 @@ function Login() {
           type="button"
           value={"Log in"}
           onClick={handleSubmit}
+          disabled={isButtonDisabled} // Add the disabled attribute here
         />
       </div>
       <div className="signup">
@@ -99,4 +103,3 @@ function Login() {
 }
 
 export default Login;
-
