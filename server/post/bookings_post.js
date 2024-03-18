@@ -12,8 +12,9 @@ bookingRounter.post(
     var date = new Date(req.body.date)
     var time = parseInt(req.body.time)
     var responseQ = await bookings_quieries.getAvailableCourts(date, time);
-    console.log(responseQ)
-    res.json(responseQ);
+    console.log(responseQ.data)
+    
+    res.json(responseQ.data);
   }
 );
 
