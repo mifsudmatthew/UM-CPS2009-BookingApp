@@ -1,9 +1,8 @@
 import { useState, useMemo, useEffect } from "react";
 import { Post } from "../utils/ApiFunctions";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 export default function Reset() {
-  let navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -58,7 +57,7 @@ export default function Reset() {
 
       console.log("Success:", response);
 
-      navigate("/");
+      return <Navigate to="/" replace={true} />;
     } catch (error) {
       alert("Error: Could not reset password.");
       console.error(error);
