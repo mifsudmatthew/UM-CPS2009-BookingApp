@@ -30,10 +30,10 @@ function BookingForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const booking = { date, time, court };
+    const booking = { date, time, court};
     console.log(booking);
     try {
-      const response = await Post("/api/booking", {booking}, token);
+      const response = await Post("/api/booking", booking);
       console.log(response);
     } catch (error) {
       console.error("Error submitting booking: ", error);

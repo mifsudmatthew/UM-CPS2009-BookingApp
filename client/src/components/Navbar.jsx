@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
 import "../styles/navbar.css";
@@ -16,6 +16,8 @@ function Navbar() {
 
   const token = useAuth();
   const user = useUser();
+
+  useEffect(() => {}, [token, user]);
 
   const handleShowNavbar = () => {
     setShowNavbar(!showNavbar);

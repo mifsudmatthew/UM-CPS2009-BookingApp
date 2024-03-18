@@ -1,17 +1,16 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Post } from "../utils/ApiFunctions";
 
 import Auth from "../context/Auth";
 import User from "../context/User";
 
-import React from 'react';
+import React from "react";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
-  let navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false); // Add this line
