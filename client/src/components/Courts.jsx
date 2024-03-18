@@ -36,8 +36,8 @@ const Courts = () => {
   const [current, setCurrent] = useState(0);
   const { image, title, description } = courts[current];
 
-  function handleBook() {
-    navigate("/booking");
+  function toBooking() {
+    navigate("/booking", { replace: true });
   }
 
   const handlePrevClick = () => {

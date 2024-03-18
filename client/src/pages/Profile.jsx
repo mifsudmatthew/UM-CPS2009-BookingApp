@@ -1,15 +1,17 @@
+import { useEffect } from "react";
 import "../styles/profile.css";
 import ProfileSidebar from "../components/ProfileSidebar";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 
 import Auth from "../context/Auth";
 
 const Profile = () => {
-  const navigate = useNavigate();
   const { useAuth } = Auth();
-  const auth = useAuth();
-  if (auth == "") {
-    navigate("/login");
+  const token = useAuth();
+
+  useEffect(() => {}, [token]);
+  if (token == "") {
+    return <Navigate to="/login" replace={true} />;
   }
 
   return (

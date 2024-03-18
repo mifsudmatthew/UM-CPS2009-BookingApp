@@ -19,6 +19,7 @@ import Reset from "./pages/Reset";
 import Profile from "./pages/Profile";
 import Topup from "./pages/Topup";
 import ChangePW from "./pages/ChangePW";
+import Errors from "./pages/Errors";
 
 // Modifies div with root id in index.html
 export default function AppContainer() {
@@ -44,6 +45,7 @@ export default function AppContainer() {
               <Route path="changepassword" element={<ChangePW />} />
             </Route>
           </Route>
+          <Route element={<Errors />} />
         </Routes>
       </AuthProvider>
     </UserProvider>
