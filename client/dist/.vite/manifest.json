@@ -1,10 +1,17 @@
 {
   "index.html": {
+<<<<<<< HEAD
     "file": "assets/index-DTGH5PCp.js",
+=======
+    "file": "assets/index-Bgh1Q1pP.js",
+>>>>>>> 3c9cebe5078bdf3014c6c91f3a74b02c79f15325
     "src": "index.html",
     "isEntry": true,
+    "dynamicImports": [
+      "node_modules/workbox-window/build/workbox-window.prod.es5.mjs"
+    ],
     "css": [
-      "assets/index-D40mxC3C.css"
+      "assets/index-B2s3bOn5.css"
     ],
     "assets": [
       "assets/grass-court-Ch3CFGZv.webp",
@@ -16,6 +23,11 @@
       "assets/bookingform-B4mP9RhM.jpg",
       "assets/banner-D_O1PRSu.jpg"
     ]
+  },
+  "node_modules/workbox-window/build/workbox-window.prod.es5.mjs": {
+    "file": "assets/workbox-window.prod.es5-DFjpnwFp.js",
+    "src": "node_modules/workbox-window/build/workbox-window.prod.es5.mjs",
+    "isDynamicEntry": true
   },
   "src/assets/banner.jpg": {
     "file": "assets/banner-D_O1PRSu.jpg",
