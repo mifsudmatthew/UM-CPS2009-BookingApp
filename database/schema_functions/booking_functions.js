@@ -6,7 +6,7 @@ const court_schema = require("../schemas/courts_schema")
  * Calculates the current date and time and uses them to
  * retrieve all bookings from this future date and time
  */
-async function getFutureBookings_Email(userID_toSearch) {
+async function getFutureBookings_ID(userID_toSearch) {
     try {
         // ---------------- Calculate Current Date and Time
         const currentDate = new Date();
@@ -14,9 +14,10 @@ async function getFutureBookings_Email(userID_toSearch) {
 
         // ---------------- Query Bookings from current date/time
         const bookings =  await booking_schema.find({   userID  : userID_toSearch,
-                                                        date    : { $gt : currentDate }, // Return all bookings of dates greater then current date
-                                                        $or     : { date: currentDate,  // Return all bookings of current date but future time
-                                                                    time: { $gte: currentTime } } 
+                                                        $or:[{ date: { $gt: currentDate } },        // Dates greater than current date
+                                                             { date: currentDate,                   // Dates equal to current date
+                                                               time: { $gte: currentTime }}         // Times greater than or equal to current time
+                                                            ]                                       // Return all bookings of dates greater then current date
                                                     });
         
         // ---------------- Validation of Query
@@ -44,10 +45,11 @@ async function getFutureBookings_Courts(courtID_toSearch) {
         const currentTime = currentDate.getTime();
 
         // ---------------- Query Bookings from current date/time
-        const bookings =  await booking_schema.find({courtID : courtID_toSearch,
-                                                    date    : { $gt : currentDate }, // Return all bookings of dates greater then current date
-                                                    $or     : { date: currentDate,  // Return all bookings of current date but future time
-                                                                time: { $gte: currentTime } } 
+        const bookings =  await booking_schema.find({   courtID : courtID_toSearch,
+                                                        $or:[{ date: { $gt: currentDate } },        // Dates greater than current date
+                                                             { date: currentDate,                   // Dates equal to current date
+                                                               time: { $gte: currentTime }}         // Times greater than or equal to current time
+                                                            ]                                       // Return all bookings of dates greater then current date 
                                                     });
         
         // ---------------- Validation of Query
@@ -68,7 +70,7 @@ async function getFutureBookings_Courts(courtID_toSearch) {
  * Calculates the current date and time and uses them to
  * retrieve all bookings from this future date and time
  */
-async function getFutureBookings_EmailCourt(userID_toSearch, courtID_toSearch) {
+async function getFutureBookings_IDCourt(userID_toSearch, courtID_toSearch) {
     try {
         // ---------------- Calculate Current Date and Time
         const currentDate = new Date();
@@ -76,10 +78,10 @@ async function getFutureBookings_EmailCourt(userID_toSearch, courtID_toSearch) {
 
         // Find bookings with userEmail from the current date and time onwards
         const bookings =  await booking_schema.find({   userID: userID_toSearch,
-                                                        courtID: courtID_toSearch,
-                                                        date    : { $gt : currentDate }, // Return all bookings of dates greater then current date
-                                                        $or     : { date: currentDate,  // Return all bookings of current date but future time
-                                                                    time: { $gte: currentTime } }
+                                                        $or:[{ date: { $gt: currentDate } },        // Dates greater than current date
+                                                             { date: currentDate,                   // Dates equal to current date
+                                                               time: { $gte: currentTime }}         // Times greater than or equal to current time
+                                                        ]                                           // Return all bookings of dates greater then current date
                                                     });
         
         // ---------------- Validation of Query
@@ -106,28 +108,31 @@ async function addBooking(userID_toBook, courtID_toBook, date_toBook, time_toBoo
     try{
         // --------------------- Check if the booking is more then a week in advanced
         const today = new Date(); // get current date
-        if (new Date(date_toBook) > Date(today.getFullYear(), today.getMonth(), today.getDate() + 7)) { // current date + 7 days
+        const maxFutureDate = new Date(today.getTime() + (7 * 24 * 60 * 60 * 1000)); // Calculate date 7 days from now
+        if (date_toBook > maxFutureDate) { // current date + 7 days
             return { result: false, data: null, error: "Cannot book more than a week in advance" };
         }
-
+        
         // --------------------- Check if user has not reached max bookings
-        if(len(getFutureBookingsEmail(userID_toBook)) >= max_userBookings){
+        if(getFutureBookings_ID(userID_toBook).length >= max_userBookings){
             return { result: false, data: null, error: "User has reached max bookings"};
         }
         
+        console.log("HERE 0 ");
         
         // --------------------- Check if court has not already been booked at the date and time specified
         courts_booked_at_date_time =  await booking_schema.find({   courtID: courtID_toBook,
                                                                     date: date_toBook,
                                                                     time: time_toBook 
                                                                 });
-
-        if(courts_booked_at_date_time != []){
+        console.log(courts_booked_at_date_time.length)
+        if(courts_booked_at_date_time.length != 0){
             return { result: false, data: null, error: "Court is already booked at this time/date"};
         }
 
         // --------------------- Create Booking item
-        const newBooking = new booking_schema({ date: date_toBook,
+        const newBooking = new booking_schema({ 
+                                                date: date_toBook,
                                                 time: time_toBook, 
                                                 userID: userID_toBook,
                                                 courtID: courtID_toBook 
@@ -170,26 +175,21 @@ async function removeBooking(userID_toBook, courtID_toBook, date_toBook, time_to
 async function getAvailableCourts(date_toCheck, time_toCheck) {
     try {
         
-        console.log("HERE 0 ");
         // Find all bookings at the specified date and time
         const bookedCourts = await booking_schema.find({
             date: date_toCheck,
             time: time_toCheck
         });
-        console.log("HERE 1 ");
         // --------------------- Extract court IDs from bookedCourts
         const bookedCourtIDs = bookedCourts.map(booking => booking.courtID);
         
-        console.log("HERE 2 ");
         // --------------------- Find all courts that are not in bookedCourtIDs
         const availableCourts = await court_schema.find({
             _id: { $nin: bookedCourtIDs }
         });
-        
-        console.log("HERE 3 ");
         return { result: true, data: availableCourts, error: null };
     } catch (error_message) {
-        throw new Error("Failed to Connect to Database: "+error_message);
+        throw new Error("Failed to Connect to Database");
     }
 }
 
@@ -202,9 +202,9 @@ async function getAvailableCourts(date_toCheck, time_toCheck) {
 
 module.exports = {
     addBooking                      : addBooking,
-    getFutureBookings_EmailCourt    : getFutureBookings_EmailCourt,
+    getFutureBookings_IDCourt       : getFutureBookings_IDCourt,
     getFutureBookings_Courts        : getFutureBookings_Courts,
-    getFutureBookings_Email         : getFutureBookings_Email,
+    getFutureBookings_ID            : getFutureBookings_ID,
     removeBooking                   : removeBooking,
     getAvailableCourts              : getAvailableCourts,
 };

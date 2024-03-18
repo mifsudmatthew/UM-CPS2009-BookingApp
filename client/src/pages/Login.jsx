@@ -5,6 +5,11 @@ import { Post } from "../utils/ApiFunctions";
 import Auth from "../context/Auth";
 import User from "../context/User";
 
+import React from "react";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,12 +21,12 @@ function Login() {
     event.preventDefault();
     // Check if the email and password fields are empty
     if (!email || !password) {
-      alert("Please fill in all fields.");
+      toast.error("Please fill all fields.");
       return;
     }
     // Check if the email is valid
     if (!email.includes("@")) {
-      alert("Please enter a valid email address.");
+      toast.error("Invalid e-mail format deteced.");
       return;
     }
 
@@ -32,53 +37,57 @@ function Login() {
       setUser(userData);
       return <Navigate to="/profile" replace={true} />;
     } catch (error) {
-      console.error(`Error in ${error}`);
+      console.error(`Error in: ${error}`);
+      toast.error("Login failed. Please check your credentials and try again.");
     }
   };
 
   // Form to input login detils
   return (
     <div className={"mainContainer"}>
-      <div className={"titleContainer"}>
-        <div>Login</div>
-      </div>
-      <br />
-      <div className={"inputContainer"}>
-        <label>Email</label>
-        <input
-          placeholder="name@example.com"
-          className={"inputBox"}
-          type="email"
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+      <ToastContainer />
+      <div className="innerContainer">
+        <div className={"titleContainer"}>
+          <div>Login</div>
+        </div>
         <br />
-        <label>Password</label>
-        <input
-          placeholder="password"
-          className={"inputBox"}
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <Link to="/reset" className="forgot-password">
-          Forgot password?
-        </Link>
-      </div>
-      <br />
-      <div className={"inputContainer"}>
-        <input
-          className={"inputButton"}
-          type="button"
-          value={"Log in"}
-          onClick={handleSubmit}
-        />
-      </div>
-      <div className="signup">
-        Not a member?{" "}
-        <Link to="/register" className="signup-link">
-          Sign up
-        </Link>
+        <div className={"inputContainer"}>
+          <label>Email</label>
+          <input
+            placeholder="name@example.com"
+            className={"inputBox"}
+            type="email"
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <br />
+          <label>Password</label>
+          <input
+            placeholder="password"
+            className={"inputBox"}
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <Link to="/reset" className="forgot-password">
+            Forgot password?
+          </Link>
+        </div>
+        <br />
+        <div className={"inputContainer"}>
+          <input
+            className={"inputButton"}
+            type="button"
+            value={"Log in"}
+            onClick={handleSubmit}
+          />
+        </div>
+        <div className="signup">
+          Not a member?{" "}
+          <Link to="/register" className="signup-link">
+            Sign up
+          </Link>
+        </div>
       </div>
     </div>
   );
