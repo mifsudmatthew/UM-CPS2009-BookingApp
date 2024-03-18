@@ -1,13 +1,13 @@
 {
   "index.html": {
-    "file": "assets/index-CnlYBt2R.js",
+    "file": "assets/index-BpTelvyW.js",
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
       "node_modules/workbox-window/build/workbox-window.prod.es5.mjs"
     ],
     "css": [
-      "assets/index-pKXi4pAP.css"
+      "assets/index-NoN9h9B5.css"
     ],
     "assets": [
       "assets/grass-court-Ch3CFGZv.webp",
@@ -17,6 +17,7 @@
       "assets/default-pp-CgVj1ebl.jpg",
       "assets/logo-CuQNDwzK.png",
       "assets/bookingform-B4mP9RhM.jpg",
+      "assets/login_reg_background-BqW03Y6F.jpg",
       "assets/banner-D_O1PRSu.jpg"
     ]
   },
@@ -48,6 +49,10 @@
   "src/assets/indoor-court.webp": {
     "file": "assets/indoor-court-UFsrzs5m.webp",
     "src": "src/assets/indoor-court.webp"
+  },
+  "src/assets/login_reg_background.jpg": {
+    "file": "assets/login_reg_background-BqW03Y6F.jpg",
+    "src": "src/assets/login_reg_background.jpg"
   },
   "src/assets/logo.png": {
     "file": "assets/logo-CuQNDwzK.png",
