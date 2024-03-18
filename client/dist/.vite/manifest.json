@@ -1,10 +1,14 @@
 {
   "index.html": {
+<<<<<<< HEAD
     "file": "assets/index-DIjKMyPu.js",
+=======
+    "file": "assets/index-D4ekOuTx.js",
+>>>>>>> 97b9f0eed527536e725d5d9ca4efe33084e6c8a3
     "src": "index.html",
     "isEntry": true,
     "css": [
-      "assets/index-BAMsV2Fl.css"
+      "assets/index-5fVN9Viv.css"
     ],
     "assets": [
       "assets/grass-court-Ch3CFGZv.webp",

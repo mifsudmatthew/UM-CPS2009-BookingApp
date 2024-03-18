@@ -56,15 +56,20 @@ function ChangePW() {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
           <br></br>
-          <button className="inputButton" onClick={handleChangePassword} disabled={!canChangePassword}>
-            Change Password
-          </button>
-        </div>
-        {!canChangePassword && password.length > 0 && confirmPassword.length > 0 && (
+          {!canChangePassword && password.length > 0 && confirmPassword.length > 0 && (
           <div style={{ color: "rgba(186, 26, 26, 1)" }}>
             Passwords do not match.
           </div>
-        )}
+          )}
+          <button
+          style={{ backgroundColor: canChangePassword ? "#3e4a36" : "#cccccc",
+          color: canChangePassword ? "white" : "#666666",
+          cursor: canChangePassword ? "pointer" : "not-allowed"}}
+          onClick={handleChangePassword}
+          disabled={!canChangePassword}>
+          Change Password
+        </button>
+        </div>
       </main>
     </>
   );

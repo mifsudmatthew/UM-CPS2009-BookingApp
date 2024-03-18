@@ -9,9 +9,7 @@
 }
 
 .booking-image {
-  flex: 1;
-  object-fit: cover; 
-  width: 0.5%; 
+  display: none;
 
 }
 
@@ -66,4 +64,27 @@
   border: none;
   border-radius: 30px;
   cursor: pointer;
+}
+
+@media (min-width: 864px) {
+  .booking-image {
+    display: block;
+    flex: 1;
+  object-fit: cover; 
+  width: 0.5%; 
+  }
+}
+
+@media (max-width: 864px) {
+  .booking-form-title {
+    font-size: 30px;
+  }
+
+  .booking-form-subtitle {
+    font-size: 20px;
+  }
+
+  .booking-container{
+    height: 100%;
+  }  
 }
