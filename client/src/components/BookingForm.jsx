@@ -40,6 +40,14 @@ function BookingForm() {
     }
   };
 
+  const today = new Date();
+  const maxDate = new Date();
+  maxDate.setDate(today.getDate() + 7); 
+
+  const formatDate = (date) => {
+    return new Date(date).toISOString().split('T')[0];
+  };
+
   return (
     <div className="booking-container">
       <img src={bookingImage} alt="Tennis court" className="booking-image" />
@@ -52,6 +60,8 @@ function BookingForm() {
               type="date"
               placeholder="Date"
               onChange={(e) => setDate(e.target.value)}
+              min={formatDate(today)}
+              max={formatDate(maxDate)}
             />
             <input
               type="time"
