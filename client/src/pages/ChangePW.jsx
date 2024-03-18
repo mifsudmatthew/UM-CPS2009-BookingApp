@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo } from "react";
 import { Post } from "../utils/ApiFunctions"; // Ensure this path matches where your API functions are defined
 import { useNavigate } from "react-router-dom";
 
@@ -8,7 +8,10 @@ function ChangePW() {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   // This checks if the passwords entered match
-  const passwordMatch = useMemo(() => password === confirmPassword, [password, confirmPassword]);
+  const passwordMatch = useMemo(
+    () => password === confirmPassword,
+    [password, confirmPassword]
+  );
 
   const handleChangePassword = async (event) => {
     event.preventDefault();
@@ -32,8 +35,8 @@ function ChangePW() {
 
   return (
     <>
-      <h1>Change Password</h1>
-      <div className={"mainContainerReset"}>
+      <main className="profile">
+        <h1 className="header-title">Change Password</h1>
         <div className={"inputContainer"}>
           <input
             className="inputBox"
@@ -53,8 +56,12 @@ function ChangePW() {
             Change Password
           </button>
         </div>
-        {!passwordMatch && <p style={{ color: "red" }}>Passwords do not match.</p>}
-      </div>
+        {!passwordMatch && (
+          <div style={{ color: "rgba(186, 26, 26, 1)" }}>
+          Passwords do not match.
+        </div>
+        )}
+      </main>
     </>
   );
 }
