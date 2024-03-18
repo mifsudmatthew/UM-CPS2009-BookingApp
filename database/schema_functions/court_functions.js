@@ -31,10 +31,11 @@ async function retrieveCourt(courtID) {
  * Registers a new court
  * Does not check if court is already created.
  */
-async function registerCourt({price_new, address_new, longitude_new, latitude_new}){
+async function registerCourt({name_new, price_new, address_new, longitude_new, latitude_new}){
     try {
         // Construct Schema
-        const newCourt = new courts_schema({    price       : price_new,
+        const newCourt = new courts_schema({    court_name  : name_new,
+                                                price       : price_new,
                                                 address     : address_new, 
                                                 longitude   : longitude_new,
                                                 latitude    : latitude_new

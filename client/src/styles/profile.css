@@ -55,7 +55,7 @@
     margin-left: 40px;
     margin-top: 0.5em;
     background-color: #e8e9e6; 
-    color: #fff; 
+    color: black; 
     transition: background-color 0.3s; 
     height: 30px;
     width: 500px;
@@ -113,4 +113,23 @@
 
 .bookings-table th {
   background-color: #e7f1e3; 
+}
+
+@media (max-width: 900px) {
+  h3 {
+    font-size: 15px;
+  }
+
+  .sidebar {
+    flex: 0 0 30px;
+  }
+
+  .sidebar ul {
+    font-size: 10px;
+  }
+
+  .profile-image {
+    width: 70px; 
+    height: 70px;
+  }
 }

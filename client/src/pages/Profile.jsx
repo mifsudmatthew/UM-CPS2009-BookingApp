@@ -8,7 +8,6 @@ const Profile = () => {
   const navigate = useNavigate();
   const { useAuth } = Auth();
   const auth = useAuth();
-
   if (auth == "") {
     navigate("/login");
   }
