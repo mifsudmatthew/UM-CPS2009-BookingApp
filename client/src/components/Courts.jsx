@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../styles/courts.css";
 
 import {
@@ -31,13 +31,14 @@ const courts = [
   },
 ];
 
-function toBooking() {
-  return <Navigate to="/booking" replace={true} />;
-}
-
 const Courts = () => {
+  const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
   const { image, title, description } = courts[current];
+
+  function toBooking() {
+    navigate("/booking", { replace: true });
+  }
 
   const handlePrevClick = () => {
     setCurrent((prev) => (prev - 1 + courts.length) % courts.length);
