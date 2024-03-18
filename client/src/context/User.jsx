@@ -6,7 +6,8 @@ export default function User() {
   const [user, _setUser] = useState(getUser());
 
   function getUser() {
-    return localStorage.getItem("user") || {};
+    const userData = localStorage.getItem("user");
+    return userData ? JSON.parse(userData) : {};
   }
 
   function setUser(userData) {

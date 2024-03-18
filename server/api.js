@@ -167,15 +167,6 @@ apiRouter.post("/resetpassword", async (req, res) => {
   res.status(400).json({ message: "Fail" });
 });
 
-apiRouter.post("/booking", sf.authenticateToken, (req, res, next) => {
-  court = req.body.court;
-  user = req.body.user.userID;
-
-  console.log("Booking request has been received!");
-  db.saveTestCase();
-  res.json({ message: "Booking added" });
-});
-
 // Route to for changing password both when logged in.
 apiRouter.post("/changepassword", sf.authenticateToken, async (req, res) => {
   try {

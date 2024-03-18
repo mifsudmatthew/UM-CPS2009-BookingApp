@@ -1,15 +1,21 @@
 import { useState, useMemo } from "react";
 import { Post } from "../utils/ApiFunctions"; // Ensure this path matches where your API functions are defined
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+
+function toProfile() {
+  return <Navigate to="/profile" replace={true} />;
+}
 
 function ChangePW() {
-  const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
   // This checks if the passwords entered match and are not empty
   const canChangePassword = useMemo(
-    () => password.length > 0 && confirmPassword.length > 0 && password === confirmPassword,
+    () =>
+      password.length > 0 &&
+      confirmPassword.length > 0 &&
+      password === confirmPassword,
     [password, confirmPassword]
   );
 
@@ -26,7 +32,7 @@ function ChangePW() {
     try {
       const response = await Post("/api/changepassword", data); // Adjust the endpoint as per your API's specification
       console.log("Password change successful:", response);
-      navigate("/profile"); // Navigate to login or any other page as required
+      toProfile();
     } catch (error) {
       alert("Error changing password.");
       console.error("Change password error:", error);
@@ -56,19 +62,23 @@ function ChangePW() {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
           <br></br>
-          {!canChangePassword && password.length > 0 && confirmPassword.length > 0 && (
-          <div style={{ color: "rgba(186, 26, 26, 1)" }}>
-            Passwords do not match.
-          </div>
-          )}
+          {!canChangePassword &&
+            password.length > 0 &&
+            confirmPassword.length > 0 && (
+              <div style={{ color: "rgba(186, 26, 26, 1)" }}>
+                Passwords do not match.
+              </div>
+            )}
           <button
-          style={{ backgroundColor: canChangePassword ? "#3e4a36" : "#cccccc",
-          color: canChangePassword ? "white" : "#666666",
-          cursor: canChangePassword ? "pointer" : "not-allowed"}}
-          onClick={handleChangePassword}
-          disabled={!canChangePassword}>
-          Change Password
-        </button>
+            style={{
+              backgroundColor: canChangePassword ? "#3e4a36" : "#cccccc",
+              color: canChangePassword ? "white" : "#666666",
+              cursor: canChangePassword ? "pointer" : "not-allowed",
+            }}
+            onClick={handleChangePassword}
+            disabled={!canChangePassword}>
+            Change Password
+          </button>
         </div>
       </main>
     </>
