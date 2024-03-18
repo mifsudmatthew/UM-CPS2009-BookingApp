@@ -6,6 +6,8 @@ const nodeMailer = require("nodemailer");
 // JSON Web Tokens for autherization
 const jwt = require("jsonwebtoken");
 
+const user_queries = require("../database/schema_functions/user_functions")
+
 var accountPins = []; // Creating an array to store pins generated and their corresponding emails.
 
 // Function to generate a new pin. By generating 4 random numbers (0-9) and concatenating them.
@@ -82,6 +84,45 @@ async function sendPinByMail(loggedInEmail) {
   return { message: "Email sent successfully" };
 }
 
+async function sendPaymentSuccessMail(user_email, amount){
+
+  user_data = await user_queries.retrieveUser(user_email);
+
+    if(user_data.result){
+
+    // Variable storing all email details.
+    const emailDetails = {
+      from: "no-reply@servespot.com", // Address of account sending the email.
+      to: user_email, // This should be changed to email of the user requesting a reset.
+      subject: "Successful Account Top-Up: " + amount  +" Added", // Subject of email.
+      text: "Dear " + user_data.data.name + ",\n\nWe're pleased to inform you that your recent request to top up your ServeSpot account has been successfully processed.\n\nHere are the details of your transaction:\n\n Amount: " + amount + "\n\n New Balance: " + user_data.data.balance + "\n\nYour account is now ready to use with the updated balance. We ensure that our platform is continuously updated to provide you with the best possible experience.\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot"// Email content.
+    };
+
+    // Creating a transporter with the details of the mail service being used.
+    const transporter = nodeMailer.createTransport({
+      host: process.env.MAIL_HOST, // Host is set to be changed from .env file
+      port: 465,
+      auth: {
+        user: process.env.MAIL_USER, // Username is set to be changed from .env file
+        pass: process.env.MAIL_PASS, // Password is set to be changed from .env file
+      },
+    });
+
+    // Sending the email with the details created.
+    let sentMessage = await transporter.sendMail(emailDetails);
+    console.log("Email sent:", sentMessage.response);
+
+    // Sending a response on success
+    return { message: "Email sent successfully" };
+
+  }else{
+
+    return { message: "Failed to retreive email"};
+
+  }
+  
+}
+
 function authenticateToken(req, res, next) {
   const authHeader = req.headers.authorization;
 
@@ -154,6 +195,7 @@ function generateRefreshToken(payload) {
 module.exports = {
   accountPins,
   sendPinByMail,
+  sendPaymentSuccessMail,
   authenticateToken,
   getToken,
   getEmail,
