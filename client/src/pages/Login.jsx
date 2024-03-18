@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Post } from "../utils/ApiFunctions";
 
 import Auth from "../context/Auth";
@@ -9,6 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false); // Add this line
@@ -37,7 +38,7 @@ function Login() {
       const { accessToken, ...userData } = response;
       setToken(accessToken);
       setUser(userData);
-      return <Navigate to="/profile" replace={true} />;
+      navigate("/profile", { replace: true });
     } catch (error) {
       console.error(`Error in: ${error}`);
       toast.error("Login failed. Please check your credentials and try again.");
