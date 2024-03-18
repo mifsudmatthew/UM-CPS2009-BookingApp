@@ -22,12 +22,12 @@ function Login() {
     event.preventDefault();
     // Check if the email and password fields are empty
     if (!email || !password) {
-      alert("Please fill in all fields.");
+      toast.error("Please fill all fields.");
       return;
     }
     // Check if the email is valid
     if (!email.includes("@")) {
-      alert("Please enter a valid email address.");
+      toast.error("Invalid e-mail format deteced.");
       return;
     }
 
