@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Post } from "../utils/ApiFunctions";
-import { useLocation, Navigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import Auth from "../context/Auth";
 
@@ -8,10 +8,6 @@ function Topup() {
   const [amount, setAmount] = useState("");
   const { useAuth } = Auth();
   const token = useAuth();
-
-  const isLoggedIn = () => {
-    return token == "";
-  };
 
   const session_id = new URLSearchParams(useLocation().search).get(
     "session_id"
@@ -53,10 +49,6 @@ function Topup() {
       console.error(`Error in top-up: ${error}`);
     }
   };
-
-  if (!isLoggedIn()) {
-    return <Navigate to="/login" replace />;
-  }
 
   return (
     <main className="profile">
