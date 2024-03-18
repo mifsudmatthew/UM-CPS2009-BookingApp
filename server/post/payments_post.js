@@ -55,7 +55,7 @@ payment_router.post(
   server_functions.authenticateToken,
   async (req, res) => {
     try {
-      const session_id = req.body;
+      const session_id = req.body.session_id;
       const email = req.user.email;
       const session = await stripe.checkout.sessions.retrieve(session_id);
 
@@ -65,16 +65,21 @@ payment_router.post(
       // ------------------ Check if payment is successful && session is not duplicated
       if (session.payment_status === "paid" && result_session.result == false) {
         console.log("Successfull Payment");
+        actual_amount = session.amount_total / 100  
 
         // ------------------ Add new Session
         stripe_queries.registerStripe({
           session_id: session_id,
           email_new: email,
-          amount_new: session.amount_total / 100,
+          amount_new: actual_amount
         });
 
         // ------------------ Update Balance
-        user_queries.updateUserBalance(email, session.amount_total / 100);
+
+        
+        user_queries.updateUserBalance(email, actual_amount);
+        server_functions.sendPaymentSuccessMail(email, actual_amount)
+
 
         return res.json({ success: true });
 
@@ -85,7 +90,8 @@ payment_router.post(
         return res.json({ success: false });
       }
     } catch (error) {
-      console.error("Error handling successful payment");
+      console.error("Error handling successful payment")
+      console.log(error);
       return res
         .status(500)
         .json({ error: "Failed to handle successful payment" });
