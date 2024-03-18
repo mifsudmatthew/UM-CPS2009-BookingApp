@@ -114,3 +114,22 @@
 .bookings-table th {
   background-color: #e7f1e3; 
 }
+
+@media (max-width: 900px) {
+  h3 {
+    font-size: 15px;
+  }
+
+  .sidebar {
+    flex: 0 0 30px;
+  }
+
+  .sidebar ul {
+    font-size: 10px;
+  }
+
+  .profile-image {
+    width: 70px; 
+    height: 70px;
+  }
+}
