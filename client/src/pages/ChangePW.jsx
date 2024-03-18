@@ -38,21 +38,25 @@ function ChangePW() {
       <main className="profile">
         <h1 className="header-title">Change Password</h1>
         <div className={"inputContainer"}>
+          <label>New Password</label>
           <input
-            className="inputBox"
+            className="change_inputBox"
             type="password"
             placeholder="New Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <br></br>
+          <label>Confirm New Password</label>
           <input
-            className="inputBox"
+            className="change_inputBox"
             type="password"
             placeholder="Confirm New Password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-          <button onClick={handleChangePassword} disabled={!canChangePassword}>
+          <br></br>
+          <button className="inputButton" onClick={handleChangePassword} disabled={!canChangePassword}>
             Change Password
           </button>
         </div>
