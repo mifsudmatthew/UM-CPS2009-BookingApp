@@ -46,7 +46,7 @@ function Login() {
   // Form to input login detils
   return (
     <div className={"mainContainer"}>
-      <ToastContainer />
+      <div className="innerContainer">
       <div className={"titleContainer"}>
         <div>Login</div>
       </div>
@@ -88,8 +88,10 @@ function Login() {
           Sign up
         </Link>
       </div>
+      </div>
     </div>
   );
 }
 
 export default Login;
+

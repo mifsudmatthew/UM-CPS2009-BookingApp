@@ -50,6 +50,7 @@ function Register() {
 
   return (
     <div className={"mainContainer"}>
+    <div className="innerContainer">
       <div className={"titleContainer"}>
         <div>Create Account</div>
       </div>
@@ -124,6 +125,7 @@ function Register() {
           value={"Sign up"}
           onClick={handleSubmit}
         />
+      </div>
       </div>
     </div>
   );
