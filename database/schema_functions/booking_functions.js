@@ -1,4 +1,5 @@
 const booking_schema = require("../schemas/booking_schema");
+const court_schema = require("../schemas/courts_schema")
 /** ===================================== Query Future Bookings By Email =========================
  * ------------ Recieving all future bookings By Email
  * Takes an email 
@@ -168,23 +169,27 @@ async function removeBooking(userID_toBook, courtID_toBook, date_toBook, time_to
  */
 async function getAvailableCourts(date_toCheck, time_toCheck) {
     try {
+        
+        console.log("HERE 0 ");
         // Find all bookings at the specified date and time
         const bookedCourts = await booking_schema.find({
             date: date_toCheck,
             time: time_toCheck
         });
-
+        console.log("HERE 1 ");
         // --------------------- Extract court IDs from bookedCourts
         const bookedCourtIDs = bookedCourts.map(booking => booking.courtID);
-
+        
+        console.log("HERE 2 ");
         // --------------------- Find all courts that are not in bookedCourtIDs
-        const availableCourts = await courts_modal.find({
+        const availableCourts = await court_schema.find({
             _id: { $nin: bookedCourtIDs }
         });
-
+        
+        console.log("HERE 3 ");
         return { result: true, data: availableCourts, error: null };
     } catch (error_message) {
-        throw new Error("Failed to Connect to Database");
+        throw new Error("Failed to Connect to Database: "+error_message);
     }
 }
 
