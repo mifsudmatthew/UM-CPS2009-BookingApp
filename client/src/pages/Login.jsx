@@ -18,6 +18,9 @@ function Login() {
   const { setToken } = Auth();
   const { setUser } = User();
 
+  // Regular expression for email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   // Send the login details to the server
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -36,8 +39,8 @@ function Login() {
       return;
     }
     // Check if the email is valid
-    if (!email.includes("@")) {
-      toast.error("Invalid e-mail format detected.");
+    if (!emailRegex.test(email)) {
+      toast.error("Invalid email format detected.");
       return;
     }
 
