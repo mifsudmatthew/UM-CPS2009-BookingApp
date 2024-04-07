@@ -63,7 +63,10 @@ function Register() {
     console.log("Data:", data);
     try {
       const response = await Post("/api/register", data);
-      navigate("/login", { replace: true });
+      toast.success("Sign up successful! Redirecting to login.");
+      setTimeout(() => {
+        navigate("/login", { replace: true });
+      }, 2000);
       console.log("Success:", response);
     } catch (err) {
       toast.error("Account with the same E-mail already exists.");
