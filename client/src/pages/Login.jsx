@@ -46,7 +46,10 @@ function Login() {
       const { accessToken, ...userData } = response;
       setToken(accessToken);
       setUser(userData);
-      navigate("/profile", { replace: true });
+      toast.success("Login successful! Redirecting to profile.");
+      setTimeout(() => {
+        navigate("/profile", { replace: true });
+      }, 2000);
     } catch (error) {
       console.error(`Error in: ${error}`);
       toast.error("Login failed. Please check your credentials and try again.");
