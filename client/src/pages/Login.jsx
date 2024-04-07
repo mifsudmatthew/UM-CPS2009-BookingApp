@@ -12,7 +12,9 @@ function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false); // Add this line
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [buttonColor, setButtonColor] = useState(null); // Add state to store button color
+  const [buttonCursor, setButtonCursor] = useState("pointer"); // Add state to store button cursor
   const { setToken } = Auth();
   const { setUser } = User();
 
@@ -20,7 +22,13 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsButtonDisabled(true); // Disable the button when the form is submitted
-    setTimeout(() => setIsButtonDisabled(false), 2000); // Re-enable the button after 2 seconds
+    setButtonCursor("not-allowed"); // Change cursor to not-allowed
+    setButtonColor("#CCCCCC"); // Change button color to visually indicate disabled state
+    setTimeout(() => {
+      setIsButtonDisabled(false);
+      setButtonCursor("pointer"); // Change cursor back to pointer
+      setButtonColor(null); // Re-enable the button after 2 seconds and reset color
+    }, 2000);
 
     // Check if the email and password fields are empty
     if (!email || !password) {
@@ -84,6 +92,10 @@ function Login() {
             value={"Log in"}
             onClick={handleSubmit}
             disabled={isButtonDisabled} // Add the disabled attribute here
+            style={{
+              backgroundColor: buttonColor,
+              cursor: buttonCursor // Apply dynamic cursor style
+            }}
           />
         </div>
         <div className="signup">
