@@ -22,6 +22,9 @@ function Register() {
     return password === confirmPassword;
   }, [password, confirmPassword]);
 
+  // Regular expression for email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsButtonDisabled(true);
@@ -39,8 +42,8 @@ function Register() {
       return;
     }
 
-    if (!email.includes("@")) {
-      toast.error("Invalid e-mail format detected.");
+    if (!emailRegex.test(email)) {
+      toast.error("Invalid email format detected.");
       return;
     }
 
