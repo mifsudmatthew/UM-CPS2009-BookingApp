@@ -31,9 +31,9 @@ function Navbar() {
             <NavLink to="/">ServeSpot</NavLink>
           </div>
           <div>
-            <ul className="navbar-balance">
-              {token != "" ? <>Balance: {user.balance}</> : <></>}
-            </ul>
+            <p className="navbar-balance">
+              {token != "" ? <>Balance: {user.balance}</> :<></>}
+            </p>
           </div>
           <div className="menu-icon" onClick={handleShowNavbar}>
             <img src={hamburger} alt="hamburger" />

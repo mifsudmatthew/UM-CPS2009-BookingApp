@@ -25,6 +25,15 @@
   text-decoration: none;
 }
 
+.navbar-balance{
+  font-size: 110%;
+  font-weight: bold;
+  color: black;
+  padding-right:5vmin;
+  padding-top:1vmin;
+  font-family: Roboto, sans-serif;
+}
+
 .navbar-logo, .menu-icon {
   flex-shrink: 0; 
 }
