@@ -5,7 +5,7 @@ import { useUser } from "../context/User";
 import {useAuth} from "../context/Auth";
 
 const AdminPage = () => {
-    // Check if the user is an admin based on localStorage
+    // Check if the user is an admin based on token
     const {user, setUser} = useUser();
     const { token, setToken } = useAuth();
 
