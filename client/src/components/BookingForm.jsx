@@ -5,7 +5,7 @@ import "../styles/bookingform.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NotificationContext from '../context/NavbarContext';
-import { Navigate } from "react-router-dom";
+import { useNavigate,Navigate } from "react-router-dom";
 
 import { useUser } from "../context/User";
 import {useAuth} from "../context/Auth";
@@ -16,6 +16,7 @@ import {useAuth} from "../context/Auth";
  * @returns {JSX.Element} The booking form component.
  */
 function BookingForm() {
+  const navigate = useNavigate();
   // State variables
   const [date, setDate] = useState(""); // State variable to store the selected date
   const [hour, setHour] = useState(""); // State variable to store the selected hour
@@ -26,7 +27,7 @@ function BookingForm() {
   const { token, setToken } = useAuth();
   
   if (user.admin || token === "") {
-      return <Navigate to="/" replace={true} />;
+    return <Navigate to="/" replace={true} />;
   }
 
   // Context for notifications
@@ -71,8 +72,11 @@ function BookingForm() {
       if (response.result !== true) {
         toast.error(response.error);
       } else {
-        toast.success("Court Successfully Booked, Have Fun  😀");
+        toast.success("Court successfully booked! Redirecting to bookings page.");
         addSuccessfulBooking(booking); // Add the booking to the list of successful bookings
+        setTimeout(() => {
+          navigate("/profile/bookings", { replace: true });
+        }, 2000);
       }
     } catch (error) { // Log an error if the request fails
       console.error("Error submitting booking: ", error);
