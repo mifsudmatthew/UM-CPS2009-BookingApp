@@ -19,19 +19,23 @@
 }
 
 .navbar-title a {
-  font-size: 40px;
+  font-size: 250%;
   font-weight: bold;
   color: black; 
+  text-align: center;
   text-decoration: none;
 }
 
 .navbar-balance{
+  background-color: #a0c982;
   font-size: 110%;
   font-weight: bold;
   color: black;
-  padding-right:5vmin;
-  padding-top:1vmin;
+  padding: 0.5rem;
   font-family: Roboto, sans-serif;
+  border-radius: 2rem;
+  margin: 0 3rem 0 2rem;
+  box-shadow: 0 5px 6px rgba(0, 0, 0, 0.2);
 }
 
 .navbar-logo, .menu-icon {
