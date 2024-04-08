@@ -13,6 +13,11 @@ function toProfile() {
   return <Navigate to="/profile" replace={true} />;
 }
 
+/**
+ * Renders the Change Password page.
+ *
+ * @returns {JSX.Element} The Change Password page component.
+ */
 function ChangePW() {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
@@ -28,27 +33,27 @@ function ChangePW() {
 
   const handleChangePassword = async () => {
     if (!password.trim() || !confirmPassword.trim()) {
-      toast.error("Please fill all fields.");
+      toast.error("Please fill all fields."); // Display error toast if any field is empty
       return;
     }
 
     if (!canChangePassword) {
-      toast.error("Passwords do not match.");
+      toast.error("Passwords do not match."); // Display error toast if passwords do not match
       return;
     }
 
     const data = { password };
 
     try {
-      const response = await Post("/api/changepassword", data);
-      toast.success("Password change successful! Redirecting to profile.");
+      const response = await Post("/api/changepassword", data); // Send a POST request to change the password
+      toast.success("Password change successful! Redirecting to profile."); // Display success toast
       console.log("Password change successful:", response);
-      toProfile();
+      toProfile(); // Redirect to the profile page
       setTimeout(() => {
         navigate("/profile", { replace: true });
       }, 2000);
     } catch (error) {
-      toast.error("An error occurred while changing password!");
+      toast.error("An error occurred while changing password!"); // Display error toast if an error occurs
       console.error("Change password error:", error);
     }
   };

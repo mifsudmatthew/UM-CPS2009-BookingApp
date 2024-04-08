@@ -5,17 +5,25 @@ import Form from "../components/Form";
 import InputBox from "../components/InputBox";
 import InputButton from "../components/InputButton";
 
+/**
+ * Renders a form to add a new court.
+ *
+ * @returns {JSX.Element} The AddNewCourt component.
+ */
 function AddNewCourt() {
+  // State variables to store the court name, price, and size
   const [courtName, setCourtName] = useState("");
   const [price, setPrice] = useState("");
   const [size, setSize] = useState("");
 
+  // Function to handle form submission
   const handleSubmit = async () => {
     try {
       const courtData = { courtName, price, size };
       const response = await Post("/api/configCourts", courtData);
       /*
       This was what was here before, idk if was import to do it this particular way but we already had a method for this
+            // Send a POST request to the server to add the new court
       const response = await fetch("/api/configCourts", {
         method: "POST",
         headers: {
@@ -29,8 +37,11 @@ function AddNewCourt() {
       */
       toast.success("Court added successfully.");
       console.log("Success: ", response);
+      // Display a success toast message
+      // Refresh the page to update the court list
       window.location.reload();
     } catch (error) {
+      // Display an error toast message
       toast.error("Error adding court. Please try again.");
       console.error("Error: ", error);
     }

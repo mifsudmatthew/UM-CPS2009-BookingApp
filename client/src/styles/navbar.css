@@ -19,19 +19,23 @@
 }
 
 .navbar-title a {
-  font-size: 40px;
+  font-size: 250%;
   font-weight: bold;
   color: black; 
+  text-align: center;
   text-decoration: none;
 }
 
 .navbar-balance{
+  background-color: #a0c982;
   font-size: 110%;
   font-weight: bold;
   color: black;
-  padding-right:5vmin;
-  padding-top:1vmin;
+  padding: 0.5rem;
   font-family: Roboto, sans-serif;
+  border-radius: 2rem;
+  margin: 0 3rem 0 2rem;
+  box-shadow: 0 5px 6px rgba(0, 0, 0, 0.2);
 }
 
 .navbar-logo, .menu-icon {
@@ -67,13 +71,13 @@
 .nav-elements {
     position: absolute;
     right: 0;
-    top: 60px;
+    top: 80px;
     background-color: #cde2be;
     width: 0px;
     height: 100vh;
     transition: all 0.3s ease-in;
     overflow: hidden;
-    z-index: 1000;
+    z-index: 500;
 }
 
 .nav-elements.active {
@@ -145,4 +149,17 @@
     margin-right: 20px;
     margin-top: 10px;
   }
+}
+
+.notification-panel {
+  background-color: #f5f5f5; 
+  border: 0.0625rem solid #ccc;
+  border-radius: 0.25rem; 
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.2); 
+  padding: 0.625rem; 
+  max-width: 18.75rem; 
+  z-index: 1000;
+  position: absolute;
+  top: 100%;
+  right: 0;
 }

@@ -4,10 +4,17 @@ import Form from "../components/Form";
 import InputBox from "../components/InputBox";
 import InputButton from "../components/InputButton";
 
+/**
+ * Renders the AccountDetails component.
+ *
+ * @returns {JSX.Element} The rendered AccountDetails component.
+ */
 const AccountDetails = () => {
-  const { user, setUser } = useUser();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const { user, setUser } = useUser(); // Retrieve user data once when the component mounts
+
+  // Initialize state with values from localStorage, or fallback to empty strings
+  const [name, setName] = useState(user.name || "");
+  const [email, setEmail] = useState(user.email || "");
 
   const handleSubmit = () => {
     setUser({ name, email, ...user });
