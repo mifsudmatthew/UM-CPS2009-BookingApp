@@ -100,14 +100,14 @@
   }
   
   .bookings-table {
-    width: 100%;
+    width: 5vw;
     border-collapse: collapse;
 }
 
 .bookings-table th,
 .bookings-table td {
   border: 1px solid #dde0d5; 
-  padding: 8px;
+  padding: 0.5vw;
   text-align: left;
 }
 
