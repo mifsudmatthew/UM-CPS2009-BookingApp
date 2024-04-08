@@ -2,6 +2,11 @@ import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Post } from "../utils/ApiFunctions";
 import { ToastContainer, toast } from "react-toastify";
+
+import Form from "../components/Form";
+import InputBox from "../components/InputBox";
+import InputButton from "../components/InputButton";
+
 import "react-toastify/dist/ReactToastify.css";
 
 function Register() {
@@ -11,9 +16,6 @@ function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [confirmEmail, setConfirmEmail] = useState("");
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  const [buttonColor, setButtonColor] = useState(null);
-  const [buttonCursor, setButtonCursor] = useState("pointer");
 
   const emailMatch = useMemo(() => {
     return email === confirmEmail;
@@ -25,18 +27,7 @@ function Register() {
   // Regular expression for email validation
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setIsButtonDisabled(true);
-    setButtonCursor("not-allowed");
-    setButtonColor("#CCCCCC");
-
-    setTimeout(() => {
-      setIsButtonDisabled(false);
-      setButtonCursor("pointer");
-      setButtonColor(null);
-    }, 2000);
-
+  const handleSubmit = async () => {
     if (!email || !password || !name) {
       toast.error("Please fill all fields.");
       return;
@@ -80,74 +71,52 @@ function Register() {
   return (
     <div className={"mainContainer"}>
       <ToastContainer />
-      <div className="innerContainer">
-        <div className={"titleContainer"}>
-          <div>Create Account</div>
-        </div>
-        <br />
-        <div className={"inputContainer"}>
-          <label>Name & Surname</label>
-          <input
-            placeholder="name surname"
-            className={"inputBox"}
-            type="text"
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-          <br />
-          <label>Email</label>
-          <input
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="name@example.com"
-            className={"inputBox"}
-            type="email"
-            required
-          />
-          <br />
-          <label>Re-enter email</label>
-          <input
-            onChange={(e) => setConfirmEmail(e.target.value)}
-            placeholder="name@example.com"
-            className={"inputBox"}
-            type="email"
-            required
-          />
-          <br />
-          <label>Password</label>
-          <input
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="password"
-            className={"inputBox"}
-            type="password"
-            required
-          />
-        </div>
-        <br />
-        <div className={"inputContainer"}>
-          <label>Re-enter Password</label>
-          <input
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            placeholder="password"
-            className={"inputBox"}
-            type="password"
-            required
-          />
-        </div>
-        <br />
-        <div className={"inputContainer"}>
-          <input
-            className={"inputButton"}
-            type="button"
-            value={"Sign up"}
-            onClick={handleSubmit}
-            disabled={isButtonDisabled}
-            style={{
-              backgroundColor: buttonColor,
-              cursor: buttonCursor,
-            }}
-          />
-        </div>
+      <div className={"titleContainer"}>
+        <div>Create Account</div>
       </div>
+      <br />
+      <Form className="innerContainer">
+        <InputBox
+          label="Name & Surname"
+          placeholder="name surname"
+          onChange={setName}
+          required={true}
+        />
+        <br />
+        <InputBox
+          label="Email"
+          onChange={setEmail}
+          placeholder="name@example.com"
+          type="email"
+          required={true}
+        />
+        <br />
+        <InputBox
+          label="Re-enter Email"
+          onChange={setConfirmEmail}
+          placeholder="name@example.com"
+          type="email"
+          required={true}
+        />
+        <br />
+        <InputBox
+          label="Password"
+          type="password"
+          placeholder="password"
+          onChange={setPassword}
+          required={true}
+        />
+        <br />
+        <InputBox
+          label="Re-enter Password"
+          type="password"
+          placeholder="password"
+          onChange={setConfirmPassword}
+          required={true}
+        />
+        <br />
+        <InputButton label="Sign Up" type="submit" onClick={handleSubmit} />
+      </Form>
     </div>
   );
 }

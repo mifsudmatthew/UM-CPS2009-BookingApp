@@ -1,8 +1,12 @@
 import { useState, useMemo, useEffect } from "react";
-import { Post } from "../utils/ApiFunctions";
-import { Navigate } from "react-router-dom";
-
 import { ToastContainer, toast } from "react-toastify";
+import { Navigate } from "react-router-dom";
+import { Post } from "../utils/ApiFunctions";
+
+import Form from "../components/Form";
+import InputBox from "../components/InputBox";
+import InputButton from "../components/InputButton";
+
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Reset() {
@@ -11,12 +15,6 @@ export default function Reset() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [pin, setPin] = useState("");
   const [isValid, setIsValid] = useState(false);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  const [isButtonDisabled2, setIsButtonDisabled2] = useState(false);
-  const [buttonColor, setButtonColor] = useState("#3e4a36");
-  const [buttonColor2, setButtonColor2] = useState("#3e4a36");
-  const [buttonCursor, setButtonCursor] = useState("pointer");
-  const [buttonCursor2, setButtonCursor2] = useState("pointer");
 
   const passwordMatch = useMemo(() => {
     return password === confirmPassword;
@@ -39,19 +37,7 @@ export default function Reset() {
     }
   }, [isValid]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    setIsButtonDisabled(true);
-    setButtonCursor("not-allowed");
-    setButtonColor("#CCCCCC");
-
-    setTimeout(() => {
-      setIsButtonDisabled(false);
-      setButtonCursor("pointer");
-      setButtonColor("#3e4a36");
-    }, 2000);
-
+  const handleSubmit = async () => {
     if (email.length === 0) {
       toast.error("Error! Please enter an email address.");
       return;
@@ -69,19 +55,7 @@ export default function Reset() {
     }
   };
 
-  const handleChange = async (event) => {
-    event.preventDefault();
-
-    setIsButtonDisabled2(true);
-    setButtonCursor2("not-allowed");
-    setButtonColor2("#CCCCCC");
-
-    setTimeout(() => {
-      setIsButtonDisabled2(false);
-      setButtonCursor2("pointer");
-      setButtonColor2("#3e4a36");
-    }, 2000);
-
+  const handleChange = async () => {
     // Check if any field is empty
     if (
       email.length === 0 ||
@@ -132,67 +106,50 @@ export default function Reset() {
   };
 
   return (
-    <>
-      <h1>Reset</h1>
-      <div className={"mainContainerReset"}>
-        <ToastContainer />
+    <div className={"mainContainerReset"}>
+      <ToastContainer />
+      <h2>Reset</h2>
+      <Form classname="innerContainer" onSubmit={handleSubmit}>
         <div className={"inputContainer"}>
           <br />
           <br />
         </div>
-        <div className={"inputContainer"}>
-          <input
-            className="inputBox"
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <br></br>
-        <button
+        <InputBox
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={setEmail}
+        />
+        <br />
+        <InputButton
+          label="RESET PASSWORD"
+          type="submit"
+          colour="#3e4a36"
           onClick={handleSubmit}
-          disabled={isButtonDisabled}
-          style={{
-            backgroundColor: buttonColor,
-            cursor: buttonCursor,
-            color: "white",
-          }}>
-          RESET PASSWORD
-        </button>
+        />
         <br />
-        <div className={"inputContainer"}>
-          <input
-            className="inputBox"
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </div>
+        <InputBox
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={setPassword}
+        />
         <br />
-        <div className={"inputContainer"}>
-          <input
-            className="inputBox"
-            type="password"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(event) => setConfirmPassword(event.target.value)}
-          />
-        </div>
+        <InputBox
+          type="password"
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={setConfirmPassword}
+        />
         <br />
-        <div className={"inputContainer"}>
-          <input
-            className="inputBox"
-            type="text"
-            placeholder="PIN (4 digits)"
-            value={pin}
-            onChange={(event) => {
-              const inputPin = event.target.value.replace(/\D/g, "");
-              setPin(inputPin);
-            }}
-          />
-        </div>
+        <InputBox
+          placeholder="PIN (4 digits)"
+          value={pin}
+          onChange={(value) => {
+            const inputPin = value.replace(/\D/g, "");
+            setPin(inputPin);
+          }}
+        />
         {pinValid ? (
           <></>
         ) : (
@@ -201,20 +158,13 @@ export default function Reset() {
           </div>
         )}
         <br />
-        <br />
-        <div className={"inputContainer"}>
-          <button
-            onClick={handleChange}
-            disabled={isButtonDisabled2}
-            style={{
-              backgroundColor: buttonColor2,
-              cursor: buttonCursor2,
-              color: "white",
-            }}>
-            CHANGE PASSWORD
-          </button>
-        </div>
-      </div>
-    </>
+        <InputButton
+          label="Change Password"
+          type="submit"
+          colour="#3e4a36"
+          onClick={handleChange}
+        />
+      </Form>
+    </div>
   );
 }

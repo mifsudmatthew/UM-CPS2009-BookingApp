@@ -9,6 +9,7 @@ const InputBox = ({
   value,
   disabled,
   onChange,
+  required,
 }) => {
   return (
     <div className="inputContainer">
@@ -21,6 +22,7 @@ const InputBox = ({
         onChange={(event) => onChange(event.target.value)}
         disabled={disabled}
         placeholder={placeholder}
+        required={required}
       />
     </div>
   );
@@ -35,6 +37,7 @@ InputBox.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   disabled: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
+  required: PropTypes.bool,
 };
 
 InputBox.defaultProps = {
@@ -43,6 +46,7 @@ InputBox.defaultProps = {
   placeholder: "",
   value: "",
   disabled: false,
+  required: false,
 };
 
 export default InputBox;

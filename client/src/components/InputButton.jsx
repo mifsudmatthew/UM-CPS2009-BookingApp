@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-const InputButton = ({ label, type, classname, onClick }) => {
+const InputButton = ({ label, type, classname, onClick, colour }) => {
   const [isClicked, setIsClicked] = useState(false);
 
   const handleClick = () => {
@@ -23,7 +23,7 @@ const InputButton = ({ label, type, classname, onClick }) => {
       onClick={handleClick}
       disabled={isClicked}
       style={{
-        backgroundColor: isClicked ? "#CCCCCC" : "",
+        backgroundColor: isClicked ? { colour } : "",
         cursor: isClicked ? "not-allowed" : "pointer",
       }}>
       {label}
@@ -36,11 +36,13 @@ InputButton.propTypes = {
   type: PropTypes.oneOf(["button", "submit", "reset"]).isRequired,
   classname: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
+  colour: PropTypes.string.isRequired,
 };
 
 InputButton.defaultProps = {
   type: "button",
   classname: "inputButton",
+  colour: "#CCCCCC",
 };
 
 export default InputButton;

@@ -72,6 +72,7 @@ function Login() {
           value={email}
           placeholder="name@example.com"
           onChange={setEmail}
+          required={true}
         />
         <br />
         <InputBox
@@ -81,6 +82,7 @@ function Login() {
           value={password}
           placeholder="password"
           onChange={setPassword}
+          required={true}
         />
         <Link to="/reset" className="forgot-password">
           Forgot password?
