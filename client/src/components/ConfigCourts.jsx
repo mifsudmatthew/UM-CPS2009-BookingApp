@@ -12,7 +12,14 @@ function ConfigCourts() {
         const courtData = { court, price, size };
         console.log(courtData);
         try {
-            // Send the data to the server
+            const response = await fetch("/api/configCourts", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(courtData),
+            });
+            console.log(response);
         } catch (error) {
             console.error("Error submitting booking: ", error);
         }
@@ -28,6 +35,7 @@ function ConfigCourts() {
                 <option value="">Select a court</option>
                 <option value="court1">Court 1</option>
                 <option value="court2">Court 2</option>
+                <option value="court3">Court 3</option>
               </select>
             </div>
         <div className="admin-subtitle">Edit details</div>
