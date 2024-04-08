@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
+import Popup from 'reactjs-popup';
 import { Bell, BellFill } from 'react-bootstrap-icons'; 
 import NotificationContext from '../context/NavbarContext';
 import NotificationPanel from '../components/NotificationPanel';
@@ -61,14 +62,25 @@ function Navbar() {
           </div>
           <div>
             {/* Conditionally render navbar-balance based on user.admin */}
-          {(!user.admin && token !== "") ? (
-                <p className="navbar-balance"> {"€ "+user.balance}</p>
-          ): <></>}
+          {!user.admin && (
+            <div>
+              <p className="navbar-balance">
+                {token !== "" ? <>€{user.balance}</> : <></>}
+              </p>
+            </div>
+          )}
           </div>
-          <div onClick={handleBellClick}>
-            {token && (notification ? <BellFill /> : <Bell />)}
-          </div>
-          {showNotificationPanel && <NotificationPanel />} {/* Render notification panel */}
+          <Popup // Add a popup to display the notification panel
+          trigger={
+            <div style={{ cursor: 'pointer' }} onClick={handleBellClick}>
+              {token && (notification ? <BellFill /> : <Bell />)}
+            </div>
+          }
+          position="right top"
+          on="click"
+          >   
+            <NotificationPanel />
+          </Popup>
           <div className="menu-icon" onClick={handleShowNavbar}>
             <img src={hamburger} alt="hamburger" />
           </div>
@@ -109,3 +121,4 @@ function Navbar() {
 }
 
 export default Navbar;
+
