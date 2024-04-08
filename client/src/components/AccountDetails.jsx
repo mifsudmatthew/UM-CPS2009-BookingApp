@@ -1,40 +1,49 @@
 import { useState } from "react";
 import { useUser } from "../context/User";
+import Form from "../components/Form";
+import InputBox from "../components/InputBox";
+import InputButton from "../components/InputButton";
 
 const AccountDetails = () => {
-  const { user, setUser } = useUser(); // Retrieve user data once when the component mounts
+  const { user, setUser } = useUser();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
-  // Initialize state with values from localStorage, or fallback to empty strings
-  const [name, setName] = useState(user.name || "");
-  const [email, setEmail] = useState(user.email || "");
+  const handleSubmit = () => {
+    setUser({ name, email, ...user });
+  };
 
-  // Your component JSX remains the same
+  const handleName = (value) => {
+    setName(value);
+  };
+
+  const handleEmail = (value) => {
+    setEmail(value);
+  };
+
   return (
     <main className="profile">
-      <div className="header-title">Profile</div>
-      <form>
-        <label>Name</label>
-        <br></br>
-        <input
-          className="inputBox"
-          type="text"
+      <h2 className="header-title">Profile</h2>
+      <Form onSubmit={handleSubmit}>
+        <InputBox
+          id="AccountDetailsName"
+          label="Name"
           value={name}
-          placeholder="Name Surname"
-          onChange={(e) => setName(e.target.value)}
+          placeholder="Name and Surname"
+          onChange={handleName}
         />
         <br />
-        <label>Email</label>
-        <br />
-        <input
-          className="inputBox"
-          type="text"
+        <InputBox
+          id="AccountDetailsEmail"
+          label="Email"
+          type="email"
           value={email}
-          placeholder="email@email.com"
-          onChange={(e) => setEmail(e.target.value)}
+          placeholder="bob@gmail.com"
+          onChange={handleEmail}
         />
         <br />
-        <input className={"inputButton"} type="button" value="Save" />
-      </form>
+        <InputButton type="submit" label="Save" />
+      </Form>
     </main>
   );
 };
