@@ -61,13 +61,9 @@ function Navbar() {
           </div>
           <div>
             {/* Conditionally render navbar-balance based on user.admin */}
-          {!user.admin && (
-            <div>
-              <p className="navbar-balance">
-                {token !== "" ? <>Balance: {user.balance}</> : <></>}
-              </p>
-            </div>
-          )}
+          {(!user.admin && token !== "") ? (
+                <p className="navbar-balance"> {"€ "+user.balance}</p>
+          ): <></>}
           </div>
           <div onClick={handleBellClick}>
             {token && (notification ? <BellFill /> : <Bell />)}
