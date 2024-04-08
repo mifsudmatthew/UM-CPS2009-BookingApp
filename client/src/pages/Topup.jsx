@@ -2,12 +2,11 @@ import { useState, useEffect } from "react";
 import { Post } from "../utils/ApiFunctions";
 import { useLocation } from "react-router-dom";
 
-import Auth from "../context/Auth";
+import { useAuth } from "../context/Auth";
 
 function Topup() {
   const [amount, setAmount] = useState("");
-  const { useAuth } = Auth();
-  const token = useAuth();
+  const { token, setToken } = useAuth();
 
   const session_id = new URLSearchParams(useLocation().search).get(
     "session_id"
