@@ -1,14 +1,12 @@
 import { useState } from "react";
-import User from "../context/User";
+import { useUser } from "../context/User";
 
 const AccountDetails = () => {
-  const { useUser } = User();
-
-  const userData = useUser; // Retrieve user data once when the component mounts
+  const { user, setUser } = useUser(); // Retrieve user data once when the component mounts
 
   // Initialize state with values from localStorage, or fallback to empty strings
-  const [name, setName] = useState(userData.name || "");
-  const [email, setEmail] = useState(userData.email || "");
+  const [name, setName] = useState(user.name || "");
+  const [email, setEmail] = useState(user.email || "");
 
   // Your component JSX remains the same
   return (

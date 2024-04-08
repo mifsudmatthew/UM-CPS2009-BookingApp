@@ -2,13 +2,15 @@ import { Routes, Route } from "react-router-dom";
 import App from "./App.jsx";
 
 /* Context */
-import User from "./context/User";
-import Auth from "./context/Auth";
+import { UserProvider } from "./context/User";
+import { AuthProvider } from "./context/Auth";
 
 /* Components */
 import Bookings from "./components/Bookings";
 import Balance from "./components/Balance";
 import AccountDetails from "./components/AccountDetails";
+import ConfigCourts from "./components/ConfigCourts.jsx";
+import AddNewCourt from "./components/AddNewCourt.jsx";
 
 /* Pages */
 import Home from "./pages/Home";
@@ -20,13 +22,10 @@ import Profile from "./pages/Profile";
 import Topup from "./pages/Topup";
 import ChangePW from "./pages/ChangePW";
 import Errors from "./pages/Errors";
+import AdminPage from "./pages/AdminPage.jsx";
 
 // Modifies div with root id in index.html
 export default function AppContainer() {
-  /* Context Initialization */
-  const { AuthProvider } = Auth();
-  const { UserProvider } = User();
-
   return (
     <UserProvider>
       <AuthProvider>
@@ -43,6 +42,11 @@ export default function AppContainer() {
               <Route path="balance" element={<Balance />} />
               <Route path="topup" element={<Topup />} />
               <Route path="changepassword" element={<ChangePW />} />
+            </Route>
+            <Route path="admin" element={<AdminPage />}>
+              <Route index exact element={<ConfigCourts />} />
+              <Route path="updatecourts" element={<ConfigCourts />} />
+              <Route path="addnewcourt" element={<AddNewCourt />} />
             </Route>
           </Route>
           <Route element={<Errors />} />

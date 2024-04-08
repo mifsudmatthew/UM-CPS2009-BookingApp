@@ -1,9 +1,9 @@
 import { useState, createContext, useContext } from "react";
 
-const AuthContext = createContext("");
+const AuthContext = createContext();
 
-export default function Auth() {
-  const [accessToken, _setAccessToken] = useState(getAccessToken);
+const AuthProvider = ({ children }) => {
+  const [token, _setToken] = useState(getAccessToken());
 
   function getAccessToken() {
     return localStorage.getItem("accessToken") || "";
@@ -11,20 +11,17 @@ export default function Auth() {
 
   function setToken(token) {
     localStorage.setItem("accessToken", JSON.stringify(token));
-    _setAccessToken(token);
+    _setToken(token);
   }
+  return (
+    <AuthContext.Provider value={{ token, setToken }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
-  const AuthProvider = ({ children }) => {
-    return (
-      <AuthContext.Provider value={accessToken}>
-        {children}
-      </AuthContext.Provider>
-    );
-  };
+const useAuth = () => {
+  return useContext(AuthContext);
+};
 
-  const useAuth = () => {
-    return useContext(AuthContext);
-  };
-
-  return { AuthProvider, useAuth, setToken };
-}
+export { AuthProvider, useAuth };
