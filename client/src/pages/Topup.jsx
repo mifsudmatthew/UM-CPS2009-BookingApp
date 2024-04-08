@@ -16,6 +16,9 @@ import "react-toastify/dist/ReactToastify.css";
 function Topup() {
   const [amount, setAmount] = useState(""); // Initialize the amount state
   const { token, setToken } = useAuth(); // Get the token and setToken from the Auth context
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [buttonColor, setButtonColor] = useState(null); // Add state to store button color
+  const [buttonCursor, setButtonCursor] = useState("pointer"); // Add state to store button cursor
 
   const session_id = new URLSearchParams(useLocation().search).get(
     "session_id"
@@ -55,14 +58,19 @@ function Topup() {
    */
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsButtonDisabled(true); // Disable the button when the form is submitted
+    setButtonCursor("not-allowed"); // Change cursor to not-allowed
+    setButtonColor("#CCCCCC"); // Change button color to visually indicate disabled state
+    setTimeout(() => {
+      setIsButtonDisabled(false);
+      setButtonCursor("pointer"); // Change cursor back to pointer
+      setButtonColor(null); // Re-enable the button after 2 seconds and reset color
+    }, 2000);
     const numericAmount = parseFloat(amount);
 
     if(amount.trim() === "") {
       // Check if amount is not a number or empty
       toast.error("Please enter the amount you would like to top-up.");
-      return;
-    }else if (isNaN(numericAmount)){
-      toast.error("Error! Input is not a number, please enter a number.");
       return;
     } else if (numericAmount < 0) {
       toast.error("Error! Please enter a positive number.");
@@ -116,6 +124,11 @@ function Topup() {
           type="button"
           value={"Top Up"}
           onClick={handleSubmit}
+          disabled={isButtonDisabled} // Add the disabled attribute here
+          style={{
+            backgroundColor: buttonColor,
+            cursor: buttonCursor, // Apply dynamic cursor style
+          }}
         />
       </form>
     </main>
