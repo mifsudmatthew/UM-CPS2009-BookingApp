@@ -62,9 +62,9 @@ function Login() {
         }, 2000);
         return;
       }
-      toast.success("Login successful! Redirecting to profile.");
+      toast.success("Login successful!");
       setTimeout(() => {
-        navigate("/profile", { replace: true });
+        navigate("/", { replace: true });
       }, 2000);
     } catch (error) {
       console.error(`Error in: ${error}`);
