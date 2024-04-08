@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Post } from "../utils/ApiFunctions";
 
-import Auth from "../context/Auth";
-import User from "../context/User";
+import { useAuth } from "../context/Auth";
+import { useUser } from "../context/User";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,8 +15,8 @@ function Login() {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [buttonColor, setButtonColor] = useState(null); // Add state to store button color
   const [buttonCursor, setButtonCursor] = useState("pointer"); // Add state to store button cursor
-  const { setToken } = Auth();
-  const { setUser } = User();
+  const { user, setUser } = useUser();
+  const { token, setToken } = useAuth();
 
   // Regular expression for email validation
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -46,9 +46,9 @@ function Login() {
 
     try {
       const response = await Post("/api/login", { email, password });
-      const { accessToken, ...userData } = response;
+      const { accessToken, ...user } = response;
       setToken(accessToken);
-      setUser(userData);
+      setUser(user);
       toast.success("Login successful! Redirecting to profile.");
       setTimeout(() => {
         navigate("/profile", { replace: true });
@@ -100,7 +100,7 @@ function Login() {
             disabled={isButtonDisabled} // Add the disabled attribute here
             style={{
               backgroundColor: buttonColor,
-              cursor: buttonCursor // Apply dynamic cursor style
+              cursor: buttonCursor, // Apply dynamic cursor style
             }}
           />
         </div>
