@@ -11,20 +11,40 @@ import { hamburger, logo } from "../components/Icons";
 import { useUser } from "../context/User";
 import { useAuth } from "../context/Auth";
 
+/**
+ * Renders the navigation bar component.
+ * Navbar component represents the navigation bar of the application.
+ * It displays the logo, title, user balance, notification bell, and menu icon.
+ * It also handles the show/hide functionality of the navbar, notification panel, and menu elements.
+ *
+ * @returns {JSX.Element} The rendered navigation bar.
+ */
+
 function Navbar() {
-  const [showNavbar, setShowNavbar] = useState(false);
-  const { notification } = useContext(NotificationContext);
-  const [showNotificationPanel, setShowNotificationPanel] = useState(false);
+  // State variables
+  const [showNavbar, setShowNavbar] = useState(false); // Controls the visibility of the navbar
+  const { notification } = useContext(NotificationContext); // Notification context for displaying notifications
+  const [showNotificationPanel, setShowNotificationPanel] = useState(false); // Controls the visibility of the notification panel
 
-  const { token, setToken } = useAuth();
-  const { user, setUser } = useUser();
+  // Custom hooks
+  const { token, setToken } = useAuth(); // Authentication hook for managing user token
+  const { user, setUser } = useUser(); // User hook for managing user data
 
-  useEffect(() => {}, [token, user]);
+  useEffect(() => {
+    // Effect to be triggered when token or user changes
+    // Add any necessary logic here
+  }, [token, user]);
 
+  /**
+   * Toggles the visibility of the navbar.
+   */
   const handleShowNavbar = () => {
     setShowNavbar(!showNavbar);
   };
 
+  /**
+   * Toggles the visibility of the notification panel.
+   */
   const handleBellClick = () => {
     setShowNotificationPanel(!showNotificationPanel); 
   };
