@@ -118,8 +118,6 @@ async function addBooking(userID_toBook, courtID_toBook, date_toBook, time_toBoo
             return { result: false, data: null, error: "User has reached max bookings"};
         }
         
-        console.log("HERE 0 ");
-        
         // --------------------- Check if court has not already been booked at the date and time specified
         courts_booked_at_date_time =  await booking_schema.find({   courtID: courtID_toBook,
                                                                     date: date_toBook,
@@ -143,7 +141,7 @@ async function addBooking(userID_toBook, courtID_toBook, date_toBook, time_toBoo
         return {result: true, data: await newBooking.save(), error: null};
 
     }catch (error_message) {
-        throw new Error("Failed to Connect to Database");
+        throw new Error("Failed to Connect to Database" + error_message);
     }
 
 }

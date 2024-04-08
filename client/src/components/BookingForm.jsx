@@ -14,7 +14,7 @@ function BookingForm() {
   const { addSuccessfulBooking } = useContext(NotificationContext);
 
   
-  const showCourtSelection = date && time;
+  const showCourtSelection = date && hour;
 
   useEffect(() => {
     const fetchCourts = async () => {
