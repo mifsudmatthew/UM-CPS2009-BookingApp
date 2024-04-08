@@ -7,7 +7,7 @@ const courts_quieries = require("../../database/schema_functions/court_functions
 bookingRounter.post("/getAvailableCourts", async (req, res) => {
   console.log(req.body);
   var date = new Date(req.body.date);
-  var time = parseInt(req.body.time);
+  var time = parseInt(req.body.hour);
   var responseQ = await bookings_quieries.getAvailableCourts(date, time);
   console.log(responseQ.data);
 
