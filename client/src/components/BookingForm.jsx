@@ -8,7 +8,7 @@ import NotificationContext from '../context/NavbarContext';
 
 function BookingForm() {
   const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+  const [hour, setHour] = useState("");
   const [court, setCourt] = useState("");
   const [courts, setCourts] = useState([]);
   const { addSuccessfulBooking } = useContext(NotificationContext);
@@ -18,7 +18,7 @@ function BookingForm() {
 
   useEffect(() => {
     const fetchCourts = async () => {
-      const postData = { date, time };
+      const postData = { date, hour };
       try {
         const response = await Post("/api/getAvailableCourts", postData);
         console.log(response);
@@ -28,25 +28,25 @@ function BookingForm() {
       }
     };
 
-    if (date && time) {
+    if (date && hour) {
       fetchCourts();
     }
-  }, [date, time]);
+  }, [date, hour]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!date || !time || !court) {
+    if (!date || !hour || !court) {
       console.error("Please fill all fields");
       toast.error("Please fill all fields.");
       return;
     }
-    const booking = { date, time, court};
+    const booking = { date, hour, court };
     try {
       const response = await Post("/api/booking", booking);
       console.log(response);
-      if(response.result != true){
+      if (response.result !== true) {
         toast.error(response.error);
-      }else{
+      } else {
         toast.success("Court Successfully Booked, Have Fun  😀")
         addSuccessfulBooking(booking);
       }
@@ -57,7 +57,15 @@ function BookingForm() {
 
   const today = new Date();
   const maxDate = new Date();
-  maxDate.setDate(today.getDate() + 7); 
+  maxDate.setDate(today.getDate() + 7);
+
+  const startHour = 8; // Specify the start hour
+  const endHour = 19; // Specify the end hour
+
+  const hoursArray = Array.from({ length: endHour - startHour + 1 }, (_, i) => {
+    const hour = startHour + i;
+    return hour < 10 ? `0${hour}` : `${hour}`;
+  });
 
   const formatDate = (date) => {
     return new Date(date).toISOString().split('T')[0];
@@ -71,7 +79,7 @@ function BookingForm() {
         <div className="booking-form-title">Book a Tennis Court</div>
         <form onSubmit={handleSubmit}>
           <div className="form-section">
-            <label className="booking-form-subtitle">Pick a Time & Date</label>
+            <label className="booking-form-subtitle">Pick a Date</label>
             <input
               type="date"
               placeholder="Date"
@@ -79,12 +87,17 @@ function BookingForm() {
               min={formatDate(today)}
               max={formatDate(maxDate)}
             />
-            <input
-              type="time"
-              placeholder="Time"
-              onChange={(e) => setTime(e.target.value)}
-              step="3600000"
-            />
+          </div>
+          <div className="form-section">
+            <label className="booking-form-subtitle">Choose an Hour</label>
+            <select onChange={(e) => setHour(e.target.value)}>
+              <option value="">Select an hour</option>
+              {hoursArray.map((hour) => (
+                <option key={hour} value={hour}>
+                  {hour}:00
+                </option>
+              ))}
+            </select>
           </div>
           {showCourtSelection && (
             <div className="form-section">
