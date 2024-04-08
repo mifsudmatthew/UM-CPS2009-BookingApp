@@ -49,6 +49,12 @@ function Login() {
       const { accessToken, ...userData } = response;
       setToken(accessToken);
       setUser(userData);
+      
+      if (userData.admin) {
+        toast.success("ADMIN ACCOUNT.");
+        // navigate("/admin", { replace: true });
+        return;
+      }
       toast.success("Login successful! Redirecting to profile.");
       setTimeout(() => {
         navigate("/profile", { replace: true });
