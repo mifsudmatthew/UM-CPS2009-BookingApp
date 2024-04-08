@@ -1,5 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { Bell, BellFill } from 'react-bootstrap-icons'; 
+import NotificationContext from '../context/NavbarContext';
+import NotificationPanel from '../components/NotificationPanel';
 
 import "../styles/navbar.css";
 
@@ -10,6 +13,8 @@ import { useAuth } from "../context/Auth";
 
 function Navbar() {
   const [showNavbar, setShowNavbar] = useState(false);
+  const { notification } = useContext(NotificationContext);
+  const [showNotificationPanel, setShowNotificationPanel] = useState(false);
 
   const { token, setToken } = useAuth();
   const { user, setUser } = useUser();
@@ -18,6 +23,10 @@ function Navbar() {
 
   const handleShowNavbar = () => {
     setShowNavbar(!showNavbar);
+  };
+
+  const handleBellClick = () => {
+    setShowNotificationPanel(!showNotificationPanel); 
   };
 
   return (
@@ -35,6 +44,10 @@ function Navbar() {
               {token != "" ? <>Balance: {user.balance}</> :<></>}
             </p>
           </div>
+          <div onClick={handleBellClick}>
+            {token && (notification ? <BellFill /> : <Bell />)}
+          </div>
+          {showNotificationPanel && <NotificationPanel />} {/* Render notification panel */}
           <div className="menu-icon" onClick={handleShowNavbar}>
             <img src={hamburger} alt="hamburger" />
           </div>

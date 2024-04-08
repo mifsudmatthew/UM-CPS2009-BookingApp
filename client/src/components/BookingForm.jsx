@@ -1,16 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Post } from "../utils/ApiFunctions";
 import bookingImage from "../assets/bookingform.jpg";
 import "../styles/bookingform.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import NotificationContext from '../context/NavbarContext';
 
 function BookingForm() {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [court, setCourt] = useState("");
   const [courts, setCourts] = useState([]);
+  const { addSuccessfulBooking } = useContext(NotificationContext);
 
+  
   const showCourtSelection = date && time;
 
   useEffect(() => {
@@ -45,6 +48,7 @@ function BookingForm() {
         toast.error(response.error);
       }else{
         toast.success("Court Successfully Booked, Have Fun  😀")
+        addSuccessfulBooking(booking);
       }
     } catch (error) {
       console.error("Error submitting booking: ", error);
