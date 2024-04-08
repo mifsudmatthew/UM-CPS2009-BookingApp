@@ -1,5 +1,9 @@
 import { NavLink } from "react-router-dom";
 
+/**
+ * Renders the admin sidebar component.
+ * @returns {JSX.Element} The admin sidebar component.
+ */
 export const AdminSidebar = () =>  {
     
     return (
