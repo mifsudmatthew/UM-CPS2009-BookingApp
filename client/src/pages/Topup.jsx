@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
+import { useLocation, useHistory } from "react-router-dom";
 import { Post } from "../utils/ApiFunctions";
-import { useLocation } from "react-router-dom";
 
-import { useAuth } from "../context/Auth";
+import Form from "../components/Form";
+import InputBox from "../components/InputBox";
+import InputButton from "../components/InputButton";
 
 function Topup() {
   const [amount, setAmount] = useState("");
-  const { token, setToken } = useAuth();
-
-  const session_id = new URLSearchParams(useLocation().search).get(
-    "session_id"
-  );
+  const history = useHistory();
+  const location = useLocation();
+  const session_id = new URLSearchParams(location.search).get("session_id");
 
   useEffect(() => {
     async function fetchData() {
@@ -31,19 +31,18 @@ function Topup() {
     fetchData();
   }, [session_id]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const numericAmount = parseFloat(amount);
-
+  const handleSubmit = async () => {
     try {
+      const numericAmount = parseFloat(amount);
       console.log("Amount: ", numericAmount);
-      const data = await Post("/api/topup", { amount: numericAmount }, token);
+
+      const data = await Post("/api/topup", { amount: numericAmount });
+      console.log(data);
 
       if (data.url) {
-        window.location.href = data.url;
+        // window.location.href = data.url; // old line
+        history.push(data.url); // GPT said this might be better
       }
-
-      console.log(data);
     } catch (error) {
       console.error(`Error in top-up: ${error}`);
     }
@@ -51,25 +50,18 @@ function Topup() {
 
   return (
     <main className="profile">
-      <h1 className="header-title">Top Up</h1>
-      <form onSubmit={handleSubmit} className="inputContainer">
-        <label>Amount</label>
-        <input
-          placeholder="€1000"
-          className="inputBox"
+      <h2 className="header-title">Top Up</h2>
+      <Form onSubmit={handleSubmit} buttonLabel="Top Up">
+        <InputBox
+          label="Amount"
           type="number"
           value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          required
+          placeholder="€1000"
+          onChange={setAmount}
         />
         <br />
-        <input
-          className={"inputButton"}
-          type="button"
-          value={"Top Up"}
-          onClick={handleSubmit}
-        />
-      </form>
+        <InputButton label="Top Up" type="submit" />
+      </Form>
     </main>
   );
 }
