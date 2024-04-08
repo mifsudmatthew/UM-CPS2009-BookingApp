@@ -5,7 +5,13 @@ import { Navigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+/**
+ * Reset component for resetting password.
+ *
+ * @returns {JSX.Element} The Reset component.
+ */
 export default function Reset() {
+  // State variables
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -18,10 +24,12 @@ export default function Reset() {
   const [buttonCursor, setButtonCursor] = useState("pointer");
   const [buttonCursor2, setButtonCursor2] = useState("pointer");
 
+  // Memoized value for password match
   const passwordMatch = useMemo(() => {
     return password === confirmPassword;
   }, [password, confirmPassword]);
 
+  // Memoized value for PIN validation
   const pinValid = useMemo(() => {
     return pin.length === 4;
   }, [pin]);
@@ -32,6 +40,7 @@ export default function Reset() {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }, [email]);
 
+  // Effect to show success toast when isValid is true
   useEffect(() => {
     if (isValid) {
       toast.success("E-mail sent successfully! Please check your E-mail.");
@@ -39,6 +48,7 @@ export default function Reset() {
     }
   }, [isValid]);
 
+  // Handle submit function for sending reset email
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -69,6 +79,7 @@ export default function Reset() {
     }
   };
 
+  // Handle change function for resetting password
   const handleChange = async (event) => {
     event.preventDefault();
 
@@ -76,7 +87,7 @@ export default function Reset() {
     setButtonCursor2("not-allowed");
     setButtonColor2("#CCCCCC");
 
-    setTimeout(() => {
+    setTimeout(() => { // Reset button after 2 seconds
       setIsButtonDisabled2(false);
       setButtonCursor2("pointer");
       setButtonColor2("#3e4a36");
@@ -117,7 +128,7 @@ export default function Reset() {
       pin,
     };
 
-    try {
+    try { // Send a POST request to the server with the reset password data
       const response = await Post("/api/resetpassword", data);
 
       toast.success("Password changed successfully!");
@@ -125,7 +136,7 @@ export default function Reset() {
       console.log("Success:", response);
 
       return <Navigate to="/" replace={true} />;
-    } catch (error) {
+    } catch (error) { // Log an error if the request fails
       toast.error("Error! Could not reset password.");
       console.error(error);
     }
@@ -134,7 +145,7 @@ export default function Reset() {
   return (
     <>
       <h1>Reset</h1>
-      <div className={"mainContainerReset"}>
+      <div className={"mainContainerReset"}> {/* Form to reset password */}
         <ToastContainer />
         <div className={"inputContainer"}>
           <br />
