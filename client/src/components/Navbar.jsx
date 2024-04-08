@@ -40,9 +40,14 @@ function Navbar() {
             <NavLink to="/">ServeSpot</NavLink>
           </div>
           <div>
-            <p className="navbar-balance">
-              {token != "" ? <>Balance: {user.balance}</> :<></>}
-            </p>
+            {/* Conditionally render navbar-balance based on user.admin */}
+          {!user.admin && (
+            <div>
+              <p className="navbar-balance">
+                {token !== "" ? <>Balance: {user.balance}</> : <></>}
+              </p>
+            </div>
+          )}
           </div>
           <div onClick={handleBellClick}>
             {token && (notification ? <BellFill /> : <Bell />)}
