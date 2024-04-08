@@ -7,9 +7,6 @@ import { useAuth } from "../context/Auth";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
 /**
  * Renders the Topup page component.
  *
@@ -84,7 +81,7 @@ function Topup() {
       return;
     }
 
-    
+
     try { // Send a POST request to top up the user's account
       console.log("Amount: ", numericAmount);
       const data = await Post("/api/topup", { amount: numericAmount }, token);
