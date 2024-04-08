@@ -2,7 +2,7 @@
 .container {
   margin: 0 auto;
   padding-top: 2px;
-  padding-left: 10px;
+  padding-left: 1%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -51,6 +51,7 @@
 
 .navbar {
   height: 80px;
+  width: 100%;
   background-color: #cde2be;
 }
 
