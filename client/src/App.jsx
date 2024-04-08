@@ -11,15 +11,18 @@ import "./styles/app.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ReloadPrompt from "./ReloadPrompt";
+import { NotificationProvider } from './context/NavbarContext';
 
 // Main react app
 function App() {
   return (
     <>
-      <Navbar />
-      <Outlet />
-      <ReloadPrompt />
-      <Footer />
+      <NotificationProvider>
+        <Navbar />
+        <Outlet />
+        <ReloadPrompt />
+        <Footer />
+      </NotificationProvider>
     </>
   );
 }
