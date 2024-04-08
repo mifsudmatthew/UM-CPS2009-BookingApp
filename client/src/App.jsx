@@ -16,10 +16,10 @@ import ReloadPrompt from "./ReloadPrompt";
 function App() {
   return (
     <>
-      <Navbar />
-      <Outlet />
-      <ReloadPrompt />
-      <Footer />
+      < Navbar        />
+      < Outlet        />
+      < ReloadPrompt  />
+      < Footer        />
     </>
   );
 }

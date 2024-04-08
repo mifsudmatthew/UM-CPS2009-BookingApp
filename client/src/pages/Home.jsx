@@ -5,9 +5,9 @@ import Courts from "../components/Courts";
 function Home() {
   return (
     <>
-      <Banner />
-      <AboutUs />
-      <Courts />
+      < Banner  />
+      < AboutUs />
+      < Courts  />
     </>
   );
 }
