@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { useUser } from "../context/User";
 
+/**
+ * Renders the AccountDetails component.
+ *
+ * @returns {JSX.Element} The rendered AccountDetails component.
+ */
 const AccountDetails = () => {
   const { user, setUser } = useUser(); // Retrieve user data once when the component mounts
 
@@ -8,11 +13,10 @@ const AccountDetails = () => {
   const [name, setName] = useState(user.name || "");
   const [email, setEmail] = useState(user.email || "");
 
-  // Your component JSX remains the same
   return (
     <main className="profile">
       <div className="header-title">Profile</div>
-      <form>
+      <form> {/* Form to update user details */}
         <label>Name</label>
         <br></br>
         <input

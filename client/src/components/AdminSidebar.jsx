@@ -1,5 +1,9 @@
 import { NavLink } from "react-router-dom";
 
+/**
+ * Renders the admin sidebar component.
+ * @returns {JSX.Element} The admin sidebar component.
+ */
 export const AdminSidebar = () =>  {
     
     return (
@@ -7,18 +11,16 @@ export const AdminSidebar = () =>  {
         <h3>Admin Panel</h3>
         <nav>
             <ul>
-            <li>
-                <NavLink to="/profile">Profile</NavLink>
-            </li>
-            <li>
-                <NavLink to="/admin/updatecourts">Update Courts</NavLink>
-            </li>
-            <li>
-                <NavLink to="/admin/addnewcourt">Add New Court</NavLink>
-            </li>
-            <li>
-                <NavLink to="/admin/statistics">View Statistics</NavLink>
-            </li>
+                <li>
+                    <NavLink to="/admin/statistics">Statistics</NavLink>
+                </li>
+                
+                <li>
+                    <NavLink to="/admin/updatecourts">Update Courts</NavLink>
+                </li>
+                <li>
+                    <NavLink to="/admin/addnewcourt">Add New Court</NavLink>
+                </li>
             </ul>
         </nav>
         </aside>
