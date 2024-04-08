@@ -2,8 +2,8 @@ import { Routes, Route } from "react-router-dom";
 import App from "./App.jsx";
 
 /* Context */
-import User from "./context/User";
-import Auth from "./context/Auth";
+import { UserProvider } from "./context/User";
+import { AuthProvider } from "./context/Auth";
 
 /* Components */
 import Bookings from "./components/Bookings";
@@ -23,10 +23,6 @@ import Errors from "./pages/Errors";
 
 // Modifies div with root id in index.html
 export default function AppContainer() {
-  /* Context Initialization */
-  const { AuthProvider } = Auth();
-  const { UserProvider } = User();
-
   return (
     <UserProvider>
       <AuthProvider>

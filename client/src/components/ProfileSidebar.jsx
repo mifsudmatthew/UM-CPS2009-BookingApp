@@ -2,20 +2,16 @@ import { useEffect } from "react";
 import { NavLink, Navigate } from "react-router-dom";
 import { defaultProfilePic } from "../components/Icons";
 
-import Auth from "../context/Auth";
-import User from "../context/User";
+import { useAuth } from "../context/Auth";
+import { useUser } from "../context/User";
 
 function toRoot() {
   return <Navigate to="/" replace={true} />;
 }
 
 const ProfileSidebar = () => {
-  const { setToken } = Auth();
-  const { useUser, setUser } = User();
-
-  const user = useUser();
-
-  useEffect(() => {}, [user]);
+  const { token, setToken } = useAuth();
+  const { user, setUser } = useUser();
 
   const logOut = () => {
     setToken("");

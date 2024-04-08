@@ -2,27 +2,28 @@ import { useState, createContext, useContext } from "react";
 
 const UserContext = createContext();
 
-export default function User() {
+const UserProvider = ({ children }) => {
   const [user, _setUser] = useState(getUser());
 
   function getUser() {
-    const userData = localStorage.getItem("user");
-    return userData ? JSON.parse(userData) : {};
+    const _user = localStorage.getItem("user");
+    return _user ? JSON.parse(_user) : {};
   }
 
-  function setUser(userData) {
-    const _user = JSON.stringify(userData);
+  function setUser(user) {
+    const _user = JSON.stringify(user);
     localStorage.setItem("user", _user);
-    _setUser(_user);
+    _setUser(user);
   }
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
 
-  const UserProvider = ({ children }) => {
-    return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
-  };
+const useUser = () => {
+  return useContext(UserContext);
+};
 
-  const useUser = () => {
-    return useContext(UserContext);
-  };
-
-  return { UserProvider, useUser, setUser };
-}
+export { UserProvider, useUser };

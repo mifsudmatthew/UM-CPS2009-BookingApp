@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { Post } from "../utils/ApiFunctions";
 import { useNavigate, Navigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -26,7 +26,7 @@ function ChangePW() {
 
   const handleChangePassword = async (event) => {
     event.preventDefault();
-    
+
     setIsButtonDisabled(true); // Disable the button
     setButtonCursor("not-allowed"); // Change cursor style
     setButtonColor("#CCCCCC"); // Change button color to visually indicate disabled state
@@ -35,7 +35,7 @@ function ChangePW() {
       setButtonCursor("pointer"); // Change cursor back to pointer
       setButtonColor("#3e4a36"); // Re-enable the button after 2 seconds and reset color
     }, 2000);
-    
+
     if (!password.trim() || !confirmPassword.trim()) {
       toast.error("Please fill all fields.");
       return;
@@ -100,8 +100,7 @@ function ChangePW() {
               cursor: buttonCursor,
               backgroundColor: buttonColor,
             }}
-            onClick={handleChangePassword}
-          >
+            onClick={handleChangePassword}>
             Change Password
           </button>
         </div>

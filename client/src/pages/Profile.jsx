@@ -3,11 +3,10 @@ import "../styles/profile.css";
 import ProfileSidebar from "../components/ProfileSidebar";
 import { Outlet, Navigate } from "react-router-dom";
 
-import Auth from "../context/Auth";
+import { useAuth } from "../context/Auth";
 
 const Profile = () => {
-  const { useAuth } = Auth();
-  const token = useAuth();
+  const { token, setToken } = useAuth();
 
   useEffect(() => {}, [token]);
   if (token == "") {
