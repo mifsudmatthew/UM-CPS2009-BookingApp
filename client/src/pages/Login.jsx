@@ -15,8 +15,8 @@ function Login() {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [buttonColor, setButtonColor] = useState(null); // Add state to store button color
   const [buttonCursor, setButtonCursor] = useState("pointer"); // Add state to store button cursor
-  const { user, setUser } = useUser();
-  const { token, setToken } = useAuth();
+  const { _user, setUser } = useUser();
+  const { _token, setToken } = useAuth();
 
   // Regular expression for email validation
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -49,6 +49,12 @@ function Login() {
       const { accessToken, ...user } = response;
       setToken(accessToken);
       setUser(user);
+
+      if (user.admin) {
+        toast.success("ADMIN ACCOUNT.");
+        // navigate("/admin", { replace: true });
+        return;
+      }
       toast.success("Login successful! Redirecting to profile.");
       setTimeout(() => {
         navigate("/profile", { replace: true });

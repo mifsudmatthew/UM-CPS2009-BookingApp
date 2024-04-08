@@ -77,6 +77,7 @@ apiRouter.post("/login", async (req, res) => {
         email: dbUser.data.email,
         name: dbUser.data.name,
         balance: dbUser.data.balance,
+        admin: dbUser.data.admin,
       };
 
       const accessToken = sf.generateAccessToken(user);

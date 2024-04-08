@@ -9,6 +9,7 @@ const user_schema = new Schema({
     password: String,
     name: String,
     balance: Number,
+    admin: { type: Boolean, default: false }
 });
 
 // Exporting created schemas to be used by database functions
