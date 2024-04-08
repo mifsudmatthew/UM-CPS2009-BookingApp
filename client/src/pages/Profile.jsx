@@ -3,15 +3,18 @@ import "../styles/profile.css";
 import ProfileSidebar from "../components/ProfileSidebar";
 import { Outlet, Navigate } from "react-router-dom";
 
-import { useAuth } from "../context/Auth";
+import { useUser } from "../context/User";
+import {useAuth} from "../context/Auth";
 
 const Profile = () => {
-  const { token, setToken } = useAuth();
 
-  useEffect(() => {}, [token]);
-  if (token == "") {
-    return <Navigate to="/login" replace={true} />;
-  }
+    // Check if the user is an admin based on token
+    const {user, setUser} = useUser();
+    const { token, setToken } = useAuth();
+
+    if (user.admin || token === "") {
+        return <Navigate to="/" replace={true} />;
+    }
 
   return (
     <div className="profile-container">
