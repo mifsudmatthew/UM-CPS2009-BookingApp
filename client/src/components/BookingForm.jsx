@@ -22,6 +22,9 @@ function BookingForm() {
   const [hour, setHour] = useState(""); // State variable to store the selected hour
   const [court, setCourt] = useState(""); // State variable to store the selected court
   const [courts, setCourts] = useState([]); // State variable to store the available courts
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [buttonColor, setButtonColor] = useState(null); // Add state to store button color
+  const [buttonCursor, setButtonCursor] = useState("pointer"); // Add state to store button cursor
   // Check if the user is an admin based on token
   const {user, setUser} = useUser();
   const { token, setToken } = useAuth();
@@ -60,6 +63,17 @@ function BookingForm() {
    */
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    event.preventDefault();
+    setIsButtonDisabled(true); // Disable the button when the form is submitted
+    setButtonCursor("not-allowed"); // Change cursor to not-allowed
+    setButtonColor("#CCCCCC"); // Change button color to visually indicate disabled state
+    setTimeout(() => {
+      setIsButtonDisabled(false);
+      setButtonCursor("pointer"); // Change cursor back to pointer
+      setButtonColor(null); // Re-enable the button after 2 seconds and reset color
+    }, 2000);
+
     if (!date || !hour || !court) {
       console.error("Please fill all fields");
       toast.error("Please fill all fields.");
@@ -148,8 +162,12 @@ function BookingForm() {
               </select>
             </div>
           )}
-          <button className="booking-button" type="submit">
-            Proceed
+          <button className="booking-button" type="submit" disabled={isButtonDisabled} // Add the disabled attribute here
+            style={{
+              backgroundColor: buttonColor,
+              cursor: buttonCursor, // Apply dynamic cursor style
+            }}>
+            Book
           </button>
         </form>
       </div>
