@@ -1,16 +1,21 @@
-import { useState, useMemo } from "react";
-import { Post } from "../utils/ApiFunctions"; // Ensure this path matches where your API functions are defined
-import { Navigate } from "react-router-dom";
+import React, { useState, useMemo } from "react";
+import { Post } from "../utils/ApiFunctions";
+import { useNavigate, Navigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function toProfile() {
   return <Navigate to="/profile" replace={true} />;
 }
 
 function ChangePW() {
+  const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [buttonColor, setButtonColor] = useState("#3e4a36"); // Add state to store button color
+  const [buttonCursor, setButtonCursor] = useState("pointer");
 
-  // This checks if the passwords entered match and are not empty
   const canChangePassword = useMemo(
     () =>
       password.length > 0 &&
@@ -21,27 +26,52 @@ function ChangePW() {
 
   const handleChangePassword = async (event) => {
     event.preventDefault();
-    if (!canChangePassword) {
-      alert("Passwords do not match or fields are empty.");
+    
+    setIsButtonDisabled(true); // Disable the button
+    setButtonCursor("not-allowed"); // Change cursor style
+    setButtonColor("#CCCCCC"); // Change button color to visually indicate disabled state
+    setTimeout(() => {
+      setIsButtonDisabled(false);
+      setButtonCursor("pointer"); // Change cursor back to pointer
+      setButtonColor("#3e4a36"); // Re-enable the button after 2 seconds and reset color
+    }, 2000);
+    
+    if (!password.trim() || !confirmPassword.trim()) {
+      toast.error("Please fill all fields.");
       return;
     }
 
-    // Assuming your API requires just the new password for a change password functionality
+    if (!canChangePassword) {
+      toast.error("Passwords do not match.");
+      return;
+    }
+
     const data = { password };
 
     try {
-      const response = await Post("/api/changepassword", data); // Adjust the endpoint as per your API's specification
+      const response = await Post("/api/changepassword", data);
+      toast.success("Password change successful! Redirecting to profile.");
       console.log("Password change successful:", response);
       toProfile();
+      setTimeout(() => {
+        navigate("/profile", { replace: true });
+        setIsButtonDisabled(false); // Re-enable the button after timeout
+        setButtonCursor("pointer"); // Restore cursor style
+        setButtonColor(null); // Reset button color
+      }, 2000);
     } catch (error) {
-      alert("Error changing password.");
+      toast.error("An error occurred while changing password!");
       console.error("Change password error:", error);
+      setIsButtonDisabled(false); // Re-enable the button on error
+      setButtonCursor("pointer"); // Restore cursor style
+      setButtonColor(null); // Reset button color
     }
   };
 
   return (
     <>
       <main className="profile">
+        <ToastContainer />
         <h1 className="header-title">Change Password</h1>
         <div className={"inputContainer"}>
           <label>New Password</label>
@@ -62,21 +92,16 @@ function ChangePW() {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
           <br></br>
-          {!canChangePassword &&
-            password.length > 0 &&
-            confirmPassword.length > 0 && (
-              <div style={{ color: "rgba(186, 26, 26, 1)" }}>
-                Passwords do not match.
-              </div>
-            )}
           <button
+            className={"inputButton"} // Apply the same class as the Login button
+            disabled={isButtonDisabled}
             style={{
-              backgroundColor: canChangePassword ? "#3e4a36" : "#cccccc",
-              color: canChangePassword ? "white" : "#666666",
-              cursor: canChangePassword ? "pointer" : "not-allowed",
+              color: "white",
+              cursor: buttonCursor,
+              backgroundColor: buttonColor,
             }}
             onClick={handleChangePassword}
-            disabled={!canChangePassword}>
+          >
             Change Password
           </button>
         </div>
