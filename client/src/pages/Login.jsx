@@ -51,8 +51,10 @@ function Login() {
       setUser(user);
 
       if (user.admin) {
-        toast.success("ADMIN ACCOUNT.");
-        // navigate("/admin", { replace: true });
+        toast.success("Login successful! Redirecting to admin panel.");
+        setTimeout(() => {
+          navigate("/admin", { replace: true });
+        }, 2000);
         return;
       }
       toast.success("Login successful! Redirecting to profile.");
