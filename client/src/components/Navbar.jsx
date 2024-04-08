@@ -64,7 +64,7 @@ function Navbar() {
           {!user.admin && (
             <div>
               <p className="navbar-balance">
-                {token !== "" ? <>Balance: {user.balance}</> : <></>}
+                {token !== "" ? <>€{user.balance}</> : <></>}
               </p>
             </div>
           )}
