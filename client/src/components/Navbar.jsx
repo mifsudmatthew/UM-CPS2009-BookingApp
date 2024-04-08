@@ -92,12 +92,16 @@ function Navbar() {
                 </>
               ) : (
                 <>
-                  <li>
-                    <NavLink to="/profile">Profile</NavLink>
-                  </li>
-                  <li>
+                  {!user.admin && (
+                    <>
+                    <li>
+                      <NavLink to="/profile">Profile</NavLink>
+                    </li>
+                    <li>
                     <NavLink to="/profile/topup">Top Up</NavLink>
                   </li>
+                    </>
+                  )}
                 </>
               )}
             </ul>
