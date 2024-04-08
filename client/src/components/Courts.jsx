@@ -10,6 +10,20 @@ import {
   indoorCourtImage,
 } from "./Icons";
 
+/**
+ * Array of court objects.
+ *
+ * @typedef {Object} Court
+ * @property {string} image - The image of the court.
+ * @property {string} title - The title of the court.
+ * @property {string} description - The description of the court.
+ */
+
+/**
+ * Array of courts.
+ *
+ * @type {Court[]}
+ */
 const courts = [
   {
     image: grassCourtImage,
@@ -31,19 +45,36 @@ const courts = [
   },
 ];
 
+/**
+ * Renders the Courts component.
+ * This component displays a carousel of courts, allowing the user to navigate between them.
+ * 
+ * @returns {JSX.Element} The Courts component.
+ */
 const Courts = () => {
   const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
   const { image, title, description } = courts[current];
 
+  /**
+   * Redirects to the booking page.
+   */
   function toBooking() {
     navigate("/booking", { replace: true });
   }
 
+  /**
+   * Handles the click event for the previous arrow button.
+   * Updates the current court index to display the previous court.
+   */
   const handlePrevClick = () => {
     setCurrent((prev) => (prev - 1 + courts.length) % courts.length);
   };
 
+  /**
+   * Handles the click event for the next arrow button.
+   * Updates the current court index to display the next court.
+   */
   const handleNextClick = () => {
     setCurrent((prev) => (prev + 1) % courts.length);
   };

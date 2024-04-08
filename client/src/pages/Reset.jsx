@@ -5,7 +5,13 @@ import { Navigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+/**
+ * Reset component for resetting password.
+ *
+ * @returns {JSX.Element} The Reset component.
+ */
 export default function Reset() {
+  // State variables
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -18,10 +24,12 @@ export default function Reset() {
   const [buttonCursor, setButtonCursor] = useState("pointer");
   const [buttonCursor2, setButtonCursor2] = useState("pointer");
 
+  // Memoized value for password match
   const passwordMatch = useMemo(() => {
     return password === confirmPassword;
   }, [password, confirmPassword]);
 
+  // Memoized value for PIN validation
   const pinValid = useMemo(() => {
     return pin.length === 4;
   }, [pin]);
@@ -32,6 +40,7 @@ export default function Reset() {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }, [email]);
 
+  // Effect to show success toast when isValid is true
   useEffect(() => {
     if (isValid) {
       toast.success("E-mail sent successfully! Please check your E-mail.");
@@ -39,6 +48,7 @@ export default function Reset() {
     }
   }, [isValid]);
 
+  // Handle submit function for sending reset email
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -51,15 +61,15 @@ export default function Reset() {
       setButtonCursor("pointer");
       setButtonColor("#3e4a36");
     }, 2000);
-  
-    if(email.length === 0) {
+
+    if (email.length === 0) {
       toast.error("Error! Please enter an email address.");
       return;
-    } else if (!isEmailValid){
+    } else if (!isEmailValid) {
       toast.error("Error! Please enter a valid email address.");
       return;
     }
-  
+
     try {
       await Post("/api/reset", { email: email });
       setIsValid(true);
@@ -67,10 +77,9 @@ export default function Reset() {
       toast.error("Error! Could not send reset E-mail.");
       console.error(error);
     }
-  
-
   };
 
+  // Handle change function for resetting password
   const handleChange = async (event) => {
     event.preventDefault();
 
@@ -78,53 +87,56 @@ export default function Reset() {
     setButtonCursor2("not-allowed");
     setButtonColor2("#CCCCCC");
 
-    setTimeout(() => {
+    setTimeout(() => { // Reset button after 2 seconds
       setIsButtonDisabled2(false);
       setButtonCursor2("pointer");
       setButtonColor2("#3e4a36");
     }, 2000);
-  
+
     // Check if any field is empty
-    if (email.length === 0 || password.length === 0 || confirmPassword.length === 0 || pin.length === 0) {
+    if (
+      email.length === 0 ||
+      password.length === 0 ||
+      confirmPassword.length === 0 ||
+      pin.length === 0
+    ) {
       toast.error("Please fill in all fields.");
       return;
     }
-  
+
     // Check if email is valid
     if (!isEmailValid) {
       toast.error("Please enter a valid email address.");
       return;
     }
-  
+
     // Check if passwords match
     if (!passwordMatch) {
       toast.error("Passwords do not match.");
       return;
     }
-  
+
     // Check if PIN is valid
     if (!pinValid) {
       toast.error("PIN must be 4 digits.");
       return;
     }
-  
+
     const data = {
       email,
       password,
       pin,
     };
 
-  
-    try {
+    try { // Send a POST request to the server with the reset password data
       const response = await Post("/api/resetpassword", data);
-  
-      toast.success("Password changed successfully!");
-  
-      console.log("Success:", response);
-  
-      return <Navigate to="/" replace={true} />;
 
-    } catch (error) {
+      toast.success("Password changed successfully!");
+
+      console.log("Success:", response);
+
+      return <Navigate to="/" replace={true} />;
+    } catch (error) { // Log an error if the request fails
       toast.error("Error! Could not reset password.");
       console.error(error);
     }
@@ -133,7 +145,7 @@ export default function Reset() {
   return (
     <>
       <h1>Reset</h1>
-      <div className={"mainContainerReset"}>
+      <div className={"mainContainerReset"}> {/* Form to reset password */}
         <ToastContainer />
         <div className={"inputContainer"}>
           <br />
@@ -149,13 +161,14 @@ export default function Reset() {
           />
         </div>
         <br></br>
-        <button onClick={handleSubmit} disabled={isButtonDisabled}
-                    style={{
-                      backgroundColor: buttonColor,
-                      cursor: buttonCursor,
-                      color: "white"
-                    }}
-        >
+        <button
+          onClick={handleSubmit}
+          disabled={isButtonDisabled}
+          style={{
+            backgroundColor: buttonColor,
+            cursor: buttonCursor,
+            color: "white",
+          }}>
           RESET PASSWORD
         </button>
         <br />
@@ -207,7 +220,7 @@ export default function Reset() {
             style={{
               backgroundColor: buttonColor2,
               cursor: buttonCursor2,
-              color: "white"
+              color: "white",
             }}>
             CHANGE PASSWORD
           </button>
