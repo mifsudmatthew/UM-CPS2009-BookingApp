@@ -15,7 +15,7 @@ function Banner() {
     if (token === "") {
       setButtonText("Login");
     } else if (!user.admin) {
-      setButtonText("Profile");
+      setButtonText("Book a court");
     } else {
       setButtonText("Admin Panel");
     }
@@ -25,7 +25,7 @@ function Banner() {
     if (token === "") {
       navigate("/login", { replace: true });
     } else if (!user.admin) {
-      navigate("/profile", { replace: true });
+      navigate("/booking", { replace: true });
     } else {
       navigate("/admin", { replace: true });
     }
