@@ -2,12 +2,21 @@ import { useState, useMemo, useEffect } from "react";
 import { Post } from "../utils/ApiFunctions";
 import { Navigate } from "react-router-dom";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function Reset() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [pin, setPin] = useState("");
   const [isValid, setIsValid] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [isButtonDisabled2, setIsButtonDisabled2] = useState(false);
+  const [buttonColor, setButtonColor] = useState("#3e4a36");
+  const [buttonColor2, setButtonColor2] = useState("#3e4a36");
+  const [buttonCursor, setButtonCursor] = useState("pointer");
+  const [buttonCursor2, setButtonCursor2] = useState("pointer");
 
   const passwordMatch = useMemo(() => {
     return password === confirmPassword;
@@ -25,7 +34,7 @@ export default function Reset() {
 
   useEffect(() => {
     if (isValid) {
-      alert("Email sent successfully!"); // This replaces your <p>Alert woop</p> with an actual alert box
+      toast.success("E-mail sent successfully! Please check your E-mail.");
       setIsValid(false);
     }
   }, [isValid]);
@@ -33,33 +42,90 @@ export default function Reset() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    setIsButtonDisabled(true);
+    setButtonCursor("not-allowed");
+    setButtonColor("#CCCCCC");
+
+    setTimeout(() => {
+      setIsButtonDisabled(false);
+      setButtonCursor("pointer");
+      setButtonColor("#3e4a36");
+    }, 2000);
+  
+    if(email.length === 0) {
+      toast.error("Error! Please enter an email address.");
+      return;
+    } else if (!isEmailValid){
+      toast.error("Error! Please enter a valid email address.");
+      return;
+    }
+  
     try {
       await Post("/api/reset", { email: email });
       setIsValid(true);
     } catch (error) {
-      alert("Error: Could not send reset email.");
+      toast.error("Error! Could not send reset E-mail.");
       console.error(error);
     }
+  
+
   };
 
   const handleChange = async (event) => {
     event.preventDefault();
 
+    setIsButtonDisabled2(true);
+    setButtonCursor2("not-allowed");
+    setButtonColor2("#CCCCCC");
+
+    setTimeout(() => {
+      setIsButtonDisabled2(false);
+      setButtonCursor2("pointer");
+      setButtonColor2("#3e4a36");
+    }, 2000);
+  
+    // Check if any field is empty
+    if (email.length === 0 || password.length === 0 || confirmPassword.length === 0 || pin.length === 0) {
+      toast.error("Please fill in all fields.");
+      return;
+    }
+  
+    // Check if email is valid
+    if (!isEmailValid) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+  
+    // Check if passwords match
+    if (!passwordMatch) {
+      toast.error("Passwords do not match.");
+      return;
+    }
+  
+    // Check if PIN is valid
+    if (!pinValid) {
+      toast.error("PIN must be 4 digits.");
+      return;
+    }
+  
     const data = {
       email,
       password,
       pin,
     };
 
-    console.log("Data:", data);
+  
     try {
       const response = await Post("/api/resetpassword", data);
-
+  
+      toast.success("Password changed successfully!");
+  
       console.log("Success:", response);
-
+  
       return <Navigate to="/" replace={true} />;
+
     } catch (error) {
-      alert("Error: Could not reset password.");
+      toast.error("Error! Could not reset password.");
       console.error(error);
     }
   };
@@ -68,6 +134,7 @@ export default function Reset() {
     <>
       <h1>Reset</h1>
       <div className={"mainContainerReset"}>
+        <ToastContainer />
         <div className={"inputContainer"}>
           <br />
           <br />
@@ -82,7 +149,13 @@ export default function Reset() {
           />
         </div>
         <br></br>
-        <button onClick={handleSubmit} disabled={!isEmailValid}>
+        <button onClick={handleSubmit} disabled={isButtonDisabled}
+                    style={{
+                      backgroundColor: buttonColor,
+                      cursor: buttonCursor,
+                      color: "white"
+                    }}
+        >
           RESET PASSWORD
         </button>
         <br />
@@ -126,18 +199,16 @@ export default function Reset() {
           </div>
         )}
         <br />
-        {passwordMatch ? (
-          <></>
-        ) : (
-          <div style={{ color: "rgba(186, 26, 26, 1)" }}>
-            Passwords do not match.
-          </div>
-        )}
         <br />
         <div className={"inputContainer"}>
           <button
             onClick={handleChange}
-            disabled={!isEmailValid || !passwordMatch || !pinValid}>
+            disabled={isButtonDisabled2}
+            style={{
+              backgroundColor: buttonColor2,
+              cursor: buttonCursor2,
+              color: "white"
+            }}>
             CHANGE PASSWORD
           </button>
         </div>
