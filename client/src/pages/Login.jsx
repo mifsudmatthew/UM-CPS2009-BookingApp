@@ -8,6 +8,11 @@ import { useUser } from "../context/User";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+/**
+ * Renders the login page.
+ *
+ * @returns {JSX.Element} The login page component.
+ */
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
