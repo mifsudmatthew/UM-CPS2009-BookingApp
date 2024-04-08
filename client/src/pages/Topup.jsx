@@ -4,6 +4,9 @@ import { useLocation } from "react-router-dom";
 
 import { useAuth } from "../context/Auth";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function Topup() {
   const [amount, setAmount] = useState("");
   const { token, setToken } = useAuth();
@@ -35,6 +38,18 @@ function Topup() {
     event.preventDefault();
     const numericAmount = parseFloat(amount);
 
+    if(amount.trim() === "") {
+      // Check if amount is not a number or empty
+      toast.error("Please enter the amount you would like to top-up.");
+      return;
+    }else if (isNaN(numericAmount)){
+      toast.error("Error! Input is not a number, please enter a number.");
+      return;
+    } else if (numericAmount < 0) {
+      toast.error("Error! Please enter a positive number.");
+      return;
+    }
+
     try {
       console.log("Amount: ", numericAmount);
       const data = await Post("/api/topup", { amount: numericAmount }, token);
@@ -51,6 +66,7 @@ function Topup() {
 
   return (
     <main className="profile">
+      <ToastContainer />
       <h1 className="header-title">Top Up</h1>
       <form onSubmit={handleSubmit} className="inputContainer">
         <label>Amount</label>
