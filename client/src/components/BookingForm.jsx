@@ -79,6 +79,7 @@ function BookingForm() {
               type="time"
               placeholder="Time"
               onChange={(e) => setTime(e.target.value)}
+              step="3600000"
             />
           </div>
           {showCourtSelection && (
