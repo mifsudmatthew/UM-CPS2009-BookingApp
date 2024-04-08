@@ -24,7 +24,7 @@ bookingRounter.post(
       req.user.id,
       req.body.court,
       new Date(req.body.date),
-      parseInt(req.body.time),
+      parseInt(req.body.hour),
       3
     );
     res.json(response);

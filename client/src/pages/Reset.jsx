@@ -9,17 +9,25 @@ import InputButton from "../components/InputButton";
 
 import "react-toastify/dist/ReactToastify.css";
 
+/**
+ * Reset component for resetting password.
+ *
+ * @returns {JSX.Element} The Reset component.
+ */
 export default function Reset() {
+  // State variables
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [pin, setPin] = useState("");
   const [isValid, setIsValid] = useState(false);
 
+  // Memoized value for password match
   const passwordMatch = useMemo(() => {
     return password === confirmPassword;
   }, [password, confirmPassword]);
 
+  // Memoized value for PIN validation
   const pinValid = useMemo(() => {
     return pin.length === 4;
   }, [pin]);
@@ -30,6 +38,7 @@ export default function Reset() {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }, [email]);
 
+  // Effect to show success toast when isValid is true
   useEffect(() => {
     if (isValid) {
       toast.success("E-mail sent successfully! Please check your E-mail.");
@@ -37,6 +46,7 @@ export default function Reset() {
     }
   }, [isValid]);
 
+  // Handle submit function for sending reset email
   const handleSubmit = async () => {
     if (email.length === 0) {
       toast.error("Error! Please enter an email address.");
@@ -55,6 +65,7 @@ export default function Reset() {
     }
   };
 
+  // Handle change function for resetting password
   const handleChange = async () => {
     // Check if any field is empty
     if (
@@ -92,6 +103,7 @@ export default function Reset() {
     };
 
     try {
+      // Send a POST request to the server with the reset password data
       const response = await Post("/api/resetpassword", data);
 
       toast.success("Password changed successfully!");
@@ -100,6 +112,7 @@ export default function Reset() {
 
       return <Navigate to="/" replace={true} />;
     } catch (error) {
+      // Log an error if the request fails
       toast.error("Error! Could not reset password.");
       console.error(error);
     }

@@ -10,6 +10,11 @@ import Form from "../components/Form";
 import InputBox from "../components/InputBox";
 import InputButton from "../components/InputButton";
 
+/**
+ * Renders the login page.
+ *
+ * @returns {JSX.Element} The login page component.
+ */
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -47,11 +52,9 @@ function Login() {
         }, 2000);
         return;
       }
-
-      toast.success("Login successful! Redirecting to profile.");
-
+      toast.success("Login successful!");
       setTimeout(() => {
-        navigate("/profile", { replace: true });
+        navigate("/", { replace: true });
       }, 2000);
     } catch (error) {
       console.error(`Error in: ${error}`);

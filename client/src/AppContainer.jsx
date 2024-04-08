@@ -42,14 +42,16 @@ export default function AppContainer() {
               <Route path="balance" element={<Balance />} />
               <Route path="topup" element={<Topup />} />
               <Route path="changepassword" element={<ChangePW />} />
+              <Route path="*" element={<Errors />} />
             </Route>
             <Route path="admin" element={<AdminPage />}>
               <Route index exact element={<ConfigCourts />} />
               <Route path="updatecourts" element={<ConfigCourts />} />
               <Route path="addnewcourt" element={<AddNewCourt />} />
+              <Route path="*" element={<Errors />} />
             </Route>
           </Route>
-          <Route element={<Errors />} />
+          <Route path="*" element={<Errors />} />
         </Routes>
       </AuthProvider>
     </UserProvider>

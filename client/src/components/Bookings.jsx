@@ -1,4 +1,12 @@
+/**
+ * Renders the Bookings component.
+ * This component displays the upcoming and previous bookings in a table format.
+ *
+ * @returns {JSX.Element} The Bookings component.
+ */
 const Bookings = () => {
+  // Mock data for upcoming and previous bookings
+  // Needs to be replaced with actual data fetched from the server
   const upcomingBookings = [
     {
       id: 1,
@@ -19,7 +27,10 @@ const Bookings = () => {
   ];
   return (
     <main className="profile">
+      {/* Header */}
       <div className="header-title">Bookings</div>
+
+      {/* Upcoming Bookings */}
       <section>
         <h4>Upcoming Bookings</h4>
         <table className="bookings-table">
@@ -32,30 +43,8 @@ const Bookings = () => {
             </tr>
           </thead>
           <tbody>
+            {/* Map through upcomingBookings array and render each booking */}
             {upcomingBookings.map((booking) => (
-              <tr key={booking.id}>
-                <td>{booking.date}</td>
-                <td>{booking.time}</td>
-                <td>{booking.court}</td>
-                <td>{booking.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
-      <section>
-        <h4>Previous Bookings</h4>
-        <table className="bookings-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Court</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {previousBookings.map((booking) => (
               <tr key={booking.id}>
                 <td>{booking.date}</td>
                 <td>{booking.time}</td>
