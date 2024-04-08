@@ -1,5 +1,3 @@
-import "../styles/admin.css";
-
 import { useState} from "react";
 
 function ConfigCourts() {
@@ -26,9 +24,10 @@ function ConfigCourts() {
     }
 
   return (
+    <main className="profile">
     <div>
         <h1>Configure Courts</h1>
-        <div className="admin-subtitle">Select Court</div>
+        <h4>Select Court</h4>
         <form>
         <div >
               <select className="inputBox" onChange={(e) => setCourt(e.target.value)}>
@@ -38,7 +37,7 @@ function ConfigCourts() {
                 <option value="court3">Court 3</option>
               </select>
             </div>
-        <div className="admin-subtitle">Edit details</div>
+        <h4>Edit details</h4>
         <input type="text" className="inputBox" placeholder="Court size" onChange={(e) => setSize(e.target.value)}/>
         <br></br>
         <br></br>
@@ -50,6 +49,7 @@ function ConfigCourts() {
             </button>
         </form>
     </div>
+    </main>
   );
 }
 

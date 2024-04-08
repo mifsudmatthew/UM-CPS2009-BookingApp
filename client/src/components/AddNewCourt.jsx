@@ -30,7 +30,8 @@ function AddNewCourt() {
     }
 
     return (
-        <div className={"mainContainer"}r>
+        <main className="profile">
+        <div>
             <ToastContainer />
             <h1>Add New Court</h1>
             <form>
@@ -55,6 +56,7 @@ function AddNewCourt() {
                 </button>
             </form>
         </div>
+        </main>
     );
 
 }
