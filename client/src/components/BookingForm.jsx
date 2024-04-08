@@ -5,6 +5,10 @@ import "../styles/bookingform.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NotificationContext from '../context/NavbarContext';
+import { Navigate } from "react-router-dom";
+
+import { useUser } from "../context/User";
+import {useAuth} from "../context/Auth";
 
 /**
  * Renders a form for booking a tennis court.
@@ -17,6 +21,13 @@ function BookingForm() {
   const [hour, setHour] = useState(""); // State variable to store the selected hour
   const [court, setCourt] = useState(""); // State variable to store the selected court
   const [courts, setCourts] = useState([]); // State variable to store the available courts
+  // Check if the user is an admin based on token
+  const {user, setUser} = useUser();
+  const { token, setToken } = useAuth();
+  
+  if (user.admin || token === "") {
+      return <Navigate to="/" replace={true} />;
+  }
 
   // Context for notifications
   const { addSuccessfulBooking } = useContext(NotificationContext);
