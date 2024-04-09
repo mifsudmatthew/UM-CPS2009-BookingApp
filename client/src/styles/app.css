@@ -40,7 +40,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('../assets/login_reg_background.jpg');
+  background-image: url('../assets/login_reg_background.webp');
   background-size: cover; 
   height: 60rem;
 }
