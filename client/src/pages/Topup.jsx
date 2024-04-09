@@ -15,7 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
  * @returns {JSX.Element} The Topup page component.
  */
 function Topup() {
-  const [amount, setAmount] = useState(""); // Initialize the amount state
+  const [amount, setAmount] = useState(0); // Initialize the amount state
   const location = useLocation();
   const session_id = new URLSearchParams(location.search).get("session_id");
 

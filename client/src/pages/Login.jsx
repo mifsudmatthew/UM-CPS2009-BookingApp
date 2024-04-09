@@ -75,7 +75,7 @@ function Login() {
           type="email"
           value={email}
           placeholder="name@example.com"
-          onChange={setEmail}
+          onChange={(event) => setEmail(event.target.value)}
           required={true}
         />
         <br />
@@ -85,7 +85,7 @@ function Login() {
           type="password"
           value={password}
           placeholder="password"
-          onChange={setPassword}
+          onChange={(event) => setPassword(event.target.value)}
           required={true}
         />
         <Link to="/reset" className="forgot-password">
