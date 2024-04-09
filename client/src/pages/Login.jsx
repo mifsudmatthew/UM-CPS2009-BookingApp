@@ -92,7 +92,7 @@ function Login() {
           Forgot password?
         </Link>
         <br />
-        <InputButton label="login" type="submit" onClick={handleSubmit} />
+        <InputButton label="Login" type="submit" onClick={handleSubmit} />
         <br />
         <div className="signup">
           Not a member?{" "}
