@@ -42,7 +42,7 @@ body {
   justify-content: center;
   background-image: url('../assets/login_reg_background.jpg');
   background-size: cover; 
-  height: 70vh;
+  height: 60rem;
 }
 
 .innerContainer {
