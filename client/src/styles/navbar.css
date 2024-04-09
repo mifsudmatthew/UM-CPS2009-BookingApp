@@ -1,4 +1,8 @@
-
+.nav{
+  align-items: center;
+  align-content: center;
+  max-height: 4rem;
+}
 .container {
   margin: 0 auto;
   padding-top: 2px;
@@ -15,41 +19,53 @@
   text-align: center; 
   font-family: "DM Serif Display", serif;
   width: 802;
-  height: 64;
+  height: 4rem;
 }
 
 .navbar-title a {
-  font-size: 250%;
+  font-size: 260%;
   font-weight: bold;
   color: black; 
   text-align: center;
   text-decoration: none;
+  margin: 0% 5%;
 }
 
 .navbar-balance{
+  align-items: center;
+  display: inline-flex;
+  flex-direction: row;
   background-color: #a0c982;
-  font-size: 110%;
+  font-size: 140%;
   font-weight: bold;
   color: black;
   padding: 0.5rem;
   font-family: Roboto, sans-serif;
   border-radius: 2rem;
-  margin: 0 3rem 0 2rem;
+  margin: 5%;
   box-shadow: 0 5px 6px rgba(0, 0, 0, 0.2);
 }
-
+.wallet{
+  height: 2rem;
+  padding-right: 1rem;
+}
+.bell{
+  height: 2rem;
+  margin: 0 5%;
+}
 .navbar-logo, .menu-icon {
   flex-shrink: 0; 
 }
 
 .menu-icon {
-  padding-right: 30px;
+  padding-right: 3%;
   align-items: center;
 }
 
 .menu-icon img {
-  max-width: 30px;
-  height: auto;
+  min-width: 2rem;
+  max-height: 3rem;
+  min-height: 2rem;
 }
 
 .navbar-logo {
@@ -57,9 +73,9 @@
 }
 
 .navbar-logo img {
-  padding-left: 20px;
-  max-width: 85px; 
-  height: auto;
+  margin: 0 5%;
+  max-width: auto; 
+  height: 4rem;
 }
 
 .navbar {
@@ -114,11 +130,7 @@
 
 @media (max-width: 550px) {
   .navbar {
-    height: 55px;
-  }
-
-  .navbar-logo img {
-    max-width: 50px;
+    height: 3rem;
   }
 
   .navbar-title a{
