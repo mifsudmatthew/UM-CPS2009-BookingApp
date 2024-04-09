@@ -26,7 +26,8 @@ function Login() {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   // Send the login details to the server
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     // Check if the email and password fields are empty
     if (!email || !password) {
       toast.error("Please fill all fields.");
@@ -65,7 +66,7 @@ function Login() {
   return (
     <div className="mainContainer">
       <ToastContainer />
-      <Form classname="innerContainer" onSubmit={handleSubmit}>
+      <Form>
         <div className={"titleContainer"}>Login</div>
         <br />
         <InputBox
@@ -90,15 +91,16 @@ function Login() {
         <Link to="/reset" className="forgot-password">
           Forgot password?
         </Link>
+        <br />
+        <InputButton label="login" type="submit" onClick={handleSubmit} />
+        <br />
+        <div className="signup">
+          Not a member?{" "}
+          <Link to="/register" className="signup-link">
+            Sign up
+          </Link>
+        </div>
       </Form>
-      <InputButton label="login" type="submit" />
-      <br />
-      <div className="signup">
-        Not a member?{" "}
-        <Link to="/register" className="signup-link">
-          Sign up
-        </Link>
-      </div>
     </div>
   );
 }

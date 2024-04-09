@@ -16,7 +16,8 @@ const AccountDetails = () => {
   const [name, setName] = useState(user.name || "");
   const [email, setEmail] = useState(user.email || "");
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     setUser({ name, email, ...user });
   };
 
@@ -30,8 +31,8 @@ const AccountDetails = () => {
 
   return (
     <main className="profile">
-      <h2 className="header-title">Profile</h2>
-      <Form onSubmit={handleSubmit}>
+      <div className="header-title">Profile</div>
+      <Form>
         <InputBox
           id="AccountDetailsName"
           label="Name"
@@ -49,7 +50,7 @@ const AccountDetails = () => {
           onChange={handleEmail}
         />
         <br />
-        <InputButton type="submit" label="Save" />
+        <InputButton type="submit" label="Save" onClick={handleSubmit} />
       </Form>
     </main>
   );

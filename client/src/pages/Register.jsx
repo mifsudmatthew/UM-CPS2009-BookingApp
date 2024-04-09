@@ -33,7 +33,8 @@ function Register() {
   // Regular expression for email validation
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     if (!email || !password || !name) {
       toast.error("Please fill all fields."); // Displays an error toast if any of the required fields are empty
       return;

@@ -1,13 +1,15 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-const InputButton = ({ label, type, classname, onClick, colour }) => {
+const InputButton = ({ label, type, classname, onClick, color }) => {
   const [isClicked, setIsClicked] = useState(false);
 
-  const handleClick = () => {
+  const handleClick = (event) => {
     setIsClicked(true);
     if (onClick) {
-      onClick();
+      onClick(event);
+    } else {
+      console.log("This button doesn't have a function attached on click");
     }
 
     // Reset the button state after 2 seconds
@@ -23,7 +25,7 @@ const InputButton = ({ label, type, classname, onClick, colour }) => {
       onClick={handleClick}
       disabled={isClicked}
       style={{
-        backgroundColor: isClicked ? { colour } : "",
+        backgroundColor: isClicked ? color : "",
         cursor: isClicked ? "not-allowed" : "pointer",
       }}>
       {label}
@@ -33,16 +35,16 @@ const InputButton = ({ label, type, classname, onClick, colour }) => {
 
 InputButton.propTypes = {
   label: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(["button", "submit", "reset"]).isRequired,
-  classname: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
-  colour: PropTypes.string.isRequired,
+  type: PropTypes.oneOf(["button", "submit", "reset"]),
+  classname: PropTypes.string,
+  onClick: PropTypes.func,
+  color: PropTypes.string,
 };
 
 InputButton.defaultProps = {
   type: "button",
   classname: "inputButton",
-  colour: "#CCCCCC",
+  color: "#CCCCCC",
 };
 
 export default InputButton;
