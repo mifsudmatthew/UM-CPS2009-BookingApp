@@ -3,6 +3,7 @@ import { Outlet, Navigate } from "react-router-dom";
 import ProfileSidebar from "../components/ProfileSidebar";
 import { useUser } from "../context/User";
 import { useAuth } from "../context/Auth";
+import { useEffect } from "react";
 
 /**
  * Renders the profile page.
