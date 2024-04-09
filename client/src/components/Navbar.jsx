@@ -53,18 +53,28 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="container">
+
+        {/* ---------------------- Logo ------------------------------- */}
         <div className="navbar-logo">
           <img src={logo} alt="logo" />
         </div>
+        
+        {/* ---------------------- Title ------------------------------ */}
+        <div className="navbar-title">
+          <NavLink to="/">ServeSpot</NavLink>
+        </div>
+        
+        {/* ---------------------- Balance ---------------------------- */}
         {(!user.admin && token !== "") ? (
             <div className="navbar-balance">
               <Wallet2 className="wallet"> : </Wallet2>
               {user.balance}
             </div>
-          ) : null}
-        <div className="navbar-title">
-          <NavLink to="/">ServeSpot</NavLink>
-        </div>
+          ) 
+          : null
+        }
+        
+        {/* ---------------------- Bell ---------------------------- */}
         <Popup // Add a popup to display the notification panel
           trigger={
             <div style={{ cursor: "pointer" }} onClick={handleBellClick}>
@@ -75,9 +85,18 @@ function Navbar() {
           on="click">
           <NotificationPanel />
         </Popup>
+
+
+        {/* ---------------------- Menu - icon ---------------------------- */}
         <div className="menu-icon" onClick={handleShowNavbar}>
           <img src={hamburger} alt="hamburger" />
         </div>
+        
+
+        
+        
+
+
         <div className={`nav-elements ${showNavbar ? "active" : ""}`}>
           <ul>
             <li>
