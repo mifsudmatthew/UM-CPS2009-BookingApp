@@ -42,14 +42,16 @@ body {
   justify-content: center;
   background-image: url('../assets/login_reg_background.webp');
   background-size: cover; 
-  height: 100vmin;
+  height: 60rem;
 }
 
 .innerContainer {
   display: flex;
   flex-direction: column;
+  margin-top: 1vw;
+  margin-bottom: 1vw;
   background-color: #D8E7CB;
-  padding: 40px;
+  padding: 2vw;
   border-radius: 40px;
   align-items: center;
   justify-content: center;
