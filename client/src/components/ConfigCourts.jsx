@@ -30,7 +30,8 @@ function ConfigCourts() {
         body: JSON.stringify(courtData),
       });
       console.log(response);
-    } catch (error) { // Log an error if the request fails
+    } catch (error) {
+      // Log an error if the request fails
       console.error("Error submitting booking: ", error);
     }
   };

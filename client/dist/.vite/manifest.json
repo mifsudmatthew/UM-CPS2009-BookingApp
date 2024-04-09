@@ -1,13 +1,22 @@
 {
   "index.html": {
+<<<<<<< HEAD
     "file": "assets/index-J1I_XUd7.js",
+=======
+    "file": "assets/index-zoTKHydh.js",
+    "name": "index",
+>>>>>>> d0925ba033a6cce394210f40009d0531f3cb47b2
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
       "node_modules/workbox-window/build/workbox-window.prod.es5.mjs"
     ],
     "css": [
+<<<<<<< HEAD
       "assets/index-QrKUo57B.css"
+=======
+      "assets/index-EVO3bGws.css"
+>>>>>>> d0925ba033a6cce394210f40009d0531f3cb47b2
     ],
     "assets": [
       "assets/grass-court-Ch3CFGZv.webp",
@@ -17,12 +26,14 @@
       "assets/default-pp-CgVj1ebl.jpg",
       "assets/logo-CuQNDwzK.png",
       "assets/bookingform-B4mP9RhM.jpg",
+      "assets/sad_tennis-CPNn-8Mr.png",
       "assets/login_reg_background-BqW03Y6F.jpg",
       "assets/banner-D_O1PRSu.jpg"
     ]
   },
   "node_modules/workbox-window/build/workbox-window.prod.es5.mjs": {
     "file": "assets/workbox-window.prod.es5-DFjpnwFp.js",
+    "name": "workbox-window.prod.es5",
     "src": "node_modules/workbox-window/build/workbox-window.prod.es5.mjs",
     "isDynamicEntry": true
   },
@@ -65,5 +76,9 @@
   "src/assets/racket.png": {
     "file": "assets/racket-Dl6xEiXo.png",
     "src": "src/assets/racket.png"
+  },
+  "src/assets/sad_tennis.png": {
+    "file": "assets/sad_tennis-CPNn-8Mr.png",
+    "src": "src/assets/sad_tennis.png"
   }
 }

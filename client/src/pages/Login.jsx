@@ -1,12 +1,14 @@
+import "react-toastify/dist/ReactToastify.css";
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Post } from "../utils/ApiFunctions";
-
+import { ToastContainer, toast } from "react-toastify";
 import { useAuth } from "../context/Auth";
 import { useUser } from "../context/User";
-
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Post } from "../utils/ApiFunctions";
+import Form from "../components/Form";
+import InputBox from "../components/InputBox";
+import InputButton from "../components/InputButton";
 
 /**
  * Renders the login page.
@@ -17,11 +19,8 @@ function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  const [buttonColor, setButtonColor] = useState(null); // Add state to store button color
-  const [buttonCursor, setButtonCursor] = useState("pointer"); // Add state to store button cursor
-  const { _user, setUser } = useUser();
-  const { _token, setToken } = useAuth();
+  const { setUser } = useUser();
+  const { setToken } = useAuth();
 
   // Regular expression for email validation
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -29,15 +28,6 @@ function Login() {
   // Send the login details to the server
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsButtonDisabled(true); // Disable the button when the form is submitted
-    setButtonCursor("not-allowed"); // Change cursor to not-allowed
-    setButtonColor("#CCCCCC"); // Change button color to visually indicate disabled state
-    setTimeout(() => {
-      setIsButtonDisabled(false);
-      setButtonCursor("pointer"); // Change cursor back to pointer
-      setButtonColor(null); // Re-enable the button after 2 seconds and reset color
-    }, 2000);
-
     // Check if the email and password fields are empty
     if (!email || !password) {
       toast.error("Please fill all fields.");
@@ -52,6 +42,7 @@ function Login() {
     try {
       const response = await Post("/api/login", { email, password });
       const { accessToken, ...user } = response;
+
       setToken(accessToken);
       setUser(user);
 
@@ -72,58 +63,44 @@ function Login() {
     }
   };
 
-  // Form to input login details
   return (
-    <div className={"mainContainer"}>
+    <div className="mainContainer">
       <ToastContainer />
-      <div className="innerContainer">
-        <div className={"titleContainer"}>
-          <div>Login</div>
-        </div>
+      <Form>
+        <div className={"titleContainer"}>Login</div>
         <br />
-        <div className={"inputContainer"}>
-          <label>Email</label>
-          <input
-            placeholder="name@example.com"
-            className={"inputBox"}
-            type="email"
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <br />
-          <label>Password</label>
-          <input
-            placeholder="password"
-            className={"inputBox"}
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <Link to="/reset" className="forgot-password">
-            Forgot password?
-          </Link>
-        </div>
+        <InputBox
+          id="loginEmail"
+          label="Email"
+          type="email"
+          value={email}
+          placeholder="name@example.com"
+          onChange={(event) => setEmail(event.target.value)}
+          required={true}
+        />
         <br />
-        <div className={"inputContainer"}>
-          <input
-            className={"inputButton"}
-            type="button"
-            value={"Log in"}
-            onClick={handleSubmit}
-            disabled={isButtonDisabled} // Add the disabled attribute here
-            style={{
-              backgroundColor: buttonColor,
-              cursor: buttonCursor, // Apply dynamic cursor style
-            }}
-          />
-        </div>
+        <InputBox
+          id="loginPassword"
+          label="Password"
+          type="password"
+          value={password}
+          placeholder="password"
+          onChange={(event) => setPassword(event.target.value)}
+          required={true}
+        />
+        <Link to="/reset" className="forgot-password">
+          Forgot password?
+        </Link>
+        <br />
+        <InputButton label="Login" type="submit" onClick={handleSubmit} />
+        <br />
         <div className="signup">
           Not a member?{" "}
           <Link to="/register" className="signup-link">
             Sign up
           </Link>
         </div>
-      </div>
+      </Form>
     </div>
   );
 }

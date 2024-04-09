@@ -1,13 +1,16 @@
-import { useEffect } from "react";
-import { NavLink, Navigate } from "react-router-dom";
+import { NavLink, useNavigate,  } from "react-router-dom";
 import { defaultProfilePic } from "../components/Icons";
 
 import { useAuth } from "../context/Auth";
 import { useUser } from "../context/User";
+import InputButton from "./InputButton";
 
-function toRoot() {
-  return <Navigate to="/" replace={true} />;
-}
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
+
+// function toRoot() {
+//   return <Navigate to="/" replace={true} />;
+// }
 
 /**
  * Renders the profile sidebar component.
@@ -17,47 +20,60 @@ function toRoot() {
  * @returns {JSX.Element} The profile sidebar component.
  */
 const ProfileSidebar = () => {
-  const { token, setToken } = useAuth(); // Accesses authentication context
+  const { setToken } = useAuth(); // Accesses authentication context
   const { user, setUser } = useUser(); // Accesses user context
-
+  const navigate = useNavigate(); // Navigation hook
   /**
    * Logs the user out by clearing the token and user data,
    * and redirects the user to the root page.
    */
   const logOut = () => {
-    setToken(""); // Clears the authentication token
-    setUser({}); // Clears the user data
-    toRoot(); // Redirects the user to the root page
+    toast.success("Logged out successfully!"); // Displays a success message
+
+    // Profile user validation requires change therefore setToken and setUser should be taken out then.
+    setTimeout(() => {
+      setToken(""); // Clears the authentication token
+      setUser({}); // Clears the user data
+      // navigate("/", { replace: true }); // Redirects the user to the root page
+    }, 2000);
   };
 
   return (
     <aside className="sidebar">
+      <ToastContainer />
       <div className="profile-picture">
         <img src={defaultProfilePic} alt="Profile" className="profile-image" />
       </div>
-      <h3>Hello, {user.name ? user.name : "#Undefined#"}</h3> {/* Displays the user's name or a placeholder if it's undefined */}
+      <h3>Hello, {user.name ? user.name : "#Undefined#"}</h3>{" "}
+      {/* Displays the user's name or a placeholder if it's undefined */}
       <nav>
         <ul>
           <li>
-            <NavLink to="/profile">Profile</NavLink> {/* Navigation link to the user's profile page */}
+            <NavLink to="/profile">Profile</NavLink>{" "}
+            {/* Navigation link to the user's profile page */}
           </li>
           <li>
-            <NavLink to="/profile/bookings">Bookings</NavLink> {/* Navigation link to the user's bookings page */}
+            <NavLink to="/profile/bookings">Bookings</NavLink>{" "}
+            {/* Navigation link to the user's bookings page */}
           </li>
           <li>
-            <NavLink to="/profile/balance">Balance</NavLink> {/* Navigation link to the user's balance page */}
+            <NavLink to="/profile/balance">Balance</NavLink>{" "}
+            {/* Navigation link to the user's balance page */}
           </li>
           <li>
-            <NavLink to="/profile/topup">Top Up</NavLink> {/* Navigation link to the top-up page */}
+            <NavLink to="/profile/topup">Top Up</NavLink>{" "}
+            {/* Navigation link to the top-up page */}
           </li>
           <li>
-            <NavLink to="/booking">Book Court</NavLink> {/* Navigation link to the court booking page */}
+            <NavLink to="/booking">Book Court</NavLink>{" "}
+            {/* Navigation link to the court booking page */}
           </li>
           <li>
-            <NavLink to="/profile/changepassword">Change Password</NavLink> {/* Navigation link to the change password page */}
+            <NavLink to="/profile/changepassword">Change Password</NavLink>{" "}
+            {/* Navigation link to the change password page */}
           </li>
           <li>
-            <button onClick={logOut}>Log Out</button> {/* Log out button */}
+            <InputButton onClick={logOut} label="Log Out" classname={"logoutBtn"}/>{/* Log out button */}
           </li>
         </ul>
       </nav>
