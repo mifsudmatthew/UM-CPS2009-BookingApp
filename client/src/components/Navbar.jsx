@@ -56,9 +56,6 @@ function Navbar() {
         <div className="navbar-logo">
           <img src={logo} alt="logo" />
         </div>
-        <div className="navbar-title">
-          <NavLink to="/">ServeSpot</NavLink>
-        </div>
         <div>
           {/* Conditionally render navbar-balance based on user.admin */}
           {!user.admin && (
@@ -68,6 +65,9 @@ function Navbar() {
               </p>
             </div>
           )}
+        </div>
+        <div className="navbar-title">
+          <NavLink to="/">ServeSpot</NavLink>
         </div>
         <Popup // Add a popup to display the notification panel
           trigger={
