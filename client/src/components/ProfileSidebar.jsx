@@ -1,13 +1,16 @@
-import { NavLink, Navigate } from "react-router-dom";
+import { NavLink, useNavigate,  } from "react-router-dom";
 import { defaultProfilePic } from "../components/Icons";
 
 import { useAuth } from "../context/Auth";
 import { useUser } from "../context/User";
 import InputButton from "./InputButton";
 
-function toRoot() {
-  return <Navigate to="/" replace={true} />;
-}
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
+
+// function toRoot() {
+//   return <Navigate to="/" replace={true} />;
+// }
 
 /**
  * Renders the profile sidebar component.
@@ -19,19 +22,25 @@ function toRoot() {
 const ProfileSidebar = () => {
   const { setToken } = useAuth(); // Accesses authentication context
   const { user, setUser } = useUser(); // Accesses user context
-
+  const navigate = useNavigate(); // Navigation hook
   /**
    * Logs the user out by clearing the token and user data,
    * and redirects the user to the root page.
    */
   const logOut = () => {
-    setToken(""); // Clears the authentication token
-    setUser({}); // Clears the user data
-    toRoot(); // Redirects the user to the root page
+    toast.success("Logged out successfully!"); // Displays a success message
+
+    // Profile user validation requires change therefore setToken and setUser should be taken out then.
+    setTimeout(() => {
+      setToken(""); // Clears the authentication token
+      setUser({}); // Clears the user data
+      // navigate("/", { replace: true }); // Redirects the user to the root page
+    }, 2000);
   };
 
   return (
     <aside className="sidebar">
+      <ToastContainer />
       <div className="profile-picture">
         <img src={defaultProfilePic} alt="Profile" className="profile-image" />
       </div>
