@@ -9,7 +9,7 @@ import indoorCourtImage from "../assets/indoor-court.webp";
 import logo from "../assets/racket.png";
 import hamburger from "../assets/hamburger.png";
 import defaultProfilePic from "../assets/default-pp.jpg";
-
+import money from "../assets/money.png";
 export {
   defaultProfilePic,
   logo,
@@ -22,4 +22,5 @@ export {
   grassCourtImage,
   clayCourtImage,
   indoorCourtImage,
+  money,
 };

@@ -1,13 +1,13 @@
 import { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import Popup from "reactjs-popup";
-import { Bell, BellFill } from "react-bootstrap-icons";
+import { Wallet2, Bell, BellFill } from 'react-bootstrap-icons'; 
 import NotificationContext from "../context/NavbarContext";
 import NotificationPanel from "../components/NotificationPanel";
 
 import "../styles/navbar.css";
 
-import { hamburger, logo } from "../components/Icons";
+import { money, hamburger, logo } from "../components/Icons";
 
 import { useUser } from "../context/User";
 import { useAuth } from "../context/Auth";
@@ -53,35 +53,50 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="container">
+
+        {/* ---------------------- Logo ------------------------------- */}
         <div className="navbar-logo">
           <img src={logo} alt="logo" />
         </div>
-        <div>
-          {/* Conditionally render navbar-balance based on user.admin */}
-          {!user.admin && (
-            <div>
-              <p className="navbar-balance">
-                {token !== "" ? <>€{user.balance}</> : <></>}
-              </p>
-            </div>
-          )}
-        </div>
+        
+        {/* ---------------------- Title ------------------------------ */}
         <div className="navbar-title">
           <NavLink to="/">ServeSpot</NavLink>
         </div>
+        
+        {/* ---------------------- Balance ---------------------------- */}
+        {(!user.admin && token !== "") ? (
+            <div className="navbar-balance">
+              <Wallet2 className="wallet"> : </Wallet2>
+              {user.balance}
+            </div>
+          ) 
+          : null
+        }
+        
+        {/* ---------------------- Bell ---------------------------- */}
         <Popup // Add a popup to display the notification panel
           trigger={
             <div style={{ cursor: "pointer" }} onClick={handleBellClick}>
-              {token && (notification ? <BellFill /> : <Bell />)}
+              {token && (notification ? <BellFill className="bell"/> : <Bell />)}
             </div>
           }
           position="right top"
           on="click">
           <NotificationPanel />
         </Popup>
+
+
+        {/* ---------------------- Menu - icon ---------------------------- */}
         <div className="menu-icon" onClick={handleShowNavbar}>
           <img src={hamburger} alt="hamburger" />
         </div>
+        
+
+        
+        
+
+
         <div className={`nav-elements ${showNavbar ? "active" : ""}`}>
           <ul>
             <li>
