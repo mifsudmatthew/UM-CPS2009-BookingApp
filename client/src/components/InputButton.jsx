@@ -25,7 +25,7 @@ const InputButton = ({ label, type, classname, onClick, color }) => {
       onClick={handleClick}
       disabled={isClicked}
       style={{
-        backgroundColor: isClicked ? color : "",
+        background: isClicked ? color : "",
         cursor: isClicked ? "not-allowed" : "pointer",
       }}>
       {label}

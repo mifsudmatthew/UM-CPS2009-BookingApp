@@ -48,18 +48,6 @@ function AddNewCourt() {
     }
   };
 
-  const handleNameChange = (value) => {
-    setCourtName(value);
-  };
-
-  const handleSizeChange = (value) => {
-    setSize(value);
-  };
-
-  const handlePriceChange = (value) => {
-    setPrice(value);
-  };
-
   return (
     <main className="profile">
       <ToastContainer />
@@ -69,14 +57,14 @@ function AddNewCourt() {
           id="NewCourtsCourtName"
           label="Enter the name of the court"
           placeholder="Court Name"
-          onChange={handleNameChange}
+          onChange={(event) => setCourtName(event.target.value)}
         />
         <br />
         <InputBox
           id="NewCourtsCourtSize"
           label="Enter the size of the court"
           placeholder="Court Size"
-          onChange={handleSizeChange}
+          onChange={(event) => setSize(event.target.value)}
         />
         <br />
         <InputBox
@@ -84,7 +72,7 @@ function AddNewCourt() {
           label="Enter the price of the court"
           type="number"
           placeholder="€Price"
-          onChange={handlePriceChange}
+          onChange={(event) => setPrice(event.target.value)}
         />
         <br />
         <InputButton

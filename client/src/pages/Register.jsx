@@ -86,23 +86,23 @@ function Register() {
         <InputBox
           label="Name & Surname"
           placeholder="name surname"
-          onChange={setName}
+          onChange={(event) => setName(event.target.value)}
           required={true}
         />
         <br />
         <InputBox
           label="Email"
-          onChange={setEmail}
           placeholder="name@example.com"
           type="email"
+          onChange={(event) => setEmail(event.target.value)}
           required={true}
         />
         <br />
         <InputBox
           label="Re-enter Email"
-          onChange={setConfirmEmail}
           placeholder="name@example.com"
           type="email"
+          onChange={(event) => setConfirmEmail(event.target.value)}
           required={true}
         />
         <br />
@@ -110,7 +110,7 @@ function Register() {
           label="Password"
           type="password"
           placeholder="password"
-          onChange={setPassword}
+          onChange={(event) => setPassword(event.target.value)}
           required={true}
         />
         <br />
@@ -118,7 +118,7 @@ function Register() {
           label="Re-enter Password"
           type="password"
           placeholder="password"
-          onChange={setConfirmPassword}
+          onChange={(event) => setConfirmPassword(event.target.value)}
           required={true}
         />
         <br />
