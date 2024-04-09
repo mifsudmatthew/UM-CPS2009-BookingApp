@@ -70,7 +70,7 @@ function ChangePW() {
           placeholder="New Password"
           value={password}
           type="password"
-          onChange={setPassword}
+          onChange={(event) => setPassword(event.target.value)}
         />
         <br />
         <InputBox
@@ -79,14 +79,14 @@ function ChangePW() {
           value={password}
           type="password"
           className="change_inputBox"
-          onChange={setConfirmPassword}
+          onChange={(event) => setConfirmPassword(event.target.value)}
         />
         <br />
         <InputButton
           label="Change Password"
           colour="#3e4a36"
           type="submit"
-          onClick={handleChangePassword}
+          onClick={(event) => handleChangePassword(event.target.value)}
         />
       </Form>
     </main>

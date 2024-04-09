@@ -132,7 +132,7 @@ export default function Reset() {
           type="email"
           placeholder="Email"
           value={email}
-          onChange={setEmail}
+          onChange={(event) => setEmail(event.target.value)}
         />
         <br />
         <InputButton
@@ -145,21 +145,21 @@ export default function Reset() {
           type="password"
           placeholder="Password"
           value={password}
-          onChange={setPassword}
+          onChange={(event) => setPassword(event.target.value)}
         />
         <br />
         <InputBox
           type="password"
           placeholder="Confirm Password"
           value={confirmPassword}
-          onChange={setConfirmPassword}
+          onChange={(event) => setConfirmPassword(event.target.value)}
         />
         <br />
         <InputBox
           placeholder="PIN (4 digits)"
           value={pin}
-          onChange={(value) => {
-            const inputPin = value.replace(/\D/g, "");
+          onChange={(event) => {
+            const inputPin = event.target.value.replace(/\D/g, "");
             setPin(inputPin);
           }}
         />

@@ -21,14 +21,6 @@ const AccountDetails = () => {
     setUser({ name, email, ...user });
   };
 
-  const handleName = (value) => {
-    setName(value);
-  };
-
-  const handleEmail = (value) => {
-    setEmail(value);
-  };
-
   return (
     <main className="profile">
       <div className="header-title">Profile</div>
@@ -38,7 +30,7 @@ const AccountDetails = () => {
           label="Name"
           value={name}
           placeholder="Name and Surname"
-          onChange={handleName}
+          onChange={(event) => setName(event.target.value)}
         />
         <br />
         <InputBox
@@ -47,7 +39,7 @@ const AccountDetails = () => {
           type="email"
           value={email}
           placeholder="bob@gmail.com"
-          onChange={handleEmail}
+          onChange={(event) => setEmail(event.target.value)}
         />
         <br />
         <InputButton type="submit" label="Save" onClick={handleSubmit} />
