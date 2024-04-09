@@ -3,6 +3,7 @@ import { defaultProfilePic } from "../components/Icons";
 
 import { useAuth } from "../context/Auth";
 import { useUser } from "../context/User";
+import InputButton from "./InputButton";
 
 function toRoot() {
   return <Navigate to="/" replace={true} />;
@@ -63,7 +64,7 @@ const ProfileSidebar = () => {
             {/* Navigation link to the change password page */}
           </li>
           <li>
-            <button onClick={logOut}>Log Out</button> {/* Log out button */}
+            <InputButton onClick={logOut} label="Log Out" classname={"logoutBtn"}/>{/* Log out button */}
           </li>
         </ul>
       </nav>
