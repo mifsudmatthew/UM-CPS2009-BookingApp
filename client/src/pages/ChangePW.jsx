@@ -86,7 +86,7 @@ function ChangePW() {
           label="Change Password"
           colour="#3e4a36"
           type="submit"
-          onClick={(event) => handleChangePassword(event.target.value)}
+          onClick={handleChangePassword}
         />
       </Form>
     </main>
