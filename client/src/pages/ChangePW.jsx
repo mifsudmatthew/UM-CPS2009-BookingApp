@@ -31,7 +31,8 @@ function ChangePW() {
     [password, confirmPassword]
   );
 
-  const handleChangePassword = async () => {
+  const handleChangePassword = async (event) => {
+    event.preventDefault();
     if (!password.trim() || !confirmPassword.trim()) {
       toast.error("Please fill all fields."); // Display error toast if any field is empty
       return;
@@ -61,8 +62,8 @@ function ChangePW() {
   return (
     <main className="profile">
       <ToastContainer />
-      <h2 className="header-title">Change Password</h2>
-      <Form onSubmit={handleChangePassword}>
+      <div className="header-title">Change Password</div>
+      <Form>
         <InputBox
           label="New Password"
           className="change_inputBox"
@@ -81,7 +82,12 @@ function ChangePW() {
           onChange={setConfirmPassword}
         />
         <br />
-        <InputButton label="Change Password" colour="#3e4a36" type="submit" />
+        <InputButton
+          label="Change Password"
+          colour="#3e4a36"
+          type="submit"
+          onClick={handleChangePassword}
+        />
       </Form>
     </main>
   );

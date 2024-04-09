@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Post } from "../utils/ApiFunctions";
 
 import Form from "../components/Form";
@@ -14,10 +14,8 @@ import "react-toastify/dist/ReactToastify.css";
  *
  * @returns {JSX.Element} The Topup page component.
  */
-
 function Topup() {
   const [amount, setAmount] = useState(""); // Initialize the amount state
-  const history = useHistory();
   const location = useLocation();
   const session_id = new URLSearchParams(location.search).get("session_id");
 
@@ -45,6 +43,7 @@ function Topup() {
 
     fetchData();
   }, [session_id]);
+
   /**
    * Handles the form submission.
    * Prevents the default form submission behavior.
@@ -54,7 +53,8 @@ function Topup() {
    * Logs the response or logs an error if the request fails.
    * @param {Event} event - The form submission event.
    */
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
       const numericAmount = parseFloat(amount);
       if (amount.trim() === "") {
@@ -83,8 +83,7 @@ function Topup() {
       console.log(data);
 
       if (data.url) {
-        // window.location.href = data.url; // old line
-        history.push(data.url); // GPT said this might be better
+        window.location.href = data.url;
       }
     } catch (error) {
       // Log an error if the request fails
@@ -94,19 +93,18 @@ function Topup() {
 
   return (
     <main className="profile">
-      <h2 className="header-title">Top Up</h2>
-      <Form onSubmit={handleSubmit} buttonLabel="Top Up">
-        {" "}
+      <div className="header-title">Top Up</div>
+      <Form>
         {/* Form to top up the user's account */}
         <InputBox
           label="Amount"
           type="number"
           value={amount}
           placeholder="€1000"
-          onChange={setAmount}
+          onChange={(event) => setAmount(event.target.value)}
         />
         <br />
-        <InputButton label="Top Up" type="submit" />
+        <InputButton label="Top Up" type="submit" onClick={handleSubmit} />
       </Form>
     </main>
   );

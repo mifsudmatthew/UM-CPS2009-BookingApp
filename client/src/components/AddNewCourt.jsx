@@ -17,7 +17,8 @@ function AddNewCourt() {
   const [size, setSize] = useState("");
 
   // Function to handle form submission
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
       const courtData = { courtName, price, size };
       const response = await Post("/api/configCourts", courtData);
@@ -62,8 +63,8 @@ function AddNewCourt() {
   return (
     <main className="profile">
       <ToastContainer />
-      <h2>Add New Court</h2>
-      <Form className="inputContainer" onSubmit={handleSubmit}>
+      <div className="header-title">Add New Court</div>
+      <Form>
         <InputBox
           id="NewCourtsCourtName"
           label="Enter the name of the court"
@@ -90,6 +91,7 @@ function AddNewCourt() {
           className="booking-button"
           type="submit"
           label="Add Court"
+          onClick={handleSubmit}
         />
       </Form>
     </main>

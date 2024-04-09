@@ -1,4 +1,5 @@
-import { createContext, useState } from 'react';
+import { createContext, useState } from "react";
+import PropTypes from "prop-types";
 
 // Create a new context called NotificationContext
 const NotificationContext = createContext();
@@ -24,7 +25,7 @@ export const NotificationProvider = ({ children }) => {
    */
   const addSuccessfulBooking = (booking) => {
     // Update the successfulBookings state by adding the new booking
-    setSuccessfulBookings(prevBookings => [...prevBookings, booking]);
+    setSuccessfulBookings((prevBookings) => [...prevBookings, booking]);
   };
 
   // Render the NotificationProvider component with the context value and children components
@@ -35,11 +36,14 @@ export const NotificationProvider = ({ children }) => {
         setNotification,
         successfulBookings,
         addSuccessfulBooking,
-      }}
-    >
+      }}>
       {children}
     </NotificationContext.Provider>
   );
+};
+
+NotificationProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 // Export the NotificationContext as the default export of the module

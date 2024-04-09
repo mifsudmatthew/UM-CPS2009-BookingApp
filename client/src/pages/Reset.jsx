@@ -66,7 +66,8 @@ export default function Reset() {
   };
 
   // Handle change function for resetting password
-  const handleChange = async () => {
+  const handleChange = async (event) => {
+    event.preventDefault();
     // Check if any field is empty
     if (
       email.length === 0 ||
@@ -121,8 +122,8 @@ export default function Reset() {
   return (
     <div className={"mainContainerReset"}>
       <ToastContainer />
-      <h2>Reset</h2>
-      <Form classname="innerContainer" onSubmit={handleSubmit}>
+      <div className="header-title">Reset</div>
+      <Form classname="innerContainer">
         <div className={"inputContainer"}>
           <br />
           <br />
@@ -136,7 +137,6 @@ export default function Reset() {
         <br />
         <InputButton
           label="RESET PASSWORD"
-          type="submit"
           colour="#3e4a36"
           onClick={handleSubmit}
         />
@@ -173,7 +173,6 @@ export default function Reset() {
         <br />
         <InputButton
           label="Change Password"
-          type="submit"
           colour="#3e4a36"
           onClick={handleChange}
         />

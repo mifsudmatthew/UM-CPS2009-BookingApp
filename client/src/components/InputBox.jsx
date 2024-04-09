@@ -44,7 +44,7 @@ InputBox.defaultProps = {
   classname: "",
   type: "text",
   placeholder: "",
-  value: "",
+  value: null,
   disabled: false,
   required: false,
 };

@@ -1,6 +1,5 @@
 // Errors.jsx
-import React from 'react';
-import errorImage from '../assets/sad_tennis.png';
+import errorImage from "../assets/sad_tennis.png";
 
 function Errors() {
   return (

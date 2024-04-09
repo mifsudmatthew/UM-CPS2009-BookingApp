@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
-import Popup from 'reactjs-popup';
-import { Bell, BellFill } from 'react-bootstrap-icons'; 
-import NotificationContext from '../context/NavbarContext';
-import NotificationPanel from '../components/NotificationPanel';
+import Popup from "reactjs-popup";
+import { Bell, BellFill } from "react-bootstrap-icons";
+import NotificationContext from "../context/NavbarContext";
+import NotificationPanel from "../components/NotificationPanel";
 
 import "../styles/navbar.css";
 
@@ -28,8 +28,8 @@ function Navbar() {
   const [showNotificationPanel, setShowNotificationPanel] = useState(false); // Controls the visibility of the notification panel
 
   // Custom hooks
-  const { token, setToken } = useAuth(); // Authentication hook for managing user token
-  const { user, setUser } = useUser(); // User hook for managing user data
+  const { token } = useAuth(); // Authentication hook for managing user token
+  const { user } = useUser(); // User hook for managing user data
 
   useEffect(() => {
     // Effect to be triggered when token or user changes
@@ -47,21 +47,20 @@ function Navbar() {
    * Toggles the visibility of the notification panel.
    */
   const handleBellClick = () => {
-    setShowNotificationPanel(!showNotificationPanel); 
+    setShowNotificationPanel(!showNotificationPanel);
   };
 
   return (
-    <>
-      <nav className="navbar">
-        <div className="container">
-          <div className="navbar-logo">
-            <img src={logo} alt="logo" />
-          </div>
-          <div className="navbar-title">
-            <NavLink to="/">ServeSpot</NavLink>
-          </div>
-          <div>
-            {/* Conditionally render navbar-balance based on user.admin */}
+    <nav className="navbar">
+      <div className="container">
+        <div className="navbar-logo">
+          <img src={logo} alt="logo" />
+        </div>
+        <div className="navbar-title">
+          <NavLink to="/">ServeSpot</NavLink>
+        </div>
+        <div>
+          {/* Conditionally render navbar-balance based on user.admin */}
           {!user.admin && (
             <div>
               <p className="navbar-balance">
@@ -69,56 +68,53 @@ function Navbar() {
               </p>
             </div>
           )}
-          </div>
-          <Popup // Add a popup to display the notification panel
+        </div>
+        <Popup // Add a popup to display the notification panel
           trigger={
-            <div style={{ cursor: 'pointer' }} onClick={handleBellClick}>
+            <div style={{ cursor: "pointer" }} onClick={handleBellClick}>
               {token && (notification ? <BellFill /> : <Bell />)}
             </div>
           }
           position="right top"
-          on="click"
-          >   
-            <NotificationPanel />
-          </Popup>
-          <div className="menu-icon" onClick={handleShowNavbar}>
-            <img src={hamburger} alt="hamburger" />
-          </div>
-          <div className={`nav-elements ${showNavbar ? "active" : ""}`}>
-            <ul>
-              <li>
-                <NavLink to="/">Home</NavLink>
-              </li>
-              {token == "" ? (
-                <>
-                  <li>
-                    <NavLink to="/login">Login</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/register">Register</NavLink>
-                  </li>
-                </>
-              ) : (
-                <>
-                  {!user.admin && (
-                    <>
+          on="click">
+          <NotificationPanel />
+        </Popup>
+        <div className="menu-icon" onClick={handleShowNavbar}>
+          <img src={hamburger} alt="hamburger" />
+        </div>
+        <div className={`nav-elements ${showNavbar ? "active" : ""}`}>
+          <ul>
+            <li>
+              <NavLink to="/">Home</NavLink>
+            </li>
+            {token == "" ? (
+              <>
+                <li>
+                  <NavLink to="/login">Login</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/register">Register</NavLink>
+                </li>
+              </>
+            ) : (
+              <>
+                {!user.admin && (
+                  <>
                     <li>
                       <NavLink to="/profile">Profile</NavLink>
                     </li>
                     <li>
-                    <NavLink to="/profile/topup">Top Up</NavLink>
-                  </li>
-                    </>
-                  )}
-                </>
-              )}
-            </ul>
-          </div>
+                      <NavLink to="/profile/topup">Top Up</NavLink>
+                    </li>
+                  </>
+                )}
+              </>
+            )}
+          </ul>
         </div>
-      </nav>
-    </>
+      </div>
+    </nav>
   );
 }
 
 export default Navbar;
-
