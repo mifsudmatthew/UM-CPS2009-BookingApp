@@ -9,7 +9,7 @@
   background-image: url('../assets/banner.jpg');
   background-size: contain;
   background-position: center;
-  background-repeat: no-repeat;
+  background-repeat: repeat;
   overflow: hidden
   }
 

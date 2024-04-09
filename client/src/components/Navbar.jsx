@@ -1,12 +1,11 @@
 import { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { Bell, BellFill } from 'react-bootstrap-icons'; 
+import { Wallet2, Bell, BellFill } from 'react-bootstrap-icons'; 
 import NotificationContext from '../context/NavbarContext';
 import NotificationPanel from '../components/NotificationPanel';
-
 import "../styles/navbar.css";
 
-import { hamburger, logo } from "../components/Icons";
+import { money, hamburger, logo } from "../components/Icons";
 
 import { useUser } from "../context/User";
 import { useAuth } from "../context/Auth";
@@ -59,14 +58,14 @@ function Navbar() {
           <div className="navbar-title">
             <NavLink to="/">ServeSpot</NavLink>
           </div>
-          <div>
-            {/* Conditionally render navbar-balance based on user.admin */}
           {(!user.admin && token !== "") ? (
-                <p className="navbar-balance"> {"€ "+user.balance}</p>
-          ): <></>}
-          </div>
+            <div className="navbar-balance">
+              <Wallet2 className="wallet"> : </Wallet2>
+              {user.balance}
+            </div>
+          ) : null}
           <div onClick={handleBellClick}>
-            {token && (notification ? <BellFill /> : <Bell />)}
+            {token && (notification ? <BellFill className = "bell"/> : <Bell />)}
           </div>
           {showNotificationPanel && <NotificationPanel />} {/* Render notification panel */}
           <div className="menu-icon" onClick={handleShowNavbar}>
