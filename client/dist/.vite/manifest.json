@@ -1,11 +1,15 @@
 {
   "index.html": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "file": "assets/index-J1I_XUd7.js",
 =======
     "file": "assets/index-zoTKHydh.js",
     "name": "index",
 >>>>>>> d0925ba033a6cce394210f40009d0531f3cb47b2
+=======
+    "file": "assets/index-CN0kP-PC.js",
+>>>>>>> 5e8ac6e552d3128a506a9186bb5f47e9053f39ad
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
@@ -13,10 +17,14 @@
     ],
     "css": [
 <<<<<<< HEAD
+<<<<<<< HEAD
       "assets/index-QrKUo57B.css"
 =======
       "assets/index-EVO3bGws.css"
 >>>>>>> d0925ba033a6cce394210f40009d0531f3cb47b2
+=======
+      "assets/index-CsOWlM6C.css"
+>>>>>>> 5e8ac6e552d3128a506a9186bb5f47e9053f39ad
     ],
     "assets": [
       "assets/grass-court-Ch3CFGZv.webp",
@@ -27,19 +35,18 @@
       "assets/logo-CuQNDwzK.png",
       "assets/bookingform-B4mP9RhM.jpg",
       "assets/sad_tennis-CPNn-8Mr.png",
-      "assets/login_reg_background-BqW03Y6F.jpg",
-      "assets/banner-D_O1PRSu.jpg"
+      "assets/login_reg_background-CsHHRu0D.webp",
+      "assets/banner-CXv6lYXY.webp"
     ]
   },
   "node_modules/workbox-window/build/workbox-window.prod.es5.mjs": {
     "file": "assets/workbox-window.prod.es5-DFjpnwFp.js",
-    "name": "workbox-window.prod.es5",
     "src": "node_modules/workbox-window/build/workbox-window.prod.es5.mjs",
     "isDynamicEntry": true
   },
-  "src/assets/banner.jpg": {
-    "file": "assets/banner-D_O1PRSu.jpg",
-    "src": "src/assets/banner.jpg"
+  "src/assets/banner.webp": {
+    "file": "assets/banner-CXv6lYXY.webp",
+    "src": "src/assets/banner.webp"
   },
   "src/assets/bookingform.jpg": {
     "file": "assets/bookingform-B4mP9RhM.jpg",
@@ -61,9 +68,9 @@
     "file": "assets/indoor-court-UFsrzs5m.webp",
     "src": "src/assets/indoor-court.webp"
   },
-  "src/assets/login_reg_background.jpg": {
-    "file": "assets/login_reg_background-BqW03Y6F.jpg",
-    "src": "src/assets/login_reg_background.jpg"
+  "src/assets/login_reg_background.webp": {
+    "file": "assets/login_reg_background-CsHHRu0D.webp",
+    "src": "src/assets/login_reg_background.webp"
   },
   "src/assets/logo.png": {
     "file": "assets/logo-CuQNDwzK.png",
