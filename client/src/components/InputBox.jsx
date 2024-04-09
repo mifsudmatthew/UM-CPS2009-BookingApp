@@ -19,7 +19,7 @@ const InputBox = ({
         className={`inputBox ${classname}`}
         type={type}
         value={value}
-        onChange={(event) => onChange(event.target.value)}
+        onChange={(event) => onChange(event)}
         disabled={disabled}
         placeholder={placeholder}
         required={required}
