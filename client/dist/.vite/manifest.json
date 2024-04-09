@@ -1,30 +1,14 @@
 {
   "index.html": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "file": "assets/index-J1I_XUd7.js",
-=======
-    "file": "assets/index-zoTKHydh.js",
+    "file": "assets/index-VK2idApB.js",
     "name": "index",
->>>>>>> d0925ba033a6cce394210f40009d0531f3cb47b2
-=======
-    "file": "assets/index-CN0kP-PC.js",
->>>>>>> 5e8ac6e552d3128a506a9186bb5f47e9053f39ad
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
       "node_modules/workbox-window/build/workbox-window.prod.es5.mjs"
     ],
     "css": [
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "assets/index-QrKUo57B.css"
-=======
-      "assets/index-EVO3bGws.css"
->>>>>>> d0925ba033a6cce394210f40009d0531f3cb47b2
-=======
-      "assets/index-CsOWlM6C.css"
->>>>>>> 5e8ac6e552d3128a506a9186bb5f47e9053f39ad
+      "assets/index-CoaaEAIb.css"
     ],
     "assets": [
       "assets/grass-court-Ch3CFGZv.webp",
@@ -41,6 +25,7 @@
   },
   "node_modules/workbox-window/build/workbox-window.prod.es5.mjs": {
     "file": "assets/workbox-window.prod.es5-DFjpnwFp.js",
+    "name": "workbox-window.prod.es5",
     "src": "node_modules/workbox-window/build/workbox-window.prod.es5.mjs",
     "isDynamicEntry": true
   },
