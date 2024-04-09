@@ -1,13 +1,13 @@
 {
   "index.html": {
-    "file": "assets/index-CN0kP-PC.js",
+    "file": "assets/index-XCol6H5J.js",
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
       "node_modules/workbox-window/build/workbox-window.prod.es5.mjs"
     ],
     "css": [
-      "assets/index-CsOWlM6C.css"
+      "assets/index-Dgn0lotW.css"
     ],
     "assets": [
       "assets/grass-court-Ch3CFGZv.webp",

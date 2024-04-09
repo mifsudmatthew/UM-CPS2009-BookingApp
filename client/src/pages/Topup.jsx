@@ -56,30 +56,21 @@ function Topup() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const numericAmount = parseFloat(amount);
-      if (amount.trim() === "") {
-        // Check if amount is not a number or empty
-        toast.error("Please enter the amount you would like to top-up.");
-        return;
-      } else if (numericAmount < 0) {
-        toast.error("Error! Please enter a positive number.");
-        return;
-      }
 
-      if (amount.trim() === "") {
+      if (amount == 0 || amount == "" || amount == null) {
         // Check if amount is not a number or empty
         toast.error("Please enter the amount you would like to top-up.");
         return;
-      } else if (isNaN(numericAmount)) {
+      } else if (isNaN(amount)) {
         toast.error("Error! Input is not a number, please enter a number.");
         return;
-      } else if (numericAmount < 0) {
+      } else if (amount < 0) {
         toast.error("Error! Please enter a positive number.");
         return;
       }
-      console.log("Amount: ", numericAmount);
+      console.log("Amount: ", amount);
 
-      const data = await Post("/api/topup", { amount: numericAmount });
+      const data = await Post("/api/topup", { amount: amount });
       console.log(data);
 
       if (data.url) {
