@@ -2,6 +2,11 @@ import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Post } from "../utils/ApiFunctions";
 import { ToastContainer, toast } from "react-toastify";
+
+import Form from "../components/Form";
+import InputBox from "../components/InputBox";
+import InputButton from "../components/InputButton";
+
 import "react-toastify/dist/ReactToastify.css";
 
 /**
@@ -16,9 +21,6 @@ function Register() {
   const [password, setPassword] = useState(""); // State variable for password input
   const [confirmPassword, setConfirmPassword] = useState(""); // State variable for confirm password input
   const [confirmEmail, setConfirmEmail] = useState(""); // State variable for confirm email input
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false); // State variable to disable the sign up button
-  const [buttonColor, setButtonColor] = useState(null); // State variable for button color
-  const [buttonCursor, setButtonCursor] = useState("pointer"); // State variable for button cursor
 
   const emailMatch = useMemo(() => {
     return email === confirmEmail; // Checks if email and confirm email match
@@ -33,16 +35,6 @@ function Register() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsButtonDisabled(true);
-    setButtonCursor("not-allowed");
-    setButtonColor("#CCCCCC");
-
-    setTimeout(() => {
-      setIsButtonDisabled(false);
-      setButtonCursor("pointer");
-      setButtonColor(null);
-    }, 2000);
-
     if (!email || !password || !name) {
       toast.error("Please fill all fields."); // Displays an error toast if any of the required fields are empty
       return;
@@ -86,74 +78,52 @@ function Register() {
   return (
     <div className={"mainContainer"}>
       <ToastContainer /> {/* Container for displaying toast messages */}
-      <div className="innerContainer">
-        <div className={"titleContainer"}>
-          <div>Create Account</div> {/* Title for the register page */}
-        </div>
-        <br />
-        <div className={"inputContainer"}>
-          <label>Name & Surname</label> {/* Label for the name input */}
-          <input
-            placeholder="name surname"
-            className={"inputBox"}
-            type="text"
-            onChange={(e) => setName(e.target.value)} // Updates the name state variable on input change
-            required
-          />
-          <br />
-          <label>Email</label> {/* Label for the email input */}
-          <input
-            onChange={(e) => setEmail(e.target.value)} // Updates the email state variable on input change
-            placeholder="name@example.com"
-            className={"inputBox"}
-            type="email"
-            required
-          />
-          <br />
-          <label>Re-enter email</label> {/* Label for the confirm email input */}
-          <input
-            onChange={(e) => setConfirmEmail(e.target.value)} // Updates the confirm email state variable on input change
-            placeholder="name@example.com"
-            className={"inputBox"}
-            type="email"
-            required
-          />
-          <br />
-          <label>Password</label> {/* Label for the password input */}
-          <input
-            onChange={(e) => setPassword(e.target.value)} // Updates the password state variable on input change
-            placeholder="password"
-            className={"inputBox"}
-            type="password"
-            required
-          />
-        </div>
-        <br />
-        <div className={"inputContainer"}>
-          <label>Re-enter Password</label> {/* Label for the confirm password input */}
-          <input
-            onChange={(e) => setConfirmPassword(e.target.value)} // Updates the confirm password state variable on input change
-            placeholder="password"
-            className={"inputBox"}
-            type="password"
-            required
-          />
-        </div>
-        <br />
-        <div className={"inputContainer"}>
-          <input
-            className={"inputButton"}
-            type="button"
-            value={"Sign up"}
-            onClick={handleSubmit} // Calls the handleSubmit function on button click
-            disabled={isButtonDisabled} // Disables the button if isButtonDisabled is true
-            style={{
-              backgroundColor: buttonColor,
-              cursor: buttonCursor,
-            }}
-          />
-        </div>
+      <div className={"titleContainer"}>
+        Create Account {/* Title for the register page */}
       </div>
+      <br />
+      <Form className="innerContainer">
+        <InputBox
+          label="Name & Surname"
+          placeholder="name surname"
+          onChange={(event) => setName(event.target.value)}
+          required={true}
+        />
+        <br />
+        <InputBox
+          label="Email"
+          placeholder="name@example.com"
+          type="email"
+          onChange={(event) => setEmail(event.target.value)}
+          required={true}
+        />
+        <br />
+        <InputBox
+          label="Re-enter Email"
+          placeholder="name@example.com"
+          type="email"
+          onChange={(event) => setConfirmEmail(event.target.value)}
+          required={true}
+        />
+        <br />
+        <InputBox
+          label="Password"
+          type="password"
+          placeholder="password"
+          onChange={(event) => setPassword(event.target.value)}
+          required={true}
+        />
+        <br />
+        <InputBox
+          label="Re-enter Password"
+          type="password"
+          placeholder="password"
+          onChange={(event) => setConfirmPassword(event.target.value)}
+          required={true}
+        />
+        <br />
+        <InputButton label="Sign Up" type="submit" onClick={handleSubmit} />
+      </Form>
     </div>
   );
 }

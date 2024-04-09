@@ -1,15 +1,14 @@
 import { useState, useEffect, useContext } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import { useNavigate, Navigate } from "react-router-dom";
+import { useUser } from "../context/User";
+import { useAuth } from "../context/Auth";
+import NotificationContext from "../context/NavbarContext";
 import { Post } from "../utils/ApiFunctions";
+
 import bookingImage from "../assets/bookingform.jpg";
 import "../styles/bookingform.css";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import NotificationContext from '../context/NavbarContext';
-import { useNavigate,Navigate } from "react-router-dom";
-
-import { useUser } from "../context/User";
-import {useAuth} from "../context/Auth";
-
+import "react-toastify/dist/ReactToastify.css";
 /**
  * Renders a form for booking a tennis court.
  *
@@ -26,12 +25,8 @@ function BookingForm() {
   const [buttonColor, setButtonColor] = useState(null); // Add state to store button color
   const [buttonCursor, setButtonCursor] = useState("pointer"); // Add state to store button cursor
   // Check if the user is an admin based on token
-  const {user, setUser} = useUser();
-  const { token, setToken } = useAuth();
-  
-  if (user.admin || token === "") {
-    return <Navigate to="/" replace={true} />;
-  }
+  const { user } = useUser();
+  const { token } = useAuth();
 
   // Context for notifications
   const { addSuccessfulBooking } = useContext(NotificationContext);
@@ -43,11 +38,13 @@ function BookingForm() {
   useEffect(() => {
     const fetchCourts = async () => {
       const postData = { date, hour };
-      try { // Send a POST request to the server with the selected date and hour
+      try {
+        // Send a POST request to the server with the selected date and hour
         const response = await Post("/api/getAvailableCourts", postData);
         console.log(response);
         setCourts(response);
-      } catch (error) { // Log an error if the request fails
+      } catch (error) {
+        // Log an error if the request fails
         console.error("Error fetching courts: ", error);
       }
     };
@@ -57,13 +54,15 @@ function BookingForm() {
     }
   }, [date, hour]);
 
+  if (user.admin || token === "") {
+    return <Navigate to="/" replace={true} />;
+  }
+
   /**
    * Handles form submission.
    * @param {Event} event - The form submit event.
    */
   const handleSubmit = async (event) => {
-    event.preventDefault();
-
     event.preventDefault();
     setIsButtonDisabled(true); // Disable the button when the form is submitted
     setButtonCursor("not-allowed"); // Change cursor to not-allowed
@@ -80,19 +79,23 @@ function BookingForm() {
       return;
     }
     const booking = { date, hour, court };
-    try { // Send a POST request to the server with the booking data
+    try {
+      // Send a POST request to the server with the booking data
       const response = await Post("/api/booking", booking);
       console.log(response);
       if (response.result !== true) {
         toast.error(response.error);
       } else {
-        toast.success("Court successfully booked! Redirecting to bookings page.");
+        toast.success(
+          "Court successfully booked! Redirecting to bookings page."
+        );
         addSuccessfulBooking(booking); // Add the booking to the list of successful bookings
         setTimeout(() => {
           navigate("/profile/bookings", { replace: true });
         }, 2000);
       }
-    } catch (error) { // Log an error if the request fails
+    } catch (error) {
+      // Log an error if the request fails
       console.error("Error submitting booking: ", error);
     }
   };
@@ -125,7 +128,8 @@ function BookingForm() {
     <div className="booking-container">
       <ToastContainer />
       <img src={bookingImage} alt="Tennis court" className="booking-image" />
-      <div className="booking-form"> {/* Form for booking a tennis court */}
+      <div className="booking-form">
+        {/* Form for booking a tennis court */}
         <div className="booking-form-title">Book a Tennis Court</div>
         <form onSubmit={handleSubmit}>
           <div className="form-section">
@@ -142,11 +146,15 @@ function BookingForm() {
             <label className="booking-form-subtitle">Choose an Hour</label>
             <select onChange={(e) => setHour(e.target.value)}>
               <option value="">Select an hour</option>
-              {hoursArray.map((hour) => ( // Map through the hours array and render each hour as an option
-                <option key={hour} value={hour}>
-                  {hour}:00
-                </option>
-              ))}
+              {hoursArray.map(
+                (
+                  hour // Map through the hours array and render each hour as an option
+                ) => (
+                  <option key={hour} value={hour}>
+                    {hour}:00
+                  </option>
+                )
+              )}
             </select>
           </div>
           {showCourtSelection && ( // Show court selection only if date and hour are selected
@@ -162,7 +170,10 @@ function BookingForm() {
               </select>
             </div>
           )}
-          <button className="booking-button" type="submit" disabled={isButtonDisabled} // Add the disabled attribute here
+          <button
+            className="booking-button"
+            type="submit"
+            disabled={isButtonDisabled} // Add the disabled attribute here
             style={{
               backgroundColor: buttonColor,
               cursor: buttonCursor, // Apply dynamic cursor style

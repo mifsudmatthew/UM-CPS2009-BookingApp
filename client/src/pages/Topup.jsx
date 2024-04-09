@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
-import { Post } from "../utils/ApiFunctions";
 import { useLocation } from "react-router-dom";
+import { Post } from "../utils/ApiFunctions";
 
-import { useAuth } from "../context/Auth";
+import Form from "../components/Form";
+import InputBox from "../components/InputBox";
+import InputButton from "../components/InputButton";
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 /**
  * Renders the Topup page component.
@@ -10,12 +15,9 @@ import { useAuth } from "../context/Auth";
  * @returns {JSX.Element} The Topup page component.
  */
 function Topup() {
-  const [amount, setAmount] = useState(""); // Initialize the amount state
-  const { token, setToken } = useAuth(); // Get the token and setToken from the Auth context
-
-  const session_id = new URLSearchParams(useLocation().search).get(
-    "session_id"
-  );
+  const [amount, setAmount] = useState(0); // Initialize the amount state
+  const location = useLocation();
+  const session_id = new URLSearchParams(location.search).get("session_id");
 
   useEffect(() => {
     /**
@@ -25,13 +27,15 @@ function Topup() {
      */
     async function fetchData() {
       if (session_id) {
-        try { // Send a POST request to "/api/success" with the session_id
+        try {
+          // Send a POST request to "/api/success" with the session_id
           const response = await Post("/api/success", {
             session_id: session_id,
           });
 
           console.log(response);
-        } catch (err) { // Log an error if the request fails
+        } catch (err) {
+          // Log an error if the request fails
           console.error(`Error in top-up with session_id: ${err}`);
         }
       }
@@ -51,43 +55,57 @@ function Topup() {
    */
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const numericAmount = parseFloat(amount);
+    try {
+      const numericAmount = parseFloat(amount);
+      if (amount.trim() === "") {
+        // Check if amount is not a number or empty
+        toast.error("Please enter the amount you would like to top-up.");
+        return;
+      } else if (numericAmount < 0) {
+        toast.error("Error! Please enter a positive number.");
+        return;
+      }
 
-    try { // Send a POST request to top up the user's account
+      if (amount.trim() === "") {
+        // Check if amount is not a number or empty
+        toast.error("Please enter the amount you would like to top-up.");
+        return;
+      } else if (isNaN(numericAmount)) {
+        toast.error("Error! Input is not a number, please enter a number.");
+        return;
+      } else if (numericAmount < 0) {
+        toast.error("Error! Please enter a positive number.");
+        return;
+      }
       console.log("Amount: ", numericAmount);
-      const data = await Post("/api/topup", { amount: numericAmount }, token);
+
+      const data = await Post("/api/topup", { amount: numericAmount });
+      console.log(data);
 
       if (data.url) {
         window.location.href = data.url;
       }
-
-      console.log(data);
-    } catch (error) { // Log an error if the request fails
+    } catch (error) {
+      // Log an error if the request fails
       console.error(`Error in top-up: ${error}`);
     }
   };
 
   return (
     <main className="profile">
-      <h1 className="header-title">Top Up</h1>
-      <form onSubmit={handleSubmit} className="inputContainer"> {/* Form to top up the user's account */}
-        <label>Amount</label>
-        <input
-          placeholder="€1000"
-          className="inputBox"
+      <div className="header-title">Top Up</div>
+      <Form>
+        {/* Form to top up the user's account */}
+        <InputBox
+          label="Amount"
           type="number"
           value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          required
+          placeholder="€1000"
+          onChange={(event) => setAmount(event.target.value)}
         />
         <br />
-        <input
-          className={"inputButton"}
-          type="button"
-          value={"Top Up"}
-          onClick={handleSubmit}
-        />
-      </form>
+        <InputButton label="Top Up" type="submit" onClick={handleSubmit} />
+      </Form>
     </main>
   );
 }

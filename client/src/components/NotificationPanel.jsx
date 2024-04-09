@@ -1,7 +1,6 @@
+import { useContext } from "react";
 
-import { React, useContext } from 'react';
-
-import NotificationContext from '../context/NavbarContext';
+import NotificationContext from "../context/NavbarContext";
 
 /**
  * Renders the notification panel component.
@@ -17,7 +16,7 @@ const NotificationPanel = () => {
   }
 
   return (
-    <div>
+    <div className="notification-panel">
       {/* If there are no successful bookings, display a message */}
       {successfulBookings.length === 0 ? (
         <h6>No successful bookings yet.</h6>
@@ -27,7 +26,7 @@ const NotificationPanel = () => {
           <ul>
             {/* Iterate over each booking in the successfulBookings array and display it */}
             {successfulBookings.map((booking) => (
-              <li key={booking.id}>
+              <li key={booking.id} className="booking-item">
                 <div>
                   <strong>Date:</strong> {booking.date}
                 </div>

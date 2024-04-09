@@ -1,8 +1,12 @@
 import { useState, useMemo, useEffect } from "react";
-import { Post } from "../utils/ApiFunctions";
-import { Navigate } from "react-router-dom";
-
 import { ToastContainer, toast } from "react-toastify";
+import { Navigate } from "react-router-dom";
+import { Post } from "../utils/ApiFunctions";
+
+import Form from "../components/Form";
+import InputBox from "../components/InputBox";
+import InputButton from "../components/InputButton";
+
 import "react-toastify/dist/ReactToastify.css";
 
 /**
@@ -17,12 +21,6 @@ export default function Reset() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [pin, setPin] = useState("");
   const [isValid, setIsValid] = useState(false);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  const [isButtonDisabled2, setIsButtonDisabled2] = useState(false);
-  const [buttonColor, setButtonColor] = useState("#3e4a36");
-  const [buttonColor2, setButtonColor2] = useState("#3e4a36");
-  const [buttonCursor, setButtonCursor] = useState("pointer");
-  const [buttonCursor2, setButtonCursor2] = useState("pointer");
 
   // Memoized value for password match
   const passwordMatch = useMemo(() => {
@@ -49,19 +47,7 @@ export default function Reset() {
   }, [isValid]);
 
   // Handle submit function for sending reset email
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    setIsButtonDisabled(true);
-    setButtonCursor("not-allowed");
-    setButtonColor("#CCCCCC");
-
-    setTimeout(() => {
-      setIsButtonDisabled(false);
-      setButtonCursor("pointer");
-      setButtonColor("#3e4a36");
-    }, 2000);
-
+  const handleSubmit = async () => {
     if (email.length === 0) {
       toast.error("Error! Please enter an email address.");
       return;
@@ -82,17 +68,6 @@ export default function Reset() {
   // Handle change function for resetting password
   const handleChange = async (event) => {
     event.preventDefault();
-
-    setIsButtonDisabled2(true);
-    setButtonCursor2("not-allowed");
-    setButtonColor2("#CCCCCC");
-
-    setTimeout(() => { // Reset button after 2 seconds
-      setIsButtonDisabled2(false);
-      setButtonCursor2("pointer");
-      setButtonColor2("#3e4a36");
-    }, 2000);
-
     // Check if any field is empty
     if (
       email.length === 0 ||
@@ -128,7 +103,8 @@ export default function Reset() {
       pin,
     };
 
-    try { // Send a POST request to the server with the reset password data
+    try {
+      // Send a POST request to the server with the reset password data
       const response = await Post("/api/resetpassword", data);
 
       toast.success("Password changed successfully!");
@@ -136,74 +112,57 @@ export default function Reset() {
       console.log("Success:", response);
 
       return <Navigate to="/" replace={true} />;
-    } catch (error) { // Log an error if the request fails
+    } catch (error) {
+      // Log an error if the request fails
       toast.error("Error! Could not reset password.");
       console.error(error);
     }
   };
 
   return (
-    <>
-      <h1>Reset</h1>
-      <div className={"mainContainerReset"}> {/* Form to reset password */}
-        <ToastContainer />
+    <div className={"mainContainerReset"}>
+      <ToastContainer />
+      <div className="header-title">Reset</div>
+      <Form classname="innerContainer">
         <div className={"inputContainer"}>
           <br />
           <br />
         </div>
-        <div className={"inputContainer"}>
-          <input
-            className="inputBox"
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <br></br>
-        <button
+        <InputBox
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+        />
+        <br />
+        <InputButton
+          label="RESET PASSWORD"
+          colour="#3e4a36"
           onClick={handleSubmit}
-          disabled={isButtonDisabled}
-          style={{
-            backgroundColor: buttonColor,
-            cursor: buttonCursor,
-            color: "white",
-          }}>
-          RESET PASSWORD
-        </button>
+        />
         <br />
-        <div className={"inputContainer"}>
-          <input
-            className="inputBox"
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </div>
+        <InputBox
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+        />
         <br />
-        <div className={"inputContainer"}>
-          <input
-            className="inputBox"
-            type="password"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(event) => setConfirmPassword(event.target.value)}
-          />
-        </div>
+        <InputBox
+          type="password"
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={(event) => setConfirmPassword(event.target.value)}
+        />
         <br />
-        <div className={"inputContainer"}>
-          <input
-            className="inputBox"
-            type="text"
-            placeholder="PIN (4 digits)"
-            value={pin}
-            onChange={(event) => {
-              const inputPin = event.target.value.replace(/\D/g, "");
-              setPin(inputPin);
-            }}
-          />
-        </div>
+        <InputBox
+          placeholder="PIN (4 digits)"
+          value={pin}
+          onChange={(event) => {
+            const inputPin = event.target.value.replace(/\D/g, "");
+            setPin(inputPin);
+          }}
+        />
         {pinValid ? (
           <></>
         ) : (
@@ -212,20 +171,12 @@ export default function Reset() {
           </div>
         )}
         <br />
-        <br />
-        <div className={"inputContainer"}>
-          <button
-            onClick={handleChange}
-            disabled={isButtonDisabled2}
-            style={{
-              backgroundColor: buttonColor2,
-              cursor: buttonCursor2,
-              color: "white",
-            }}>
-            CHANGE PASSWORD
-          </button>
-        </div>
-      </div>
-    </>
+        <InputButton
+          label="Change Password"
+          colour="#3e4a36"
+          onClick={handleChange}
+        />
+      </Form>
+    </div>
   );
 }

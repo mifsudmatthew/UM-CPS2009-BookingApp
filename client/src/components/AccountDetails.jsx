@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useUser } from "../context/User";
+import Form from "../components/Form";
+import InputBox from "../components/InputBox";
+import InputButton from "../components/InputButton";
 
 /**
  * Renders the AccountDetails component.
@@ -13,32 +16,34 @@ const AccountDetails = () => {
   const [name, setName] = useState(user.name || "");
   const [email, setEmail] = useState(user.email || "");
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setUser({ name, email, ...user });
+  };
+
   return (
     <main className="profile">
       <div className="header-title">Profile</div>
-      <form> {/* Form to update user details */}
-        <label>Name</label>
-        <br></br>
-        <input
-          className="inputBox"
-          type="text"
+      <Form>
+        <InputBox
+          id="AccountDetailsName"
+          label="Name"
           value={name}
-          placeholder="Name Surname"
-          onChange={(e) => setName(e.target.value)}
+          placeholder="Name and Surname"
+          onChange={(event) => setName(event.target.value)}
         />
         <br />
-        <label>Email</label>
-        <br />
-        <input
-          className="inputBox"
-          type="text"
+        <InputBox
+          id="AccountDetailsEmail"
+          label="Email"
+          type="email"
           value={email}
-          placeholder="email@email.com"
-          onChange={(e) => setEmail(e.target.value)}
+          placeholder="bob@gmail.com"
+          onChange={(event) => setEmail(event.target.value)}
         />
         <br />
-        <input className={"inputButton"} type="button" value="Save" />
-      </form>
+        <InputButton type="submit" label="Save" onClick={handleSubmit} />
+      </Form>
     </main>
   );
 };

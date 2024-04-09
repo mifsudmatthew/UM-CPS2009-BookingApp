@@ -1,16 +1,11 @@
-import { useRouteError } from "react-router-dom";
+// Errors.jsx
+import errorImage from "../assets/sad_tennis.png";
 
 function Errors() {
-  const error = useRouteError();
-  console.error(error);
-
   return (
     <div>
-      <h1>Oops!</h1>
-      <p>Sorry, an unexpected error has occurred.</p>
-      <p>
-        <i>{error.statusText || error.message}</i>
-      </p>
+      <h1> Sorry, the page you are looking for does not exist.</h1>
+      <img src={errorImage} alt="Error" />
     </div>
   );
 }
