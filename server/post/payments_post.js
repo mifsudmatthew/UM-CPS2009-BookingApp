@@ -77,7 +77,6 @@ payment_router.post(
         // ------------------ Update Balance
         await user_queries.updateUserBalance(email, actual_amount);
         await server_functions.sendPaymentSuccessMail(email, actual_amount);
-
         const user = await user_queries.retrieveUser(email);
         const userData = {
           _id: user.data._id,
