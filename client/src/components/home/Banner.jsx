@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../context/User";
-import { useAuth } from "../context/Auth";
+import { useUser } from "../../context/UserContext";
+import { useAuth } from "../../context/AuthContext";
 
-import "../styles/banner.css";
+import "../../styles/banner.css";
 
 /**
  * Renders a banner component with a title, description, and a login button.
@@ -13,12 +13,12 @@ import "../styles/banner.css";
 function Banner() {
   const navigate = useNavigate();
   const { user } = useUser();
-  const { token } = useAuth();
+  const { accessToken } = useAuth();
   const [buttonText, setButtonText] = useState("");
 
   // Set the button text based on the user's login status
   useEffect(() => {
-    if (token === "") {
+    if (accessToken === "") {
       // If the user is not logged in
       setButtonText("Login"); // Set the button text to "Login"
     } else if (!user.admin) {
@@ -28,7 +28,7 @@ function Banner() {
       // If the user is an admin
       setButtonText("Admin Panel"); // Set the button text to "Admin Panel"
     }
-  }, [token, user.admin]);
+  }, [accessToken, user.admin]);
 
   /**
    *
@@ -37,7 +37,7 @@ function Banner() {
    * If the user is an admin, redirects them to the admin page.
    */
   const toLogin = () => {
-    if (token === "") {
+    if (accessToken === "") {
       navigate("/login", { replace: true });
     } else if (!user.admin) {
       navigate("/booking", { replace: true });

@@ -1,4 +1,4 @@
-export function Post(url, data) {
+export const Post = (url, data) => {
   return fetch(url, {
     method: "POST",
     headers: {
@@ -19,4 +19,19 @@ export function Post(url, data) {
       console.error("Error while fetching data:", error);
       throw error;
     });
-}
+};
+
+export const getServerStatus = async () => {
+  await fetch("/server-status")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(
+          `Server is not responding: ${response.status} - ${response.statusText}`
+        );
+      }
+      return true;
+    })
+    .catch((error) => {
+      throw new Error(`Error while fetching data: ${error}`);
+    });
+};

@@ -3,9 +3,9 @@ import { useNavigate, Navigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { Post } from "../utils/ApiFunctions";
 
-import Form from "../components/Form";
-import InputBox from "../components/InputBox";
-import InputButton from "../components/InputButton";
+import Form from "../components/form/Form";
+import InputBox from "../components/form/InputBox";
+import InputButton from "../components/form/InputButton";
 
 import "react-toastify/dist/ReactToastify.css";
 
