@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 /**
  * Renders a form to configure courts.
@@ -11,7 +11,7 @@ function ConfigCourts() {
   const [court, setCourt] = useState(""); // State variable to store the selected court
   const [price, setPrice] = useState(""); // State variable to store the price of the court
   const [size, setSize] = useState(""); // State variable to store the size of the court
-  
+
   /**
    * Handles the form submission.
    * Sends a POST request to the server with the court data.
@@ -36,7 +36,6 @@ function ConfigCourts() {
       console.error("Error submitting booking: ", error);
     }
   };
-
 
   /**
    * Fetches all courts from the API.
@@ -69,7 +68,7 @@ function ConfigCourts() {
    * @param {Object} e - The event object.
    */
   const handleCourtChange = (e) => {
-    const selectedCourt = courts.find(court => court.name === e.target.value);
+    const selectedCourt = courts.find((court) => court.name === e.target.value);
     setCourt(selectedCourt.name);
     setSize(selectedCourt.size);
     setPrice(selectedCourt.price);
@@ -82,10 +81,7 @@ function ConfigCourts() {
         <h4>Select Court</h4>
         <form>
           <div>
-            <select
-              className="inputBox"
-              onChange={handleCourtChange}
-            >
+            <select className="inputBox" onChange={handleCourtChange}>
               {/* Display a list of courts fetched from the API in the dropdown */}
               <option value="">Select a court</option>
               {courts.map((court) => (
