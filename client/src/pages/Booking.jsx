@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate, Navigate } from "react-router-dom";
 
-import { useProfile } from "../../context/ProfileContext";
+import { useProfile } from "../context/ProfileContext";
 import NotificationContext from "../context/NavbarContext";
 
 import { Post } from "../utils/ApiFunctions";

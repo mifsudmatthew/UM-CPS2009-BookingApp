@@ -2,8 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import App from "./App.jsx";
 
 /* Context */
-import { UserProvider } from "./context/UserContext";
-import { AuthProvider } from "./context/AuthContext";
+import { ProfileProvider } from "./context/ProfileContext";
 import { NotificationProvider } from "./context/NavbarContext";
 
 /* Components */
@@ -27,34 +26,32 @@ import AdminPage from "./pages/AdminPage.jsx";
 // Modifies div with root id in index.html
 export default function AppContainer() {
   return (
-    <UserProvider>
-      <AuthProvider>
-        <NotificationProvider>
-          <Routes>
-            <Route path="/" element={<App />}>
-              <Route index exact element={<Home />} />
-              <Route path="login" element={<Login />} />
-              <Route path="register" element={<Register />} />
-              <Route path="reset" element={<Reset />} />
-              <Route path="booking" element={<Booking />} />
-              <Route path="profile" element={<Profile />}>
-                <Route index exact element={<AccountDetails />} />
-                <Route path="bookings" element={<Bookings />} />
-                <Route path="topup" element={<Topup />} />
-                <Route path="changepassword" element={<ChangePW />} />
-                <Route path="*" element={<Errors />} />
-              </Route>
-              <Route path="admin" element={<AdminPage />}>
-                <Route index exact element={<ConfigCourts />} />
-                <Route path="updatecourts" element={<ConfigCourts />} />
-                <Route path="addnewcourt" element={<AddNewCourt />} />
-                <Route path="*" element={<Errors />} />
-              </Route>
+    <ProfileProvider>
+      <NotificationProvider>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route index exact element={<Home />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="reset" element={<Reset />} />
+            <Route path="booking" element={<Booking />} />
+            <Route path="profile" element={<Profile />}>
+              <Route index exact element={<AccountDetails />} />
+              <Route path="bookings" element={<Bookings />} />
+              <Route path="topup" element={<Topup />} />
+              <Route path="changepassword" element={<ChangePW />} />
+              <Route path="*" element={<Errors />} />
             </Route>
-            <Route path="*" element={<Errors />} />
-          </Routes>
-        </NotificationProvider>
-      </AuthProvider>
-    </UserProvider>
+            <Route path="admin" element={<AdminPage />}>
+              <Route index exact element={<ConfigCourts />} />
+              <Route path="updatecourts" element={<ConfigCourts />} />
+              <Route path="addnewcourt" element={<AddNewCourt />} />
+              <Route path="*" element={<Errors />} />
+            </Route>
+          </Route>
+          <Route path="*" element={<Errors />} />
+        </Routes>
+      </NotificationProvider>
+    </ProfileProvider>
   );
 }

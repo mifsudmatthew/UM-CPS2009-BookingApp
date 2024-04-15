@@ -1,6 +1,6 @@
 import { Outlet, Navigate } from "react-router-dom";
 import { AdminSidebar } from "../components/admin/AdminSidebar";
-import { useProfile } from "../../context/ProfileContext";
+import { useProfile } from "../context/ProfileContext";
 import { isAuthenticated, isAdmin } from "../utils/userFunctions";
 import "../styles/profile.css";
 
