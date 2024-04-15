@@ -38,7 +38,7 @@ function Banner() {
     if (accessToken === "") {
       navigate("/login", { replace: true });
     } else if (!user.admin) {
-      navigate("/booking", { replace: true });
+      navigate("/profile/booking", { replace: true });
     } else {
       navigate("/admin", { replace: true });
     }

@@ -34,9 +34,9 @@ export default function AppContainer() {
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
             <Route path="reset" element={<Reset />} />
-            <Route path="booking" element={<Booking />} />
             <Route path="profile" element={<Profile />}>
               <Route index exact element={<AccountDetails />} />
+              <Route path="booking" element={<Booking />} />
               <Route path="bookings" element={<Bookings />} />
               <Route path="topup" element={<Topup />} />
               <Route path="changepassword" element={<ChangePW />} />
