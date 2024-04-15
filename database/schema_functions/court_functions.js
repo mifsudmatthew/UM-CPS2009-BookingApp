@@ -8,7 +8,7 @@ const courts_schema = require("../schemas/courts_schema");
 async function retrieveCourt(courtID) {
     try {
         // -------------------- Run Query
-        const courts_found =  await courts_schema.findByID(courtID);
+        const courts_found =  await courts_schema.findById(courtID);
 
         // -------------------- Validation
         if (courts_found == null) {
@@ -22,7 +22,7 @@ async function retrieveCourt(courtID) {
         return { result: true, data: courts_found, error: null };
 
     } catch (error_message) {
-        throw new Error("Failed to Connect to Database");
+        throw new Error("Failed to Connect to Database: "+error_message);
     }
 }
 
