@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Post } from "../utils/ApiFunctions";
+import { jwtDecode } from "jwt-decode";
 
 import Form from "../components/form/Form";
 import InputBox from "../components/form/InputBox";
@@ -10,6 +11,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { useAuth } from "../context/AuthContext";
+import { useUser } from "../context/UserContext";
 
 /**
  * Renders the Topup page component.
@@ -20,6 +22,7 @@ function Topup() {
   const location = useLocation();
   const session_id = new URLSearchParams(location.search).get("session_id");
   const { updateToken } = useAuth();
+  const { setUser } = useUser();
   const [amount, setAmount] = useState(0); // Initialize the amount state
 
   useEffect(() => {
@@ -36,8 +39,12 @@ function Topup() {
             session_id: session_id,
           });
 
-          if (response.accessToken) updateToken(response.accessToken);
-
+          if (response.accessToken) {
+            updateToken(response.accessToken);
+            setUser(
+              response.accessToken ? jwtDecode(response.accessToken) : {}
+            );
+          }
           console.log(response);
         } catch (err) {
           // Log an error if the request fails
