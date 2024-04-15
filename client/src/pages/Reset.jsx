@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Post } from "../utils/ApiFunctions";
 
 import Form from "../components/form/Form";
@@ -15,6 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
  * @returns {JSX.Element} The Reset component.
  */
 export default function Reset() {
+  const navigate = useNavigate();
   // State variables
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -97,21 +98,15 @@ export default function Reset() {
       return;
     }
 
-    const data = {
-      email,
-      password,
-      pin,
-    };
-
     try {
       // Send a POST request to the server with the reset password data
-      const response = await Post("/api/resetpassword", data);
+      await Post("/api/resetpassword", { email, password, pin });
 
       toast.success("Password changed successfully!");
 
-      console.log("Success:", response);
-
-      return <Navigate to="/" replace={true} />;
+      setTimeout(() => {
+        navigate("/", { replace: true });
+      }, 2000);
     } catch (error) {
       // Log an error if the request fails
       toast.error("Error! Could not reset password.");
@@ -129,9 +124,10 @@ export default function Reset() {
           <br />
         </div>
         <InputBox
-          type="email"
+          id="reset-email"
           placeholder="Email"
           value={email}
+          type="email"
           onChange={(event) => setEmail(event.target.value)}
         />
         <br />
@@ -142,33 +138,38 @@ export default function Reset() {
         />
         <br />
         <InputBox
-          type="password"
+          id="reset-password"
           placeholder="Password"
           value={password}
+          type="password"
           onChange={(event) => setPassword(event.target.value)}
         />
         <br />
         <InputBox
-          type="password"
+          id="reset-password-confirm"
           placeholder="Confirm Password"
           value={confirmPassword}
+          type="password"
           onChange={(event) => setConfirmPassword(event.target.value)}
         />
         <br />
         <InputBox
+          id="reset-pin"
           placeholder="PIN (4 digits)"
           value={pin}
+          type="number"
           onChange={(event) => {
             const inputPin = event.target.value.replace(/\D/g, "");
             setPin(inputPin);
           }}
         />
-        {pinValid ? (
-          <></>
-        ) : (
+        <br />
+        {!pinValid ? (
           <div style={{ color: "rgba(186, 26, 26, 1)" }}>
             PIN must be 4 digits.
           </div>
+        ) : (
+          <></>
         )}
         <br />
         <InputButton

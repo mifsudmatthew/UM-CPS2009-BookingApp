@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import Popup from "reactjs-popup";
 import { Wallet2, Bell, BellFill } from "react-bootstrap-icons";
@@ -11,6 +11,32 @@ import { useAuth } from "../../context/AuthContext";
 import { money, hamburger, logo } from "../Icons";
 
 import "../../styles/navbar.css";
+
+const isAuthenticated = (accessToken) => {
+  if (!accessToken) return false;
+
+  return fetch("/api/authenticate", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${accessToken}` },
+  })
+    .then((response) => {
+      if (response.ok) {
+        return true;
+      } else {
+        return false;
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      return false;
+    });
+};
+
+const isAdmin = (user) => {
+  if (!user) return false;
+  return user.isAdmin ? true : false;
+};
+
 /**
  * Renders the navigation bar component.
  * Navbar component represents the navigation bar of the application.
@@ -19,7 +45,6 @@ import "../../styles/navbar.css";
  *
  * @returns {JSX.Element} The rendered navigation bar.
  */
-
 function Navbar() {
   // State variables
   const [showNavbar, setShowNavbar] = useState(false); // Controls the visibility of the navbar
@@ -29,11 +54,6 @@ function Navbar() {
   // Custom hooks
   const { accessToken } = useAuth(); // Authentication hook for managing user accessToken
   const { user } = useUser(); // User hook for managing user data
-
-  useEffect(() => {
-    // Effect to be triggered when accessToken or user changes
-    // Add any necessary logic here
-  }, [accessToken, user]);
 
   /**
    * Toggles the visibility of the navbar.
@@ -63,7 +83,7 @@ function Navbar() {
         </div>
 
         {/* ---------------------- Balance ---------------------------- */}
-        {!user.admin && accessToken !== "" ? (
+        {!isAdmin(user.admin) && isAuthenticated(accessToken) ? (
           <div className="navbar-balance">
             <Wallet2 className="wallet"> : </Wallet2>
             {user.balance}
