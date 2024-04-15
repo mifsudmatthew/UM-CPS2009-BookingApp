@@ -3,7 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { useProfile } from "../../context/ProfileContext";
+import { useProfile } from "../context/ProfileContext";
 import { Post } from "../utils/ApiFunctions";
 import Form from "../components/form/Form";
 import InputBox from "../components/form/InputBox";

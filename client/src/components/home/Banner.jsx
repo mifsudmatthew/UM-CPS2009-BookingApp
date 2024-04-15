@@ -46,7 +46,7 @@ function Banner() {
 
   return (
     <div className="background-container">
-      <h2>Your best tennis game</h2>
+      <div className="banner-title">Your best tennis game</div>
       <p>Having the best equipment</p>
       <button className="login-button" onClick={toLogin}>
         {buttonText}

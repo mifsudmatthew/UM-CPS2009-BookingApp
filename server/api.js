@@ -188,4 +188,29 @@ apiRouter.post("/changepassword", sf.authenticateToken, async (req, res) => {
   }
 });
 
+// Route to for changing password both when logged in.
+apiRouter.post("/changedetails", sf.authenticateToken, async (req, res) => {
+  try {
+    // Attempt to  a new password to the account of the given email, after encrypting it.
+
+    const response = await queries.changeDetails(
+      req.user.email,
+      req.body.name,
+      req.body.email
+    );
+    console.log(response);
+
+    const accessToken = sf.generateAccessToken(response.data);
+
+    // Response Success
+    res.status(200).json({
+      message: "Details Changed!",
+      data: { accessToken, ...response.data },
+    });
+  } catch (error) {
+    // Response Fail
+    res.status(500).json({ message: "Details Change Failed!" });
+  }
+});
+
 module.exports = apiRouter;
