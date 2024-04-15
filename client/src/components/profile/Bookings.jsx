@@ -37,6 +37,25 @@ const Bookings = () => {
     fetchBookedCourts();
   }, []);
 
+  /**
+   * Cancels a booking by sending a request to the server.
+   * @param {string} id - The ID of the booking to be cancelled.
+   * @returns {Promise<void>} - A Promise that resolves when the booking is successfully cancelled.
+   */
+  const cancelBooking = async (id) => {
+    try {
+      const response = await fetch(`/api/cancelBooking/${id}`, {
+        method: "POST",
+      });
+      const data = await response.json();
+      console.log(data);
+      // After successfully cancelling the booking, fetch the updated list of courts
+      fetchBookedCourts();
+    } catch (error) {
+      console.error("Error cancelling booking: ", error);
+    }
+  };
+
   return (
     <main className="profile">
       {/* Header */}
@@ -61,6 +80,9 @@ const Bookings = () => {
                 <td>{court.name}</td>
                 <td>{court.date}</td>
                 <td>{court.time}</td>
+                <td>
+                  <button onClick={() => cancelBooking(court.id)}>Cancel</button>
+                </td>
               </tr>
             ))}
           </tbody>
