@@ -69,6 +69,11 @@ function Navbar() {
     setShowNotificationPanel(!showNotificationPanel);
   };
 
+  console.log(user.admin);
+  console.log(isAdmin(user.admin));
+  console.log(accessToken);
+  console.log(isAuthenticated(accessToken));
+
   return (
     <nav className="navbar">
       <div className="container">
