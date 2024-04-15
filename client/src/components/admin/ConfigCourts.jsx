@@ -59,7 +59,7 @@ function ConfigCourts() {
       }
     };
 
-    fetchCourts();
+    // fetchCourts();
   }, [setCourts]);
 
   /**
