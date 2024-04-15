@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import { Post } from "../utils/ApiFunctions";
-import Form from "../components/Form";
-import InputBox from "../components/InputBox";
-import InputButton from "../components/InputButton";
+
+import { Post } from "../../utils/ApiFunctions";
+
+import Form from "../form/Form";
+import InputBox from "../form/InputBox";
+import InputButton from "../form/InputButton";
 
 /**
  * Renders a form to add a new court.
@@ -24,7 +26,7 @@ function AddNewCourt() {
       const response = await Post("/api/configCourts", courtData);
       /*
       This was what was here before, idk if was import to do it this particular way but we already had a method for this
-            // Send a POST request to the server to add the new court
+      // Send a POST request to the server to add the new court
       const response = await fetch("/api/configCourts", {
         method: "POST",
         headers: {
