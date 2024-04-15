@@ -55,15 +55,12 @@ function Register() {
       return;
     }
 
-    const data = {
-      email,
-      password,
-      name,
-    };
-
-    console.log("Data:", data); // Logs the data object to the console
     try {
-      const response = await Post("/api/register", data); // Sends a POST request to the "/api/register" endpoint with the data object
+      const response = await Post("/api/register", {
+        email,
+        password,
+        name,
+      }); // Sends a POST request to the "/api/register" endpoint with the data object
       toast.success("Sign up successful! Redirecting to login."); // Displays a success toast message
       setTimeout(() => {
         navigate("/login", { replace: true }); // Redirects to the login page after a delay
@@ -84,6 +81,7 @@ function Register() {
       <br />
       <Form className="innerContainer">
         <InputBox
+          id="register-name-surname"
           label="Name & Surname"
           placeholder="name surname"
           onChange={(event) => setName(event.target.value)}
@@ -91,33 +89,41 @@ function Register() {
         />
         <br />
         <InputBox
+          id="register-email"
           label="Email"
           placeholder="name@example.com"
           type="email"
+          value={email}
           onChange={(event) => setEmail(event.target.value)}
           required={true}
         />
         <br />
         <InputBox
+          id="register-email-confirm"
           label="Re-enter Email"
           placeholder="name@example.com"
           type="email"
+          value={confirmEmail}
           onChange={(event) => setConfirmEmail(event.target.value)}
           required={true}
         />
         <br />
         <InputBox
+          id="register-password"
           label="Password"
-          type="password"
           placeholder="password"
+          type="password"
+          value={password}
           onChange={(event) => setPassword(event.target.value)}
           required={true}
         />
         <br />
         <InputBox
+          id="register-password-confirm"
           label="Re-enter Password"
           type="password"
           placeholder="password"
+          value={confirmPassword}
           onChange={(event) => setConfirmPassword(event.target.value)}
           required={true}
         />
