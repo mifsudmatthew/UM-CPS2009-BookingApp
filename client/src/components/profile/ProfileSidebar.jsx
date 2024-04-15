@@ -1,8 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { defaultProfilePic } from "../Icons";
 
-import { useAuth } from "../../context/AuthContext";
-import { useUser } from "../../context/UserContext";
+import { useProfile } from "../../context/ProfileContext";
 import InputButton from "../form//InputButton";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -20,8 +19,7 @@ import { ToastContainer, toast } from "react-toastify";
  * @returns {JSX.Element} The profile sidebar component.
  */
 const ProfileSidebar = () => {
-  const { updateToken } = useAuth(); // Accesses authentication context
-  const { user, setUser } = useUser(); // Accesses user context
+  const { user, updateUser, updateToken } = useProfile(); // Accesses authentication context
   const navigate = useNavigate(); // Navigation hook
   /**
    * Logs the user out by clearing the accessToken and user data,
@@ -33,7 +31,7 @@ const ProfileSidebar = () => {
     // Profile user validation requires change therefore updateToken and setUser should be taken out then.
     setTimeout(() => {
       updateToken(""); // Clears the authentication accessToken
-      setUser({}); // Clears the user data
+      updateUser({}); // Clears the user data
       // navigate("/", { replace: true }); // Redirects the user to the root page
     }, 2000);
   };
@@ -44,7 +42,7 @@ const ProfileSidebar = () => {
       <div className="profile-picture">
         <img src={defaultProfilePic} alt="Profile" className="profile-image" />
       </div>
-      <h3>Hello, {user.name ? user.name : "#Undefined#"}</h3>{" "}
+      <h3>Hello, {user.name ? user.name : "#Undefined#"}</h3>
       {/* Displays the user's name or a placeholder if it's undefined */}
       <nav>
         <ul>

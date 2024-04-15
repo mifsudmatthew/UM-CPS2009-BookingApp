@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-
-import { useUser } from "../../context/UserContext";
+import { useProfile } from "../../context/ProfileContext";
 
 /**
  * Renders the Balance component.
@@ -8,7 +7,7 @@ import { useUser } from "../../context/UserContext";
  * @returns {JSX.Element} The rendered Balance component.
  */
 const Balance = () => {
-  const { user } = useUser();
+  const { user } = useProfile();
 
   return (
     <main className="profile">

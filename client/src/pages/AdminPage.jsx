@@ -1,7 +1,7 @@
 import { Outlet, Navigate } from "react-router-dom";
 import { AdminSidebar } from "../components/admin/AdminSidebar";
-import { useUser } from "../context/UserContext";
-import { useAuth } from "../context/AuthContext";
+import { useProfile } from "../../context/ProfileContext";
+import { isAuthenticated, isAdmin } from "../utils/userFunctions";
 import "../styles/profile.css";
 
 /**
@@ -11,10 +11,9 @@ import "../styles/profile.css";
  */
 const AdminPage = () => {
   // Check if the user is an admin based on accessToken
-  const { user } = useUser();
-  const { accessToken } = useAuth();
+  const { user, accessToken } = useProfile();
 
-  if (!user.admin || accessToken === "") {
+  if (!isAdmin(user) || !isAuthenticated(accessToken)) {
     // Redirect to the home page if the user is not an admin
     return <Navigate to="/" replace={true} />;
   }

@@ -1,6 +1,35 @@
 /* Stores functions that communicate with the server to
  * retrieve/set/delete user data */
 
+export const isAdmin = (user) => {
+  if (!user) return false;
+  return user.isAdmin ? true : false;
+};
+
+export const isAuthenticated = (accessToken) => {
+  const url = "/api/authenticate";
+  const options = {
+    method: "POST",
+    headers: { Authorization: `Bearer ${accessToken}` },
+  };
+  let result = false;
+
+  if (!accessToken) return result;
+
+  const authResult = fetch(url, options);
+
+  authResult
+    .then((response) => {
+      result = response.ok ? true : false;
+    })
+    .catch((error) => {
+      console.error("Error attempting to authenticate the user:", error);
+      result = false;
+    });
+
+  return result;
+};
+
 export const getUserData = async () => {
   const url = "/api/user";
   const options = {
@@ -51,7 +80,7 @@ export const setUserData = async (newUserData) => {
   });
 
   if (!userData.ok) {
-    throw new Error("Failed to retrieve user data from the server");
+    throw new Error("Failed to set user data on the server");
   }
 
   return await userData.json();

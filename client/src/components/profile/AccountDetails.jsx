@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useUser } from "../../context/UserContext";
+import { useProfile } from "../../context/ProfileContext";
 import Form from "../form/Form";
 import InputBox from "../form/InputBox";
 import InputButton from "../form/InputButton";
@@ -10,7 +10,7 @@ import InputButton from "../form/InputButton";
  * @returns {JSX.Element} The rendered AccountDetails component.
  */
 const AccountDetails = () => {
-  const { user, setUser } = useUser(); // Retrieve user data once when the component mounts
+  const { user, setUser: updateUser } = useProfile(); // Retrieve user data once when the component mounts
 
   // Initialize state with values from localStorage, or fallback to empty strings
   const [name, setName] = useState(user.name || "");
@@ -18,7 +18,7 @@ const AccountDetails = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setUser({ ...user, name, email });
+    updateUser({ ...user, name, email });
   };
 
   return (

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useUser } from "../../context/UserContext";
+import { useProfile } from "../../context/ProfileContext";
 
 /**
  * Renders the Bookings component.
@@ -8,12 +8,10 @@ import { useUser } from "../../context/UserContext";
  * @returns {JSX.Element} The Bookings component.
  */
 const Bookings = () => {
-  const { user, setUser } = useUser(); // Retrieve user data once when the component mounts
+  const { user } = useProfile(); // Retrieve user data once when the component mounts
   const [courts, setCourts] = useState([]); // State variable to store the list of courts
-  
-  // Initialize state with values from localStorage, or fallback to empty strings
-  const [name, setName] = useState(user.name || "");
-  const [email, setEmail] = useState(user.email || "");
+  const name = user.name;
+  const email = user.email;
 
   /**
    * Fetches the booked courts for a specific user.
@@ -22,17 +20,16 @@ const Bookings = () => {
    * @returns {Promise<void>} A Promise that resolves when the booked courts are fetched.
    */
   const fetchBookedCourts = async () => {
-    const user_details = {name, email};
+    const user_details = { name, email };
     try {
-      const response = await fetch("/api/getBookedCourts", user_details); 
-      console.log(data);
+      const response = await fetch("/api/getBookedCourts", user_details);
       setCourts(response);
     } catch (error) {
       // Log an error if the request fails
       console.error("Error fetching booked courts: ", error);
     }
   };
-  
+
   useEffect(() => {
     fetchBookedCourts();
   }, []);
@@ -60,7 +57,6 @@ const Bookings = () => {
     <main className="profile">
       {/* Header */}
       <div className="header-title">Bookings</div>
-
       {/* Upcoming Bookings */}
       <section>
         <h4>Upcoming Bookings</h4>
@@ -81,7 +77,9 @@ const Bookings = () => {
                 <td>{court.date}</td>
                 <td>{court.time}</td>
                 <td>
-                  <button onClick={() => cancelBooking(court.id)}>Cancel</button>
+                  <button onClick={() => cancelBooking(court.id)}>
+                    Cancel
+                  </button>
                 </td>
               </tr>
             ))}
