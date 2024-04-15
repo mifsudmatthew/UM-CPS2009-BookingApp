@@ -3,12 +3,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { useAuth } from "../context/Auth";
-import { useUser } from "../context/User";
+import { useAuth } from "../context/AuthContext";
+import { useUser } from "../context/UserContext";
 import { Post } from "../utils/ApiFunctions";
-import Form from "../components/Form";
-import InputBox from "../components/InputBox";
-import InputButton from "../components/InputButton";
+import Form from "../components/form/Form";
+import InputBox from "../components/form/InputBox";
+import InputButton from "../components/form/InputButton";
 
 /**
  * Renders the login page.
@@ -20,7 +20,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setUser } = useUser();
-  const { setToken } = useAuth();
+  const { updateToken } = useAuth();
 
   // Regular expression for email validation
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -43,7 +43,7 @@ function Login() {
       const response = await Post("/api/login", { email, password });
       const { accessToken, ...user } = response;
 
-      setToken(accessToken);
+      updateToken(accessToken);
       setUser(user);
 
       if (user.admin) {

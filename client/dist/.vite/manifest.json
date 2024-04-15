@@ -1,6 +1,10 @@
 {
   "index.html": {
+<<<<<<< HEAD
     "file": "assets/index-DxZKMH3p.js",
+=======
+    "file": "assets/index-BzpOPtZO.js",
+>>>>>>> 90dd6ef3d73b44427b9c56c5ea0133942b2d9317
     "name": "index",
     "src": "index.html",
     "isEntry": true,

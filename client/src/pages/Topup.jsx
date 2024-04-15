@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Post } from "../utils/ApiFunctions";
 
-import Form from "../components/Form";
-import InputBox from "../components/InputBox";
-import InputButton from "../components/InputButton";
+import Form from "../components/form/Form";
+import InputBox from "../components/form/InputBox";
+import InputButton from "../components/form/InputButton";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -48,7 +48,7 @@ function Topup() {
    * Handles the form submission.
    * Prevents the default form submission behavior.
    * Converts the amount to a numeric value.
-   * Sends a POST request to "/api/topup" with the amount and token.
+   * Sends a POST request to "/api/topup" with the amount and accessToken.
    * If a URL is returned in the response, redirects the user to that URL.
    * Logs the response or logs an error if the request fails.
    * @param {Event} event - The form submission event.
@@ -56,30 +56,20 @@ function Topup() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const numericAmount = parseFloat(amount);
-      if (amount.trim() === "") {
+      if (amount == 0 || amount == "" || amount == null) {
         // Check if amount is not a number or empty
         toast.error("Please enter the amount you would like to top-up.");
         return;
-      } else if (numericAmount < 0) {
-        toast.error("Error! Please enter a positive number.");
-        return;
-      }
-
-      if (amount.trim() === "") {
-        // Check if amount is not a number or empty
-        toast.error("Please enter the amount you would like to top-up.");
-        return;
-      } else if (isNaN(numericAmount)) {
+      } else if (isNaN(amount)) {
         toast.error("Error! Input is not a number, please enter a number.");
         return;
-      } else if (numericAmount < 0) {
+      } else if (amount < 0) {
         toast.error("Error! Please enter a positive number.");
         return;
       }
-      console.log("Amount: ", numericAmount);
+      console.log("Amount: ", amount);
 
-      const data = await Post("/api/topup", { amount: numericAmount });
+      const data = await Post("/api/topup", { amount: amount });
       console.log(data);
 
       if (data.url) {

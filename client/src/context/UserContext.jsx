@@ -1,30 +1,30 @@
 import { useState, createContext, useContext } from "react";
+import { jwtDecode } from "jwt-decode";
 import PropTypes from "prop-types";
 
 const UserContext = createContext();
+
+const useUser = () => {
+  return useContext(UserContext);
+};
 
 const UserProvider = ({ children }) => {
   const [user, _setUser] = useState(getUser());
 
   function getUser() {
-    const _user = localStorage.getItem("user");
-    return _user ? JSON.parse(_user) : {};
+    const accessToken = JSON.parse(localStorage.getItem("accessToken"));
+    return accessToken ? jwtDecode(accessToken) : {};
   }
 
   function setUser(user) {
-    const _user = JSON.stringify(user);
-    localStorage.setItem("user", _user);
     _setUser(user);
   }
+
   return (
     <UserContext.Provider value={{ user, setUser }}>
       {children}
     </UserContext.Provider>
   );
-};
-
-const useUser = () => {
-  return useContext(UserContext);
 };
 
 UserProvider.propTypes = {
