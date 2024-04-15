@@ -28,7 +28,6 @@ bookingRounter.post(
     if(user.data.balance <= court.data.price){
       return res.json({ result: false, data: null, error: "Not enough Points in Balance" });
     }else{
-      user_quieries.updateUserBalance(email, -court.data.price);
       response = await bookings_quieries.addBooking(
         req.user.id,
         req.body.court,
@@ -36,6 +35,9 @@ bookingRounter.post(
         parseInt(req.body.hour),
         3
       );
+      if(response.result == true){
+        user_quieries.updateUserBalance(email, -court.data.price);
+      }
       res.json(response);
     }
   }
