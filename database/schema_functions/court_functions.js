@@ -48,6 +48,20 @@ async function registerCourt({name_new, price_new, address_new, longitude_new, l
     }
 }
 
+/** ===================================== Get All Courts ======================================================
+ * ------------ Get all of the courts
+ * Gets a list of all courts in the database
+ */
+async function getAllCourts() {
+    try {
+        // Find all courts
+        const allCourts = await court_schema.find({});
+        return { result: true, data: allCourts, error: null };
+    } catch (error_message) {
+        throw new Error("Failed to Connect to Database");
+    }
+}
+
 /** ===================================== Exporting ======================================================
  * ------------ Exportation of functions
  * Export the functions
@@ -58,4 +72,5 @@ async function registerCourt({name_new, price_new, address_new, longitude_new, l
 module.exports = {
     retrieveCourt       : retrieveCourt,
     registerCourt       : registerCourt,
+    getAllCourts        : getAllCourts
 };
