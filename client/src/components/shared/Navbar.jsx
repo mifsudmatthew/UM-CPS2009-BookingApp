@@ -126,7 +126,7 @@ function Navbar() {
             <li>
               <NavLink to="/">Home</NavLink>
             </li>
-            {authenticated ? (
+            {!authenticated ? (
               <>
                 <li>
                   <NavLink to="/login">Login</NavLink>
@@ -137,7 +137,7 @@ function Navbar() {
               </>
             ) : (
               <>
-                {!isAdmin(user.admin) && (
+                {!isAdmin(user) && (
                   <>
                     <li>
                       <NavLink to="/profile">Profile</NavLink>
