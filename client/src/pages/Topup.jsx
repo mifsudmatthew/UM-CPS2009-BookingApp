@@ -9,6 +9,8 @@ import InputButton from "../components/form/InputButton";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { useAuth } from "../context/AuthContext";
+
 /**
  * Renders the Topup page component.
  *
@@ -18,6 +20,7 @@ function Topup() {
   const [amount, setAmount] = useState(0); // Initialize the amount state
   const location = useLocation();
   const session_id = new URLSearchParams(location.search).get("session_id");
+  const { updateToken } = useAuth();
 
   useEffect(() => {
     /**
@@ -32,6 +35,8 @@ function Topup() {
           const response = await Post("/api/success", {
             session_id: session_id,
           });
+
+          updateToken(response.accessToken);
 
           console.log(response);
         } catch (err) {
