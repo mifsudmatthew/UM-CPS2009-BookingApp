@@ -79,7 +79,15 @@ payment_router.post(
         server_functions.sendPaymentSuccessMail(email, actual_amount);
 
         const user = await user_queries.retrieveUser(email);
-        const accessToken = server_functions.generateAccessToken(user);
+        const userData = {
+          _id: user.data._id,
+          email: user.data.email,
+          name: user.data.name,
+          admin: user.data.admin,
+          balance: user.data.balance,
+          iat: user.data.iat
+        }
+        const accessToken = server_functions.generateAccessToken(userData);
 
         return res.json({ success: true, accessToken: accessToken });
         // ------------------ Payment Not Successfull
