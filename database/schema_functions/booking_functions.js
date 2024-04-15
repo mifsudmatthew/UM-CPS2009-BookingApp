@@ -209,6 +209,31 @@ async function getAvailableCourts(date_toCheck, time_toCheck) {
     }
 }
 
+async function getBookedCourts(user_data) {
+    try {
+        // Get current date and time
+        const currentDate = new Date();
+
+        // Find all bookings for the specified user that are in the future
+        const upcomingBookings = await booking_schema.find({
+            user_email: user_data.email,
+            date: { $gte: currentDate }
+        });
+
+        // Extract court IDs from upcomingBookings
+        const upcomingCourtIDs = upcomingBookings.map(booking => booking.courtID);
+
+        // Find all courts that are in upcomingCourtIDs
+        const upcomingCourts = await court_schema.find({
+            _id: { $in: upcomingCourtIDs }
+        });
+
+        return { result: true, data: upcomingCourts, error: null };
+    } catch (error_message) {
+        throw new Error("Failed to Connect to Database");
+    }
+}
+
 
 /** ===================================== Exporting ======================================================
  * ------------ Exportation of functions
@@ -223,4 +248,5 @@ module.exports = {
     getFutureBookings_ID            : getFutureBookings_ID,
     removeBooking                   : removeBooking,
     getAvailableCourts              : getAvailableCourts,
+    getBookedCourts                 : getBookedCourts
 };
