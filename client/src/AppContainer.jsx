@@ -8,7 +8,6 @@ import { NotificationProvider } from "./context/NavbarContext";
 
 /* Components */
 import Bookings from "./components/profile/Bookings.jsx";
-import Balance from "./components/profile/Balance.jsx";
 import AccountDetails from "./components/profile/AccountDetails";
 import ConfigCourts from "./components/admin/ConfigCourts.jsx";
 import AddNewCourt from "./components/admin/AddNewCourt.jsx";

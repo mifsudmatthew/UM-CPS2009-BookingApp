@@ -2,8 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate, Navigate } from "react-router-dom";
 
-import { useUser } from "../context/UserContext";
-import { useAuth } from "../context/AuthContext";
+import { useProfile } from "../../context/ProfileContext";
 import NotificationContext from "../context/NavbarContext";
 
 import { Post } from "../utils/ApiFunctions";
@@ -27,8 +26,7 @@ function Booking() {
   const [buttonColor, setButtonColor] = useState(null); // Add state to store button color
   const [buttonCursor, setButtonCursor] = useState("pointer"); // Add state to store button cursor
   // Check if the user is an admin based on accessToken
-  const { user } = useUser();
-  const { accessToken } = useAuth();
+  const { user, accessToken } = useProfile();
 
   // Context for notifications
   const { addSuccessfulBooking } = useContext(NotificationContext);

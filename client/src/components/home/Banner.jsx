@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../../context/UserContext";
-import { useAuth } from "../../context/AuthContext";
+import { useProfile } from "../../context/ProfileContext";
 
 import "../../styles/banner.css";
 
@@ -12,8 +11,7 @@ import "../../styles/banner.css";
  */
 function Banner() {
   const navigate = useNavigate();
-  const { user } = useUser();
-  const { accessToken } = useAuth();
+  const { user, accessToken } = useProfile();
   const [buttonText, setButtonText] = useState("");
 
   // Set the button text based on the user's login status

@@ -3,8 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { useAuth } from "../context/AuthContext";
-import { useUser } from "../context/UserContext";
+import { useProfile } from "../../context/ProfileContext";
 import { Post } from "../utils/ApiFunctions";
 import Form from "../components/form/Form";
 import InputBox from "../components/form/InputBox";
@@ -19,8 +18,7 @@ function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setUser } = useUser();
-  const { updateToken } = useAuth();
+  const { updateToken, updateUser } = useProfile();
 
   // Regular expression for email validation
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -44,7 +42,7 @@ function Login() {
       const { accessToken, ...user } = response;
 
       updateToken(accessToken);
-      setUser(user);
+      updateUser(user);
 
       if (user.admin) {
         toast.success("Login successful! Redirecting to admin panel.");

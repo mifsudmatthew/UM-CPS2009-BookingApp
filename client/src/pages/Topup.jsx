@@ -10,8 +10,7 @@ import InputButton from "../components/form/InputButton";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { useAuth } from "../context/AuthContext";
-import { useUser } from "../context/UserContext";
+import { useProfile } from "../context/ProfileContext";
 
 /**
  * Renders the Topup page component.
@@ -21,8 +20,7 @@ import { useUser } from "../context/UserContext";
 function Topup() {
   const location = useLocation();
   const session_id = new URLSearchParams(location.search).get("session_id");
-  const { updateToken } = useAuth();
-  const { setUser } = useUser();
+  const { updateToken, updateUser } = useProfile();
   const [amount, setAmount] = useState(0); // Initialize the amount state
 
   useEffect(() => {
@@ -41,7 +39,7 @@ function Topup() {
 
           if (response.accessToken) {
             updateToken(response.accessToken);
-            setUser(
+            updateUser(
               response.accessToken ? jwtDecode(response.accessToken) : {}
             );
           }

@@ -5,10 +5,9 @@ import { Wallet2, Bell, BellFill } from "react-bootstrap-icons";
 import NotificationPanel from "./NotificationPanel";
 
 import NotificationContext from "../../context/NavbarContext";
-import { useUser } from "../../context/UserContext";
-import { useAuth } from "../../context/AuthContext";
+import { useProfile } from "../../context/ProfileContext";
 
-import { money, hamburger, logo } from "../Icons";
+import { hamburger, logo } from "../Icons";
 
 import "../../styles/navbar.css";
 
@@ -52,9 +51,7 @@ function Navbar() {
   const { notification } = useContext(NotificationContext); // Notification context for displaying notifications
   const [showNotificationPanel, setShowNotificationPanel] = useState(false); // Controls the visibility of the notification panel
 
-  // Custom hooks
-  const { accessToken } = useAuth(); // Authentication hook for managing user accessToken
-  const { user } = useUser(); // User hook for managing user data
+  const { user, accessToken } = useProfile();
 
   /**
    * Toggles the visibility of the navbar.
@@ -111,8 +108,7 @@ function Navbar() {
             </div>
           }
           position="right top"
-          on="click"
-        >
+          on="click">
           <NotificationPanel />
         </Popup>
 
