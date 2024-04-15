@@ -76,7 +76,7 @@ function ChangePW() {
         <InputBox
           label="Confirm New Password"
           placeholder="New Password"
-          value={password}
+          value={confirmPassword}
           type="password"
           className="change_inputBox"
           onChange={(event) => setConfirmPassword(event.target.value)}

@@ -41,49 +41,48 @@ function Register() {
     }
 
     if (!emailRegex.test(email)) {
-      toast.error("Invalid email format detected."); // Displays an error toast if the email format is invalid
+      // Displays an error toast if the email format is invalid
+      toast.error("Invalid email format detected.");
       return;
     }
 
     if (!emailMatch) {
-      toast.error("Emails do not match."); // Displays an error toast if the email and confirm email do not match
+      // Displays an error toast if the email and confirm email do not match
+      toast.error("Emails do not match.");
       return;
     }
 
     if (!passwordMatch) {
-      toast.error("Passwords do not match."); // Displays an error toast if the password and confirm password do not match
+      // Displays an error toast if the password and confirm password do not match
+      toast.error("Passwords do not match.");
       return;
     }
 
-    const data = {
-      email,
-      password,
-      name,
-    };
-
-    console.log("Data:", data); // Logs the data object to the console
     try {
-      const response = await Post("/api/register", data); // Sends a POST request to the "/api/register" endpoint with the data object
-      toast.success("Sign up successful! Redirecting to login."); // Displays a success toast message
+      // Sends a POST request to "/api/register" with the data
+      await Post("/api/register", { email, password, name });
+      // Displays a success toast message
+      toast.success("Sign up successful! Redirecting to login.");
+      // Redirects to the login page after a delay
       setTimeout(() => {
-        navigate("/login", { replace: true }); // Redirects to the login page after a delay
+        navigate("/login", { replace: true });
       }, 2000);
-      console.log("Success:", response); // Logs the response object to the console
     } catch (err) {
-      toast.error("Account with the same E-mail already exists."); // Displays an error toast if an account with the same email already exists
-      console.error(err); // Logs the error to the console
+      // Displays an error toast if an account with the same email already exists
+      toast.error("Account with the same E-mail already exists.");
+      // Logs the error to the console
+      console.error(err);
     }
   };
 
   return (
     <div className={"mainContainer"}>
       <ToastContainer /> {/* Container for displaying toast messages */}
-      <div className={"titleContainer"}>
-        Create Account {/* Title for the register page */}
-      </div>
+      <h2 className="titleContainer">Create Account</h2>
       <br />
       <Form className="innerContainer">
         <InputBox
+          id="register-name-surname"
           label="Name & Surname"
           placeholder="name surname"
           onChange={(event) => setName(event.target.value)}
@@ -91,33 +90,41 @@ function Register() {
         />
         <br />
         <InputBox
+          id="register-email"
           label="Email"
           placeholder="name@example.com"
           type="email"
+          value={email}
           onChange={(event) => setEmail(event.target.value)}
           required={true}
         />
         <br />
         <InputBox
+          id="register-email-confirm"
           label="Re-enter Email"
           placeholder="name@example.com"
           type="email"
+          value={confirmEmail}
           onChange={(event) => setConfirmEmail(event.target.value)}
           required={true}
         />
         <br />
         <InputBox
+          id="register-password"
           label="Password"
-          type="password"
           placeholder="password"
+          type="password"
+          value={password}
           onChange={(event) => setPassword(event.target.value)}
           required={true}
         />
         <br />
         <InputBox
+          id="register-password-confirm"
           label="Re-enter Password"
           type="password"
           placeholder="password"
+          value={confirmPassword}
           onChange={(event) => setConfirmPassword(event.target.value)}
           required={true}
         />

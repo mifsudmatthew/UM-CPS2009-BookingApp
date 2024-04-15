@@ -65,24 +65,29 @@ payment_router.post(
       // ------------------ Check if payment is successful && session is not duplicated
       if (session.payment_status === "paid" && result_session.result == false) {
         console.log("Successfull Payment");
-        actual_amount = session.amount_total / 100  
+        actual_amount = session.amount_total / 100;
 
         // ------------------ Add new Session
         stripe_queries.registerStripe({
           session_id: session_id,
           email_new: email,
-          amount_new: actual_amount
+          amount_new: actual_amount,
         });
 
         // ------------------ Update Balance
+        await user_queries.updateUserBalance(email, actual_amount);
+        await server_functions.sendPaymentSuccessMail(email, actual_amount);
+        const user = await user_queries.retrieveUser(email);
+        const userData = {
+          _id: user.data._id,
+          email: user.data.email,
+          name: user.data.name,
+          admin: user.data.admin,
+          balance: user.data.balance,
+        };
+        const accessToken = server_functions.generateAccessToken(userData);
 
-        
-        user_queries.updateUserBalance(email, actual_amount);
-        server_functions.sendPaymentSuccessMail(email, actual_amount)
-
-
-        return res.json({ success: true });
-
+        return res.json({ success: true, accessToken: accessToken });
         // ------------------ Payment Not Successfull
       } else {
         console.log("Failed Payment");
@@ -90,7 +95,7 @@ payment_router.post(
         return res.json({ success: false });
       }
     } catch (error) {
-      console.error("Error handling successful payment")
+      console.error("Error handling successful payment");
       console.log(error);
       return res
         .status(500)

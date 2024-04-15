@@ -41,7 +41,6 @@ export default function AppContainer() {
               <Route path="profile" element={<Profile />}>
                 <Route index exact element={<AccountDetails />} />
                 <Route path="bookings" element={<Bookings />} />
-                <Route path="balance" element={<Balance />} />
                 <Route path="topup" element={<Topup />} />
                 <Route path="changepassword" element={<ChangePW />} />
                 <Route path="*" element={<Errors />} />
