@@ -9,16 +9,19 @@ const court_schema = require("../schemas/courts_schema")
 async function getFutureBookings_ID(userID_toSearch) {
     try {
         // ---------------- Calculate Current Date and Time
-        const currentDate = new Date();
+        currentDate = new Date();
         const currentTime = currentDate.getTime();
+        currentDate.setHours(0, 0, 0, 0);
+        console.log(currentDate)
 
         // ---------------- Query Bookings from current date/time
-        const bookings =  await booking_schema.find({   userID  : userID_toSearch,
-                                                        $or:[{ date: { $gt: currentDate } },        // Dates greater than current date
-                                                             { date: currentDate,                   // Dates equal to current date
-                                                               time: { $gte: currentTime }}         // Times greater than or equal to current time
-                                                            ]                                       // Return all bookings of dates greater then current date
-                                                    });
+        const bookings =  await booking_schema.find({   
+            userID  : userID_toSearch,
+            $or:[{ date: { $gt: currentDate } },        // Dates greater than current date
+                    { date: currentDate,                // Dates equal to current date
+                    time: { $gte: currentTime }}        // Times greater than or equal to current time
+                ]                                       // Return all bookings of dates greater then current date
+        });
         
         // ---------------- Validation of Query
         if(bookings == [] || bookings == null){ 
@@ -41,19 +44,21 @@ async function getFutureBookings_ID(userID_toSearch) {
 async function getFutureBookings_Courts(courtID_toSearch) {
     try {
         // ---------------- Calculate Current Date and Time
-        const currentDate = new Date();
-        const currentTime = currentDate.getTime();
-
+        currentDate = new Date();
+        const currentTime = currentDate.getHours();
+        currentDate.setHours(0, 0, 0, 0);
+        console.log(currentDate)
         // ---------------- Query Bookings from current date/time
-        const bookings =  await booking_schema.find({   courtID : courtID_toSearch,
-                                                        $or:[{ date: { $gt: currentDate } },        // Dates greater than current date
-                                                             { date: currentDate,                   // Dates equal to current date
-                                                               time: { $gte: currentTime }}         // Times greater than or equal to current time
-                                                            ]                                       // Return all bookings of dates greater then current date 
-                                                    });
+        const bookings =  await booking_schema.find({   
+            courtID : courtID_toSearch,
+            $or:[{ date: { $gt: currentDate } },        // Dates greater than current date
+                    { date: currentDate,                // Dates equal to current date
+                    time: { $gte: currentTime }}        // Times greater than or equal to current time
+                ]                                       // Return all bookings of dates greater then current date 
+        });
         
         // ---------------- Validation of Query
-        if(bookings == [] || bookings == null){ 
+        if(bookings.length === 0|| bookings == null){ 
             return { result: false, data: null, error: "No bookings where found" };
         }
         // --------------------- Bookings Found (Returning Bookings List)
@@ -73,16 +78,19 @@ async function getFutureBookings_Courts(courtID_toSearch) {
 async function getFutureBookings_IDCourt(userID_toSearch, courtID_toSearch) {
     try {
         // ---------------- Calculate Current Date and Time
-        const currentDate = new Date();
+        currentDate = new Date();
         const currentTime = currentDate.getTime();
-
+        currentDate.setHours(0, 0, 0, 0);
+        console.log(currentDate)
         // Find bookings with userEmail from the current date and time onwards
-        const bookings =  await booking_schema.find({   userID: userID_toSearch,
-                                                        $or:[{ date: { $gt: currentDate } },        // Dates greater than current date
-                                                             { date: currentDate,                   // Dates equal to current date
-                                                               time: { $gte: currentTime }}         // Times greater than or equal to current time
-                                                        ]                                           // Return all bookings of dates greater then current date
-                                                    });
+        const bookings =  await booking_schema.find({   
+            userID: userID_toSearch,
+            $or:[
+                    { date: { $gt: currentDate } },         // Dates greater than current date
+                    { date: currentDate,                    // Dates equal to current date
+                    time: { $gte: currentTime }}            // Times greater than or equal to current time
+                ]                                           // Return all bookings of dates greater then current date
+        });
         
         // ---------------- Validation of Query
         if(bookings == [] || bookings == null){ 
@@ -106,35 +114,45 @@ async function getFutureBookings_IDCourt(userID_toSearch, courtID_toSearch) {
  */
 async function addBooking(userID_toBook, courtID_toBook, date_toBook, time_toBook, max_userBookings) {
     try{
+        const today = new Date();
+        // --------------------- Check Current Date
+        
+        // If the date is today, check if the time is in the past
+        
+        if(today.toDateString() === date_toBook.toDateString() ){
+            if(today.getHours() >= time_toBook){
+                return { result: false, data: null, error: "Cannot book for a past time on the current date" };
+            }
+        }
+        
         // --------------------- Check if the booking is more then a week in advanced
-        const today = new Date(); // get current date
         const maxFutureDate = new Date(today.getTime() + (7 * 24 * 60 * 60 * 1000)); // Calculate date 7 days from now
         if (date_toBook > maxFutureDate) { // current date + 7 days
             return { result: false, data: null, error: "Cannot book more than a week in advance" };
         }
-        
+
         // --------------------- Check if user has not reached max bookings
-        if(getFutureBookings_ID(userID_toBook).length >= max_userBookings){
+        future_bookings = await getFutureBookings_ID(userID_toBook)
+        if(future_bookings.data.length >= max_userBookings){
             return { result: false, data: null, error: "User has reached max bookings"};
         }
         
         // --------------------- Check if court has not already been booked at the date and time specified
-        courts_booked_at_date_time =  await booking_schema.find({   courtID: courtID_toBook,
-                                                                    date: date_toBook,
-                                                                    time: time_toBook 
-                                                                });
-        console.log(courts_booked_at_date_time.length)
+        courts_booked_at_date_time =  await booking_schema.find({   
+            courtID: courtID_toBook,
+            date: date_toBook,
+            time: time_toBook 
+        });
         if(courts_booked_at_date_time.length != 0){
             return { result: false, data: null, error: "Court is already booked at this time/date"};
         }
-
         // --------------------- Create Booking item
         const newBooking = new booking_schema({ 
-                                                date: date_toBook,
-                                                time: time_toBook, 
-                                                userID: userID_toBook,
-                                                courtID: courtID_toBook 
-                                                });
+            date: date_toBook,
+            time: time_toBook, 
+            userID: userID_toBook,
+            courtID: courtID_toBook 
+        });
 
         
         // --------------------- Save and return
