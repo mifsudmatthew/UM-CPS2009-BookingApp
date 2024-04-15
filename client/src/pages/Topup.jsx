@@ -17,10 +17,10 @@ import { useAuth } from "../context/AuthContext";
  * @returns {JSX.Element} The Topup page component.
  */
 function Topup() {
-  const [amount, setAmount] = useState(0); // Initialize the amount state
   const location = useLocation();
   const session_id = new URLSearchParams(location.search).get("session_id");
   const { updateToken } = useAuth();
+  const [amount, setAmount] = useState(0); // Initialize the amount state
 
   useEffect(() => {
     /**
@@ -47,7 +47,7 @@ function Topup() {
     }
 
     fetchData();
-  }, [session_id]);
+  }, [session_id, updateToken]);
 
   /**
    * Handles the form submission.
@@ -92,6 +92,7 @@ function Topup() {
       <Form>
         {/* Form to top up the user's account */}
         <InputBox
+          id="topup-amount"
           label="Amount"
           type="number"
           value={amount}
