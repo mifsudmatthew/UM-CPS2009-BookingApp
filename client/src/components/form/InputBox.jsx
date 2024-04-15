@@ -17,11 +17,11 @@ const InputBox = ({
       <input
         id={id}
         className={`inputBox ${classname}`}
-        type={type}
+        placeholder={placeholder}
         value={value}
+        type={type}
         onChange={(event) => onChange(event)}
         disabled={disabled}
-        placeholder={placeholder}
         required={required}
       />
     </div>
