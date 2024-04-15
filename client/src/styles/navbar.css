@@ -64,9 +64,9 @@
 }
 
 .menu-icon img {
-  min-width: 2rem;
-  max-height: 3rem;
-  min-height: 2rem;
+  min-width: 1rem;
+  max-height: 2rem;
+  min-height: 1rem;
 }
 
 .navbar-logo {
@@ -88,7 +88,7 @@
 .nav-elements {
     position: absolute;
     right: 0;
-    top: 80px;
+    top: 4.3rem;
     background-color: #cde2be;
     width: 0px;
     height: 100vh;
@@ -98,7 +98,8 @@
 }
 
 .nav-elements.active {
-  width: 270px;
+  width: 15rem;
+  top: 4.3rem;
 }
 
 .nav-elements ul {
@@ -151,11 +152,12 @@
   }
 
   .nav-elements {
-    top: 50px;
+    top: 3rem;
   }
 
   .nav-elements.active {
-    width: 160px;
+    width: 10rem;
+    top: 2.9rem;
   }
 
   .nav-elements ul li {
