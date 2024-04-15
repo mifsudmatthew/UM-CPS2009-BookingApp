@@ -24,11 +24,12 @@ const Bookings = () => {
   const fetchBookedCourts = async () => {
     const data = {name, email};
     try {
-      const response = await fetch("/api/getBookedCourts?userId=", data, {
+      const response = await fetch("/api/getBookedCourts?userId=", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify(data),
       });
       const data = await response.json();
       console.log(data);
