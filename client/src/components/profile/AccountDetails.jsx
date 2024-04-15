@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useUser } from "../context/User";
-import Form from "../components/Form";
-import InputBox from "../components/InputBox";
-import InputButton from "../components/InputButton";
+import { useUser } from "../../context/UserContext";
+import Form from "../form/Form";
+import InputBox from "../form/InputBox";
+import InputButton from "../form/InputButton";
 
 /**
  * Renders the AccountDetails component.
@@ -18,7 +18,7 @@ const AccountDetails = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setUser({ name, email, ...user });
+    setUser({ ...user, name, email });
   };
 
   return (

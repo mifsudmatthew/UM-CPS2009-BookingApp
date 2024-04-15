@@ -1,6 +1,7 @@
 {
   "index.html": {
-    "file": "assets/index-CWQp40_G.js",
+    "file": "assets/index-BzpOPtZO.js",
+    "name": "index",
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
@@ -24,6 +25,7 @@
   },
   "node_modules/workbox-window/build/workbox-window.prod.es5.mjs": {
     "file": "assets/workbox-window.prod.es5-DFjpnwFp.js",
+    "name": "workbox-window.prod.es5",
     "src": "node_modules/workbox-window/build/workbox-window.prod.es5.mjs",
     "isDynamicEntry": true
   },
