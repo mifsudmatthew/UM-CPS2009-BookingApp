@@ -83,7 +83,7 @@ function Navbar() {
         </div>
 
         {/* ---------------------- Balance ---------------------------- */}
-        {isAdmin(user.admin) && isAuthenticated(accessToken) ? (
+        {!isAdmin(user.admin) && isAuthenticated(accessToken) ? (
           <div className="navbar-balance">
             <Wallet2 className="wallet"> : </Wallet2>
             {user.balance}
