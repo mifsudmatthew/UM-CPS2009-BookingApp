@@ -22,19 +22,13 @@ const Bookings = () => {
    * @returns {Promise<void>} A Promise that resolves when the booked courts are fetched.
    */
   const fetchBookedCourts = async () => {
-    const data = {name, email};
+    const user_details = {name, email};
     try {
-      const response = await fetch("/api/getBookedCourts?userId=", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      const data = await response.json();
+      const response = await fetch("/api/getBookedCourts", user_details); 
       console.log(data);
-      setCourts(data);
+      setCourts(response);
     } catch (error) {
+      // Log an error if the request fails
       console.error("Error fetching booked courts: ", error);
     }
   };
