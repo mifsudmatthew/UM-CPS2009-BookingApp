@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import Popup from "reactjs-popup";
 import { Wallet2, Bell, BellFill } from "react-bootstrap-icons";
@@ -33,6 +33,7 @@ const isAuthenticated = (accessToken) => {
 };
 
 const isAdmin = (user) => {
+  if (!user) return false;
   return user.isAdmin ? true : false;
 };
 
@@ -53,11 +54,6 @@ function Navbar() {
   // Custom hooks
   const { accessToken } = useAuth(); // Authentication hook for managing user accessToken
   const { user } = useUser(); // User hook for managing user data
-
-  useEffect(() => {
-    // Effect to be triggered when accessToken or user changes
-    // Add any necessary logic here
-  }, [accessToken, user]);
 
   /**
    * Toggles the visibility of the navbar.
