@@ -41,25 +41,26 @@ function ConfigCourts() {
    * Fetches all courts from the API.
    * @returns {Promise<void>} A Promise that resolves when the courts are fetched successfully.
    */
-  const fetchCourts = async () => {
-    try {
-      const response = await fetch("/api/getAllCourts", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await response.json();
-      console.log(data);
-      setCourts(data);
-    } catch (error) {
-      console.error("Error fetching courts: ", error);
-    }
-  };
 
   useEffect(() => {
+    const fetchCourts = async () => {
+      try {
+        const response = await fetch("/api/getAllCourts", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await response.json();
+        console.log(data);
+        setCourts(data);
+      } catch (error) {
+        console.error("Error fetching courts: ", error);
+      }
+    };
+
     fetchCourts();
-  }, []);
+  }, [setCourts]);
 
   /**
    * Handles the change event of the court selection.

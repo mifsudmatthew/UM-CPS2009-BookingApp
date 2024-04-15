@@ -88,7 +88,9 @@ function Navbar() {
             <Wallet2 className="wallet"> : </Wallet2>
             {user.balance}
           </div>
-        ) : null}
+        ) : (
+          <></>
+        )}
 
         {/* ---------------------- Bell ---------------------------- */}
         <Popup // Add a popup to display the notification panel
@@ -99,7 +101,8 @@ function Navbar() {
             </div>
           }
           position="right top"
-          on="click">
+          on="click"
+        >
           <NotificationPanel />
         </Popup>
 
