@@ -78,9 +78,9 @@ function Register() {
   return (
     <div className={"mainContainer"}>
       <ToastContainer /> {/* Container for displaying toast messages */}
+      <Form className="innerContainer">
       <h2 className="titleContainer">Create Account</h2>
       <br />
-      <Form className="innerContainer">
         <InputBox
           id="register-name-surname"
           label="Name & Surname"
