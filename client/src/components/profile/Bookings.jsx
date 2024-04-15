@@ -1,3 +1,6 @@
+import { useState, useEffect } from "react";
+import { useUser } from "../../context/UserContext";
+
 /**
  * Renders the Bookings component.
  * This component displays the upcoming and previous bookings in a table format.
@@ -5,26 +8,40 @@
  * @returns {JSX.Element} The Bookings component.
  */
 const Bookings = () => {
-  // Mock data for upcoming and previous bookings
-  // Needs to be replaced with actual data fetched from the server
-  const upcomingBookings = [
-    {
-      id: 1,
-      date: "2024-04-10",
-      time: "10:00",
-      court: "Court 3",
-      status: "Confirmed",
-    },
-  ];
-  const previousBookings = [
-    {
-      id: 2,
-      date: "2024-03-05",
-      time: "12:00",
-      court: "Court 1",
-      status: "Completed",
-    },
-  ];
+  const { user, setUser } = useUser(); // Retrieve user data once when the component mounts
+  const [courts, setCourts] = useState([]); // State variable to store the list of courts
+  
+  // Initialize state with values from localStorage, or fallback to empty strings
+  const [name, setName] = useState(user.name || "");
+  const [email, setEmail] = useState(user.email || "");
+
+  /**
+   * Fetches the booked courts for a specific user.
+   * @async
+   * @function fetchBookedCourts
+   * @returns {Promise<void>} A Promise that resolves when the booked courts are fetched.
+   */
+  const fetchBookedCourts = async () => {
+    const data = {name, email};
+    try {
+      const response = await fetch("/api/getBookedCourts?userId=", data, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+      setCourts(data);
+    } catch (error) {
+      console.error("Error fetching booked courts: ", error);
+    }
+  };
+  
+  useEffect(() => {
+    fetchBookedCourts();
+  }, []);
+
   return (
     <main className="profile">
       {/* Header */}
@@ -44,12 +61,11 @@ const Bookings = () => {
           </thead>
           <tbody>
             {/* Map through upcomingBookings array and render each booking */}
-            {upcomingBookings.map((booking) => (
-              <tr key={booking.id}>
-                <td>{booking.date}</td>
-                <td>{booking.time}</td>
-                <td>{booking.court}</td>
-                <td>{booking.status}</td>
+            {courts.map((court) => (
+              <tr key={court.id}>
+                <td>{court.name}</td>
+                <td>{court.date}</td>
+                <td>{court.time}</td>
               </tr>
             ))}
           </tbody>
