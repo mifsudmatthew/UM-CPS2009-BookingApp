@@ -57,10 +57,6 @@ const ProfileSidebar = () => {
             {/* Navigation link to the user's bookings page */}
           </li>
           <li>
-            <NavLink to="/profile/balance">Balance</NavLink>{" "}
-            {/* Navigation link to the user's balance page */}
-          </li>
-          <li>
             <NavLink to="/profile/topup">Top Up</NavLink>{" "}
             {/* Navigation link to the top-up page */}
           </li>
