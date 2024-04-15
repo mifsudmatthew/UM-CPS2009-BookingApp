@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { useUser } from "../context/User";
+
+import { useUser } from "../../context/UserContext";
 
 /**
  * Renders the Balance component.

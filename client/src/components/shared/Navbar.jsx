@@ -1,17 +1,16 @@
 import { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import Popup from "reactjs-popup";
-import { Wallet2, Bell, BellFill } from 'react-bootstrap-icons'; 
-import NotificationContext from "../context/NavbarContext";
-import NotificationPanel from "../components/NotificationPanel";
+import { Wallet2, Bell, BellFill } from "react-bootstrap-icons";
+import NotificationPanel from "./NotificationPanel";
 
-import "../styles/navbar.css";
+import NotificationContext from "../../context/NavbarContext";
+import { useUser } from "../../context/UserContext";
+import { useAuth } from "../../context/AuthContext";
 
-import { money, hamburger, logo } from "../components/Icons";
+import { money, hamburger, logo } from "../Icons";
 
-import { useUser } from "../context/User";
-import { useAuth } from "../context/Auth";
-
+import "../../styles/navbar.css";
 /**
  * Renders the navigation bar component.
  * Navbar component represents the navigation bar of the application.
@@ -28,13 +27,13 @@ function Navbar() {
   const [showNotificationPanel, setShowNotificationPanel] = useState(false); // Controls the visibility of the notification panel
 
   // Custom hooks
-  const { token } = useAuth(); // Authentication hook for managing user token
+  const { accessToken } = useAuth(); // Authentication hook for managing user accessToken
   const { user } = useUser(); // User hook for managing user data
 
   useEffect(() => {
-    // Effect to be triggered when token or user changes
+    // Effect to be triggered when accessToken or user changes
     // Add any necessary logic here
-  }, [token, user]);
+  }, [accessToken, user]);
 
   /**
    * Toggles the visibility of the navbar.
@@ -53,37 +52,48 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="container">
+        {/* ---------------------- Logo ------------------------------- */}
         <div className="navbar-logo">
           <img src={logo} alt="logo" />
         </div>
-        {(!user.admin && token !== "") ? (
-            <div className="navbar-balance">
-              <Wallet2 className="wallet"> : </Wallet2>
-              {user.balance}
-            </div>
-          ) : null}
+
+        {/* ---------------------- Title ------------------------------ */}
         <div className="navbar-title">
           <NavLink to="/">ServeSpot</NavLink>
         </div>
+
+        {/* ---------------------- Balance ---------------------------- */}
+        {!user.admin && accessToken !== "" ? (
+          <div className="navbar-balance">
+            <Wallet2 className="wallet"> : </Wallet2>
+            {user.balance}
+          </div>
+        ) : null}
+
+        {/* ---------------------- Bell ---------------------------- */}
         <Popup // Add a popup to display the notification panel
           trigger={
             <div style={{ cursor: "pointer" }} onClick={handleBellClick}>
-              {token && (notification ? <BellFill className="bell"/> : <Bell />)}
+              {accessToken &&
+                (notification ? <BellFill className="bell" /> : <Bell />)}
             </div>
           }
           position="right top"
           on="click">
           <NotificationPanel />
         </Popup>
+
+        {/* ---------------------- Menu - icon ---------------------------- */}
         <div className="menu-icon" onClick={handleShowNavbar}>
           <img src={hamburger} alt="hamburger" />
         </div>
+
         <div className={`nav-elements ${showNavbar ? "active" : ""}`}>
           <ul>
             <li>
               <NavLink to="/">Home</NavLink>
             </li>
-            {token == "" ? (
+            {accessToken == "" ? (
               <>
                 <li>
                   <NavLink to="/login">Login</NavLink>

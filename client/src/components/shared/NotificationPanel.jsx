@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import NotificationContext from "../context/NavbarContext";
+import NotificationContext from "../../context/NavbarContext";
 
 /**
  * Renders the notification panel component.

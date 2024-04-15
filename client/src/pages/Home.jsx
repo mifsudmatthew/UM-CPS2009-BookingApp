@@ -1,6 +1,6 @@
-import Banner from "../components/Banner";
-import AboutUs from "../components/AboutUs";
-import Courts from "../components/Courts";
+import Banner from "../components/home/Banner";
+import AboutUs from "../components/home/AboutUs";
+import Courts from "../components/home/Courts";
 
 function Home() {
   return (

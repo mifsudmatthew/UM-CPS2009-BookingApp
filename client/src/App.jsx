@@ -8,21 +8,18 @@ import { Outlet } from "react-router-dom";
 import "./styles/app.css";
 
 /* Components */
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import Navbar from "./components/shared/Navbar";
+import Footer from "./components/shared/Footer";
 import ReloadPrompt from "./ReloadPrompt";
-import { NotificationProvider } from './context/NavbarContext';
 
 // Main react app
 function App() {
   return (
     <>
-      <NotificationProvider>
-        <Navbar />
-        <Outlet />
-        <ReloadPrompt />
-        <Footer />
-      </NotificationProvider>
+      <Navbar />
+      <Outlet />
+      <ReloadPrompt />
+      <Footer />
     </>
   );
 }

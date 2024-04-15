@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/courts.css";
+import "../../styles/courts.css";
 
 import {
   leftArrow,
@@ -8,7 +8,7 @@ import {
   grassCourtImage,
   clayCourtImage,
   indoorCourtImage,
-} from "./Icons";
+} from "../Icons";
 
 /**
  * Array of court objects.
@@ -48,7 +48,7 @@ const courts = [
 /**
  * Renders the Courts component.
  * This component displays a carousel of courts, allowing the user to navigate between them.
- * 
+ *
  * @returns {JSX.Element} The Courts component.
  */
 const Courts = () => {
