@@ -1,19 +1,19 @@
 .notification-panel {
-    position: absolute;
-    top: 50vh; 
-    right: 10vw; 
-    background-color: #f5f5f5;
-    border: 1em solid #ccc; 
-    border-radius: 0.25em;
-    box-shadow: 0 0.125em 0.25em rgba(0, 0, 0, 0.2);
-    padding: 0.625em; 
-    max-width: 18.75em; 
-    z-index: 1;
-  }
+  position: absolute;
+  top: 50vh; 
+  right: 10vw; 
+  background-color: #f5f5f5;
+  border: 1em solid #ccc; 
+  border-radius: 0.25em;
+  box-shadow: 0 0.125em 0.25em rgba(0, 0, 0, 0.2);
+  padding: 0.625em; 
+  max-width: 18.75em; 
+  z-index: 1;
+}
   
-  .booking-item {
-    margin-bottom: 0.625em;
-    padding: 0.625em;
-    background-color: #f5f5f5;
-    border-radius: 0.25em;
-  }
+.booking-item {
+  margin-bottom: 0.625em;
+  padding: 0.625em;
+  background-color: #f5f5f5;
+  border-radius: 0.25em;
+}

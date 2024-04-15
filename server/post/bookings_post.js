@@ -3,6 +3,7 @@ const bookingRounter = express.Router();
 const server_functions = require("../server_functions");
 const bookings_quieries = require("../../database/schema_functions/booking_functions");
 const courts_quieries = require("../../database/schema_functions/court_functions");
+const user_quieries = require ("../../database/schema_functions/user_functions");
 
 bookingRounter.post("/getAvailableCourts", async (req, res) => {
   console.log(req.body);
@@ -20,14 +21,23 @@ bookingRounter.post(
   async (req, res) => {
     console.log(req.user);
     console.log(req.body);
-    response = await bookings_quieries.addBooking(
-      req.user.id,
-      req.body.court,
-      new Date(req.body.date),
-      parseInt(req.body.hour),
-      3
-    );
-    res.json(response);
+    court = await courts_quieries.retrieveCourt(req.body.court);
+
+    email = req.user.email;
+    user = await user_quieries.retrieveUser(email);
+    if(user.data.balance <= court.data.price){
+      return res.json({ result: false, data: null, error: "Not enough Points in Balance" });
+    }else{
+      user_quieries.updateUserBalance(email, -court.data.price);
+      response = await bookings_quieries.addBooking(
+        req.user.id,
+        req.body.court,
+        new Date(req.body.date),
+        parseInt(req.body.hour),
+        3
+      );
+      res.json(response);
+    }
   }
 );
 
