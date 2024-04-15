@@ -55,7 +55,7 @@ function ConfigCourts() {
         console.log(data);
         setCourts(data);
       } catch (error) {
-        console.error("Error fetching courts: ", error);
+        console.error(`Error fetching courts: ${error}`);
       }
     };
 
