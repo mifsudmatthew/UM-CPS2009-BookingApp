@@ -34,7 +34,7 @@ const isAuthenticated = (accessToken) => {
 
 const isAdmin = (user) => {
   if (!user) return false;
-  return user.isAdmin ? true : false;
+  return user.admin ? true : false;
 };
 
 /**
@@ -75,8 +75,10 @@ function Navbar() {
       setAuthenticated(await isAuthenticated(accessToken));
     };
     authenticatedResult();
-  }, [accessToken]);
-
+  }, [accessToken, setAuthenticated]);
+  // console.log(authenticated);
+  // console.log(!isAdmin(user));
+  // console.log(!isAdmin(user) && authenticated);
   return (
     <nav className="navbar">
       <div className="container">
@@ -91,7 +93,7 @@ function Navbar() {
         </div>
 
         {/* ---------------------- Balance ---------------------------- */}
-        {!isAdmin(user.admin) && authenticated ? (
+        {!isAdmin(user) && authenticated ? (
           <div className="navbar-balance">
             <Wallet2 className="wallet"> : </Wallet2>
             {user.balance}
