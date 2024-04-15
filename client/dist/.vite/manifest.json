@@ -1,11 +1,7 @@
 {
   "index.html": {
-<<<<<<< HEAD
-    "file": "assets/index-Dnxqu_9P.js",
+    "file": "assets/index-Dqma8G8Z.js",
     "name": "index",
-=======
-    "file": "assets/index-4xa8SHHR.js",
->>>>>>> 16def1d939b824fa04a2b1c5d3122428f598b9c1
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
@@ -29,6 +25,7 @@
   },
   "node_modules/workbox-window/build/workbox-window.prod.es5.mjs": {
     "file": "assets/workbox-window.prod.es5-DFjpnwFp.js",
+    "name": "workbox-window.prod.es5",
     "src": "node_modules/workbox-window/build/workbox-window.prod.es5.mjs",
     "isDynamicEntry": true
   },

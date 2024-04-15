@@ -81,7 +81,6 @@ async function getFutureBookings_IDCourt(userID_toSearch, courtID_toSearch) {
         currentDate = new Date();
         const currentTime = currentDate.getTime();
         currentDate.setHours(0, 0, 0, 0);
-        console.log(currentDate)
         // Find bookings with userEmail from the current date and time onwards
         const bookings =  await booking_schema.find({   
             userID: userID_toSearch,
@@ -133,6 +132,7 @@ async function addBooking(userID_toBook, courtID_toBook, date_toBook, time_toBoo
 
         // --------------------- Check if user has not reached max bookings
         future_bookings = await getFutureBookings_ID(userID_toBook)
+        console.log(future_bookings)
         if(future_bookings.data.length >= max_userBookings){
             return { result: false, data: null, error: "User has reached max bookings"};
         }
