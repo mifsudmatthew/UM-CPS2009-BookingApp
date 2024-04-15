@@ -1,5 +1,5 @@
-import "../styles/aboutus.css";
-import { happy, tennis, players } from "./Icons";
+import "../../styles/aboutus.css";
+import { happy, tennis, players } from "../Icons";
 
 /**
  * Renders the About Us section of the application.
@@ -10,7 +10,7 @@ const AboutUs = () => {
   return (
     <div className="aboutus-container">
       <div className="aboutus-title">About Us</div>
-      <div className="aboutus-text"> 
+      <div className="aboutus-text">
         Welcome to ServeSpot! At ServeSpot, we understand that tennis is more
         than just a sport; it&#39;s a lifestyle. That&#39;s why we&#39;re
         committed to providing you with a seamless experience, from finding the

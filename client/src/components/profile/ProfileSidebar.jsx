@@ -1,9 +1,9 @@
-import { NavLink, useNavigate,  } from "react-router-dom";
-import { defaultProfilePic } from "../components/Icons";
+import { NavLink, useNavigate } from "react-router-dom";
+import { defaultProfilePic } from "../Icons";
 
-import { useAuth } from "../context/Auth";
-import { useUser } from "../context/User";
-import InputButton from "./InputButton";
+import { useAuth } from "../../context/AuthContext";
+import { useUser } from "../../context/UserContext";
+import InputButton from "../form//InputButton";
 
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -20,19 +20,19 @@ import { ToastContainer, toast } from "react-toastify";
  * @returns {JSX.Element} The profile sidebar component.
  */
 const ProfileSidebar = () => {
-  const { setToken } = useAuth(); // Accesses authentication context
+  const { updateToken } = useAuth(); // Accesses authentication context
   const { user, setUser } = useUser(); // Accesses user context
   const navigate = useNavigate(); // Navigation hook
   /**
-   * Logs the user out by clearing the token and user data,
+   * Logs the user out by clearing the accessToken and user data,
    * and redirects the user to the root page.
    */
   const logOut = () => {
     toast.success("Logged out successfully!"); // Displays a success message
 
-    // Profile user validation requires change therefore setToken and setUser should be taken out then.
+    // Profile user validation requires change therefore updateToken and setUser should be taken out then.
     setTimeout(() => {
-      setToken(""); // Clears the authentication token
+      updateToken(""); // Clears the authentication accessToken
       setUser({}); // Clears the user data
       // navigate("/", { replace: true }); // Redirects the user to the root page
     }, 2000);
@@ -73,7 +73,12 @@ const ProfileSidebar = () => {
             {/* Navigation link to the change password page */}
           </li>
           <li>
-            <InputButton onClick={logOut} label="Log Out" classname={"logoutBtn"}/>{/* Log out button */}
+            <InputButton
+              onClick={logOut}
+              label="Log Out"
+              classname={"logoutBtn"}
+            />
+            {/* Log out button */}
           </li>
         </ul>
       </nav>
