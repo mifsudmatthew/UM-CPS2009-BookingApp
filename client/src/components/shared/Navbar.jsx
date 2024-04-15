@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import Popup from "reactjs-popup";
 import { Wallet2, Bell, BellFill } from "react-bootstrap-icons";
@@ -47,6 +47,7 @@ const isAdmin = (user) => {
  */
 function Navbar() {
   // State variables
+  const [authenticated, setAuthenticated] = useState(false); // State variable to store the login status of the user
   const [showNavbar, setShowNavbar] = useState(false); // Controls the visibility of the navbar
   const { notification } = useContext(NotificationContext); // Notification context for displaying notifications
   const [showNotificationPanel, setShowNotificationPanel] = useState(false); // Controls the visibility of the notification panel
@@ -69,10 +70,12 @@ function Navbar() {
     setShowNotificationPanel(!showNotificationPanel);
   };
 
-  console.log(user.admin);
-  console.log(isAdmin(user.admin));
-  console.log(accessToken);
-  console.log(isAuthenticated(accessToken));
+  useEffect(() => {
+    const authenticatedResult = async () => {
+      setAuthenticated(await isAuthenticated(accessToken));
+    };
+    authenticatedResult();
+  }, [accessToken]);
 
   return (
     <nav className="navbar">
@@ -88,7 +91,7 @@ function Navbar() {
         </div>
 
         {/* ---------------------- Balance ---------------------------- */}
-        {!isAdmin(user.admin) && isAuthenticated(accessToken) ? (
+        {!isAdmin(user.admin) && authenticated ? (
           <div className="navbar-balance">
             <Wallet2 className="wallet"> : </Wallet2>
             {user.balance}
@@ -121,7 +124,7 @@ function Navbar() {
             <li>
               <NavLink to="/">Home</NavLink>
             </li>
-            {accessToken == "" ? (
+            {authenticated ? (
               <>
                 <li>
                   <NavLink to="/login">Login</NavLink>
@@ -132,7 +135,7 @@ function Navbar() {
               </>
             ) : (
               <>
-                {!user.admin && (
+                {!isAdmin(user.admin) && (
                   <>
                     <li>
                       <NavLink to="/profile">Profile</NavLink>
