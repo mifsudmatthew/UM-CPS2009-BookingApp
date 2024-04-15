@@ -23,7 +23,7 @@ async function retrieveUser(email_toSearch) {
         return { result: true, data: user_found, error: null };
 
     } catch (error_message) {
-        throw new Error("Failed to Connect to Database");
+        throw new Error("Failed to Connect to Database: "+error_message);
     }
 }
 
@@ -56,7 +56,7 @@ async function registerUser({email_new, password_new, name_new}){
         return {result: true, data:await newUser.save(), error: null};
 
     }catch (error_message) {
-        throw new Error("Failed to Connect to Database");
+        throw new Error("Failed to Connect to Database: "+error_message);
     }
 }
 
@@ -82,7 +82,7 @@ async function validateLogin(email_toSearch, password_toSearch) {
                                     }, error: null };
 
     } catch (error_message) {
-        throw new Error("Failed to Connect to Database");
+        throw new Error("Failed to Connect to Database: "+error_message);
     }
 }
 /** ===================================== Reset Password ================================================
@@ -109,7 +109,7 @@ async function resetPassword(email_toSearch, password_toReset) {
                                     }, error: null };
 
     } catch (error_message) {
-        throw new Error("Failed to Connect to Database");
+        throw new Error("Failed to Connect to Database: "+error_message);
     }
 }
 /** =============================== Update User Balance ================================================
@@ -124,20 +124,19 @@ async function updateUserBalance(email_toSearch, amount_toAdd) {
                                                                 { $inc  : { balance: amount_toAdd } }, // Increment value by amount
                                                                 { new   : true }                       // Return updated
                                                             );
-
+                               
         // --------------------- No user Found (Cannot update Balance)
         if (user_updated == null) {
             return {result: false, data: null, error: "No user found that matches the email: " + email_toSearch };
         }
-
+                               
         // --------------------- User Found (returning stuff)
         return {result: true, data:{    email   : user_updated.email,
                                         name    : user_updated.name,
                                         balance : user_updated.balance
                                     }, error: null };
-
     } catch (error_message) {
-        throw new Error("Failed to Connect to Database");
+        throw new Error("Failed to Connect to Database: "+error_message);
     }
 }
 /**===================================== Delete User =====================================================
@@ -153,7 +152,7 @@ async function deleteUser(email_toSearch) {
         // --------------------- Returning stuff
         return {result: true, data: null, error: null };
     } catch (error) {
-        throw new Error("Failed to Connect to Database");
+        throw new Error("Failed to Connect to Database: "+error_message);
     }
 }
 
