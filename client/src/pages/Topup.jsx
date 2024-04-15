@@ -36,7 +36,7 @@ function Topup() {
             session_id: session_id,
           });
 
-          if (response.accesToken) updateToken(response.accessToken);
+          if (response.accessToken) updateToken(response.accessToken);
 
           console.log(response);
         } catch (err) {
