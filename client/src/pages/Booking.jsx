@@ -88,9 +88,12 @@ function Booking() {
         toast.error(response.error);
       } else {
         toast.success(
-          "Court successfully booked! Redirecting to bookings page."
+          "Court successfully booked! 😃 Redirecting to bookings page."
         );
         addSuccessfulBooking(booking); // Add the booking to the list of successful bookings
+        if (response.accessToken) {
+          updateToken(response.accessToken);
+        }
         setTimeout(() => {
           navigate("/profile/bookings", { replace: true });
         }, 2000);

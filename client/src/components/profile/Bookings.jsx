@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useProfile } from "../../context/ProfileContext";
 import { Post } from "../../utils/ApiFunctions";
+import { ToastContainer, toast } from "react-toastify";
 
 /**
  * Renders the Bookings component.
@@ -45,15 +46,22 @@ const Bookings = () => {
    * @param {string} id - The ID of the booking to be cancelled.
    * @returns {Promise<void>} - A Promise that resolves when the booking is successfully cancelled.
    */
-  const cancelBooking = async (id) => {
+  const cancelBooking = async (id, price) => {
     try {
-      const response = await fetch(`/api/cancelBooking/${id}`, {
-        method: "POST",
-      });
-      const data = await response.json();
-      console.log(data);
-      // After successfully cancelling the booking, fetch the updated list of courts
-      fetchBookedCourts();
+      const response = await Post("/api/cancelBooking",{booking_id: id, price: price})
+      if(response.result == true){
+        toast.success(
+          "Court Successfully Canceled!"
+        );
+        if (response.accessToken) {
+          updateToken(response.accessToken);
+        }
+        setCourts(prevCourts => prevCourts.filter(court => court.id !== id));
+      }else{
+        toast.error(
+          "Court Failed to Delete"
+        );
+      }
     } catch (error) {
       console.error("Error cancelling booking: ", error);
     }
@@ -62,6 +70,7 @@ const Bookings = () => {
   return (
     <main className="profile">
       {/* Header */}
+      <ToastContainer/>
       <div className="header-title">Bookings</div>
       {/* Upcoming Bookings */}
       <section>
@@ -87,7 +96,7 @@ const Bookings = () => {
                 <td>{court.address}</td>
                 <td>{court.price}</td>
                 <td>
-                  <button onClick={() => cancelBooking(court.id)}>
+                  <button onClick={() => cancelBooking(court.id, court.price)}>
                     Cancel
                   </button>
                 </td>
