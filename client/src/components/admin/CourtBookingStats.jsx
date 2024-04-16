@@ -1,46 +1,52 @@
+import { useState, useEffect } from "react";
 import Accordion from 'react-bootstrap/Accordion';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../../styles/accordion.css";
 
+/**
+ * Renders a component that displays the booking statistics for each court.
+ * @returns {JSX.Element} The CourtBookingStats component.
+ */
 function CourtBookingStats() {
+  const [courtBookings, setCourtBookings] = useState([]); // Array of court bookings
+
+  useEffect(() => {
+    /**
+     * Fetches a list of courts and associated bookings from the server.
+     * @returns {Promise<void>} A Promise that resolves when the court bookings are fetched successfully.
+     */
+    const fetchCourtBookings = async () => {
+      try {
+        const response = await Post("/api/getCourtsAndBookings");
+        console.log(response);
+        setCourtBookings(response);
+      } catch (error) {
+        console.error(`Error fetching courts: ${error}`);
+      }
+    };
+    fetchCourtBookings();
+  });
+  
   return (
     <Accordion defaultActiveKey="0">
-      <Accordion.Item eventKey="0" >
-        <Accordion.Header className="custom-accordion-header">Court 1</Accordion.Header>
+      {/* Display the list of courts */}
+      {courtBookings.map((court, index) => (
+      <Accordion.Item eventKey={index.toString()} key={court.id}>
+        <Accordion.Header className="custom-accordion-header">
+          {court.name}
+        </Accordion.Header>
         <Accordion.Body style={{ backgroundColor: '#b4c69d9a' }}>
-          Court statistics here
+          <ul> 
+            {/* Display the list of associated court bookings for the court */}
+            {court.bookings.map(booking => (
+              <li key={booking.id}>
+                {booking} 
+              </li>
+            ))}
+          </ul>
         </Accordion.Body>
       </Accordion.Item>
-      <Accordion.Item eventKey="1" >
-        <Accordion.Header className="custom-accordion-header">Court 2</Accordion.Header>
-        <Accordion.Body style={{ backgroundColor: '#b4c69d9a' }}>
-          Court statistics here
-        </Accordion.Body>
-      </Accordion.Item>
-      <Accordion.Item eventKey="2" >
-        <Accordion.Header className="custom-accordion-header">Court 3</Accordion.Header>
-        <Accordion.Body style={{ backgroundColor: '#b4c69d9a' }}>
-          Court statistics here
-        </Accordion.Body>
-      </Accordion.Item>
-      <Accordion.Item eventKey="3" >
-        <Accordion.Header className="custom-accordion-header">Court 4</Accordion.Header>
-        <Accordion.Body style={{ backgroundColor: '#b4c69d9a' }}>
-          Court statistics here
-        </Accordion.Body>
-      </Accordion.Item>
-      <Accordion.Item eventKey="4" >
-        <Accordion.Header className="custom-accordion-header">Court 5</Accordion.Header>
-        <Accordion.Body style={{ backgroundColor: '#b4c69d9a' }}>
-          Court statistics here
-        </Accordion.Body>
-      </Accordion.Item>
-      <Accordion.Item eventKey="5" >
-        <Accordion.Header className="custom-accordion-header">Court 6</Accordion.Header>
-        <Accordion.Body style={{ backgroundColor: '#b4c69d9a' }}>
-          Court statistics here
-        </Accordion.Body>
-      </Accordion.Item>
+    ))}
     </Accordion>
   );
 }

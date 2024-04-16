@@ -15,17 +15,22 @@ const queries = require("../database/schema_functions/user_functions");
 // Util functions
 const sf = require("./server_functions");
 
-// Variable to store
-let currentUserEmail = "";
-
 // Log the current URL that is accessed
 apiRouter.use((req, _res, next) => {
   console.log(`API on ${req.url}`);
   next();
 });
 
+/**
+ * Route checks that the attached token header is valid.
+ * Returns:
+ *  200 -> When toke Valid
+ *  400 -> No authorization field attached
+ *  403 -> No token is attached to field
+ *      OR Token supplied is invalid
+ */
 apiRouter.post("/authenticate", sf.authenticateToken, (req, res) => {
-  res.sendStatus(200);
+  res.status(200).json({ message: "Ok" }).end();
 });
 
 // To refresh the token
@@ -54,14 +59,15 @@ apiRouter.post("/refresh", (req, res) => {
   });
 });
 
+/**
+ * Validates the user's information with the database
+ * Returns:
+ *  200 -> Valid Login
+ *  400
+ */
 apiRouter.post("/login", async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-
-  // TEMP
-  // Temporary gloabl email for testing
-  currentUserEmail = email;
-  // TEMP
 
   try {
     const dbUser = await queries.retrieveUser(email);
