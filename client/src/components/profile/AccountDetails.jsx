@@ -48,8 +48,8 @@ const AccountDetails = () => {
 
       toast.success("Change successful!");
       setTimeout(() => {
-        // navigate("/profile", { replace: true });
-        window.location.reload();
+        navigate("/profile", { replace: true });
+        // window.location.reload();
       }, 2000);
     } catch (error) {
       console.error(`Error in: ${error}`);
