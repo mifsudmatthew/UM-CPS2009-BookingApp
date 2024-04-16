@@ -38,11 +38,7 @@ const Authenticated = ({ children }) => {
     return <div>Loading...</div>;
   }
 
-  if (!isAuthenticated) {
-    return <Navigate to={"/"} replace />;
-  }
-
-  return <>{children}</>;
+  return isAuthenticated ? <>{children}</> : <Navigate to={"/"} replace />;
 };
 
 Authenticated.propTypes = {

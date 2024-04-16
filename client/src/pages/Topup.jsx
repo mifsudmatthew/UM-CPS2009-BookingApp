@@ -7,7 +7,7 @@ import Form from "../components/form/Form";
 import InputBox from "../components/form/InputBox";
 import InputButton from "../components/form/InputButton";
 
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { useProfile } from "../context/ProfileContext";
@@ -93,6 +93,7 @@ function Topup() {
 
   return (
     <main className="profile">
+      <ToastContainer />
       <div className="header-title">Top Up</div>
       <Form>
         {/* Form to top up the user's account */}
