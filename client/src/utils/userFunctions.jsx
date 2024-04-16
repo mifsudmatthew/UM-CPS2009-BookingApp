@@ -6,28 +6,21 @@ export const isAdmin = (user) => {
   return user.isAdmin ? true : false;
 };
 
-export const isAuthenticated = (accessToken) => {
+export const isAuthenticated = async (accessToken) => {
+  if (!accessToken) return false;
   const url = "/api/authenticate";
   const options = {
     method: "POST",
     headers: { Authorization: `Bearer ${accessToken}` },
   };
-  let result = false;
 
-  if (!accessToken) return result;
-
-  const authResult = fetch(url, options);
-
-  authResult
-    .then((response) => {
-      result = response.ok ? true : false;
-    })
-    .catch((error) => {
-      console.error("Error attempting to authenticate the user:", error);
-      result = false;
-    });
-
-  return result;
+  try {
+    const response = await fetch(url, options);
+    return response.ok;
+  } catch (error) {
+    console.error("Error attempting to authenticate the user:", error);
+    return false;
+  }
 };
 
 export const getUserData = async () => {
