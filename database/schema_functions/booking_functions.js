@@ -34,7 +34,6 @@ async function getFutureBookings_ID(userID_toSearch) {
         throw new Error("Failed to Connect to Database");
     }
 }
-
 /** ===================================== Query Future Bookings By Court =========================
  * ------------ Recieving all future bookings By Court
  * Takes an Court ID
