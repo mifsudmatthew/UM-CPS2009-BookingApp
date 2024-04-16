@@ -1,14 +1,15 @@
+import "../styles/bookingform.css";
+import "react-toastify/dist/ReactToastify.css";
+
+import bookingImage from "../assets/bookingform.jpg";
+
 import { useState, useEffect, useContext } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate, Navigate } from "react-router-dom";
 
+import { Post } from "../utils/ApiFunctions";
 import { useProfile } from "../context/ProfileContext";
 import NotificationContext from "../context/NavbarContext";
-
-import { Post } from "../utils/ApiFunctions";
-import bookingImage from "../assets/bookingform.jpg";
-import "../styles/bookingform.css";
-import "react-toastify/dist/ReactToastify.css";
 
 /**
  * Renders a form for booking a tennis court.
@@ -125,7 +126,7 @@ function Booking() {
   };
 
   return (
-    <div className="booking-container">
+    <main className="booking-container">
       <ToastContainer />
       <img src={bookingImage} alt="Tennis court" className="booking-image" />
       <div className="booking-form">
@@ -182,7 +183,7 @@ function Booking() {
           </button>
         </form>
       </div>
-    </div>
+    </main>
   );
 }
 

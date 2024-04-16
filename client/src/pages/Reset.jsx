@@ -1,13 +1,13 @@
-import { useState, useMemo, useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { Post } from "../utils/ApiFunctions";
+import "react-toastify/dist/ReactToastify.css";
 
+import { useState, useMemo, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+
+import { Post } from "../utils/ApiFunctions";
 import Form from "../components/form/Form";
 import InputBox from "../components/form/InputBox";
 import InputButton from "../components/form/InputButton";
-
-import "react-toastify/dist/ReactToastify.css";
 
 /**
  * Reset component for resetting password.
@@ -115,7 +115,7 @@ export default function Reset() {
   };
 
   return (
-    <div className={"mainContainerReset"}>
+    <main className={"mainContainerReset"}>
       <ToastContainer />
       <div className="header-title">Reset</div>
       <Form classname="innerContainer">
@@ -178,6 +178,6 @@ export default function Reset() {
           onClick={handleChange}
         />
       </Form>
-    </div>
+    </main>
   );
 }

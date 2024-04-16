@@ -1,13 +1,13 @@
+import "react-toastify/dist/ReactToastify.css";
+
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { Post } from "../utils/ApiFunctions";
 
+import { Post } from "../utils/ApiFunctions";
 import Form from "../components/form/Form";
 import InputBox from "../components/form/InputBox";
 import InputButton from "../components/form/InputButton";
-
-import "react-toastify/dist/ReactToastify.css";
 
 /**
  * Renders the Register page component.
@@ -76,11 +76,11 @@ function Register() {
   };
 
   return (
-    <div className={"mainContainer"}>
+    <main className={"mainContainer"}>
       <ToastContainer /> {/* Container for displaying toast messages */}
       <Form className="innerContainer">
-      <h2 className="titleContainer">Create Account</h2>
-      <br />
+        <h2 className="titleContainer">Create Account</h2>
+        <br />
         <InputBox
           id="register-name-surname"
           label="Name & Surname"
@@ -131,7 +131,7 @@ function Register() {
         <br />
         <InputButton label="Sign Up" type="submit" onClick={handleSubmit} />
       </Form>
-    </div>
+    </main>
   );
 }
 
