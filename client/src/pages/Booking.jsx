@@ -27,7 +27,7 @@ function Booking() {
   const [buttonColor, setButtonColor] = useState(null); // Add state to store button color
   const [buttonCursor, setButtonCursor] = useState("pointer"); // Add state to store button cursor
   // Check if the user is an admin based on accessToken
-  const { user, accessToken } = useProfile();
+  const { user, accessToken, updateToken } = useProfile();
 
   // Context for notifications
   const { addSuccessfulBooking } = useContext(NotificationContext);
@@ -87,9 +87,7 @@ function Booking() {
       if (response.result !== true) {
         toast.error(response.error);
       } else {
-        toast.success(
-          "Court successfully booked! 😃 Redirecting to bookings page."
-        );
+        // toast.success("Court successfully booked! 😃 Redirecting to bookings page.");
         addSuccessfulBooking(booking); // Add the booking to the list of successful bookings
         if (response.accessToken) {
           updateToken(response.accessToken);
