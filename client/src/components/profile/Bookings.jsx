@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useProfile } from "../../context/ProfileContext";
+import { Post } from "../../utils/ApiFunctions";
+import { ToastContainer, toast } from "react-toastify";
 
 /**
  * Renders the Bookings component.
@@ -19,19 +21,23 @@ const Bookings = () => {
    * @function fetchBookedCourts
    * @returns {Promise<void>} A Promise that resolves when the booked courts are fetched.
    */
-  const fetchBookedCourts = async () => {
-    const user_details = { name, email };
-    try {
-      const response = await fetch("/api/getFutureBookings", user_details);
-      console.log(reponse);
-      setCourts(response);
-    } catch (error) {
-      // Log an error if the request fails
-      console.error("Error fetching booked courts: ", error);
-    }
-  };
+
 
   useEffect(() => {
+    console.log("HERE BOIO")
+    const fetchBookedCourts = async () => {
+      const user_details = { name, email };
+      try {
+        
+        console.log("HERE BOIO2")
+        const response = await Post("/api/getFutureBookings", user_details);
+        console.log(response);
+        setCourts(response);
+      } catch (error) {
+        // Log an error if the request fails
+        console.error("Error fetching booked courts: ", error);
+      }
+    };
     fetchBookedCourts();
   }, []);
 
@@ -40,15 +46,22 @@ const Bookings = () => {
    * @param {string} id - The ID of the booking to be cancelled.
    * @returns {Promise<void>} - A Promise that resolves when the booking is successfully cancelled.
    */
-  const cancelBooking = async (id) => {
+  const cancelBooking = async (id, price) => {
     try {
-      const response = await fetch(`/api/cancelBooking/${id}`, {
-        method: "POST",
-      });
-      const data = await response.json();
-      console.log(data);
-      // After successfully cancelling the booking, fetch the updated list of courts
-      fetchBookedCourts();
+      const response = await Post("/api/cancelBooking",{booking_id: id, price: price})
+      if(response.result == true){
+        toast.success(
+          "Court Successfully Canceled!"
+        );
+        if (response.accessToken) {
+          updateToken(response.accessToken);
+        }
+        setCourts(prevCourts => prevCourts.filter(court => court.id !== id));
+      }else{
+        toast.error(
+          "Court Failed to Delete"
+        );
+      }
     } catch (error) {
       console.error("Error cancelling booking: ", error);
     }
@@ -57,6 +70,7 @@ const Bookings = () => {
   return (
     <main className="profile">
       {/* Header */}
+      <ToastContainer/>
       <div className="header-title">Bookings</div>
       {/* Upcoming Bookings */}
       <section>
@@ -64,10 +78,12 @@ const Bookings = () => {
         <table className="bookings-table">
           <thead>
             <tr>
+              <th>Name</th>
               <th>Date</th>
               <th>Time</th>
-              <th>Court</th>
-              <th>Status</th>
+              <th>Address</th>
+              <th>Price</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -77,8 +93,10 @@ const Bookings = () => {
                 <td>{court.name}</td>
                 <td>{court.date}</td>
                 <td>{court.time}</td>
+                <td>{court.address}</td>
+                <td>{court.price}</td>
                 <td>
-                  <button onClick={() => cancelBooking(court.id)}>
+                  <button onClick={() => cancelBooking(court.id, court.price)}>
                     Cancel
                   </button>
                 </td>

@@ -34,7 +34,6 @@ async function getFutureBookings_ID(userID_toSearch) {
         throw new Error("Failed to Connect to Database");
     }
 }
-
 /** ===================================== Query Future Bookings By Court =========================
  * ------------ Recieving all future bookings By Court
  * Takes an Court ID
@@ -167,17 +166,10 @@ async function addBooking(userID_toBook, courtID_toBook, date_toBook, time_toBoo
  * ------------ Remove a booking
  * you will need to specify all the values related to the booking
  */
-async function removeBooking(userID_toBook, courtID_toBook, date_toBook, time_toBook) {
+async function removeBooking(bookingID) {
     try {
-        await booking_schema.findOneAndDelete({ date: date_toBook,
-                                                time: time_toBook, 
-                                                userID: userID_toBook,
-                                                courtID: courtID_toBook 
-                                              });
-
-        // --------------------- Deletion Successfull
-        return {result: true, data: null, error: null };
-
+        await booking_schema.findByIdAndDelete(bookingID);
+        return { result: true, data: null, error: null };
     } catch (error) {
         throw new Error("Failed to Connect to Database");
     }
