@@ -8,6 +8,7 @@ import {
   House,
   BoxArrowInRight,
   PersonPlusFill,
+  PersonFill,
 } from "react-bootstrap-icons";
 import NotificationPanel from "./NotificationPanel";
 
@@ -53,19 +54,15 @@ const isAdmin = (user) => {
  */
 function Navbar() {
   const [open, setOpen] = useState(false);
-
   let menuRef = useRef();
 
   useEffect(() => {
     let handler = (e) => {
       if (!menuRef.current.contains(e.target)) {
         setOpen(false);
-        console.log(menuRef.current);
       }
     };
-
     document.addEventListener("mousedown", handler);
-
     return () => {
       document.removeEventListener("mousedown", handler);
     };
@@ -218,13 +215,13 @@ function Navbar() {
                 {!isAdmin(user) && (
                   <>
                     <li className="dropdownItem">
-                      <PersonPlusFill className="dropdownItem-img"></PersonPlusFill>
+                      <PersonFill className="dropdownItem-img"></PersonFill>
                       <NavLink className="dropdownItem-a" to="/profile">
                         Profile
                       </NavLink>
                     </li>
                     <li className="dropdownItem">
-                      <PersonPlusFill className="dropdownItem-img"></PersonPlusFill>
+                      <Wallet2 className="dropdownItem-img"></Wallet2>
                       <NavLink className="dropdownItem-a" to="profile/topup">
                         Topup
                       </NavLink>
