@@ -36,6 +36,17 @@
   }
   
 }
+@media (max-width: 360px) {
+  .navbar-title a{
+    font-size: 120%;
+    font-weight: bold;
+    color: black; 
+    text-align: center;
+    text-decoration: none;
+    margin: 0% 5%;
+  }
+  
+}
 .navbar-balance{
   outline: 2px solid #444444;
   stroke: black;
@@ -109,7 +120,7 @@
 
 .nav-elements.active {
   width: 15rem;
-  top: 4.3rem;
+  top: 4rem;
 }
 
 .nav-elements ul {
