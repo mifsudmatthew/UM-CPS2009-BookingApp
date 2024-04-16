@@ -10,6 +10,7 @@ import Bookings from "./components/profile/Bookings.jsx";
 import AccountDetails from "./components/profile/AccountDetails";
 import ConfigCourts from "./components/admin/ConfigCourts.jsx";
 import AddNewCourt from "./components/admin/AddNewCourt.jsx";
+import CourtBookingStats from "./components/admin/CourtBookingStats.jsx";
 
 /* Pages */
 import Home from "./pages/Home";
@@ -46,6 +47,7 @@ export default function AppContainer() {
               <Route index exact element={<ConfigCourts />} />
               <Route path="updatecourts" element={<ConfigCourts />} />
               <Route path="addnewcourt" element={<AddNewCourt />} />
+              <Route path="stats" element={<CourtBookingStats />} />
               <Route path="*" element={<Errors />} />
             </Route>
           </Route>
