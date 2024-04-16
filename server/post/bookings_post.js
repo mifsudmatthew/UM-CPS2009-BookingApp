@@ -37,6 +37,17 @@ bookingRouter.post(
       );
       if (response.result == true) {
         user_quieries.updateUserBalance(email, -court.data.price);
+        const user = await user_queries.retrieveUser(email);
+        const userData = {
+          _id: user.data._id,
+          email: user.data.email,
+          name: user.data.name,
+          admin: user.data.admin,
+          balance: user.data.balance,
+        };
+        const accessToken = server_functions.generateAccessToken(userData);
+
+        return res.json({ result: true, accessToken: accessToken });
       }
       res.json(response);
     }
@@ -48,36 +59,64 @@ bookingRouter.post(
   server_functions.authenticateToken,
   async (req, res) => {
     try {
-      console.log("HERE");
       const email = req.user.email;
       const user = await user_quieries.retrieveUser(email);
       const bookings = await bookings_quieries.getFutureBookings_ID(
         user.data.id
       );
-
-      console.log(bookings);
-
-      const formattedBookings = await Promise.all(
-        bookings.data.map(async (booking) => {
-          const court = await courts_quieries.retrieveCourt(booking.courtID);
-          console.log(court);
-          return {
-            id: booking.id,
-            date: booking.date.toDateString(),
-            time: booking.time,
-            name: court.data.court_name,
-            address: court.data.address,
-            price: court.data.price,
-          };
-        })
-      );
-
-      res.json(formattedBookings);
+      if(bookings.result == true){
+        const formattedBookings = await Promise.all(
+          bookings.data.map(async (booking) => {
+            const court = await courts_quieries.retrieveCourt(booking.courtID);
+            return {
+              id: booking.id,
+              date: booking.date.toDateString(),
+              time: booking.time,
+              name: court.data.court_name,
+              address: court.data.address,
+              price: court.data.price,
+            };
+          })
+        );
+        res.json(formattedBookings);
+      }else{
+        res.json([]);
+      }
     } catch (error) {
       console.error("Error fetching future bookings: ", error);
       res.status(500).json({ error: "Error fetching future bookings" });
     }
   }
 );
+bookingRouter.post(
+  "/cancelBooking",
+  server_functions.authenticateToken,
+  async (req, res) => {
+    try {
+      const booking_id = req.body.booking_id;
+      const result = await bookings_quieries.removeBooking(
+        booking_id
+      );
+      if(result.result == true){
+        await user_quieries.updateUserBalance(req.user.email, req.body.price);
+        const user = await user_queries.retrieveUser(email);
+        const userData = {
+          _id: user.data._id,
+          email: user.data.email,
+          name: user.data.name,
+          admin: user.data.admin,
+          balance: user.data.balance,
+        };
+        const accessToken = server_functions.generateAccessToken(userData);
 
+        return res.json({ result: true, accessToken: accessToken });
+      }else{
+        res.json({result: false});
+      }
+    } catch (error) {
+      console.error("Error fetching future bookings: ", error);
+      res.status(500).json({ error: "Error fetching future bookings" });
+    }
+  }
+);
 module.exports = bookingRouter;
