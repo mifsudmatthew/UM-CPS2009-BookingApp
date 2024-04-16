@@ -1,11 +1,11 @@
 const express = require("express");
-const bookingRounter = express.Router();
+const bookingRouter = express.Router();
 const server_functions = require("../server_functions");
 const bookings_quieries = require("../../database/schema_functions/booking_functions");
 const courts_quieries = require("../../database/schema_functions/court_functions");
-const user_quieries = require ("../../database/schema_functions/user_functions");
+const user_quieries = require("../../database/schema_functions/user_functions");
 
-bookingRounter.post("/getAvailableCourts", async (req, res) => {
+bookingRouter.post("/getAvailableCourts", async (req, res) => {
   var date = new Date(req.body.date);
   var time = parseInt(req.body.hour);
   var responseQ = await bookings_quieries.getAvailableCourts(date, time);
@@ -13,7 +13,7 @@ bookingRounter.post("/getAvailableCourts", async (req, res) => {
   res.json(responseQ.data);
 });
 
-bookingRounter.post(
+bookingRouter.post(
   "/booking",
   server_functions.authenticateToken,
   async (req, res) => {
@@ -21,9 +21,13 @@ bookingRounter.post(
 
     email = req.user.email;
     user = await user_quieries.retrieveUser(email);
-    if(user.data.balance <= court.data.price){
-      return res.json({ result: false, data: null, error: "Not enough Points in Balance" });
-    }else{
+    if (user.data.balance <= court.data.price) {
+      return res.json({
+        result: false,
+        data: null,
+        error: "Not enough Points in Balance",
+      });
+    } else {
       response = await bookings_quieries.addBooking(
         req.user.id,
         req.body.court,
@@ -31,7 +35,7 @@ bookingRounter.post(
         parseInt(req.body.hour),
         3
       );
-      if(response.result == true){
+      if (response.result == true) {
         user_quieries.updateUserBalance(email, -court.data.price);
       }
       res.json(response);
@@ -39,15 +43,41 @@ bookingRounter.post(
   }
 );
 
-bookingRounter.post("/getFutureBookings", async (req, res) => {
-  email = req.user.email;
-  user = await user_quieries.retrieveUser(email);
-  console.log(user)
-  var responseQ = await bookings_quieries.getFutureBookings_ID(user.data.id);
+bookingRouter.post(
+  "/getFutureBookings",
+  server_functions.authenticateToken,
+  async (req, res) => {
+    try {
+      console.log("HERE");
+      const email = req.user.email;
+      const user = await user_quieries.retrieveUser(email);
+      const bookings = await bookings_quieries.getFutureBookings_ID(
+        user.data.id
+      );
 
-  res.json(responseQ.data);
-});
+      console.log(bookings);
 
+      const formattedBookings = await Promise.all(
+        bookings.data.map(async (booking) => {
+          const court = await courts_quieries.retrieveCourt(booking.courtID);
+          console.log(court);
+          return {
+            id: booking.id,
+            date: booking.date.toDateString(),
+            time: booking.time,
+            name: court.data.court_name,
+            address: court.data.address,
+            price: court.data.price,
+          };
+        })
+      );
 
+      res.json(formattedBookings);
+    } catch (error) {
+      console.error("Error fetching future bookings: ", error);
+      res.status(500).json({ error: "Error fetching future bookings" });
+    }
+  }
+);
 
-module.exports = bookingRounter;
+module.exports = bookingRouter;

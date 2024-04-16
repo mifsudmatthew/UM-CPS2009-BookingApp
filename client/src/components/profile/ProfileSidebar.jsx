@@ -59,7 +59,7 @@ const ProfileSidebar = () => {
             {/* Navigation link to the top-up page */}
           </li>
           <li>
-            <NavLink to="/booking">Book Court</NavLink>{" "}
+            <NavLink to="/profile/booking">Book Court</NavLink>{" "}
             {/* Navigation link to the court booking page */}
           </li>
           <li>
