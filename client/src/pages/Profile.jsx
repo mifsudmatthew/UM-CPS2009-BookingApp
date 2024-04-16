@@ -1,8 +1,12 @@
+import "react-toastify/dist/ReactToastify.css";
 import "../styles/profile.css";
+import { useMemo } from "react";
 import { Outlet, Navigate } from "react-router-dom";
 import ProfileSidebar from "../components/profile/ProfileSidebar";
 import { useProfile } from "../context/ProfileContext";
-import { isAuthenticated, isAdmin } from "../utils/userFunctions";
+import { isAdmin } from "../utils/userFunctions";
+import Authenticated from "../components/shared/Authenticated.jsx";
+import { ToastContainer } from "react-toastify";
 
 /**
  * Renders the profile page.
@@ -10,19 +14,22 @@ import { isAuthenticated, isAdmin } from "../utils/userFunctions";
  * @returns {JSX.Element} The rendered profile page.
  */
 const Profile = () => {
-  // Check if the user is an admin based on accessToken
-  const { user, accessToken } = useProfile();
+  const { user } = useProfile();
 
-  if (!isAuthenticated(accessToken) || isAdmin(user)) {
-    // Redirect to the home page if the user is an admin or not logged in
-    return <Navigate to="/" replace={true} />;
-  }
+  useMemo(async () => {
+    if (isAdmin(user)) {
+      return <Navigate to="/" replace={true} />;
+    }
+  }, [user]);
 
   return (
-    <div className="profile-container">
-      <ProfileSidebar />
-      <Outlet />
-    </div>
+    <Authenticated>
+      <div className="profile-container">
+        <ToastContainer />
+        <ProfileSidebar />
+        <Outlet />
+      </div>
+    </Authenticated>
   );
 };
 
