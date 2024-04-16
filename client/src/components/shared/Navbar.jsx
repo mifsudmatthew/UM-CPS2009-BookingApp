@@ -220,7 +220,7 @@ function Navbar() {
                       </NavLink>
                     </li>
                     <li className="dropdownItem">
-                      <PersonPlusFill className="dropdownItem-img"></PersonPlusFill>
+                      <Wallet2 className="dropdownItem-img"></Wallet2>
                       <NavLink className="dropdownItem-a" to="profile/topup">
                         Topup
                       </NavLink>
