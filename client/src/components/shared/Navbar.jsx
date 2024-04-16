@@ -1,7 +1,14 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import Popup from "reactjs-popup";
-import { Wallet2, Bell, BellFill } from "react-bootstrap-icons";
+import {
+  Wallet2,
+  Bell,
+  BellFill,
+  House,
+  BoxArrowInRight,
+  PersonPlusFill,
+} from "react-bootstrap-icons";
 import NotificationPanel from "./NotificationPanel";
 
 import NotificationContext from "../../context/NavbarContext";
@@ -45,6 +52,24 @@ const isAdmin = (user) => {
  * @returns {JSX.Element} The rendered navigation bar.
  */
 function Navbar() {
+  const [open, setOpen] = useState(false);
+
+  let menuRef = useRef();
+
+  useEffect(() => {
+    let handler = (e) => {
+      if (!menuRef.current.contains(e.target)) {
+        setOpen(false);
+        console.log(menuRef.current);
+      }
+    };
+
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  }, []);
   // State variables
   const [authenticated, setAuthenticated] = useState(false); // State variable to store the login status of the user
   const [showNavbar, setShowNavbar] = useState(false); // Controls the visibility of the navbar
@@ -101,25 +126,31 @@ function Navbar() {
 
         {/* ---------------------- Bell ---------------------------- */}
         <div className="navbar-bell">
-        <Popup // Add a popup to display the notification panel
-          trigger={
-            <div style={{ cursor: "pointer" }} onClick={handleBellClick}>
-              {accessToken &&
-                (notification ? <BellFill className="bell" /> : <Bell />)}
-            </div>
-          }
-          position="right top"
-          on="click"
-        >
-          <NotificationPanel />
-        </Popup>
+          <Popup // Add a popup to display the notification panel
+            trigger={
+              <div style={{ cursor: "pointer" }} onClick={handleBellClick}>
+                {accessToken &&
+                  (notification ? <BellFill className="bell" /> : <Bell />)}
+              </div>
+            }
+            position="right top"
+            on="click"
+          >
+            <NotificationPanel />
+          </Popup>
         </div>
         {/* ---------------------- Menu - icon ---------------------------- */}
-        <div className="menu-icon" onClick={handleShowNavbar}>
-          <img src={hamburger} alt="hamburger" />
+        <div className="menu-icon" ref={menuRef}>
+          <img
+            src={hamburger}
+            alt="hamburger"
+            onClick={() => {
+              setOpen(!open);
+            }}
+          />
         </div>
 
-        <div className={`nav-elements ${showNavbar ? "active" : ""}`}>
+        {/* <div className={`nav-elements ${showNavbar ? "active" : ""}`}>
           <ul>
             <li>
               <NavLink to="/">Home</NavLink>
@@ -142,6 +173,61 @@ function Navbar() {
                     </li>
                     <li>
                       <NavLink to="/profile/topup">Top Up</NavLink>
+                    </li>
+                  </>
+                )}
+              </>
+            )}
+          </ul>
+        </div> */}
+        {/* <div className="menu-container" ref={menuRef}>
+          <div
+            className="menu-trigger"
+            onClick={() => {
+              setOpen(!open);
+            }}
+          >
+            <img src={user}></img>
+          </div> */}
+
+        <div className={`dropdown-menu ${open ? "active" : "inactive"}`}>
+          <ul>
+            <li className="dropdownItem">
+              <House className="dropdownItem-img"></House>
+              <NavLink className="dropdownItem-a" to="/">
+                Home
+              </NavLink>
+            </li>
+            {!authenticated ? (
+              <>
+                <li className="dropdownItem">
+                  <BoxArrowInRight className="dropdownItem-img"></BoxArrowInRight>
+                  <NavLink className="dropdownItem-a" to="/login">
+                    Login
+                  </NavLink>
+                </li>
+                <li className="dropdownItem">
+                  <PersonPlusFill className="dropdownItem-img"></PersonPlusFill>
+                  <NavLink className="dropdownItem-a" to="/register">
+                    Register
+                  </NavLink>
+                </li>
+              </>
+            ) : (
+              <>
+                {!isAdmin(user) && (
+                  <>
+                    <li className="dropdownItem">
+                      <PersonPlusFill className="dropdownItem-img"></PersonPlusFill>
+                      <NavLink className="dropdownItem-a" to="/profile">
+                        Profile
+                      </NavLink>
+                    </li>
+                    <li className="dropdownItem">
+                      <PersonPlusFill className="dropdownItem-img"></PersonPlusFill>
+                      <NavLink className="dropdownItem-a" to="profile/topup">
+                        Topup
+                      </NavLink>
                     </li>
                   </>
                 )}
