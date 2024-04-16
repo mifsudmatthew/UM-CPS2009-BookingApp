@@ -78,17 +78,17 @@ function Navbar() {
   // console.log(!isAdmin(user) && authenticated);
   return (
     <nav className="navbar">
-      <div className="container">
-        {/* ---------------------- Logo ------------------------------- */}
-        <div className="navbar-logo">
-          <img src={logo} alt="logo" />
-        </div>
+      {/* ---------------------- Logo ------------------------------- */}
+      <div className="navbar-logo">
+        <img src={logo} alt="logo" />
+      </div>
 
-        {/* ---------------------- Title ------------------------------ */}
-        <div className="navbar-title">
-          <NavLink to="/">ServeSpot</NavLink>
-        </div>
+      {/* ---------------------- Title ------------------------------ */}
+      <div className="navbar-title">
+        <NavLink to="/">ServeSpot</NavLink>
+      </div>
 
+      <div className="navbar-right">
         {/* ---------------------- Balance ---------------------------- */}
         {!isAdmin(user) && authenticated ? (
           <div className="navbar-balance">
@@ -100,6 +100,7 @@ function Navbar() {
         )}
 
         {/* ---------------------- Bell ---------------------------- */}
+        <div className="navbar-bell">
         <Popup // Add a popup to display the notification panel
           trigger={
             <div style={{ cursor: "pointer" }} onClick={handleBellClick}>
@@ -108,10 +109,11 @@ function Navbar() {
             </div>
           }
           position="right top"
-          on="click">
+          on="click"
+        >
           <NotificationPanel />
         </Popup>
-
+        </div>
         {/* ---------------------- Menu - icon ---------------------------- */}
         <div className="menu-icon" onClick={handleShowNavbar}>
           <img src={hamburger} alt="hamburger" />
