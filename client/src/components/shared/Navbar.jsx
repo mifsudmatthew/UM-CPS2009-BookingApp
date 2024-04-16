@@ -8,6 +8,7 @@ import {
   House,
   BoxArrowInRight,
   PersonPlusFill,
+  PersonFill,
 } from "react-bootstrap-icons";
 import NotificationPanel from "./NotificationPanel";
 
@@ -214,7 +215,7 @@ function Navbar() {
                 {!isAdmin(user) && (
                   <>
                     <li className="dropdownItem">
-                      <PersonPlusFill className="dropdownItem-img"></PersonPlusFill>
+                      <PersonFill className="dropdownItem-img"></PersonFill>
                       <NavLink className="dropdownItem-a" to="/profile">
                         Profile
                       </NavLink>
