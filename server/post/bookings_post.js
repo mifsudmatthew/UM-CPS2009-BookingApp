@@ -54,7 +54,7 @@ bookingRouter.post(
   }
 );
 
-bookingRounter.post("/getFutureBookings", async (req, res) => {
+bookingRouter.post("/getFutureBookings", async (req, res) => {
   email = req.user.email;
   user = await user_quieries.retrieveUser(email);
   console.log(user);
@@ -63,4 +63,4 @@ bookingRounter.post("/getFutureBookings", async (req, res) => {
   res.json(responseQ.data);
 });
 
-module.exports = bookingRounter;
+module.exports = bookingRouter;
