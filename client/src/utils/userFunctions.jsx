@@ -1,28 +1,6 @@
 /* Stores functions that communicate with the server to
  * retrieve/set/delete user data */
 
-export const isAdmin = (user) => {
-  if (!user) return false;
-  return user.isAdmin ? true : false;
-};
-
-export const isAuthenticated = async (accessToken) => {
-  if (!accessToken) return false;
-  const url = "/api/authenticate";
-  const options = {
-    method: "POST",
-    headers: { Authorization: `Bearer ${accessToken}` },
-  };
-
-  try {
-    const response = await fetch(url, options);
-    return response.ok;
-  } catch (error) {
-    console.error("Error attempting to authenticate the user:", error);
-    return false;
-  }
-};
-
 export const getUserData = async () => {
   const url = "/api/user";
   const options = {

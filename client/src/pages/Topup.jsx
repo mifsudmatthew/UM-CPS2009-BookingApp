@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Post } from "../utils/ApiFunctions";
-import { jwtDecode } from "jwt-decode";
 
 import Form from "../components/form/Form";
 import InputBox from "../components/form/InputBox";
 import InputButton from "../components/form/InputButton";
 
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { useProfile } from "../context/ProfileContext";
@@ -20,7 +19,7 @@ import { useProfile } from "../context/ProfileContext";
 function Topup() {
   const location = useLocation();
   const session_id = new URLSearchParams(location.search).get("session_id");
-  const { updateToken, updateUser } = useProfile();
+  const { updateToken } = useProfile();
   const [amount, setAmount] = useState(0); // Initialize the amount state
 
   useEffect(() => {
@@ -39,9 +38,6 @@ function Topup() {
 
           if (response.accessToken) {
             updateToken(response.accessToken);
-            updateUser(
-              response.accessToken ? jwtDecode(response.accessToken) : {}
-            );
           }
           console.log(response);
         } catch (err) {
@@ -93,6 +89,7 @@ function Topup() {
 
   return (
     <main className="profile">
+      <ToastContainer />
       <div className="header-title">Top Up</div>
       <Form>
         {/* Form to top up the user's account */}

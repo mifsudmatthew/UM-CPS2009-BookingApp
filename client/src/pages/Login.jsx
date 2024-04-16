@@ -3,6 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+
 import { useProfile } from "../context/ProfileContext";
 import { Post } from "../utils/ApiFunctions";
 import Form from "../components/form/Form";
@@ -62,7 +63,7 @@ function Login() {
   };
 
   return (
-    <div className="mainContainer">
+    <main className="mainContainer">
       <ToastContainer />
       <Form>
         <div className={"titleContainer"}>Login</div>
@@ -99,7 +100,7 @@ function Login() {
           </Link>
         </div>
       </Form>
-    </div>
+    </main>
   );
 }
 

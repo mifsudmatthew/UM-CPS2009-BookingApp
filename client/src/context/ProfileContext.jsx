@@ -21,6 +21,7 @@ export const ProfileProvider = ({ children }) => {
   const updateToken = (accessToken) => {
     localStorage.setItem("accessToken", JSON.stringify(accessToken));
     setAccessToken(accessToken);
+    setUser(accessToken ? jwtDecode(accessToken) : {});
   };
 
   const removeToken = () => {
