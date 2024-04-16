@@ -22,7 +22,8 @@ const Bookings = () => {
   const fetchBookedCourts = async () => {
     const user_details = { name, email };
     try {
-      const response = await fetch("/api/getBookedCourts", user_details);
+      const response = await fetch("/api/getFutureBookings", user_details);
+      console.log(reponse);
       setCourts(response);
     } catch (error) {
       // Log an error if the request fails
