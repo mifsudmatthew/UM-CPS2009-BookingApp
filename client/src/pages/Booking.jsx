@@ -87,7 +87,7 @@ function Booking() {
       if (response.result !== true) {
         toast.error(response.error);
       } else {
-        // toast.success("Court successfully booked! 😃 Redirecting to bookings page.");
+        toast.success("Court successfully booked! Redirecting to bookings page.");
         addSuccessfulBooking(booking); // Add the booking to the list of successful bookings
         if (response.accessToken) {
           updateToken(await getUpdatedToken());
@@ -128,7 +128,6 @@ function Booking() {
 
   return (
     <main className="booking-container">
-      <ToastContainer />
       <img src={bookingImage} alt="Tennis court" className="booking-image" />
       <div className="booking-form">
         {/* Form for booking a tennis court */}
