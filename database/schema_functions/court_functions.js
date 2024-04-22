@@ -65,7 +65,7 @@ async function registerCourt({
 async function getAllCourts() {
   try {
     // Find all courts
-    const allCourts = await court_schema.find({});
+    const allCourts = await courts_schema.find({});
     return { result: true, data: allCourts, error: null };
   } catch (error_message) {
     throw new Error("Failed to Connect to Database");
@@ -74,7 +74,7 @@ async function getAllCourts() {
 
 async function updateCourt(court_id, newName, newPrice) {
   try {
-    const court = await court_schema.findByIdAndUpdate(
+    const court = await courts_schema.findByIdAndUpdate(
       court_id, // Search by court_id
       { $set: { court_name: newName, price: newPrice } }, // Change name and price
       { new: true } // Specify to return updated entry
@@ -92,7 +92,7 @@ async function updateCourt(court_id, newName, newPrice) {
     // --------------------- Court Found (returning stuff)
     return {
       result: true,
-      data: { court },
+      data: { ...court },
       error: null,
     };
   } catch (error_message) {
@@ -110,4 +110,5 @@ module.exports = {
   retrieveCourt: retrieveCourt,
   registerCourt: registerCourt,
   getAllCourts: getAllCourts,
+  updateCourt: updateCourt,
 };
