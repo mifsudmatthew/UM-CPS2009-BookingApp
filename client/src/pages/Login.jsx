@@ -63,11 +63,11 @@ function Login() {
   };
 
   return (
-    <main className="mainContainer">
+    <main className="mainContainerLogin">
       <ToastContainer />
       <Form>
         <div className={"titleContainer"}>Login</div>
-        <br />
+  
         <InputBox
           id="loginEmail"
           label="Email"

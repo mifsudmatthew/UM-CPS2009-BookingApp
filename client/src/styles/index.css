@@ -30,12 +30,12 @@ button {
   /* border-radius: 8px; */
   /* border: 1px solid transparent; */
   border: none;
-  border-radius: 15px;
-  background: #3e4a36;
+  border-radius: 5rem;
+  background: #344a2b;
   color: white;
-  padding: 15px 10vh;
+  padding: 15px 5vh;
   /* padding: 0.6em 1.2em; */
-  font-size: 20px;
+  font-size: 1rem;
   /* font-size: 1em; */
   /* font-weight: 500; */
   /* font-family: inherit; */
