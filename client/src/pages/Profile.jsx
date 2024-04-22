@@ -13,17 +13,17 @@ import Admin from "../components/shared/Admin.jsx";
  */
 const Profile = () => {
   return (
-   //<Authenticated>
-   <div>
-      <Admin>
-        <Navigate to="/" replace={true} />
-      </Admin>
-      <div className="profile-container">
-        <ProfileSidebar />
-        <Outlet />
+    <Authenticated>
+      <div>
+        <Admin>
+          <Navigate to="/" replace={true} />
+        </Admin>
+        <div className="profile-container">
+          <ProfileSidebar />
+          <Outlet />
+        </div>
       </div>
-      </div>
-    //</Authenticated>
+    </Authenticated>
   );
 };
 
