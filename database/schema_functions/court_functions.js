@@ -65,7 +65,7 @@ async function registerCourt({
 async function getAllCourts() {
   try {
     // Find all courts
-    const allCourts = await court_schema.find({});
+    const allCourts = await courts_schema.find({});
     return { result: true, data: allCourts, error: null };
   } catch (error_message) {
     throw new Error("Failed to Connect to Database");

@@ -82,3 +82,5 @@ adminRouter.post(
     }
   }
 );
+
+module.exports = adminRouter;
