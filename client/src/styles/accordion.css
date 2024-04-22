@@ -1,15 +1,15 @@
 /* Updated CSS styles */
 .accordion-button {
-    background-color: #b4c69d;
-    width: 98%;
-    border-radius: 20px;
+  background-color: #b4c69d;
+  width: 98%;
+  border-radius: 20px;
 }
 
 .accordion-button:not(.collapsed) {
-    background-color: #b4c69d9a;
+  background-color: #b4c69d9a;
 }
 
 .accordion-body {
-    border: 10px solid rgb(255, 255, 255);
-    border-radius: 20px;
+  border: 10px solid rgb(255, 255, 255);
+  border-radius: 20px;
 }
