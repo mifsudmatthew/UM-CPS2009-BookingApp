@@ -73,6 +73,7 @@ const Bookings = () => {
       {/* Upcoming Bookings */}
       <section>
         <h4>Upcoming Bookings</h4>
+        <div className="table-container">
         <table className="bookings-table">
           <thead>
             <tr>
@@ -81,7 +82,6 @@ const Bookings = () => {
               <th>Time</th>
               <th>Address</th>
               <th>Price</th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -102,6 +102,7 @@ const Bookings = () => {
             ))}
           </tbody>
         </table>
+        </div>
       </section>
     </main>
   );
