@@ -80,7 +80,8 @@
   cursor: pointer;
 }
 
-.menu-icon img {
+.menu-icon-img {
+  font-size: 35px;
   width: auto;
   max-height: 3rem;
   height: 80%;
