@@ -6,7 +6,7 @@ const nodeMailer = require("nodemailer");
 // JSON Web Tokens for autherization
 const jwt = require("jsonwebtoken");
 
-const user_queries = require("../database/schema_functions/user_functions")
+const user_queries = require("../database/schema_functions/user_functions");
 
 var accountPins = []; // Creating an array to store pins generated and their corresponding emails.
 
@@ -86,16 +86,22 @@ async function sendPinByMail(loggedInEmail) {
 
 // Function to send a confirmation to the user that the payment was successfull.
 async function sendPaymentSuccessMail(user_email, amount) {
-
   user_data = await user_queries.retrieveUser(user_email); // Obtaining data associated with the email inputted.
 
-    if (user_data.result) {
+  if (user_data.result) {
     // Variable storing all email details.
     const emailDetails = {
       from: "no-reply@servespot.com", // Address of account sending the email.
       to: user_email, // This should be changed to email of the user requesting a reset.
-      subject: "Successful Account Top-Up: " + amount  +" Added", // Subject of email.
-      text: "Dear " + user_data.data.name + ",\n\nWe're pleased to inform you that your recent request to top up your ServeSpot account has been successfully processed.\n\nHere are the details of your transaction:\n\n Amount: " + amount + "\n\n New Balance: " + user_data.data.balance + "\n\nYour account is now ready to use with the updated balance. We ensure that our platform is continuously updated to provide you with the best possible experience.\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot"// Email content.
+      subject: "Successful Account Top-Up: " + amount + " Added", // Subject of email.
+      text:
+        "Dear " +
+        user_data.data.name +
+        ",\n\nWe're pleased to inform you that your recent request to top up your ServeSpot account has been successfully processed.\n\nHere are the details of your transaction:\n\n Amount: " +
+        amount +
+        "\n\n New Balance: " +
+        user_data.data.balance +
+        "\n\nYour account is now ready to use with the updated balance. We ensure that our platform is continuously updated to provide you with the best possible experience.\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot", // Email content.
     };
 
     // Creating a transporter with the details of the mail service being used.
@@ -114,13 +120,9 @@ async function sendPaymentSuccessMail(user_email, amount) {
 
     // Sending a response on success
     return { message: "Email sent successfully" };
-
-  }else{
-
-    return { message: "Failed to retreive email"};
-
+  } else {
+    return { message: "Failed to retreive email" };
   }
-  
 }
 
 function authenticateToken(req, res, next) {
@@ -128,7 +130,7 @@ function authenticateToken(req, res, next) {
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     // Check if header is exists and starts with 'Bearer '
-    return res.status(400).send("No authorization attached");
+    return res.status(400).json({ error: "No authorization attached" });
   }
 
   // When token exists
@@ -136,12 +138,12 @@ function authenticateToken(req, res, next) {
 
   if (!token) {
     // When token is blank
-    return res.status(403).send("Unauthorized: No token supplied");
+    return res.status(403).json({ error: "Unauthorized: No token supplied" });
   }
 
   // Verify
   jwt.verify(token, process.env.JWT_ACCESS, (err, decoded) => {
-    if (err) return res.status(403).send(`Token is invalid ${err}`);
+    if (err) return res.status(403).json({ error: `Token is invalid ${err}` });
     req.user = decoded;
     next();
   });
@@ -165,22 +167,29 @@ function getToken(req) {
   return authHeader.split(" ")[1];
 }
 
-function getEmail(token) {
-  if (!token) {
-    // If token is undefined
-    throw new Error("No token supplied to function");
+async function getUpdatedToken(email) {
+  if (email == undefined || email == null)
+    return { result: false, data: {}, error: "Email not supplied" };
+
+  try {
+    const user = await queries.retrieveUser(email);
+
+    if (!user.result) return { result: true, data: {}, error: user.error };
+
+    const newPayload = {
+      id: user.data._id,
+      email: user.data.email,
+      name: user.data.name,
+      balance: user.data.balance,
+      admin: user.data.admin,
+    };
+
+    const newToken = generateAccessToken(newPayload);
+
+    return { result: true, data: { accesstoken: newToken }, error: null };
+  } catch (error) {
+    return { result: false, data: { accesstoken: newToken }, error: error };
   }
-
-  // Obtain decoded object
-  const decoded = jwt.decode(token);
-
-  if (!decoded) {
-    // If decoded is not valid object
-    throw new Error("Failed to decode token");
-  }
-
-  // Return the email
-  return decoded.email;
 }
 
 function generateAccessToken(payload) {
@@ -198,7 +207,7 @@ module.exports = {
   sendPaymentSuccessMail,
   authenticateToken,
   getToken,
-  getEmail,
+  getUpdatedToken,
   generateAccessToken,
   generateRefreshToken,
 };

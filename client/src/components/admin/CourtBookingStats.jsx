@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Accordion from "react-bootstrap/Accordion";
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import "../../styles/accordion.css";
 
 /**
