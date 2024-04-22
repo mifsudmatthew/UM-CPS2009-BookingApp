@@ -6,8 +6,7 @@ import Form from "../components/form/Form";
 import InputBox from "../components/form/InputBox";
 import InputButton from "../components/form/InputButton";
 
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 import { useProfile } from "../context/ProfileContext";
 

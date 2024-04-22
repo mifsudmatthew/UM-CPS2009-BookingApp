@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "../../styles/courts.css";
 
 import {
@@ -52,16 +51,8 @@ const courts = [
  * @returns {JSX.Element} The Courts component.
  */
 const Courts = () => {
-  const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
   const { image, title, description } = courts[current];
-
-  /**
-   * Redirects to the booking page.
-   */
-  function toBooking() {
-    navigate("/booking", { replace: true });
-  }
 
   /**
    * Handles the click event for the previous arrow button.

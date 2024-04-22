@@ -92,7 +92,7 @@ async function updateCourt(court_id, newName, newPrice) {
     // --------------------- Court Found (returning stuff)
     return {
       result: true,
-      data: { ...court },
+      data: court,
       error: null,
     };
   } catch (error_message) {
