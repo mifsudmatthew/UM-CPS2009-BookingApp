@@ -85,9 +85,11 @@ adminRouter.post(
 
       // When court doesn't exist
       if (!response.result) {
-        return res
-          .status(400)
-          .json({ message: "No court found", error: response.error });
+        return res.status(400).json({
+          message: "No court found",
+          data: {},
+          error: response.error,
+        });
       }
 
       // When court does exist
@@ -97,9 +99,11 @@ adminRouter.post(
         error: null,
       });
     } catch (error_msg) {
-      return res
-        .status(400)
-        .json({ message: "Failed to update court", error: error_msg });
+      return res.status(400).json({
+        message: "Failed to update court",
+        data: {},
+        error: error_msg,
+      });
     }
   }
 );

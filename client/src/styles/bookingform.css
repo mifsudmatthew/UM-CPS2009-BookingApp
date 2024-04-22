@@ -1,6 +1,6 @@
 .booking-container {
   display: flex;
-  align-items: stretch; 
+  align-items: stretch;
   justify-content: center;
   padding: 20px;
   width: 70%;
@@ -10,7 +10,6 @@
 
 .booking-image {
   display: none;
-
 }
 
 .booking-form {
@@ -19,7 +18,7 @@
   flex-direction: column;
   padding: 40px;
   padding-right: 50px;
-  background-color: #D8E7CB; 
+  background-color: #d8e7cb;
 }
 
 .booking-form-title {
@@ -28,7 +27,6 @@
   font-size: 2.5rem;
   border-bottom: 1px solid #0000003f;
   margin-bottom: 20px;
-
 }
 
 .booking-form-subtitle {
@@ -50,7 +48,7 @@
 
 .form-section input,
 .form-section select {
-  box-sizing: border-box; 
+  box-sizing: border-box;
   width: 100%;
   padding: 10px;
   margin-bottom: 20px;
@@ -59,7 +57,7 @@
 }
 .booking-button {
   padding: 10px 20px;
-  background-color: #446732; 
+  background-color: #446732;
   color: white;
   border: none;
   border-radius: 30px;
@@ -70,8 +68,8 @@
   .booking-image {
     display: block;
     flex: 1;
-  object-fit: cover; 
-  width: 0.5%; 
+    object-fit: cover;
+    width: 0.5%;
   }
 }
 
@@ -84,7 +82,7 @@
     font-size: 20px;
   }
 
-  .booking-container{
+  .booking-container {
     height: 100%;
-  }  
+  }
 }
