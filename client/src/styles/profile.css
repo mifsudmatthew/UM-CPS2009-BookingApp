@@ -3,6 +3,7 @@
     font-family: 'Roboto', sans-serif;
     min-height: 100vh;
     border-top: 1px solid #ccc;
+    margin: 0 auto;
   }
 
   .sidebar {
@@ -25,6 +26,7 @@
     display: flex;
     flex-direction: column; 
     align-items: flex-start;
+    margin: 0 auto;
   }
 
   .profile .header-title {
@@ -33,6 +35,7 @@
     font-weight: bolder;
     margin-left: 40px;
     margin-bottom: 40px;
+    margin: 0 auto;
   }
   
   .profile-picture button {
@@ -107,7 +110,8 @@
 .bookings-table th,
 .bookings-table td {
   border: 1px solid #dde0d5; 
-  padding: 0.5vw;
+  padding-left: 2rem;
+  padding-right: 2rem;
   text-align: left;
 }
 
@@ -151,4 +155,37 @@
     width: 70px; 
     height: 70px;
   }
+}
+
+@media (max-width: 700px) {
+  .bookings-table th,
+  .bookings-table td {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (max-width: 541px) {
+
+.bookings-table th,
+.bookings-table td {
+  border: 1px solid #dde0d5; 
+  padding-left: 0.5vw;
+  padding-right: 0.5vw;
+  text-align: left;
+  font-size: small;
+}
+
+.profile {
+  padding: 0.5em;
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start;
+}
+}
+
+.table-container {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
 }
