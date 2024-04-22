@@ -1,6 +1,10 @@
 {
   "index.html": {
+<<<<<<< HEAD
     "file": "assets/index-BPLBrBwT.js",
+=======
+    "file": "assets/index-DGGpLCMR.js",
+>>>>>>> 4d0cd1ddc2b20f6c108c3d71291b60546c2ef550
     "name": "index",
     "src": "index.html",
     "isEntry": true,
@@ -8,7 +12,11 @@
       "node_modules/workbox-window/build/workbox-window.prod.es5.mjs"
     ],
     "css": [
+<<<<<<< HEAD
       "assets/index-BxKTTSh9.css"
+=======
+      "assets/index-Tde-J-TV.css"
+>>>>>>> 4d0cd1ddc2b20f6c108c3d71291b60546c2ef550
     ],
     "assets": [
       "assets/grass-court-Ch3CFGZv.webp",

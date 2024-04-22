@@ -1,64 +1,64 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:wght@600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:wght@600;700&display=swap");
 
 .feature-card {
-    display: flex;
-    align-items: center;
-    background-color: #D8E7CB; 
-    padding: 5vw;
-    position: relative;
-  }
-  
-  .left-arrow {
-    margin-right: 20px; 
-  }
-  
-  .right-arrow {
-    margin-left: 20px; 
-  }
-  
-  .content {
-    display: flex;
-    align-items: center;
-    gap: 8vw; 
-  }
-  
-  .court-image {
-    width: 30vw;
-    height: auto;
-  }
-  
-  .text-content {
-    color: #000000;
-    font-size: 1.5vw;
-  }
-  
-  .court-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 4.5vw;
-    font-weight: bold;
-    color: #446732; 
-    margin-bottom: 0.5em;
-    text-align: center;
-  }
-  
-  .court-desc {
-    font-size: 1em;
-    padding-bottom: 3em;
-  }
+  display: flex;
+  align-items: center;
+  background-color: #d8e7cb;
+  padding: 5vw;
+  position: relative;
+}
 
-  .book-button {
-    background-color: #3E4A36;
-    color: #ffffff;
-    border: none;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 370px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-size: 1em;
-    border-radius: 20px;
-    padding: 15px 60px;
-    scroll-padding-top: 100px;
-  }
+.left-arrow {
+  margin-right: 20px;
+}
+
+.right-arrow {
+  margin-left: 20px;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  gap: 8vw;
+}
+
+.court-image {
+  width: 30vw;
+  height: auto;
+}
+
+.text-content {
+  color: #000000;
+  font-size: 1.5vw;
+}
+
+.court-title {
+  font-family: "DM Serif Display", serif;
+  font-size: 4.5vw;
+  font-weight: bold;
+  color: #446732;
+  margin-bottom: 0.5em;
+  text-align: center;
+}
+
+.court-desc {
+  font-size: 1em;
+  padding-bottom: 3em;
+}
+
+.book-button {
+  background-color: #3e4a36;
+  color: #ffffff;
+  border: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: 370px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1em;
+  border-radius: 20px;
+  padding: 15px 60px;
+  scroll-padding-top: 100px;
+}
 
 @media (max-width: 768px) {
   .book-button {
@@ -67,9 +67,10 @@
     border-radius: 10px;
   }
 
-  .left-arrow img, .right-arrow img {
-    width: 20px; 
-    height: auto; 
+  .left-arrow img,
+  .right-arrow img {
+    width: 20px;
+    height: auto;
   }
 
   .text-content {
