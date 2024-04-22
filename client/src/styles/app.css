@@ -8,7 +8,7 @@ body {
   place-items: center;
   margin: 0;
   width: 100%;
-  height:100%
+  height: 100%;
 }
 
 @keyframes logo-spin {
@@ -40,8 +40,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('../assets/login_reg_background.webp');
-  background-size: cover; 
+  background-image: url("../assets/login_reg_background.webp");
+  background-size: cover;
   height: 50rem;
 }
 
@@ -50,14 +50,14 @@ body {
   flex-direction: column;
   margin-top: 1vw;
   margin-bottom: 1vw;
-  background-color: #D8E7CB;
+  background-color: #d8e7cb;
   padding: 2vw;
   border-radius: 40px;
   align-items: center;
   justify-content: center;
 }
 
-.mainContainerReset{
+.mainContainerReset {
   flex-direction: column;
   display: flex;
   align-items: center;
@@ -71,7 +71,7 @@ body {
   font-weight: bolder;
   align-items: center;
   justify-content: center;
-  font-family: 'DM Serif Display', serif;
+  font-family: "DM Serif Display", serif;
   color: rgb(34, 43, 30);
 }
 
@@ -128,8 +128,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('../assets/login_reg_background.webp');
-  background-size: cover; 
+  background-image: url("../assets/login_reg_background.webp");
+  background-size: cover;
   height: 35rem;
 }
 
@@ -146,4 +146,3 @@ body {
     height: 30rem;
   }
 }
-
