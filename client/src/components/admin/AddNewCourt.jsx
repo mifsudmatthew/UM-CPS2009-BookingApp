@@ -26,6 +26,10 @@ function AddNewCourt() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
+            if (!courtName || !price || !address || !longitude || !latitude || !area || !type) {
+                toast.error("Please fill in all the required fields.");
+                return;
+            }
             const courtData = {
                 courtName,
                 price,
@@ -39,8 +43,11 @@ function AddNewCourt() {
             if (response.result == true) {
                 toast.success("Court added successfully.");
                 console.log("Success: ", response);
+                window.location.reload;
+            }else{
+                toast.error(response.error);
+                console.log("Error: ", response);
             }
-            window.location.reload();
         } catch (error) {
             // Display an error toast message
             toast.error("Error adding court. Please try again.");
@@ -82,13 +89,11 @@ function AddNewCourt() {
                     <option value="Hard Court">Hard Court</option>
                     <option value="Clay Court">Clay Court</option>
                     <option value="Grass Court">Grass Court</option>
-                    <option value="Carpet Court">Carpet Court</option>
                 </select>
                 <br />
                 <InputBox
                     id="NewCourtsCourtAddress"
                     label="Enter the address of the court"
-                    type="number"
                     placeholder="Address"
                     onChange={(event) => setAddress(event.target.value)}
                 />
