@@ -31,7 +31,7 @@ async function getFutureBookings_ID(userID_toSearch) {
         return { result: true, data: bookings, error: null };
 
     } catch (error_message) {
-        throw new Error("Failed to Connect to Database");
+        throw new Error("Failed to Connect to Database: "+error_message);
     }
 }
 /** ===================================== Query Future Bookings By Court =========================
@@ -64,7 +64,7 @@ async function getFutureBookings_Courts(courtID_toSearch) {
         return { result: true, data: bookings, error: null };
 
     } catch (error_message) {
-        throw new Error("Failed to Connect to Database");
+        throw new Error("Failed to Connect to Database: "+error_message);
     }
 }
 
@@ -99,7 +99,7 @@ async function getFutureBookings_IDCourt(userID_toSearch, courtID_toSearch) {
         return { result: true, data: bookings, error: null };
 
     } catch (error_message) {
-        throw new Error("Failed to Connect to Database");
+        throw new Error("Failed to Connect to Database: "+error_message);
     }
 }
 /** ===================================== Add a new Booking =========================
@@ -171,7 +171,7 @@ async function removeBooking(bookingID) {
         await booking_schema.findByIdAndDelete(bookingID);
         return { result: true, data: null, error: null };
     } catch (error) {
-        throw new Error("Failed to Connect to Database");
+        throw new Error("Failed to Connect to Database: "+error_message);
     }
 }
 
@@ -197,7 +197,7 @@ async function getAvailableCourts(date_toCheck, time_toCheck) {
         });
         return { result: true, data: availableCourts, error: null };
     } catch (error_message) {
-        throw new Error("Failed to Connect to Database");
+        throw new Error("Failed to Connect to Database: "+error_message);
     }
 }
 
@@ -222,10 +222,23 @@ async function getBookedCourts(user_data) {
 
         return { result: true, data: upcomingCourts, error: null };
     } catch (error_message) {
-        throw new Error("Failed to Connect to Database");
+        throw new Error("Failed to Connect to Database: "+error_message);
     }
 }
 
+/** ===================================== Count Bookings By Court ID =========================
+ * ------------ Count the number of bookings made for a specific court.
+ * Takes a courtID.
+ * Retrieves the count of bookings associated with the specified courtID.
+ */
+async function countBookingsByCourtID(courtID_toCount) {
+    try {
+        const bookingCount = await booking_schema.countDocuments({ courtID: courtID_toCount });
+        return { result: true, data: bookingCount, error: null };
+    } catch (error_message) {
+        throw new Error("Failed to Connect to Database: "+error_message);
+    }
+}
 
 /** ===================================== Exporting ======================================================
  * ------------ Exportation of functions
@@ -240,5 +253,6 @@ module.exports = {
     getFutureBookings_ID            : getFutureBookings_ID,
     removeBooking                   : removeBooking,
     getAvailableCourts              : getAvailableCourts,
-    getBookedCourts                 : getBookedCourts
+    getBookedCourts                 : getBookedCourts,
+    countBookingsByCourtID          : countBookingsByCourtID,
 };
