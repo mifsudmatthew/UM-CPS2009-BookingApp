@@ -19,6 +19,37 @@ adminRouter.post("/registerCourt", async (req, res) => {
   res.json(response);
 });
 
+adminRouter.post("/getBasicStatistics", async (req, res) => {
+  try {
+    console.log("----------------------------------------------");
+    const { data: allCourts } = await courts_quieries.getAllCourts();
+    const courtStatistics = [];
+
+    console.log(allCourts);
+
+    for (const court of allCourts) {
+      const { data: bookingCount } =
+        await bookings_quieries.countBookingsByCourtID(court._id);
+      const totalProfit = bookingCount * court.price;
+      const courtInfo = {
+        name: court.court_name,
+        bookings: bookingCount,
+        money: totalProfit,
+      };
+      courtStatistics.push(courtInfo);
+    }
+
+    res.json({ result: true, data: courtStatistics, error: null });
+  } catch (error) {
+    console.error("Error fetching basic statistics:", error);
+    res.status(500).json({
+      result: false,
+      data: null,
+      error: "Failed to fetch basic statistics",
+    });
+  }
+});
+
 adminRouter.post(
   "/configCourts",
   server_functions.authenticateToken,
