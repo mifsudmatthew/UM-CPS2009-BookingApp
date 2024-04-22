@@ -78,6 +78,7 @@
   align-items: center;
   padding-right: 1rem;
   cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
 .menu-icon-img {
@@ -87,6 +88,9 @@
   height: 80%;
 }
 
+.menu-icon:hover {
+  transform: scale(1.2);
+}
 .navbar-logo {
   display: flex;
   width: 35%;
