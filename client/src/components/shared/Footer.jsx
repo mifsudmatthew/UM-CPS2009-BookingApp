@@ -50,7 +50,7 @@ function Footer() {
       </div>
       <div>
         <nav>
-          <h4>Links</h4>
+          <div className="footer-heading">Links</div>
           <a href="/">Home</a>
           <br />
           {!authenticated ? (
@@ -75,7 +75,7 @@ function Footer() {
         </nav>
       </div>
       <div>
-        <h4>Contact us</h4>
+      <div className="footer-heading">Contact Us</div>
         <h8>Email: servespot@servspot.com</h8>
         <br />
         <h8>Telephone: 123456789</h8>
