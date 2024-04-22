@@ -2,7 +2,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 import { useProfile } from "../context/ProfileContext";
 import { Post } from "../utils/ApiFunctions";
@@ -64,10 +64,9 @@ function Login() {
 
   return (
     <main className="mainContainerLogin">
-      <ToastContainer />
       <Form>
         <div className={"titleContainer"}>Login</div>
-  
+
         <InputBox
           id="loginEmail"
           label="Email"

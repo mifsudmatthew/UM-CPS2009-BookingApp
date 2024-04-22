@@ -89,7 +89,6 @@ function Topup() {
 
   return (
     <main className="profile">
-      <ToastContainer />
       <div className="header-title">Top Up</div>
       <Form>
         {/* Form to top up the user's account */}

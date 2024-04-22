@@ -2,7 +2,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 import { Post } from "../utils/ApiFunctions";
 import Form from "../components/form/Form";
@@ -116,7 +116,6 @@ export default function Reset() {
 
   return (
     <main className={"mainContainerReset"}>
-      <ToastContainer />
       <div className="header-title">Reset</div>
       <Form classname="innerContainer">
         <div className={"inputContainer"}>

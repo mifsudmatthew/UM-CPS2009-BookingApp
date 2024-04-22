@@ -4,7 +4,7 @@ import InputButton from "../form//InputButton";
 import { useProfile } from "../../context/ProfileContext";
 
 import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 /**
  * Renders the admin sidebar component.
@@ -28,7 +28,6 @@ export const AdminSidebar = () => {
 
   return (
     <aside className="sidebar">
-      <ToastContainer />
       <h3>Admin Panel</h3>
       <nav>
         <ul>

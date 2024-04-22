@@ -2,7 +2,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 import { Post } from "../utils/ApiFunctions";
 import Form from "../components/form/Form";
@@ -77,7 +77,7 @@ function Register() {
 
   return (
     <main className={"mainContainer"}>
-      <ToastContainer /> {/* Container for displaying toast messages */}
+      {/* Container for displaying toast messages */}
       <Form className="innerContainer">
         <div className={"titleContainer"}>Create Account</div>
         <InputBox
