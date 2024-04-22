@@ -9,6 +9,7 @@ import {
   BoxArrowInRight,
   PersonPlusFill,
   PersonFill,
+  List,
 } from "react-bootstrap-icons";
 import NotificationPanel from "./NotificationPanel";
 
@@ -137,14 +138,14 @@ function Navbar() {
           </Popup>
         </div>
         {/* ---------------------- Menu - icon ---------------------------- */}
-        <div className="menu-icon" ref={menuRef}>
-          <img
-            src={hamburger}
-            alt="hamburger"
-            onClick={() => {
-              setOpen(!open);
-            }}
-          />
+        <div
+          className="menu-icon"
+          ref={menuRef}
+          onClick={() => {
+            setOpen(!open);
+          }}
+        >
+          <List className="menu-icon-img"></List>
         </div>
 
         {/* <div className={`nav-elements ${showNavbar ? "active" : ""}`}>
@@ -189,43 +190,43 @@ function Navbar() {
 
         <div className={`dropdown-menu ${open ? "active" : "inactive"}`}>
           <ul>
-            <li className="dropdownItem">
-              <House className="dropdownItem-img"></House>
-              <NavLink className="dropdownItem-a" to="/">
-                Home
-              </NavLink>
-            </li>
+            <NavLink to="/">
+              <li className="dropdownItem">
+                <House className="dropdownItem-img"></House>
+                <a className="dropdownItem-a"> Home</a>
+              </li>
+            </NavLink>
             {!authenticated ? (
               <>
-                <li className="dropdownItem">
-                  <BoxArrowInRight className="dropdownItem-img"></BoxArrowInRight>
-                  <NavLink className="dropdownItem-a" to="/login">
-                    Login
-                  </NavLink>
-                </li>
-                <li className="dropdownItem">
-                  <PersonPlusFill className="dropdownItem-img"></PersonPlusFill>
-                  <NavLink className="dropdownItem-a" to="/register">
-                    Register
-                  </NavLink>
-                </li>
+                <NavLink to="/login">
+                  <li className="dropdownItem">
+                    <BoxArrowInRight className="dropdownItem-img"></BoxArrowInRight>
+                    <a className="dropdownItem-a"> Login </a>
+                  </li>
+                </NavLink>
+                <NavLink to="/register">
+                  <li className="dropdownItem">
+                    <PersonPlusFill className="dropdownItem-img"></PersonPlusFill>
+                    <a className="dropdownItem-a"> Register </a>
+                  </li>
+                </NavLink>
               </>
             ) : (
               <>
                 {!isAdmin(user) && (
                   <>
-                    <li className="dropdownItem">
-                      <PersonFill className="dropdownItem-img"></PersonFill>
-                      <NavLink className="dropdownItem-a" to="/profile">
-                        Profile
-                      </NavLink>
-                    </li>
-                    <li className="dropdownItem">
-                      <Wallet2 className="dropdownItem-img"></Wallet2>
-                      <NavLink className="dropdownItem-a" to="profile/topup">
-                        Topup
-                      </NavLink>
-                    </li>
+                    <NavLink to="/profile">
+                      <li className="dropdownItem">
+                        <PersonFill className="dropdownItem-img"></PersonFill>
+                        <a className="dropdownItem-a">Profile</a>
+                      </li>
+                    </NavLink>
+                    <NavLink to="/profile/topup">
+                      <li className="dropdownItem">
+                        <Wallet2 className="dropdownItem-img"></Wallet2>
+                        <a className="dropdownItem-a">Topup</a>
+                      </li>
+                    </NavLink>
                   </>
                 )}
               </>
