@@ -35,3 +35,28 @@ export const getServerStatus = async () => {
       throw new Error(`Error while fetching data: ${error}`);
     });
 };
+
+export const getUpdatedToken = async () => {
+  try {
+    const response = await fetch("/api/token", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${JSON.parse(
+          localStorage.getItem("accessToken")
+        )}`,
+      },
+    });
+
+    const data = response.json();
+
+    if (!response.ok) {
+      console.error(data.error);
+      return "";
+    }
+
+    return data.accesstoken;
+  } catch (error) {
+    console.error(error);
+    return "";
+  }
+};
