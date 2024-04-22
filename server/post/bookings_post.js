@@ -3,7 +3,7 @@ const bookingRouter = express.Router();
 const server_functions = require("../server_functions");
 const bookings_quieries = require("../../database/schema_functions/booking_functions");
 const courts_quieries = require("../../database/schema_functions/court_functions");
-const user_quieries = require("../../database/schema_functions/user_functions");
+const user_queries = require("../../database/schema_functions/user_functions");
 
 bookingRouter.post("/getAvailableCourts", async (req, res) => {
   var date = new Date(req.body.date);
@@ -20,7 +20,7 @@ bookingRouter.post(
     court = await courts_quieries.retrieveCourt(req.body.court);
 
     email = req.user.email;
-    user = await user_quieries.retrieveUser(email);
+    user = await user_queries.retrieveUser(email);
     if (user.data.balance <= court.data.price) {
       return res.json({
         result: false,
@@ -36,7 +36,7 @@ bookingRouter.post(
         3
       );
       if (response.result == true) {
-        user_quieries.updateUserBalance(email, -court.data.price);
+        user_queries.updateUserBalance(email, -court.data.price);
         const user = await user_quieries.retrieveUser(email);
         const userData = {
           _id: user.data._id,
@@ -60,11 +60,11 @@ bookingRouter.post(
   async (req, res) => {
     try {
       const email = req.user.email;
-      const user = await user_quieries.retrieveUser(email);
+      const user = await user_queries.retrieveUser(email);
       const bookings = await bookings_quieries.getFutureBookings_ID(
         user.data.id
       );
-      if(bookings.result == true){
+      if (bookings.result == true) {
         const formattedBookings = await Promise.all(
           bookings.data.map(async (booking) => {
             const court = await courts_quieries.retrieveCourt(booking.courtID);
@@ -79,7 +79,7 @@ bookingRouter.post(
           })
         );
         res.json(formattedBookings);
-      }else{
+      } else {
         res.json([]);
       }
     } catch (error) {
@@ -93,12 +93,11 @@ bookingRouter.post(
   server_functions.authenticateToken,
   async (req, res) => {
     try {
+      const email = req.user.email;
       const booking_id = req.body.booking_id;
-      const result = await bookings_quieries.removeBooking(
-        booking_id
-      );
-      if(result.result == true){
-        await user_quieries.updateUserBalance(req.user.email, req.body.price);
+      const result = await bookings_quieries.removeBooking(booking_id);
+      if (result.result == true) {
+        await user_queries.updateUserBalance(email, req.body.price);
         const user = await user_queries.retrieveUser(email);
         const userData = {
           _id: user.data._id,
@@ -110,8 +109,8 @@ bookingRouter.post(
         const accessToken = server_functions.generateAccessToken(userData);
 
         return res.json({ result: true, accessToken: accessToken });
-      }else{
-        res.json({result: false});
+      } else {
+        res.json({ result: false });
       }
     } catch (error) {
       console.error("Error fetching future bookings: ", error);

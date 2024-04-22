@@ -24,7 +24,7 @@ apiRouter.use((req, _res, next) => {
 /**
  * Route checks that the attached token header is valid.
  * Returns:
- *  200 -> When toke Valid
+ *  200 -> When token Valid
  *  400 -> No authorization field attached
  *  403 -> No token is attached to field
  *      OR Token supplied is invalid
@@ -75,7 +75,7 @@ apiRouter.post("/login", async (req, res) => {
     // Check if email exists
     if (!dbUser.result) {
       // Email no exist
-      return res.status(400).send("Email not in use");
+      return res.status(400).json({ error: "Email not in use" });
     }
 
     // Email exists
@@ -117,7 +117,7 @@ apiRouter.post("/register", async (req, res) => {
     // Check if email exists
     if (dbUser.result) {
       // Email no exist
-      return res.status(400).send("Email already in use");
+      return res.status(400).json({ error: "Email already in use" });
     }
 
     // Email exists
@@ -141,7 +141,6 @@ apiRouter.post("/register", async (req, res) => {
 
 // Route for sending an email to reset password.
 apiRouter.post("/reset", async (req, res) => {
-  console.log("Connected to reset page");
   try {
     // Attempting to send an email
     let result = await sf.sendPinByMail(req.body.email);
@@ -217,6 +216,14 @@ apiRouter.post("/changedetails", sf.authenticateToken, async (req, res) => {
     // Response Fail
     res.status(500).json({ message: "Details Change Failed!" });
   }
+});
+
+apiRouter.get("/token", sf.authenticateToken, async (req, res) => {
+  const response = await sf.getUpdatedToken(req.user.email);
+
+  if (!response.result) res.status(400).json({ error: response.error });
+
+  res.status(200).json({ accesstoken: response.data.accesstoken });
 });
 
 module.exports = apiRouter;
