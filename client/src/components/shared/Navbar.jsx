@@ -1,12 +1,15 @@
 import { useState, useContext, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import Popup from "reactjs-popup";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import {
   Wallet2,
   Bell,
   BellFill,
   House,
   BoxArrowInRight,
+  BoxArrowInLeft,
   PersonPlusFill,
   PersonFill,
   List,
@@ -18,7 +21,7 @@ import NotificationPanel from "./NotificationPanel";
 import NotificationContext from "../../context/NavbarContext";
 import { useProfile } from "../../context/ProfileContext";
 
-import { hamburger, logo } from "../Icons";
+import { logo } from "../Icons";
 
 import "../../styles/navbar.css";
 
@@ -56,8 +59,24 @@ const isAdmin = (user) => {
  * @returns {JSX.Element} The rendered navigation bar.
  */
 function Navbar() {
+  const { updateToken } = useProfile(); // Accesses authentication context
   const [open, setOpen] = useState(false);
+  let logoutButtonState = false;
   let menuRef = useRef();
+
+  const logOut = () => {
+    if (logoutButtonState == false) {
+      // Only allow logout to be pressed once.
+
+      logoutButtonState = true;
+      toast.success("Logged out successfully!"); // Displays a success message
+
+      // Profile user validation requires change therefore updateToken and setUser should be taken out then.
+      setTimeout(() => {
+        updateToken(""); // Clears the authentication accessToken
+      }, 2000);
+    }
+  };
 
   useEffect(() => {
     let handler = (e) => {
@@ -217,7 +236,7 @@ function Navbar() {
               </>
             ) : (
               <>
-                {!isAdmin(user) && (
+                {!isAdmin(user) ? (
                   <>
                     <NavLink to="/profile">
                       <li className="dropdownItem">
@@ -232,17 +251,18 @@ function Navbar() {
                       </li>
                     </NavLink>
                   </>
+                ) : (
+                  <NavLink to="/admin">
+                    <li className="dropdownItem">
+                      <GearWideConnected className="dropdownItem-img"></GearWideConnected>
+                      <a className="dropdownItem-a">Admin Panel</a>
+                    </li>
+                  </NavLink>
                 )}
-              </>
-            )}
-            {isAdmin(user) && (
-              <>
-                <NavLink to="/admin">
-                  <li className="dropdownItem">
-                    <GearWideConnected className="dropdownItem-img"></GearWideConnected>
-                    <a className="dropdownItem-a">Admin Panel</a>
-                  </li>
-                </NavLink>
+                <li className="dropdownItem" onClick={logOut}>
+                  <BoxArrowInLeft className="dropdownItem-img"></BoxArrowInLeft>
+                  <a className="dropdownItem-a">Logout</a>
+                </li>
               </>
             )}
           </ul>

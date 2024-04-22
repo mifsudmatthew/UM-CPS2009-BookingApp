@@ -4,7 +4,7 @@ import Form from "../form/Form";
 import InputBox from "../form/InputBox";
 import InputButton from "../form/InputButton";
 import { Post } from "../../utils/ApiFunctions";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
@@ -59,7 +59,6 @@ const AccountDetails = () => {
 
   return (
     <main className="profile">
-      <ToastContainer />
       <div className="header-title">Profile</div>
       <Form>
         <InputBox

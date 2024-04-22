@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useProfile } from "../../context/ProfileContext";
 import { Post } from "../../utils/ApiFunctions";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { getUpdatedToken } from "../../utils/ApiFunctions";
 
 /**
@@ -11,7 +11,7 @@ import { getUpdatedToken } from "../../utils/ApiFunctions";
  * @returns {JSX.Element} The Bookings component.
  */
 const Bookings = () => {
-  const { user, accessToken, updateToken } = useProfile();// Retrieve user data once when the component mounts
+  const { user, accessToken, updateToken } = useProfile(); // Retrieve user data once when the component mounts
   const [courts, setCourts] = useState([]); // State variable to store the list of courts
 
   /**
@@ -73,34 +73,36 @@ const Bookings = () => {
       <section>
         <h4>Upcoming Bookings</h4>
         <div className="table-container">
-        <table className="bookings-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Address</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* Map through upcomingBookings array and render each booking */}
-            {courts.map((court) => (
-              <tr key={court.id}>
-                <td>{court.name}</td>
-                <td>{court.date}</td>
-                <td>{court.time}</td>
-                <td>{court.address}</td>
-                <td>{court.price}</td>
-                <td>
-                  <button onClick={() => cancelBooking(court.id, court.price)}>
-                    Cancel
-                  </button>
-                </td>
+          <table className="bookings-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Address</th>
+                <th>Price</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {/* Map through upcomingBookings array and render each booking */}
+              {courts.map((court) => (
+                <tr key={court.id}>
+                  <td>{court.name}</td>
+                  <td>{court.date}</td>
+                  <td>{court.time}</td>
+                  <td>{court.address}</td>
+                  <td>{court.price}</td>
+                  <td>
+                    <button
+                      onClick={() => cancelBooking(court.id, court.price)}
+                    >
+                      Cancel
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </section>
     </main>

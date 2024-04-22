@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { Post } from "../utils/ApiFunctions";
 
 import Form from "../components/form/Form";
@@ -61,7 +61,6 @@ function ChangePW() {
 
   return (
     <main className="profile">
-      <ToastContainer />
       <div className="header-title">Change Password</div>
       <Form>
         <InputBox
