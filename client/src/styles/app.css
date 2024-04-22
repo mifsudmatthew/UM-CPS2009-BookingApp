@@ -42,7 +42,7 @@ body {
   justify-content: center;
   background-image: url('../assets/login_reg_background.webp');
   background-size: cover; 
-  height: 60rem;
+  height: 50rem;
 }
 
 .innerContainer {
@@ -71,6 +71,8 @@ body {
   font-weight: bolder;
   align-items: center;
   justify-content: center;
+  font-family: 'DM Serif Display', serif;
+  color: rgb(34, 43, 30);
 }
 
 .buttonContainer {
@@ -121,8 +123,27 @@ body {
   margin-top: 5px;
 }
 
+.mainContainerLogin {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('../assets/login_reg_background.webp');
+  background-size: cover; 
+  height: 35rem;
+}
+
 @media (max-width: 768px) {
   .titleContainer {
     font-size: 40px;
   }
+
+  .mainContainer {
+    height: 45rem;
+  }
+
+  .mainContainerLogin {
+    height: 30rem;
+  }
 }
+
