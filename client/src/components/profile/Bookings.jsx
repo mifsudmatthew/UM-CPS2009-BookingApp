@@ -11,7 +11,7 @@ import { getUpdatedToken } from "../../utils/ApiFunctions";
  * @returns {JSX.Element} The Bookings component.
  */
 const Bookings = () => {
-  const { user, accessToken, updateToken } = useProfile(); // Retrieve user data once when the component mounts
+  const { user, updateToken } = useProfile(); // Retrieve user data once when the component mounts
   const [courts, setCourts] = useState([]); // State variable to store the list of courts
 
   /**
@@ -94,8 +94,7 @@ const Bookings = () => {
                   <td>{court.price}</td>
                   <td>
                     <button
-                      onClick={() => cancelBooking(court.id, court.price)}
-                    >
+                      onClick={() => cancelBooking(court.id, court.price)}>
                       Cancel
                     </button>
                   </td>

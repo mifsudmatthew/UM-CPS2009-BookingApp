@@ -33,13 +33,11 @@ adminRouter.get("/getAllCourts", async (req, res) => {
       .status(200)
       .json({ result: true, data: response.data, error: null });
   } catch (error) {
-    return res
-      .status(400)
-      .json({
-        result: false,
-        data: null,
-        error: "Failed to fetch basic statistics",
-      });
+    return res.status(400).json({
+      result: false,
+      data: null,
+      error: "Failed to fetch basic statistics",
+    });
   }
 });
 
@@ -96,7 +94,7 @@ adminRouter.post(
       // When court does exist
       return res.status(200).json({
         message: "Court Updated",
-        data: { ...response.data },
+        data: response.data,
         error: null,
       });
     } catch (error_msg) {
