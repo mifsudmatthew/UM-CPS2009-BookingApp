@@ -172,9 +172,9 @@ async function getUpdatedToken(email) {
     return { result: false, data: {}, error: "Email not supplied" };
 
   try {
-    const user = await queries.retrieveUser(email);
+    const user = await user_queries.retrieveUser(email);
 
-    if (!user.result) return { result: true, data: {}, error: user.error };
+    if (!user.result) return { result: false, data: {}, error: user.error };
 
     const newPayload = {
       id: user.data._id,
@@ -188,6 +188,8 @@ async function getUpdatedToken(email) {
 
     return { result: true, data: { accesstoken: newToken }, error: null };
   } catch (error) {
+    console.log("----------------------------------")
+    console.log(error)
     return { result: false, data: { }, error: error };
   }
 }
