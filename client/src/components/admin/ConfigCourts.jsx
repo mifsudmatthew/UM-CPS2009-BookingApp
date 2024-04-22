@@ -78,9 +78,9 @@ function ConfigCourts() {
   return (
     <main className="profile">
       <div>
-        <h1>Configure Courts</h1>
-        <h4>Select Court</h4>
-        <form>
+        <div className="header-title">Configure Courts</div>
+        <form className="innerContainer">
+          <h4>Select Court</h4>
           <div>
             <select className="inputBox" onChange={handleCourtChange}>
               {/* Display a list of courts fetched from the API in the dropdown */}
