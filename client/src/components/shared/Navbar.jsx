@@ -21,7 +21,7 @@ import NotificationPanel from "./NotificationPanel";
 import NotificationContext from "../../context/NavbarContext";
 import { useProfile } from "../../context/ProfileContext";
 
-import { hamburger, logo } from "../Icons";
+import { logo } from "../Icons";
 
 import "../../styles/navbar.css";
 
@@ -59,16 +59,23 @@ const isAdmin = (user) => {
  * @returns {JSX.Element} The rendered navigation bar.
  */
 function Navbar() {
+  const { updateToken } = useProfile(); // Accesses authentication context
   const [open, setOpen] = useState(false);
+  let logoutButtonState = false;
   let menuRef = useRef();
 
   const logOut = () => {
-    toast.success("Logged out successfully!"); // Displays a success message
+    if (logoutButtonState == false) {
+      // Only allow logout to be pressed once.
 
-    // Profile user validation requires change therefore updateToken and setUser should be taken out then.
-    setTimeout(() => {
-      updateToken(""); // Clears the authentication accessToken
-    }, 2000);
+      logoutButtonState = true;
+      toast.success("Logged out successfully!"); // Displays a success message
+
+      // Profile user validation requires change therefore updateToken and setUser should be taken out then.
+      setTimeout(() => {
+        updateToken(""); // Clears the authentication accessToken
+      }, 2000);
+    }
   };
 
   useEffect(() => {
