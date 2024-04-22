@@ -12,42 +12,19 @@ import { Post, Get } from "../../utils/ApiFunctions";
  */
 function ConfigCourts() {
   const [courts, setCourts] = useState([]); // State variable to store the list of courts
-  const [court, setCourt] = useState(""); // State variable to store the selected court
+  const [courtId, setCourtId] = useState(""); // State variable to store the selected court
   const [price, setPrice] = useState(""); // State variable to store the price of the court
   const [name, setName] = useState(""); // State variable to store the name of the court
-
-  /**
-   * Handles the form submission.
-   * Sends a POST request to the server with the court data.
-   *
-   * @param {Event} event - The form submission event.
-   */
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const courtData = { court, price, name };
-    console.log(courtData);
-    try {
-      const response = await Post("/api/configCourts", courtData);
-      console.log(response);
-      setCourts((prev) => {
-        return prev + response.data;
-      });
-    } catch (error) {
-      // Log an error if the request fails
-      console.error("Error submitting booking: ", error);
-    }
-  };
 
   /**
    * Fetches all courts from the API.
    * @returns {Promise<void>} A Promise that resolves when the courts are fetched successfully.
    */
-
   useEffect(() => {
     const fetchCourts = async () => {
       try {
         const response = await Get("/api/getAllCourts");
-        setCourts(response);
+        setCourts(response.data);
       } catch (error) {
         console.error(`Error fetching courts: ${error}`);
       }
@@ -57,15 +34,39 @@ function ConfigCourts() {
   }, [setCourts]);
 
   /**
+   * Handles the form submission.
+   * Sends a POST request to the server with the court data.
+   *
+   * @param {Event} event - The form submission event.
+   */
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await Post("/api/configCourts", {
+        courtId,
+        price,
+        name,
+      });
+      const newCourts = courts.map((court) => {
+        return court._id === response.data._id ? response.data : court;
+      });
+      setCourts(newCourts);
+    } catch (error) {
+      // Log an error if the request fails
+      console.error("Error submitting booking: ", error);
+    }
+  };
+
+  /**
    * Handles the change event of the court selection.
    * Updates the state variables for court, size, and price based on the selected court.
    *
    * @param {Object} e - The event object.
    */
   const handleCourtChange = (e) => {
-    const selectedCourt = courts.find((court) => court.name === e.target.value);
-    setCourt(selectedCourt._id);
-    setName(selectedCourt.size);
+    const selectedCourt = courts.find((court) => court._id === e.target.value);
+    setCourtId(selectedCourt._id);
+    setName(selectedCourt.court_name);
     setPrice(selectedCourt.price);
   };
 
@@ -78,8 +79,8 @@ function ConfigCourts() {
           {/* Display a list of courts fetched from the API in the dropdown */}
           <option value="">Select a court</option>
           {courts.map((court) => (
-            <option key={court.name} value={court.name}>
-              {court.name}
+            <option key={court.court_name} value={court._id}>
+              {court.court_name}
             </option>
           ))}
         </select>
