@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import bookingImage from "../assets/bookingform.jpg";
 
 import { useState, useEffect, useContext } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useNavigate, Navigate } from "react-router-dom";
 
 import { Post } from "../utils/ApiFunctions";
@@ -87,7 +87,9 @@ function Booking() {
       if (response.result !== true) {
         toast.error(response.error);
       } else {
-        toast.success("Court successfully booked! Redirecting to bookings page.");
+        toast.success(
+          "Court successfully booked! Redirecting to bookings page."
+        );
         addSuccessfulBooking(booking); // Add the booking to the list of successful bookings
         if (response.accessToken) {
           updateToken(await getUpdatedToken());
@@ -178,7 +180,8 @@ function Booking() {
             style={{
               backgroundColor: buttonColor,
               cursor: buttonCursor, // Apply dynamic cursor style
-            }}>
+            }}
+          >
             Book
           </button>
         </form>

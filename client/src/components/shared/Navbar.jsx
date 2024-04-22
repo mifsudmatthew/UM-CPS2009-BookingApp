@@ -1,12 +1,15 @@
 import { useState, useContext, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import Popup from "reactjs-popup";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import {
   Wallet2,
   Bell,
   BellFill,
   House,
   BoxArrowInRight,
+  BoxArrowInLeft,
   PersonPlusFill,
   PersonFill,
   List,
@@ -58,6 +61,15 @@ const isAdmin = (user) => {
 function Navbar() {
   const [open, setOpen] = useState(false);
   let menuRef = useRef();
+
+  const logOut = () => {
+    toast.success("Logged out successfully!"); // Displays a success message
+
+    // Profile user validation requires change therefore updateToken and setUser should be taken out then.
+    setTimeout(() => {
+      updateToken(""); // Clears the authentication accessToken
+    }, 2000);
+  };
 
   useEffect(() => {
     let handler = (e) => {
@@ -240,6 +252,10 @@ function Navbar() {
                     </li>
                   </NavLink>
                 )}
+                <li className="dropdownItem" onClick={logOut}>
+                  <BoxArrowInLeft className="dropdownItem-img"></BoxArrowInLeft>
+                  <a className="dropdownItem-a">Logout</a>
+                </li>
               </>
             )}
           </ul>
