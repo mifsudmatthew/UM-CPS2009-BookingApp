@@ -9,7 +9,9 @@ const courts_schema = new Schema({
     price: Number,
     address: String,
     longitude: Number,
-    latitude: Number
+    latitude: Number,
+    area: Number,
+    type: String,
 });
 
 // Exporting created schemas to be used by database functions

@@ -1,22 +1,14 @@
 {
   "index.html": {
-<<<<<<< HEAD
-    "file": "assets/index-D8CqlAId.js",
+    "file": "assets/index-De8sc8kC.js",
     "name": "index",
-=======
-    "file": "assets/index-ZQ-2HEj6.js",
->>>>>>> 578d68f1b0566d0126ade435f0888d62f12a1fa0
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
       "node_modules/workbox-window/build/workbox-window.prod.es5.mjs"
     ],
     "css": [
-<<<<<<< HEAD
-      "assets/index-_jN71Lu3.css"
-=======
       "assets/index-D-kgE5zO.css"
->>>>>>> 578d68f1b0566d0126ade435f0888d62f12a1fa0
     ],
     "assets": [
       "assets/grass-court-Ch3CFGZv.webp",
@@ -33,6 +25,7 @@
   },
   "node_modules/workbox-window/build/workbox-window.prod.es5.mjs": {
     "file": "assets/workbox-window.prod.es5-DFjpnwFp.js",
+    "name": "workbox-window.prod.es5",
     "src": "node_modules/workbox-window/build/workbox-window.prod.es5.mjs",
     "isDynamicEntry": true
   },
