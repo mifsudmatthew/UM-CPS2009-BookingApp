@@ -11,6 +11,7 @@ import {
   PersonFill,
   List,
   X,
+  GearWideConnected,
 } from "react-bootstrap-icons";
 import NotificationPanel from "./NotificationPanel";
 
@@ -232,6 +233,16 @@ function Navbar() {
                     </NavLink>
                   </>
                 )}
+              </>
+            )}
+            {isAdmin(user) && (
+              <>
+                <NavLink to="/admin">
+                  <li className="dropdownItem">
+                    <GearWideConnected className="dropdownItem-img"></GearWideConnected>
+                    <a className="dropdownItem-a">Admin Panel</a>
+                  </li>
+                </NavLink>
               </>
             )}
           </ul>
