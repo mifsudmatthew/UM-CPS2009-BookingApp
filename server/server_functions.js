@@ -188,7 +188,7 @@ async function getUpdatedToken(email) {
 
     return { result: true, data: { accesstoken: newToken }, error: null };
   } catch (error) {
-    return { result: false, data: { accesstoken: newToken }, error: error };
+    return { result: false, data: { }, error: error };
   }
 }
 

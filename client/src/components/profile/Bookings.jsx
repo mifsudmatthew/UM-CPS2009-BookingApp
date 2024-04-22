@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useProfile } from "../../context/ProfileContext";
 import { Post } from "../../utils/ApiFunctions";
 import { ToastContainer, toast } from "react-toastify";
+import { getUpdatedToken } from "../../utils/ApiFunctions";
 
 /**
  * Renders the Bookings component.
@@ -10,7 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
  * @returns {JSX.Element} The Bookings component.
  */
 const Bookings = () => {
-  const { user, updateToken } = useProfile(); // Retrieve user data once when the component mounts
+  const { user, accessToken, updateToken } = useProfile();// Retrieve user data once when the component mounts
   const [courts, setCourts] = useState([]); // State variable to store the list of courts
 
   /**
@@ -21,13 +22,11 @@ const Bookings = () => {
    */
 
   useEffect(() => {
-    console.log("HERE BOIO");
     const fetchBookedCourts = async () => {
       const name = user.name;
       const email = user.email;
       const user_details = { name, email };
       try {
-        console.log("HERE BOIO2");
         const response = await Post("/api/getFutureBookings", user_details);
         console.log(response);
         setCourts(response);
@@ -51,15 +50,15 @@ const Bookings = () => {
         price: price,
       });
       if (response.result == true) {
-        // toast.success("Court Successfully Canceled!");
+        toast.success("Court Successfully Canceled!");
         if (response.accessToken) {
-          updateToken(response.accessToken);
+          updateToken(await getUpdatedToken());
         }
         setCourts((prevCourts) =>
           prevCourts.filter((court) => court.id !== id)
         );
       } else {
-        // toast.error("Court Failed to Delete");
+        toast.error("Court Failed to Delete");
       }
     } catch (error) {
       console.error("Error cancelling booking: ", error);
