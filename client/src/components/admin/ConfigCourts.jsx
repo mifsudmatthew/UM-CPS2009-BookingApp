@@ -1,4 +1,8 @@
 import { useState, useEffect } from "react";
+import Form from "../form/Form";
+import InputBox from "../form/InputBox";
+import InputButton from "../form/InputButton";
+import Selecter from "../form/Selecter";
 
 /**
  * Renders a form to configure courts.
@@ -77,49 +81,42 @@ function ConfigCourts() {
 
   return (
     <main className="profile">
-      <div>
-        <div className="header-title">Configure Courts</div>
-        <form className="innerContainer">
-          <h4>Select Court</h4>
-          <div>
-            <select className="inputBox" onChange={handleCourtChange}>
-              {/* Display a list of courts fetched from the API in the dropdown */}
-              <option value="">Select a court</option>
-              {courts.map((court) => (
-                <option key={court.name} value={court.name}>
-                  {court.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <h4>Edit details</h4>
-          <input
-            type="text"
-            className="inputBox"
-            placeholder="Court size"
-            value={size} // Display the size of the selected court
-            onChange={(e) => setSize(e.target.value)} // Update the court size when the user enters a value
-          />
-          <br></br>
-          <br></br>
-          <input
-            type="number"
-            className="inputBox"
-            placeholder="€Price"
-            value={price} // Display the price of the selected court
-            onChange={(e) => setPrice(e.target.value)} // Update the court price when the user enters a value
-          />
-          <br></br>
-          <br></br>
-          <button
-            type="submit"
-            className="booking-button"
-            onClick={handleSubmit} // Call the handleSubmit function when the user clicks the button
-          >
-            Save
-          </button>
-        </form>
-      </div>
+      <div className="header-title">Configure Courts</div>
+      <Form>
+        <h4>Select Court</h4>
+        <select className="inputBox" onChange={handleCourtChange}>
+          {/* Display a list of courts fetched from the API in the dropdown */}
+          <option value="">Select a court</option>
+          {courts.map((court) => (
+            <option key={court.name} value={court.name}>
+              {court.name}
+            </option>
+          ))}
+        </select>
+        <h4>Edit details</h4>
+        <InputBox
+          id="admin-config-size"
+          label="Court Size"
+          placeholder={"Court Size"}
+          value={size}
+          onChange={(event) => setSize(event.target.value)}
+        />
+        <br />
+        <InputBox
+          id="admin-config-price"
+          label="Court Price"
+          placeholder="€Price"
+          value={price}
+          onChange={(event) => setPrice(event.target.value)} // Update the court price when the user enters a value
+        />
+        <br />
+        <InputButton
+          label="Save"
+          type={"submit"}
+          className="booking-button"
+          onClick={handleSubmit} // Call the handleSubmit function when the user clicks the button
+        />
+      </Form>
     </main>
   );
 }
