@@ -1,5 +1,5 @@
 .footer {
-  background-color: #bbbbb9;
+  background-color: #cde2be;
   color: #333;
   padding-left: 6.25rem;
   padding-right: 6.25rem;
@@ -65,9 +65,8 @@
   .footer-content nav ul {
     flex-direction: column;
   }
-
 }
 
 .footer nav ul li {
-  list-style-type: none; 
+  list-style-type: none;
 }
