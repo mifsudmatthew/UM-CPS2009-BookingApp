@@ -8,7 +8,8 @@ const booking_schema = new Schema({
     date: Date,
     time: Number,
     userID: String,
-    courtID: String
+    courtID: String,
+    cost: Number
 });
 
 // Exporting created schemas to be used by database functions
