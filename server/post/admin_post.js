@@ -19,6 +19,28 @@ adminRouter.post("/registerCourt", async (req, res) => {
   res.json(response);
 });
 
+adminRouter.get("/getAllCourts", async (req, res) => {
+  try {
+    const response = await courts_quieries.getAllCourts();
+
+    if (!response.result) {
+      return res
+        .status(400)
+        .json({ message: "Failed to retrieve courts", error: response.error });
+    }
+
+    return res
+      .status(200)
+      .json({ result: true, data: response.data, error: null });
+  } catch (error) {
+    return res.status(400).json({
+      result: false,
+      data: null,
+      error: "Failed to fetch basic statistics",
+    });
+  }
+});
+
 adminRouter.post("/getBasicStatistics", async (req, res) => {
   try {
     console.log("----------------------------------------------");
@@ -54,7 +76,7 @@ adminRouter.post(
   "/configCourts",
   server_functions.authenticateToken,
   async (req, res) => {
-    const id = req.body.courtid;
+    const id = req.body.courtId;
     const name = req.body.name;
     const price = req.body.price;
 
@@ -72,7 +94,7 @@ adminRouter.post(
       // When court does exist
       return res.status(200).json({
         message: "Court Updated",
-        data: { ...response.data },
+        data: response.data,
         error: null,
       });
     } catch (error_msg) {

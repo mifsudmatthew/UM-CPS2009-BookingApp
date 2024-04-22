@@ -115,11 +115,10 @@ export default function Reset() {
   };
 
   return (
-    <main className={"mainContainerReset"}>
-      <div className="header-title">Reset</div>
+    <main className={"mainContainer"}>
       <Form classname="innerContainer">
+      <div className="titleContainer">Reset</div>
         <div className={"inputContainer"}>
-          <br />
           <br />
         </div>
         <InputBox
