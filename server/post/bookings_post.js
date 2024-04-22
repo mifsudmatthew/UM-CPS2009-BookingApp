@@ -21,16 +21,19 @@ bookingRouter.post(
 
     email = req.user.email;
     user = await user_queries.retrieveUser(email);
+
     if (user.data.balance <= court.data.price) {
       return res.json({
         result: false,
         data: null,
         error: "Not enough Points in Balance",
       });
+
     } else {
       response = await bookings_quieries.addBooking(
         req.user.id,
         req.body.court,
+        court.data.price,
         new Date(req.body.date),
         parseInt(req.body.hour),
         3
@@ -74,7 +77,7 @@ bookingRouter.post(
               time: booking.time,
               name: court.data.court_name,
               address: court.data.address,
-              price: court.data.price,
+              price: booking.cost,
             };
           })
         );

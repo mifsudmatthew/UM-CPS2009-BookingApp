@@ -51,12 +51,11 @@ adminRouter.post("/getBasicStatistics", async (req, res) => {
 
     for (const court of allCourts) {
       const { data: bookingCount } =
-        await bookings_quieries.countBookingsByCourtID(court._id);
-      const totalProfit = bookingCount * court.price;
+        await bookings_quieries.countAndSumBookingsByCourtID(court._id);
       const courtInfo = {
         name: court.court_name,
-        bookings: bookingCount,
-        money: totalProfit,
+        bookings: bookingCount.count,
+        money: bookingCount.totalCost
       };
       courtStatistics.push(courtInfo);
     }

@@ -110,7 +110,7 @@ async function getFutureBookings_IDCourt(userID_toSearch, courtID_toSearch) {
  * 2. The user has not already booked the max possible bookings
  * 3. The court has not already been booked at the set date and time
  */
-async function addBooking(userID_toBook, courtID_toBook, date_toBook, time_toBook, max_userBookings) {
+async function addBooking(userID_toBook, courtID_toBook, cost_toBook, date_toBook, time_toBook, max_userBookings) {
     try{
         const today = new Date();
         // --------------------- Check Current Date
@@ -150,7 +150,8 @@ async function addBooking(userID_toBook, courtID_toBook, date_toBook, time_toBoo
             date: date_toBook,
             time: time_toBook, 
             userID: userID_toBook,
-            courtID: courtID_toBook 
+            courtID: courtID_toBook,
+            cost : cost_toBook
         });
 
         
@@ -226,17 +227,30 @@ async function getBookedCourts(user_data) {
     }
 }
 
-/** ===================================== Count Bookings By Court ID =========================
+/** ===================================== Count & Sum Bookings By Court ID =========================
  * ------------ Count the number of bookings made for a specific court.
  * Takes a courtID.
  * Retrieves the count of bookings associated with the specified courtID.
  */
-async function countBookingsByCourtID(courtID_toCount) {
+async function countAndSumBookingsByCourtID(courtID_toCount) {
     try {
-        const bookingCount = await booking_schema.countDocuments({ courtID: courtID_toCount });
-        return { result: true, data: bookingCount, error: null };
+        const result = await booking_schema.aggregate([
+            { $match: { courtID: courtID_toCount } },
+            {
+                $group: {
+                    _id: null,
+                    count: { $sum: 1 }, // Count the number of bookings
+                    totalCost: { $sum: "$cost" } // Sum the total cost of bookings
+                }
+            }
+        ]);
+
+        // Extract the count and total cost from the result
+        const { count, totalCost } = result[0] || { count: 0, totalCost: 0 };
+
+        return { result: true, data: { count, totalCost }, error: null };
     } catch (error_message) {
-        throw new Error("Failed to Connect to Database: "+error_message);
+        throw new Error("Failed to Connect to Database: " + error_message);
     }
 }
 
@@ -254,5 +268,5 @@ module.exports = {
     removeBooking                   : removeBooking,
     getAvailableCourts              : getAvailableCourts,
     getBookedCourts                 : getBookedCourts,
-    countBookingsByCourtID          : countBookingsByCourtID,
+    countAndSumBookingsByCourtID    : countAndSumBookingsByCourtID
 };
