@@ -51,12 +51,11 @@ adminRouter.post("/getBasicStatistics", async (req, res) => {
 
     for (const court of allCourts) {
       const { data: bookingCount } =
-        await bookings_quieries.countBookingsByCourtID(court._id);
-      const totalProfit = bookingCount * court.price;
+        await bookings_quieries.countAndSumBookingsByCourtID(court._id);
       const courtInfo = {
         name: court.court_name,
-        bookings: bookingCount,
-        money: totalProfit,
+        bookings: bookingCount.count,
+        money: bookingCount.totalCost
       };
       courtStatistics.push(courtInfo);
     }
@@ -86,9 +85,11 @@ adminRouter.post(
 
       // When court doesn't exist
       if (!response.result) {
-        return res
-          .status(400)
-          .json({ message: "No court found", error: response.error });
+        return res.status(400).json({
+          message: "No court found",
+          data: {},
+          error: response.error,
+        });
       }
 
       // When court does exist
@@ -98,9 +99,11 @@ adminRouter.post(
         error: null,
       });
     } catch (error_msg) {
-      return res
-        .status(400)
-        .json({ message: "Failed to update court", error: error_msg });
+      return res.status(400).json({
+        message: "Failed to update court",
+        data: {},
+        error: error_msg,
+      });
     }
   }
 );
