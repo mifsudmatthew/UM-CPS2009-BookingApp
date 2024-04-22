@@ -217,7 +217,7 @@ function Navbar() {
               </>
             ) : (
               <>
-                {!isAdmin(user) && (
+                {!isAdmin(user) ? (
                   <>
                     <NavLink to="/profile">
                       <li className="dropdownItem">
@@ -232,17 +232,14 @@ function Navbar() {
                       </li>
                     </NavLink>
                   </>
+                ) : (
+                  <NavLink to="/admin">
+                    <li className="dropdownItem">
+                      <GearWideConnected className="dropdownItem-img"></GearWideConnected>
+                      <a className="dropdownItem-a">Admin Panel</a>
+                    </li>
+                  </NavLink>
                 )}
-              </>
-            )}
-            {isAdmin(user) && (
-              <>
-                <NavLink to="/admin">
-                  <li className="dropdownItem">
-                    <GearWideConnected className="dropdownItem-img"></GearWideConnected>
-                    <a className="dropdownItem-a">Admin Panel</a>
-                  </li>
-                </NavLink>
               </>
             )}
           </ul>
