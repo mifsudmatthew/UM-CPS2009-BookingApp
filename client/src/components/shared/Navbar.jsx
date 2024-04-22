@@ -9,6 +9,7 @@ import {
   BoxArrowInRight,
   PersonPlusFill,
   PersonFill,
+  List,
 } from "react-bootstrap-icons";
 import NotificationPanel from "./NotificationPanel";
 
@@ -144,7 +145,7 @@ function Navbar() {
             setOpen(!open);
           }}
         >
-          <img src={hamburger} alt="hamburger" />
+          <List className="menu-icon-img"></List>
         </div>
 
         {/* <div className={`nav-elements ${showNavbar ? "active" : ""}`}>
