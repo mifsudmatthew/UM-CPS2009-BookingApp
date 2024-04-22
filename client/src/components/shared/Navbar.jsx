@@ -146,11 +146,9 @@ function Navbar() {
             setOpen(!open);
           }}
         >
-          {open ? (
-            <X className="menu-icon-img"></X>
-          ) : (
-            <List className="menu-icon-img"></List>
-          )}
+          <div className="menu-icon menu-icon-img">
+            {open ? <X></X> : <List></List>}
+          </div>
         </div>
 
         {/* <div className={`nav-elements ${showNavbar ? "active" : ""}`}>
