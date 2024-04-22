@@ -68,7 +68,6 @@ const Bookings = () => {
   return (
     <main className="profile">
       {/* Header */}
-      <ToastContainer />
       <div className="header-title">Bookings</div>
       {/* Upcoming Bookings */}
       <section>
