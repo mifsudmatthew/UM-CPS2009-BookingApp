@@ -47,7 +47,7 @@ export const getUpdatedToken = async () => {
       },
     });
 
-    const data = response.json();
+    const data = await response.json();
 
     if (!response.ok) {
       console.error(data.error);
