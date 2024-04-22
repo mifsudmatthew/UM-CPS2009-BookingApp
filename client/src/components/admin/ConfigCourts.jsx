@@ -81,7 +81,7 @@ function ConfigCourts() {
 
   return (
     <main className="profile">
-      <h2>Configure Courts</h2>
+      <div className="header-title">Configure Courts</div>
       <Form>
         <h4>Select Court</h4>
         <select className="inputBox" onChange={handleCourtChange}>
