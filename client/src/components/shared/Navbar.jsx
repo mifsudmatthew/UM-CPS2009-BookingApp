@@ -137,14 +137,14 @@ function Navbar() {
           </Popup>
         </div>
         {/* ---------------------- Menu - icon ---------------------------- */}
-        <div className="menu-icon" ref={menuRef}>
-          <img
-            src={hamburger}
-            alt="hamburger"
-            onClick={() => {
-              setOpen(!open);
-            }}
-          />
+        <div
+          className="menu-icon"
+          ref={menuRef}
+          onClick={() => {
+            setOpen(!open);
+          }}
+        >
+          <img src={hamburger} alt="hamburger" />
         </div>
 
         {/* <div className={`nav-elements ${showNavbar ? "active" : ""}`}>
