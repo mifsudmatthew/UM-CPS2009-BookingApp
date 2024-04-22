@@ -10,7 +10,7 @@ import { useNavigate, Navigate } from "react-router-dom";
 import { Post } from "../utils/ApiFunctions";
 import { useProfile } from "../context/ProfileContext";
 import NotificationContext from "../context/NavbarContext";
-
+import { getUpdatedToken } from "../utils/ApiFunctions";
 /**
  * Renders a form for booking a tennis court.
  *
@@ -90,7 +90,7 @@ function Booking() {
         // toast.success("Court successfully booked! 😃 Redirecting to bookings page.");
         addSuccessfulBooking(booking); // Add the booking to the list of successful bookings
         if (response.accessToken) {
-          updateToken(response.accessToken);
+          updateToken(await getUpdatedToken());
         }
         setTimeout(() => {
           navigate("/profile/bookings", { replace: true });
