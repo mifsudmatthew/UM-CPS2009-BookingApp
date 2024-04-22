@@ -10,6 +10,7 @@ import {
   PersonPlusFill,
   PersonFill,
   List,
+  X,
 } from "react-bootstrap-icons";
 import NotificationPanel from "./NotificationPanel";
 
@@ -145,7 +146,11 @@ function Navbar() {
             setOpen(!open);
           }}
         >
-          <List className="menu-icon-img"></List>
+          {open ? (
+            <X className="menu-icon-img"></X>
+          ) : (
+            <List className="menu-icon-img"></List>
+          )}
         </div>
 
         {/* <div className={`nav-elements ${showNavbar ? "active" : ""}`}>
