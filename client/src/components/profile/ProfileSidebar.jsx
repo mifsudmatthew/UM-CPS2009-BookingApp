@@ -4,8 +4,7 @@ import { defaultProfilePic } from "../Icons";
 import { useProfile } from "../../context/ProfileContext";
 import InputButton from "../form//InputButton";
 
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 /**
  * Renders the profile sidebar component.
  * This component displays the user's profile picture, name, and navigation links.
@@ -30,7 +29,6 @@ const ProfileSidebar = () => {
 
   return (
     <aside className="sidebar">
-      <ToastContainer />
       <div className="profile-picture">
         <img src={defaultProfilePic} alt="Profile" className="profile-image" />
       </div>
@@ -61,7 +59,7 @@ const ProfileSidebar = () => {
           <li>
             <InputButton
               onClick={logOut}
-              label="Log Out"
+              label="Logout"
               classname={"logoutBtn"}
             />
             {/* Log out button */}
