@@ -1,11 +1,7 @@
 {
   "index.html": {
-<<<<<<< HEAD
-    "file": "assets/index-CcJRnOPo.js",
+    "file": "assets/index-BH620VFI.js",
     "name": "index",
-=======
-    "file": "assets/index-hs7bVulK.js",
->>>>>>> 5fdfa76a555f24c6749375f68382f2532217b5c3
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
