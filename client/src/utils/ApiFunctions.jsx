@@ -21,6 +21,27 @@ export const Post = (url, data) => {
     });
 };
 
+export const Get = (url) => {
+  return fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${JSON.parse(
+        localStorage.getItem("accessToken")
+      )}`,
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`${url}: ${response.status} - ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      console.error("Error while fetching data:", error);
+      throw error;
+    });
+};
+
 export const getServerStatus = async () => {
   await fetch("/server-status")
     .then((response) => {

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Form from "../form/Form";
 import InputBox from "../form/InputBox";
 import InputButton from "../form/InputButton";
-import Selecter from "../form/Selecter";
+import { Post, Get } from "../../utils/ApiFunctions";
 
 /**
  * Renders a form to configure courts.
@@ -14,7 +14,7 @@ function ConfigCourts() {
   const [courts, setCourts] = useState([]); // State variable to store the list of courts
   const [court, setCourt] = useState(""); // State variable to store the selected court
   const [price, setPrice] = useState(""); // State variable to store the price of the court
-  const [size, setSize] = useState(""); // State variable to store the size of the court
+  const [name, setName] = useState(""); // State variable to store the name of the court
 
   /**
    * Handles the form submission.
@@ -24,17 +24,14 @@ function ConfigCourts() {
    */
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const courtData = { court, price, size };
+    const courtData = { court, price, name };
     console.log(courtData);
     try {
-      const response = await fetch("/api/configCourts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(courtData),
-      });
+      const response = await Post("/api/configCourts", courtData);
       console.log(response);
+      setCourts((prev) => {
+        return prev + response.data;
+      });
     } catch (error) {
       // Log an error if the request fails
       console.error("Error submitting booking: ", error);
@@ -49,21 +46,14 @@ function ConfigCourts() {
   useEffect(() => {
     const fetchCourts = async () => {
       try {
-        const response = await fetch("/api/getAllCourts", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await response.json();
-        console.log(data);
-        setCourts(data);
+        const response = await Get("/api/getAllCourts");
+        setCourts(response);
       } catch (error) {
         console.error(`Error fetching courts: ${error}`);
       }
     };
 
-    // fetchCourts();
+    fetchCourts();
   }, [setCourts]);
 
   /**
@@ -74,8 +64,8 @@ function ConfigCourts() {
    */
   const handleCourtChange = (e) => {
     const selectedCourt = courts.find((court) => court.name === e.target.value);
-    setCourt(selectedCourt.name);
-    setSize(selectedCourt.size);
+    setCourt(selectedCourt._id);
+    setName(selectedCourt.size);
     setPrice(selectedCourt.price);
   };
 
@@ -95,11 +85,11 @@ function ConfigCourts() {
         </select>
         <h4>Edit details</h4>
         <InputBox
-          id="admin-config-size"
-          label="Court Size"
-          placeholder={"Court Size"}
-          value={size}
-          onChange={(event) => setSize(event.target.value)}
+          id="admin-config-name"
+          label="Court Name"
+          placeholder={"Court Name"}
+          value={name}
+          onChange={(event) => setName(event.target.value)}
         />
         <br />
         <InputBox
