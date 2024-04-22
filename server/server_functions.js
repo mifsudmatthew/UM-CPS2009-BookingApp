@@ -167,6 +167,31 @@ function getToken(req) {
   return authHeader.split(" ")[1];
 }
 
+async function getUpdatedToken(email) {
+  if (email == undefined || email == null)
+    return { result: false, data: {}, error: "Email not supplied" };
+
+  try {
+    const user = await queries.retrieveUser(email);
+
+    if (!user.result) return { result: true, data: {}, error: user.error };
+
+    const newPayload = {
+      id: user.data._id,
+      email: user.data.email,
+      name: user.data.name,
+      balance: user.data.balance,
+      admin: user.data.admin,
+    };
+
+    const newToken = generateAccessToken(newPayload);
+
+    return { result: true, data: { accesstoken: newToken }, error: null };
+  } catch (error) {
+    return { result: false, data: { accesstoken: newToken }, error: error };
+  }
+}
+
 function generateAccessToken(payload) {
   return jwt.sign(payload, process.env.JWT_ACCESS);
 }
@@ -182,6 +207,7 @@ module.exports = {
   sendPaymentSuccessMail,
   authenticateToken,
   getToken,
+  getUpdatedToken,
   generateAccessToken,
   generateRefreshToken,
 };
