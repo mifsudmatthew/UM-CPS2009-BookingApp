@@ -221,7 +221,7 @@ apiRouter.post("/changedetails", sf.authenticateToken, async (req, res) => {
 apiRouter.get("/token", sf.authenticateToken, async (req, res) => {
   const response = await sf.getUpdatedToken(req.user.email);
 
-  if (!response.result) res.status(400).json({ error: response.error });
+  if (!response.result) return res.status(400).json({ error: response.error });
 
   res.status(200).json({ accesstoken: response.data.accesstoken });
 });

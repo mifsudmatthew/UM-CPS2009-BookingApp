@@ -37,7 +37,7 @@ bookingRouter.post(
       );
       if (response.result == true) {
         user_queries.updateUserBalance(email, -court.data.price);
-        const user = await user_quieries.retrieveUser(email);
+        const user = await user_queries.retrieveUser(email);
         const userData = {
           _id: user.data._id,
           email: user.data.email,
