@@ -82,7 +82,7 @@ function AddNewCourt() {
                     onChange={(event) => setPrice(event.target.value)}
                 />
                 <br />
-                <select
+                <select className="inputBox" 
                     id="NewCourtsCourtType"
                     onChange={(event) => setType(event.target.value)}>
                     <option value="">Select Court Type</option>
