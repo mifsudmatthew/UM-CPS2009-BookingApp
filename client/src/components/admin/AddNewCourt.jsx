@@ -98,7 +98,7 @@ function AddNewCourt() {
           value={price}
           label="Enter the price of the court"
           type="number"
-          placeholder="€Price"
+          placeholder="Price"
           onChange={(event) => setPrice(event.target.value)}
         />
         <br />
