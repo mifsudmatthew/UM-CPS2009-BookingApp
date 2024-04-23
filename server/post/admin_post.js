@@ -43,11 +43,8 @@ adminRouter.get("/getAllCourts", async (req, res) => {
 
 adminRouter.post("/getBasicStatistics", async (req, res) => {
   try {
-    console.log("----------------------------------------------");
     const { data: allCourts } = await courts_quieries.getAllCourts();
     const courtStatistics = [];
-
-    console.log(allCourts);
 
     for (const court of allCourts) {
       const { data: bookingCount } =

@@ -92,12 +92,10 @@ const Bookings = () => {
                   <td>{court.time}</td>
                   <td>{court.address}</td>
                   <td>{court.price}</td>
-                  <td>
-                    <button
-                      onClick={() => cancelBooking(court.id, court.price)}>
-                      Cancel
-                    </button>
-                  </td>
+                  <button
+                    onClick={() => cancelBooking(court.id, court.price)}>
+                    Cancel
+                  </button>
                 </tr>
               ))}
             </tbody>
