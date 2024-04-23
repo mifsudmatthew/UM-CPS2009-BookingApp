@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Post } from "../../utils/ApiFunctions"; // Import the Post function to make API requests
 import "../../styles/accordion.css";
+import { Bar } from "react-chartjs-2";
+import Chart from "chart.js/auto";
 
 /**
  * Renders a component that displays the booking statistics for each court.
@@ -36,6 +38,28 @@ function CourtBookingStats() {
 
   return (
     <div className="accordion">
+      <Bar
+        data={{
+          labels: [
+            "Court 1",
+            "Court 2",
+            "Court 3",
+            "Court 4",
+            "Court 5",
+            "Court 6",
+            "Court 7",
+          ],
+          datasets: [
+            {
+              label: "Court Bookings",
+              data: [65, 59, 80, 81, 56, 55, 40],
+              backgroundColor: "rgba(75, 192, 192, 0.2)",
+              borderColor: "rgb(75, 192, 192)",
+              borderWidth: 1,
+            },
+          ],
+        }}
+      />
       {courtStats.map((court, index) => (
         <div key={index} className="accordion-item">
           <div
