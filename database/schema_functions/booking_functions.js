@@ -233,20 +233,14 @@ async function getBookedCourts(user_data) {
  * Retrieves the count of bookings associated with the specified courtID.
  */
 async function countAndSumBookingsByCourtID(courtID_toCount) {
+    console.log("ID: ");
+    console.log(courtID_toCount);
+    const id = courtID_toCount.toString()
     try {
-        const result = await booking_schema.aggregate([
-            { $match: { courtID: courtID_toCount } },
-            {
-                $group: {
-                    _id: null,
-                    count: { $sum: 1 }, // Count the number of bookings
-                    totalCost: { $sum: "$cost" } // Sum the total cost of bookings
-                }
-            }
-        ]);
+        const bookings = await booking_schema.find({ courtID: courtID_toCount });
 
-        // Extract the count and total cost from the result
-        const { count, totalCost } = result[0] || { count: 0, totalCost: 0 };
+        const count = bookings.length;
+        const totalCost = bookings.reduce((acc, booking) => acc + booking.cost, 0);
 
         return { result: true, data: { count, totalCost }, error: null };
     } catch (error_message) {
