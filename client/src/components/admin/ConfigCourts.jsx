@@ -3,6 +3,7 @@ import Form from "../form/Form";
 import InputBox from "../form/InputBox";
 import InputButton from "../form/InputButton";
 import { Post, Get } from "../../utils/ApiFunctions";
+import { toast } from "react-toastify";
 
 /**
  * Renders a form to configure courts.
@@ -41,6 +42,18 @@ function ConfigCourts() {
    */
   const handleSubmit = async (event) => {
     event.preventDefault();
+    // Check if the email and password fields are empty
+    if (!price || !name || !courtId) {
+      // Check if amount is not a number or empty
+      toast.error("Please fill all fields.");
+      return;
+    } else if (isNaN(price)) {
+      toast.error("Error! Input is not a number, please enter a number.");
+      return;
+    } else if (price < 0) {
+      toast.error("Error! Please enter a positive number.");
+      return;
+    }
     try {
       const response = await Post("/api/configCourts", {
         courtId,
@@ -51,6 +64,11 @@ function ConfigCourts() {
         return court._id === response.data._id ? response.data : court;
       });
       setCourts(newCourts);
+      toast.success("Court updated successfully!");
+      // Clear input fields
+      setName("");
+      setPrice("");
+      setCourtId("");
     } catch (error) {
       // Log an error if the request fails
       console.error("Error submitting booking: ", error);
@@ -96,6 +114,7 @@ function ConfigCourts() {
         <InputBox
           id="admin-config-price"
           label="Court Price"
+          type="number"
           placeholder="€Price"
           value={price}
           onChange={(event) => setPrice(event.target.value)} // Update the court price when the user enters a value
