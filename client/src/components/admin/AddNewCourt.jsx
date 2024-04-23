@@ -6,6 +6,7 @@ import { Post } from "../../utils/ApiFunctions";
 import Form from "../form/Form";
 import InputBox from "../form/InputBox";
 import InputButton from "../form/InputButton";
+import { set } from "mongoose";
 
 /**
  * Renders a form to add a new court.
@@ -25,19 +26,22 @@ function AddNewCourt() {
   // Function to handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (
+      !courtName ||
+      !price ||
+      !address ||
+      !longitude ||
+      !latitude ||
+      !area ||
+      !type
+    ) {
+      toast.error("Please fill in all the required fields.");
+      return;
+    } else if (price < 0 || area < 0) {
+      toast.error("Error! Please enter a positive number.");
+      return;
+    }
     try {
-      if (
-        !courtName ||
-        !price ||
-        !address ||
-        !longitude ||
-        !latitude ||
-        !area ||
-        !type
-      ) {
-        toast.error("Please fill in all the required fields.");
-        return;
-      }
       const courtData = {
         courtName,
         price,
@@ -51,7 +55,13 @@ function AddNewCourt() {
       if (response.result == true) {
         toast.success("Court added successfully.");
         console.log("Success: ", response);
-        window.location.reload;
+        setCourtName("");
+        setPrice("");
+        setAddress("");
+        setLongitude("");
+        setLatitude("");
+        setArea("");
+        setType("");
       } else {
         toast.error(response.error);
         console.log("Error: ", response);
@@ -71,11 +81,13 @@ function AddNewCourt() {
           id="NewCourtsCourtName"
           label="Enter the name of the court"
           placeholder="Court Name"
+          value={courtName}
           onChange={(event) => setCourtName(event.target.value)}
         />
         <br />
         <InputBox
           id="NewCourtsCourtArea"
+          value={area}
           label="Enter the area of the court"
           placeholder="Court Area"
           onChange={(event) => setArea(event.target.value)}
@@ -83,14 +95,16 @@ function AddNewCourt() {
         <br />
         <InputBox
           id="NewCourtsCourtPrice"
+          value={price}
           label="Enter the price of the court"
           type="number"
-          placeholder="€Price"
+          placeholder="Price"
           onChange={(event) => setPrice(event.target.value)}
         />
         <br />
         <select
           className="inputBox"
+          value={type}
           id="NewCourtsCourtType"
           onChange={(event) => setType(event.target.value)}
         >
@@ -102,6 +116,7 @@ function AddNewCourt() {
         <br />
         <InputBox
           id="NewCourtsCourtAddress"
+          value={address}
           label="Enter the address of the court"
           placeholder="Address"
           onChange={(event) => setAddress(event.target.value)}
@@ -109,6 +124,7 @@ function AddNewCourt() {
         <br />
         <InputBox
           id="NewCourtsCourtLongitude"
+          value={longitude}
           label="Enter the longitude of the court"
           type="number"
           placeholder="Longitude"
@@ -117,6 +133,7 @@ function AddNewCourt() {
         <br />
         <InputBox
           id="NewCourtsCourtLatitude"
+          value={latitude}
           label="Enter the latitude of the court"
           type="number"
           placeholder="Latitude"

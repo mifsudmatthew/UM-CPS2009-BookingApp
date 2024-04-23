@@ -54,6 +54,12 @@ function ConfigCourts() {
       toast.error("Error! Please enter a positive number.");
       return;
     }
+    const selectedCourt = courts.find((court) => court._id === courtId);
+    if (name === selectedCourt.court_name && price === selectedCourt.price) {
+      toast.error("No changes detected.");
+      return;
+    }
+
     try {
       const response = await Post("/api/configCourts", {
         courtId,
@@ -93,7 +99,11 @@ function ConfigCourts() {
       <div className="header-title">Configure Courts</div>
       <Form>
         <h4>Select Court</h4>
-        <select className="inputBox" onChange={handleCourtChange}>
+        <select
+          className="inputBox"
+          value={courtId}
+          onChange={handleCourtChange}
+        >
           {/* Display a list of courts fetched from the API in the dropdown */}
           <option value="">Select a court</option>
           {courts.map((court) => (
@@ -106,7 +116,7 @@ function ConfigCourts() {
         <InputBox
           id="admin-config-name"
           label="Court Name"
-          placeholder={"Court Name"}
+          placeholder={"Name"}
           value={name}
           onChange={(event) => setName(event.target.value)}
         />
@@ -115,7 +125,7 @@ function ConfigCourts() {
           id="admin-config-price"
           label="Court Price"
           type="number"
-          placeholder="€Price"
+          placeholder="Price"
           value={price}
           onChange={(event) => setPrice(event.target.value)} // Update the court price when the user enters a value
         />
