@@ -2,45 +2,74 @@
 
 /* Style for the accordion container */
 .accordion {
-    width: 100%;
+  width: 100%;
 }
 
 /* Style for each accordion item */
 .accordion-item {
-    border-radius: 1rem;
-    margin: 1rem;
-    border: 1px solid #8d8d8d; /* Add border between accordion items */
+  border-radius: 1rem;
+  margin: 1rem;
+  border: 1px solid #8d8d8d; /* Add border between accordion items */
 }
 
 /* Style for the accordion header */
 .accordion-header.close {
-    font-size: 100%;
-    font-weight: 700;
-    padding: 1rem;
-    background-color: #cde2be;
-    border-radius: 1rem;
+  font-size: 100%;
+  font-weight: 700;
+  padding: 1rem;
+  background-color: #cde2be;
+  border-radius: 1rem;
 }
 
 /* Style for the open accordion header */
 .accordion-header.open {
-    font-size: 100%;
-    font-weight: 700;
-    padding: 1rem;
-    background-color: #bbd6a8;
-    border-top-left-radius: 1rem;
-    border-top-right-radius: 1rem;
+  font-size: 100%;
+  font-weight: 700;
+  padding: 1rem;
+  background-color: #bbd6a8;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
 }
 
 /* Style for the accordion body */
-.accordion-body.close{
-    display: none; /* Initially hide accordion body */
-    transition: max-height 0.3s ease;
+.accordion-body.close {
+  display: none; /* Initially hide accordion body */
+  transition: max-height 0.3s ease;
 }
 
 /* Style for the open accordion body */
 .accordion-body.open {
-    display: flex;
-    flex-direction: column;
-    font-size: 80%;
-    transition: max-height 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  font-size: 80%;
+  transition: max-height 0.3s ease;
+}
+
+.horizontalNav {
+  text-decoration: none;
+  display: inline-block;
+  padding: 8px 16px;
+  position: fixed;
+  /*bottom right corner of page*/
+  right: 0;
+  bottom: 0;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  border-radius: 50%;
+}
+
+.horizontalNav:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.previous {
+  background-color: black;
+  color: white;
+  right: 50px;
+}
+
+.next {
+  background-color: #04aa6d;
+  color: white;
 }
