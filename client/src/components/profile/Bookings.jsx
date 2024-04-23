@@ -94,6 +94,7 @@ const Bookings = () => {
                   <td>{court.price}</td>
                   <td>
                     <button
+                      className="cancel-btn"
                       onClick={() => cancelBooking(court.id, court.price)}>
                       Cancel
                     </button>
