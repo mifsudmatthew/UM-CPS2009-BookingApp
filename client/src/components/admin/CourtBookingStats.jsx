@@ -57,37 +57,49 @@ function CourtBookingStats() {
   const renderChart = () => {
     if (currentNav === "0") {
       return (
-        <Bar
-          data={{
-            labels: courtNames,
-            datasets: [
-              {
-                label: "Court Profits",
-                data: courtProfits,
-                backgroundColor: "rgba(75, 192, 192, 0.2)",
-                borderColor: "rgb(75, 192, 192)",
-                borderWidth: 1,
-              },
-            ],
-          }}
-        />
+        <div style={{ height: "80vh", width: "100%" }}>
+          <Bar
+            data={{
+              labels: courtNames,
+              datasets: [
+                {
+                  label: "Court Profits",
+                  data: courtProfits,
+                  backgroundColor: "rgba(75, 192, 192, 0.2)",
+                  borderColor: "rgb(75, 192, 192)",
+                  borderWidth: 1,
+                },
+              ],
+            }}
+            options={{
+              maintainAspectRatio: false,
+              responsive: true,
+            }}
+          />
+        </div>
       );
     } else if (currentNav === "1") {
       return (
-        <Line
-          data={{
-            labels: courtNames,
-            datasets: [
-              {
-                label: "Court Profits",
-                data: courtProfits,
-                backgroundColor: "rgba(75, 192, 192, 0.2)",
-                borderColor: "rgb(75, 192, 192)",
-                borderWidth: 1,
-              },
-            ],
-          }}
-        />
+        <div style={{ height: "80vh", width: "100%" }}>
+          <Line
+            data={{
+              labels: courtNames,
+              datasets: [
+                {
+                  label: "Court Profits",
+                  data: courtProfits,
+                  backgroundColor: "rgba(75, 192, 192, 0.2)",
+                  borderColor: "rgb(75, 192, 192)",
+                  borderWidth: 1,
+                },
+              ],
+            }}
+            options={{
+              maintainAspectRatio: false,
+              responsive: true,
+            }}
+          />
+        </div>
       );
     } else {
       return null;
@@ -95,44 +107,48 @@ function CourtBookingStats() {
   };
 
   return (
-    <div className="accordion">
+    <>
       <a href="#" className="horizontalNav previous" onClick={navigateBackward}>
         &#8249;
       </a>
       <a href="#" className="horizontalNav next" onClick={navigateForward}>
         &#8250;
       </a>
-      <div className="chart-container">{renderChart()}</div>
-      {currentNav === "2" &&
-        courtStats.map((court, index) => (
-          <div key={index} className="accordion-item">
-            <div
-              className={`accordion-header ${court.isOpen ? "open" : "close"}`}
-              onClick={() => toggleAccordion(index)}
-            >
-              {court.name}
+      <div className="accordion">
+        <div className="chart-container">{renderChart()}</div>
+        {currentNav === "2" &&
+          courtStats.map((court, index) => (
+            <div key={index} className="accordion-item">
+              <div
+                className={`accordion-header ${
+                  court.isOpen ? "open" : "close"
+                }`}
+                onClick={() => toggleAccordion(index)}
+              >
+                {court.name}
+              </div>
+              <div
+                className={`accordion-body ${court.isOpen ? "open" : "close"}`}
+              >
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Bookings Count</th>
+                      <th>Total Profit</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{court.bookings}</td>
+                      <td>{court.money}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
-            <div
-              className={`accordion-body ${court.isOpen ? "open" : "close"}`}
-            >
-              <table>
-                <thead>
-                  <tr>
-                    <th>Bookings Count</th>
-                    <th>Total Profit</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{court.bookings}</td>
-                    <td>{court.money}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        ))}
-    </div>
+          ))}
+      </div>
+    </>
   );
 }
 
