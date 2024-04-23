@@ -69,8 +69,6 @@ function ConfigCourts() {
       const newCourts = courts.map((court) => {
         return court._id === response.data._id ? response.data : court;
       });
-
-      console.log("HERE");
       setCourts(newCourts);
       toast.success("Court updated successfully!");
       // Clear input fields
