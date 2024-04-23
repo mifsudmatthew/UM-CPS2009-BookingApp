@@ -116,7 +116,7 @@ function ConfigCourts() {
         <InputBox
           id="admin-config-name"
           label="Court Name"
-          placeholder={""}
+          placeholder={"Name"}
           value={name}
           onChange={(event) => setName(event.target.value)}
         />
@@ -125,7 +125,7 @@ function ConfigCourts() {
           id="admin-config-price"
           label="Court Price"
           type="number"
-          placeholder=""
+          placeholder="Price"
           value={price}
           onChange={(event) => setPrice(event.target.value)} // Update the court price when the user enters a value
         />
