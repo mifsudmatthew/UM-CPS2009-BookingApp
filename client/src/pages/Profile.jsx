@@ -14,7 +14,7 @@ import Admin from "../components/shared/Admin.jsx";
 const Profile = () => {
   return (
     <Authenticated>
-      <Admin>
+      <Admin fallback={<></>}>
         <Navigate to="/" replace={true} />
       </Admin>
       <div className="profile-container">
