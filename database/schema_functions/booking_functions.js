@@ -12,7 +12,6 @@ async function getFutureBookings_ID(userID_toSearch) {
         currentDate = new Date();
         const currentTime = currentDate.getTime();
         currentDate.setHours(0, 0, 0, 0);
-        console.log(currentDate)
 
         // ---------------- Query Bookings from current date/time
         const bookings =  await booking_schema.find({   
@@ -110,7 +109,7 @@ async function getFutureBookings_IDCourt(userID_toSearch, courtID_toSearch) {
  * 2. The user has not already booked the max possible bookings
  * 3. The court has not already been booked at the set date and time
  */
-async function addBooking(userID_toBook, courtID_toBook, date_toBook, time_toBook, max_userBookings) {
+async function addBooking(userID_toBook, courtID_toBook, cost_toBook, date_toBook, time_toBook, max_userBookings) {
     try{
         const today = new Date();
         // --------------------- Check Current Date
@@ -131,7 +130,6 @@ async function addBooking(userID_toBook, courtID_toBook, date_toBook, time_toBoo
 
         // --------------------- Check if user has not reached max bookings
         future_bookings = await getFutureBookings_ID(userID_toBook)
-        console.log(future_bookings)
         if(future_bookings.data.length >= max_userBookings){
             return { result: false, data: null, error: "User has reached max bookings"};
         }
@@ -150,7 +148,8 @@ async function addBooking(userID_toBook, courtID_toBook, date_toBook, time_toBoo
             date: date_toBook,
             time: time_toBook, 
             userID: userID_toBook,
-            courtID: courtID_toBook 
+            courtID: courtID_toBook,
+            cost : cost_toBook
         });
 
         
@@ -226,17 +225,21 @@ async function getBookedCourts(user_data) {
     }
 }
 
-/** ===================================== Count Bookings By Court ID =========================
+/** ===================================== Count & Sum Bookings By Court ID =========================
  * ------------ Count the number of bookings made for a specific court.
  * Takes a courtID.
  * Retrieves the count of bookings associated with the specified courtID.
  */
-async function countBookingsByCourtID(courtID_toCount) {
+async function countAndSumBookingsByCourtID(courtID_toCount) {
     try {
-        const bookingCount = await booking_schema.countDocuments({ courtID: courtID_toCount });
-        return { result: true, data: bookingCount, error: null };
+        const bookings = await booking_schema.find({ courtID: courtID_toCount });
+
+        const count = bookings.length;
+        const totalCost = bookings.reduce((acc, booking) => acc + booking.cost, 0);
+
+        return { result: true, data: { count, totalCost }, error: null };
     } catch (error_message) {
-        throw new Error("Failed to Connect to Database: "+error_message);
+        throw new Error("Failed to Connect to Database: " + error_message);
     }
 }
 
@@ -254,5 +257,5 @@ module.exports = {
     removeBooking                   : removeBooking,
     getAvailableCourts              : getAvailableCourts,
     getBookedCourts                 : getBookedCourts,
-    countBookingsByCourtID          : countBookingsByCourtID,
+    countAndSumBookingsByCourtID    : countAndSumBookingsByCourtID
 };

@@ -1,0 +1,59 @@
+.bookings-table {
+    font-size: 100%;
+    width: 100%;
+    border-collapse: separate;
+}
+@media (max-width: 450px) {
+    .bookings-table {
+        font-size: 50%;
+        width: 100%;
+        border-collapse: separate;
+    }
+    .bookings-table th,
+    .bookings-table td {
+        padding: 0.1rem;
+        border-bottom: 1px solid #ddd;
+    }
+    .bookings-table button {
+        display: flex;
+        flex-direction: row;
+        font-size: 60%;
+        background: #a0c982;
+        border: none;
+        cursor: pointer;
+        outline: none;
+        padding: 40%
+    }
+    
+}
+
+.bookings-table th,
+.bookings-table td {
+    padding: 0.5rem;
+    border-bottom: 1px solid #ddd;
+}
+
+.bookings-table th {
+    background-color: #a0c982;
+}
+
+.bookings-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.bookings-table tbody tr:hover {
+    background-color: #ddd;
+}
+
+.bookings-table button {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    color: black;
+    font-size: 140%;
+    background: #a0c982;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 1rem 2rem
+}
