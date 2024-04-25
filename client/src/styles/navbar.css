@@ -26,7 +26,7 @@
 }
 @media (max-width: 450px) {
   .navbar-title a {
-    font-size: 150%;
+    font-size: 120%;
     font-weight: bold;
     color: black;
     text-align: center;
@@ -34,9 +34,9 @@
     margin: 0% 5%;
   }
 }
-@media (max-width: 360px) {
+@media (max-width: 380px) {
   .navbar-title a {
-    font-size: 120%;
+    font-size: 100%;
     font-weight: bold;
     color: black;
     text-align: center;

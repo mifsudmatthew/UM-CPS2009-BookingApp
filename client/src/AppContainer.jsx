@@ -44,7 +44,7 @@ export default function AppContainer() {
               <Route path="*" element={<Errors />} />
             </Route>
             <Route path="admin" element={<AdminPage />}>
-              <Route index exact element={<ConfigCourts />} />
+              <Route index exact element={<CourtBookingStats />} />
               <Route path="updatecourts" element={<ConfigCourts />} />
               <Route path="addnewcourt" element={<AddNewCourt />} />
               <Route path="statistics" element={<CourtBookingStats />} />
