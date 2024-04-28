@@ -6,7 +6,6 @@ import { Post } from "../../utils/ApiFunctions";
 import Form from "../form/Form";
 import InputBox from "../form/InputBox";
 import InputButton from "../form/InputButton";
-import { set } from "mongoose";
 
 /**
  * Renders a form to add a new court.
@@ -106,8 +105,7 @@ function AddNewCourt() {
           className="inputBox"
           value={type}
           id="NewCourtsCourtType"
-          onChange={(event) => setType(event.target.value)}
-        >
+          onChange={(event) => setType(event.target.value)}>
           <option value="">Select Court Type</option>
           <option value="Hard Court">Hard Court</option>
           <option value="Clay Court">Clay Court</option>
