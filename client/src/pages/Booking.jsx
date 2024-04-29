@@ -81,7 +81,7 @@ function Booking() {
       toast.error("Please fill all fields.");
       return;
     }
-    const booking = { date, hour, court };
+    const booking = { date, hour, court, players};
     try {
       // Send a POST request to the server with the booking data
       const response = await Post("/api/booking", booking);
