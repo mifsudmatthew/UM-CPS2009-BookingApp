@@ -40,7 +40,7 @@ steps:
 
   - task: AzureWebApp@1
     inputs:
-      azureSubscription: 'Azure for Students(f2e395ec-82cd-4beb-befa-76bd5ce082d1)'
+      azureSubscription: 'Azure for Students(ddc1cb0e-7021-43ee-88f7-3f7c9cda3828)'
       appType: 'webApp'
       appName: 'ServeSpot'
       package: '$(System.DefaultWorkingDirectory)/**/*.zip'
