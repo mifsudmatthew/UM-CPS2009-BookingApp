@@ -26,7 +26,7 @@ bookingRouter.post(
     email = req.user.email;
     user = await user_queries.retrieveUser(email);
     // ----------------------------------------------- Secondary Users
-    secondary_users_emails = req.body.secondary_users;
+    secondary_users_emails = req.body.players;
     secondary_users = [];
     secondary_users_id = [];
     for (const email of secondary_users_emails) {
