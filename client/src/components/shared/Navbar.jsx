@@ -143,42 +143,32 @@ function Navbar() {
         )}
 
         {/* ---------------------- Bell ---------------------------- */}
-        {/* <div className="navbar-bell">
-          <Popup // Add a popup to display the notification panel
-            trigger={
-              <div style={{ cursor: "pointer" }} onClick={handleBellClick}>
-                {accessToken &&
-                  (notification ? <BellFill className="bell" /> : <Bell />)}
+        {!isAdmin(user) && authenticated ? (
+          <div className="bellWidth">
+            <div className="navbar-bell" ref={notifRef}>
+              <div
+                className="hover-grow"
+                onClick={() => {
+                  setNotificationOpen(!notificationOpen);
+                }}
+              >
+                {notificationOpen ? (
+                  <X
+                    className="bell-icon menu-icon-img"
+                    style={{ marginTop: "10px" }}
+                  ></X>
+                ) : (
+                  <Bell
+                    className="bell-icon bell-icon-img"
+                    style={{ marginTop: "15px" }}
+                  ></Bell>
+                )}
               </div>
-            }
-            position="right top"
-            on="click"
-          >
-            <NotificationPanel />
-          </Popup>
-        </div> */}
-        <div className="bellWidth">
-          <div className="navbar-bell" ref={notifRef}>
-            <div
-              className="hover-grow"
-              onClick={() => {
-                setNotificationOpen(!notificationOpen);
-              }}
-            >
-              {notificationOpen ? (
-                <X
-                  className="bell-icon menu-icon-img"
-                  style={{ marginTop: "10px" }}
-                ></X>
-              ) : (
-                <Bell
-                  className="bell-icon bell-icon-img"
-                  style={{ marginTop: "15px" }}
-                ></Bell>
-              )}
             </div>
           </div>
-        </div>
+        ) : (
+          <></>
+        )}
 
         {/* ---------------------- Menu - icon ---------------------------- */}
         <div
