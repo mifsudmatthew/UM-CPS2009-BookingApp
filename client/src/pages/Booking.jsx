@@ -93,9 +93,7 @@ function Booking() {
           "Court successfully booked! Redirecting to bookings page."
         );
         addSuccessfulBooking(booking); // Add the booking to the list of successful bookings
-        if (response.accessToken) {
-          updateToken(await getUpdatedToken());
-        }
+        updateToken(await getUpdatedToken());
         setTimeout(() => {
           navigate("/profile/bookings", { replace: true });
         }, 2000);
@@ -221,8 +219,8 @@ function Booking() {
           <div className="form-section">
             <label className="booking-form-subtitle">Add Player</label>
             <div>Do you wish to add another player?</div>
-            <button onClick={removePlayer}>-</button>
-            <button onClick={addAnotherPlayer}>+</button>
+            <button type="button" onClick={removePlayer}>-</button>
+            <button type="button" onClick={addAnotherPlayer}>+</button>
             <br />
             {Array.from({ length: playerCount }).map((_, i) => (
               <div key={i}>
