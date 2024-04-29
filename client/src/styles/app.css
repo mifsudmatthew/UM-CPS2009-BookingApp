@@ -146,3 +146,15 @@ body {
     height: 30rem;
   }
 }
+
+
+@media (min-height: 853px) {
+  .mainContainerLogin {
+    height: 100vh;
+  }
+
+  .mainContainer {
+    height: 100vh;
+  }
+}
+
