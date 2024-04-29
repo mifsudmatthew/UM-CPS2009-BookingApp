@@ -223,6 +223,30 @@ function Navbar() {
             <img src={user}></img>
           </div> */}
 
+        <div
+          className={`notification-menu ${
+            notificationOpen ? "active" : "inactive"
+          }`}
+        >
+          <ul className="notificationList">
+            <li className="dropdownItem">
+              <span className="dropdownItem-notification">
+                Booking Successful! at 12:00 PM
+              </span>
+            </li>
+            <li className="dropdownItem">
+              <span className="dropdownItem-notification">
+                Booking Cancellation at 2:00 PM
+              </span>
+            </li>
+            <li className="dropdownItem">
+              <span className="dropdownItem-notification">
+                Topped up Successfully! at 3:00 PM
+              </span>
+            </li>
+          </ul>
+        </div>
+
         <div className={`dropdown-menu ${open ? "active" : "inactive"}`}>
           <ul>
             <NavLink to="/">
