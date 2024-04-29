@@ -14,21 +14,81 @@ bookingRouter.post("/getAvailableCourts", async (req, res) => {
   res.json(responseQ.data);
 });
 
+/** ============================================ booking ===========================================
+ * ------------  Add Booking
+ */
 bookingRouter.post(
   "/booking",
   server_functions.authenticateToken,
   async (req, res) => {
     court = await courts_queries.retrieveCourt(req.body.court);
-
+    // ----------------------------------------------- Email
     email = req.user.email;
     user = await user_queries.retrieveUser(email);
+    // ----------------------------------------------- Secondary Users
+    secondary_users_emails = req.body.secondary_users;
+    secondary_users = [];
+    secondary_users_id = [];
+    for (const email of secondary_users_emails) {
+      const secondaryUser = await user_queries.retrieveUser(email);
+      secondary_users.push(secondaryUser);
+      secondary_users_id.push(secondaryUser._id);
+    }
 
-    if (user.data.balance <= court.data.price) {
+    // ----------------------------------------------- Multi User
+    if (secondary_users.length > 0) {
+      split_cost = court.data.price / (secondary_users.length + 1);
+      if (user.data.balance < split_cost) {
+        return res.json({
+          result: false,
+          data: null,
+          error: "Insufficient Funds",
+        });
+      }
+      for (const sec_user of secondary_users) {
+        if (sec_user.data.balance < split_cost) {
+          return res.json({
+            result: false,
+            data: null,
+            error: "Secondary User has Insufficient Funds",
+          });
+        }
+      }
+      response = await bookings_queries.addBooking(
+        req.user.id,
+        req.body.court,
+        court.data.price,
+        new Date(req.body.date),
+        parseInt(req.body.hour),
+        3,
+        secondary_users_id
+      );
+      if (response.result == true) {
+        result = await user_queries.updateUserBalance(email, -split_cost);
+        if (result.result == false) {
+          return res.json(result);
+        }
+        for (const sec_user of secondary_users) {
+          result = await user_queries.updateUserBalance(
+            sec_user.email,
+            -split_cost
+          );
+          if (result.result == false) {
+            return res.json(result);
+          }
+        }
+        return res.json(result);
+      }
+
+      // ----------------------------------------------- Single User Invalid
+    } else if (user.data.balance < court.data.price) {
       return res.json({
         result: false,
         data: null,
-        error: "Not enough Points in Balance",
+        error: "Insufficient Funds",
       });
+
+      // ----------------------------------------------- Single User Valid
     } else {
       response = await bookings_queries.addBooking(
         req.user.id,
@@ -36,33 +96,28 @@ bookingRouter.post(
         court.data.price,
         new Date(req.body.date),
         parseInt(req.body.hour),
-        3
+        3,
+        []
+      );
+      server_functions.sendBookingSuccessMail(
+        email,
+        court.data.court_name,
+        req.body.date,
+        req.body.hour,
+        court.data.price / (1 + req.body.players.length)
       );
       if (response.result == true) {
         user_queries.updateUserBalance(email, -court.data.price);
-        const user = await user_queries.retrieveUser(email);
-        const userData = {
-          _id: user.data._id,
-          email: user.data.email,
-          name: user.data.name,
-          admin: user.data.admin,
-          balance: user.data.balance,
-        };
-        const accessToken = server_functions.generateAccessToken(userData);
-        server_functions.sendBookingSuccessMail(
-          email,
-          court.data.court_name,
-          req.body.date,
-          req.body.hour,
-          court.data.price / (1 + req.body.players.length)
-        );
-        return res.json({ result: true, accessToken: accessToken });
       }
+
       res.json(response);
     }
   }
 );
 
+/** ============================================ Future Bookings ====================================
+ * ------------  Future Bookings
+ */
 bookingRouter.post(
   "/getFutureBookings",
   server_functions.authenticateToken,

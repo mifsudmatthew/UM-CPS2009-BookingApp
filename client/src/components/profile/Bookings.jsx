@@ -56,9 +56,7 @@ const Bookings = () => {
             });
             if (response.result == true) {
                 toast.success("Court Successfully Canceled!");
-                if (response.accessToken) {
-                    updateToken(await getUpdatedToken());
-                }
+                updateToken(await getUpdatedToken());
                 setCourts((prevCourts) =>
                     prevCourts.filter((court) => court.id !== id)
                 );

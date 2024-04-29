@@ -120,7 +120,8 @@ async function addBooking(
   cost_toBook,
   date_toBook,
   time_toBook,
-  max_userBookings
+  max_userBookings,
+  secondary_users
 ) {
   try {
     const today = new Date();
@@ -179,6 +180,7 @@ async function addBooking(
       userID: userID_toBook,
       courtID: courtID_toBook,
       cost: cost_toBook,
+      secondaryUsers: secondary_users,
     });
 
     // --------------------- Save and return
