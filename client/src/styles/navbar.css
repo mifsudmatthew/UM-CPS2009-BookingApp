@@ -54,8 +54,7 @@
   height: 2rem;
   margin: 0 5%;
 }
-.navbar-logo,
-.menu-icon {
+.navbar-logo {
   flex-shrink: 0;
 }
 
@@ -64,6 +63,14 @@
   align-items: center;
   padding-right: 1rem;
   cursor: pointer;
+  flex-shrink: 0;
+}
+
+.bell-icon {
+  align-content: center;
+  align-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .menu-icon-img {
@@ -73,8 +80,20 @@
   height: 80%;
   transition: transform 0.3s ease;
 }
-
+/* 
 .menu-icon-img:hover {
+  transform: scale(1.15);
+} */
+
+.bell-icon-img {
+  font-size: 27.5px;
+  width: auto;
+  max-height: 3rem;
+  height: 80%;
+  transition: transform 0.3s ease;
+}
+
+.hover-grow:hover {
   transform: scale(1.15);
 }
 
