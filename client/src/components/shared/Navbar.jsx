@@ -127,10 +127,12 @@ function Navbar() {
       <div className="navbar-right">
         {/* ---------------------- Balance ---------------------------- */}
         {!isAdmin(user) && authenticated ? (
+          <NavLink to="/profile/topup">
           <div className="navbar-balance">
             <Wallet2 className="wallet"> : </Wallet2>
             €{user.balance.toFixed(2)}
           </div>
+          </NavLink>
         ) : (
           <></>
         )}
