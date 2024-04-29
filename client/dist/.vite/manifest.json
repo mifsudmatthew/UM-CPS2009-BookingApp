@@ -1,6 +1,6 @@
 {
   "index.html": {
-    "file": "assets/index-CQixLXDR.js",
+    "file": "assets/index-DYU5nQag.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
@@ -8,7 +8,7 @@
       "node_modules/workbox-window/build/workbox-window.prod.es5.mjs"
     ],
     "css": [
-      "assets/index-CH-ih1i3.css"
+      "assets/index-CBLjNVzx.css"
     ],
     "assets": [
       "assets/grass-court-Ch3CFGZv.webp",
