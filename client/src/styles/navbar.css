@@ -26,24 +26,10 @@
 }
 @media (max-width: 450px) {
   .navbar-title a {
-    font-size: 120%;
-    font-weight: bold;
-    color: black;
-    text-align: center;
-    text-decoration: none;
-    margin: 0% 5%;
+    display: none;
   }
 }
-@media (max-width: 380px) {
-  .navbar-title a {
-    font-size: 100%;
-    font-weight: bold;
-    color: black;
-    text-align: center;
-    text-decoration: none;
-    margin: 0% 5%;
-  }
-}
+
 .navbar-balance {
   outline: 2px solid #444444;
   stroke: black;
