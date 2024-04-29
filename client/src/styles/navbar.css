@@ -7,6 +7,7 @@
 }
 .navbar-bell {
   align-content: center;
+  width: 20%;
 }
 
 .navbar-title {
@@ -95,6 +96,7 @@
 
 .hover-grow:hover {
   transform: scale(1.15);
+  cursor: pointer;
 }
 
 .navbar-logo {
