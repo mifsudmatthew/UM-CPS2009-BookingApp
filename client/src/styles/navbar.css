@@ -9,6 +9,11 @@
   align-content: center;
 }
 
+.bellWidth {
+  margin-top: 7px;
+  width: 15%;
+}
+
 .navbar-title {
   align-items: center;
   flex-grow: 100;
@@ -54,8 +59,7 @@
   height: 2rem;
   margin: 0 5%;
 }
-.navbar-logo,
-.menu-icon {
+.navbar-logo {
   flex-shrink: 0;
 }
 
@@ -64,6 +68,14 @@
   align-items: center;
   padding-right: 1rem;
   cursor: pointer;
+  flex-shrink: 0;
+}
+
+.bell-icon {
+  align-content: center;
+  align-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .menu-icon-img {
@@ -71,11 +83,26 @@
   width: auto;
   max-height: 3rem;
   height: 80%;
+}
+/* 
+.menu-icon-img:hover {
+  transform: scale(1.15);
+} */
+
+.bell-icon-img {
+  font-size: 27.5px;
+  width: auto;
+  max-height: 3rem;
+  height: 80%;
+}
+
+.hover-grow {
   transition: transform 0.3s ease;
 }
 
-.menu-icon-img:hover {
+.hover-grow:hover {
   transform: scale(1.15);
+  cursor: pointer;
 }
 
 .navbar-logo {
