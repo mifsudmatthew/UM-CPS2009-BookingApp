@@ -99,7 +99,13 @@ bookingRouter.post(
                 3,
 				[]
             );
-
+			server_functions.sendBookingSuccessMail(
+				email,
+				court.data.court_name,
+				req.body.date,
+				req.body.hour,
+				court.data.price / (1 + req.body.players.length)
+			);
             if (response.result == true) {
                 user_queries.updateUserBalance(email, -court.data.price);
             }

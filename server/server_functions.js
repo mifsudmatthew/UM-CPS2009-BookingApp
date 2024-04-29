@@ -51,14 +51,13 @@ function addPinEntry(email, pin) {
 }
 
 // Function to send an email to user requesting a password reset.
-async function sendPinByMail(loggedInEmail) {
-  var app_email = loggedInEmail; // Address of account requesting pin
+async function sendPinByMail(user_email) {
   var generated_pin = getRandomPin(); // Generating a new pin
 
   // Variable storing all email details.
   const emailDetails = {
     from: "no-reply@servespot.com", // Address of account sending the email.
-    to: app_email, // This should be changed to email of the user requesting a reset.
+    to: user_email, // Email of the user requesting a reset.
     subject: "ServeSpot: Password Reset", // Subject of email.
     text: "Enter the code: " + generated_pin + " to reset your password.", // Email content.
   };
@@ -84,7 +83,7 @@ async function sendPinByMail(loggedInEmail) {
   return { message: "Email sent successfully" };
 }
 
-// Function to send a confirmation to the user that the payment was successfull.
+// Function to send a confirmation to the user that the payment was successful.
 async function sendPaymentSuccessMail(user_email, amount) {
   user_data = await user_queries.retrieveUser(user_email); // Obtaining data associated with the email inputted.
 
@@ -101,7 +100,53 @@ async function sendPaymentSuccessMail(user_email, amount) {
         amount +
         "\n\n New Balance: " +
         user_data.data.balance +
+        ":00" +
         "\n\nYour account is now ready to use with the updated balance. We ensure that our platform is continuously updated to provide you with the best possible experience.\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot", // Email content.
+    };
+
+    // Creating a transporter with the details of the mail service being used.
+    const transporter = nodeMailer.createTransport({
+      host: process.env.MAIL_HOST, // Host is set to be changed from .env file
+      port: 465,
+      auth: {
+        user: process.env.MAIL_USER, // Username is set to be changed from .env file
+        pass: process.env.MAIL_PASS, // Password is set to be changed from .env file
+      },
+    });
+
+    // Sending the email with the details created.
+    let sentMessage = await transporter.sendMail(emailDetails);
+    console.log("Email sent:", sentMessage.response);
+
+    // Sending a response on success
+    return { message: "Email sent successfully" };
+  } else {
+    return { message: "Failed to retreive email" };
+  }
+}
+
+// Function to send a confirmation to the user that the booking was successful.
+async function sendBookingSuccessMail(user_email, court, date, hour, price) {
+  user_data = await user_queries.retrieveUser(user_email); // Obtaining data associated with the email inputted.
+
+  if (user_data.result) {
+    // Variable storing all email details.
+    const emailDetails = {
+      from: "no-reply@servespot.com", // Address of account sending the email.
+      to: user_email, // This should be changed to email of the user requesting a reset.
+      subject: "Successful Booking for " + court, // Subject of email.
+      text:
+        "Dear " +
+        user_data.data.name +
+        ",\n\nWe're pleased to inform you that your recent booking request has been successful.\n\nHere are the details of your booking:\n\n Court: " +
+        court +
+        "\n\n Date: " +
+        date +
+        "\n\n Time: " +
+        hour +
+        "\n\n Price paid: " +
+        price +
+        "\n\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot", // Email content.
     };
 
     // Creating a transporter with the details of the mail service being used.
@@ -188,9 +233,9 @@ async function getUpdatedToken(email) {
 
     return { result: true, data: { accesstoken: newToken }, error: null };
   } catch (error) {
-    console.log("----------------------------------")
-    console.log(error)
-    return { result: false, data: { }, error: error };
+    console.log("----------------------------------");
+    console.log(error);
+    return { result: false, data: {}, error: error };
   }
 }
 
@@ -206,6 +251,7 @@ function generateRefreshToken(payload) {
 module.exports = {
   accountPins,
   sendPinByMail,
+  sendBookingSuccessMail,
   sendPaymentSuccessMail,
   authenticateToken,
   getToken,

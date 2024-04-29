@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { getUpdatedToken } from "../../utils/ApiFunctions";
 import { XOctagon } from "react-bootstrap-icons";
 import "../../styles/bookings.css";
+
 /**
  * Renders the Bookings component.
  * This component displays the upcoming and previous bookings in a table format.
@@ -88,7 +89,11 @@ const Bookings = () => {
                         </thead>
                         <tbody>
                             {/* Map through upcomingBookings array and render each booking */}
-                            {courts.map((court) => (
+                            {courts.map((court) => {
+                                const courtDateTime = new Date(`${court.date}T${court.time}:00`);
+                                const now = new Date();
+                                const diffInHours = (courtDateTime - now) / 1000 / 60 / 60;
+                                return (
                                 <tr key={court.id}>
                                     <td>{court.name}</td>
                                     <td>{court.date}</td>
@@ -96,6 +101,8 @@ const Bookings = () => {
                                     <td>{court.address}</td>
                                     <td>€{court.price.toFixed(2)}</td>
                                     <td> 
+                                        {/* Calculate the time difference, if more than 24 hours allow cancellation */}
+                                        {diffInHours > 24 ? (
                                         <button
                                             onClick={() =>
                                                 cancelBooking(
@@ -104,11 +111,13 @@ const Bookings = () => {
                                                 )
                                             }
                                         >
-                                            <XOctagon />
+                                        <XOctagon />
                                         </button>
+                                        ) : null}
                                     </td>
                                 </tr>
-                            ))}
+                            );
+                            })}
                         </tbody>
                     </table>
                 </div>

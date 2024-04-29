@@ -39,6 +39,11 @@ function Topup() {
             updateToken(response.accessToken);
           }
           console.log(response);
+
+          // Display success toast if the payment was successful
+          if (response.success) {
+            toast.success("Top Up Successful!");
+          }
         } catch (err) {
           // Log an error if the request fails
           console.error(`Error in top-up with session_id: ${err}`);
