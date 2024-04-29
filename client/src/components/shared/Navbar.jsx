@@ -91,18 +91,10 @@ function Navbar() {
   }, []);
   // State variables
   const [authenticated, setAuthenticated] = useState(false); // State variable to store the login status of the user
-  const [showNavbar, setShowNavbar] = useState(false); // Controls the visibility of the navbar
   const { notification } = useContext(NotificationContext); // Notification context for displaying notifications
   const [showNotificationPanel, setShowNotificationPanel] = useState(false); // Controls the visibility of the notification panel
 
   const { user, accessToken } = useProfile();
-
-  /**
-   * Toggles the visibility of the navbar.
-   */
-  const handleShowNavbar = () => {
-    setShowNavbar(!showNavbar);
-  };
 
   /**
    * Toggles the visibility of the notification panel.
@@ -153,8 +145,7 @@ function Navbar() {
               </div>
             }
             position="right top"
-            on="click"
-          >
+            on="click">
             <NotificationPanel />
           </Popup>
         </div>
@@ -164,8 +155,7 @@ function Navbar() {
           ref={menuRef}
           onClick={() => {
             setOpen(!open);
-          }}
-        >
+          }}>
           <div className="menu-icon menu-icon-img">
             {open ? <X></X> : <List></List>}
           </div>
