@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "../../styles/courts.css";
+import { Post } from "../../utils/ApiFunctions";
 
 import {
   leftArrow,
