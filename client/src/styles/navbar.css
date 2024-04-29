@@ -7,7 +7,11 @@
 }
 .navbar-bell {
   align-content: center;
-  width: 20%;
+}
+
+.bellWidth {
+  margin-top: 7px;
+  width: 15%;
 }
 
 .navbar-title {
@@ -79,7 +83,6 @@
   width: auto;
   max-height: 3rem;
   height: 80%;
-  transition: transform 0.3s ease;
 }
 /* 
 .menu-icon-img:hover {
@@ -91,6 +94,9 @@
   width: auto;
   max-height: 3rem;
   height: 80%;
+}
+
+.hover-grow {
   transition: transform 0.3s ease;
 }
 

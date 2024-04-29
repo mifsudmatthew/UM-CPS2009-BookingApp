@@ -157,19 +157,23 @@ function Navbar() {
             <NotificationPanel />
           </Popup>
         </div> */}
-
-        <div className="navbar-bell" ref={notifRef}>
-          <div
-            className="hover-grow"
-            onClick={() => {
-              setNotificationOpen(!notificationOpen);
-            }}
-          >
-            {notificationOpen ? (
-              <X className="bell-icon menu-icon-img"></X>
-            ) : (
-              <Bell className="bell-icon bell-icon-img"></Bell>
-            )}
+        <div className="bellWidth">
+          <div className="navbar-bell" ref={notifRef}>
+            <div
+              className="hover-grow"
+              onClick={() => {
+                setNotificationOpen(!notificationOpen);
+              }}
+            >
+              {notificationOpen ? (
+                <X
+                  className="bell-icon menu-icon-img"
+                  style={{ marginBottom: "7.5px" }}
+                ></X>
+              ) : (
+                <Bell className="bell-icon bell-icon-img"></Bell>
+              )}
+            </div>
           </div>
         </div>
 
