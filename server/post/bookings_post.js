@@ -161,6 +161,7 @@ bookingRouter.post(
               name: court.data.court_name,
               address: court.data.address,
               price: booking.cost,
+			  secondary: booking.secondaryUsers
             };
           })
         );
@@ -186,24 +187,30 @@ bookingRouter.post(
       );
       const result = await bookings_queries.removeBooking(booking_id);
       if (result.result == true) {
-        await user_queries.updateUserBalance(email, req.body.price);
-        const user = await user_queries.retrieveUser(email);
-        const userData = {
-          _id: user.data._id,
-          email: user.data.email,
-          name: user.data.name,
-          admin: user.data.admin,
-          balance: user.data.balance,
-        };
-        const accessToken = server_functions.generateAccessToken(userData);
-        server_functions.sendCancellationSuccessMail(
-          email,
-          bookingDetails.data.court_name,
-          bookingDetails.data.date,
-          bookingDetails.data.hour
-        );
+		secondaryUsers = result.data.secondaryUsers;
+		if(secondaryUsers.length > 0){
+			split_cost = bookingDetails.data.cost/(secondaryUsers.length+1);
+			await user_queries.updateUserBalance(email,split_cost);
+			for (const sec_user of secondary_users) {
+				result = await user_queries.updateUserBalance(
+					sec_user.email,
+					split_cost
+				);
+			}
+			return res.json({ result: true});
 
-        return res.json({ result: true, accessToken: accessToken });
+		}else{
+			await user_queries.updateUserBalance(email, bookingDetails.data.cost);
+			server_functions.sendCancellationSuccessMail(
+				email,
+				bookingDetails.data.court_name,
+				bookingDetails.data.date,
+				bookingDetails.data.hour
+			);
+			return res.json({ result: true});
+		}
+
+        
       } else {
         res.json({ result: false });
       }
