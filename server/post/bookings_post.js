@@ -7,11 +7,11 @@ const user_queries = require("../../database/schema_functions/user_functions");
 const { findById } = require("../../database/schemas/user_schema");
 
 bookingRouter.post("/getAvailableCourts", async (req, res) => {
-  var date = new Date(req.body.date);
-  var time = parseInt(req.body.hour);
-  var responseQ = await bookings_queries.getAvailableCourts(date, time);
+    var date = new Date(req.body.date);
+    var time = parseInt(req.body.hour);
+    var responseQ = await bookings_queries.getAvailableCourts(date, time);
 
-  res.json(responseQ.data);
+    res.json(responseQ.data);
 });
 bookingRouter.post("/verifyPlayer", async (req, res) => {
     var response = await user_queries.retrieveUser(req.body.email);
@@ -30,27 +30,25 @@ bookingRouter.post(
         email = req.user.email;
         user = await user_queries.retrieveUser(email);
         // ----------------------------------------------- Secondary Users
-		console.log(req.body);
+        console.log(req.body);
         secondary_users_emails = req.body.players;
         secondary_users = [];
-		secondary_users_id = [];
+        secondary_users_id = [];
         for (const email of secondary_users_emails) {
             const secondaryUser = await user_queries.retrieveUser(email);
-			if(secondaryUser.result == false){
-				return res.json({
+            if (secondaryUser.result == false) {
+                return res.json({
                     result: false,
                     data: null,
                     error: "Invalid Second User",
                 });
-			}
+            }
             secondary_users.push(secondaryUser.data);
-			secondary_users_id.push(secondaryUser.data._id)
+            secondary_users_id.push(secondaryUser.data._id);
         }
-		console.log("HERE 1");
         // ----------------------------------------------- Multi User
         if (secondary_users.length > 0) {
             split_cost = court.data.price / (secondary_users.length + 1);
-			console.log("HERE 2");
             if (user.data.balance < split_cost) {
                 return res.json({
                     result: false,
@@ -58,7 +56,6 @@ bookingRouter.post(
                     error: "Insufficient Funds",
                 });
             }
-			console.log("HERE 3");
             for (const sec_user of secondary_users) {
                 if (sec_user.balance < split_cost) {
                     return res.json({
@@ -68,7 +65,6 @@ bookingRouter.post(
                     });
                 }
             }
-			console.log("HERE 4");
             response = await bookings_queries.addBooking(
                 req.user.id,
                 req.body.court,
@@ -76,149 +72,149 @@ bookingRouter.post(
                 new Date(req.body.date),
                 parseInt(req.body.hour),
                 3,
-				secondary_users_id
+                secondary_users_id
             );
-			console.log("HERE 4");
-			console.log(response);
             if (response.result == true) {
                 result = await user_queries.updateUserBalance(
                     email,
                     -split_cost
                 );
-				
-				console.log("HERE 5");
-				if(result.result == false){return res.json(result);}
+                if (result.result == false) {
+                    return res.json(result);
+                }
 
-				for (const sec_user of secondary_users) {
-					result = await user_queries.updateUserBalance(
-						sec_user.email,
-						-split_cost
-					);
-					if(result.result == false){return res.json(result);}
-				}
-				
-				
-				console.log("HERE 6");
+                for (const sec_user of secondary_users) {
+                    result = await user_queries.updateUserBalance(
+                        sec_user.email,
+                        -split_cost
+                    );
+                    if (result.result == false) {
+                        return res.json(result);
+                    }
+                }
             }
-			return res.json(response);
+            return res.json(response);
 
-      // ----------------------------------------------- Single User Invalid
-    } else if (user.data.balance < court.data.price) {
-      return res.json({
-        result: false,
-        data: null,
-        error: "Insufficient Funds",
-      });
+            // ----------------------------------------------- Single User Invalid
+        } else if (user.data.balance < court.data.price) {
+            return res.json({
+                result: false,
+                data: null,
+                error: "Insufficient Funds",
+            });
 
-      // ----------------------------------------------- Single User Valid
-    } else {
-      response = await bookings_queries.addBooking(
-        req.user.id,
-        req.body.court,
-        court.data.price,
-        new Date(req.body.date),
-        parseInt(req.body.hour),
-        3,
-        []
-      );
-      server_functions.sendBookingSuccessMail(
-        email,
-        court.data.court_name,
-        req.body.date,
-        req.body.hour,
-        court.data.price / (1 + req.body.players.length)
-      );
-      if (response.result == true) {
-        user_queries.updateUserBalance(email, -court.data.price);
-      }
+            // ----------------------------------------------- Single User Valid
+        } else {
+            response = await bookings_queries.addBooking(
+                req.user.id,
+                req.body.court,
+                court.data.price,
+                new Date(req.body.date),
+                parseInt(req.body.hour),
+                3,
+                []
+            );
+            server_functions.sendBookingSuccessMail(
+                email,
+                court.data.court_name,
+                req.body.date,
+                req.body.hour,
+                court.data.price / (1 + req.body.players.length)
+            );
+            if (response.result == true) {
+                user_queries.updateUserBalance(email, -court.data.price);
+            }
 
-      res.json(response);
+            res.json(response);
+        }
     }
-  }
 );
 
 /** ============================================ Future Bookings ====================================
  * ------------  Future Bookings
  */
 bookingRouter.post(
-  "/getFutureBookings",
-  server_functions.authenticateToken,
-  async (req, res) => {
-    try {
-      const email = req.user.email;
-      const user = await user_queries.retrieveUser(email);
-      const bookings = await bookings_queries.getFutureBookings_ID(
-        user.data.id
-      );
-      if (bookings.result == true) {
-        const formattedBookings = await Promise.all(
-          bookings.data.map(async (booking) => {
-            const court = await courts_queries.retrieveCourt(booking.courtID);
-            return {
-              id: booking.id,
-              date: booking.date.toDateString(),
-              time: booking.time,
-              name: court.data.court_name,
-              address: court.data.address,
-              price: booking.cost,
-			  secondary: booking.secondaryUsers
-            };
-          })
-        );
-        res.json(formattedBookings);
-      } else {
-        res.json([]);
-      }
-    } catch (error) {
-      console.error("Error fetching future bookings: ", error);
-      res.status(500).json({ error: "Error fetching future bookings" });
+    "/getFutureBookings",
+    server_functions.authenticateToken,
+    async (req, res) => {
+        try {
+            const email = req.user.email;
+            const user = await user_queries.retrieveUser(email);
+            const bookings = await bookings_queries.getFutureBookings_ID(
+                user.data.id
+            );
+            if (bookings.result == true) {
+                const formattedBookings = await Promise.all(
+                    bookings.data.map(async (booking) => {
+                        const court = await courts_queries.retrieveCourt(
+                            booking.courtID
+                        );
+                        return {
+                            id: booking.id,
+                            date: booking.date.toDateString(),
+                            time: booking.time,
+                            name: court.data.court_name,
+                            address: court.data.address,
+                            price: booking.cost,
+                            secondary: booking.secondaryUsers,
+                        };
+                    })
+                );
+                res.json(formattedBookings);
+            } else {
+                res.json([]);
+            }
+        } catch (error) {
+            console.error("Error fetching future bookings: ", error);
+            res.status(500).json({ error: "Error fetching future bookings" });
+        }
     }
-  }
 );
 bookingRouter.post(
-  "/cancelBooking",
-  server_functions.authenticateToken,
-  async (req, res) => {
-    try {
-      const email = req.user.email;
-      const booking_id = req.body.booking_id;
-      const bookingDetails = await bookings_queries.getBookingDetails(
-        booking_id
-      );
-      const result = await bookings_queries.removeBooking(booking_id);
-      if (result.result == true) {
-		secondaryUsers = result.data.secondaryUsers;
-		if(secondaryUsers.length > 0){
-			console.log("HERE CANCEL BOIO");
-			split_cost = bookingDetails.data.cost/(secondaryUsers.length+1);
-			await user_queries.updateUserBalance(email,split_cost);
-			for (const sec_user of secondary_users) {
-				result = await user_queries.updateUserBalance(
-					sec_user.email,
-					split_cost
-				);
-			}
-			return res.json({ result: true});
+    "/cancelBooking",
+    server_functions.authenticateToken,
+    async (req, res) => {
+        try {
+            const email = req.user.email;
+            const booking_id = req.body.booking_id;
+            const bookingDetails = await bookings_queries.getBookingDetails(
+                booking_id
+            );
+            const result = await bookings_queries.removeBooking(booking_id);
+            if (result.result == true) {
+                secondaryUsers = bookingDetails.data.secondaryUsers;
 
-		}else{
-			await user_queries.updateUserBalance(email, bookingDetails.data.cost);
-			server_functions.sendCancellationSuccessMail(
-				email,
-				bookingDetails.data.court_name,
-				bookingDetails.data.date,
-				bookingDetails.data.hour
-			);
-			return res.json({ result: true});
-		}
-
-        
-      } else {
-        res.json({ result: false });
-      }
-    } catch (error) {
-      console.error("Error fetching future bookings: ", error);
-      res.status(500).json({ error: "Error fetching future bookings" });
+                if (secondaryUsers.length > 0) {
+                    split_cost =
+                        bookingDetails.data.cost / (secondaryUsers.length + 1);
+                    await user_queries.updateUserBalance(email, split_cost);
+                    for (const sec_user of secondary_users) {
+                        const result2 = await user_queries.updateUserBalance(
+                            sec_user.email,
+                            split_cost
+                        );
+                    }
+                    return res.json({ result: true });
+                } else {
+                    await user_queries.updateUserBalance(
+                        email,
+                        bookingDetails.data.cost
+                    );
+                    server_functions.sendCancellationSuccessMail(
+                        email,
+                        bookingDetails.data.court_name,
+                        bookingDetails.data.date,
+                        bookingDetails.data.hour
+                    );
+                    return res.json({ result: true });
+                }
+            } else {
+                res.json({ result: false });
+            }
+        } catch (error) {
+            console.error("Error fetching future bookings: ", error);
+            res.status(500).json({ error: "Error fetching future bookings" });
+        }
     }
-  }
 );
 module.exports = bookingRouter;
