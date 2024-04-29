@@ -61,8 +61,10 @@ const isAdmin = (user) => {
 function Navbar() {
   const { updateToken } = useProfile(); // Accesses authentication context
   const [open, setOpen] = useState(false);
+  const [notificationOpen, setNotificationOpen] = useState(false); // State variable to store the visibility of the notification panel
   let logoutButtonState = false;
   let menuRef = useRef();
+  let notifRef = useRef();
 
   const logOut = () => {
     if (logoutButtonState == false) {
@@ -82,6 +84,9 @@ function Navbar() {
     let handler = (e) => {
       if (!menuRef.current.contains(e.target)) {
         setOpen(false);
+      }
+      if (!notifRef.current.contains(e.target)) {
+        setNotificationOpen(false);
       }
     };
     document.addEventListener("mousedown", handler);
@@ -128,17 +133,17 @@ function Navbar() {
         {/* ---------------------- Balance ---------------------------- */}
         {!isAdmin(user) && authenticated ? (
           <NavLink to="/profile/topup">
-          <div className="navbar-balance">
-            <Wallet2 className="wallet"> : </Wallet2>
-            €{user.balance.toFixed(2)}
-          </div>
+            <div className="navbar-balance">
+              <Wallet2 className="wallet"> : </Wallet2>
+              {user.balance !== undefined ? `€${user.balance.toFixed(2)}` : 0}
+            </div>
           </NavLink>
         ) : (
           <></>
         )}
 
         {/* ---------------------- Bell ---------------------------- */}
-        <div className="navbar-bell">
+        {/* <div className="navbar-bell">
           <Popup // Add a popup to display the notification panel
             trigger={
               <div style={{ cursor: "pointer" }} onClick={handleBellClick}>
@@ -147,18 +152,40 @@ function Navbar() {
               </div>
             }
             position="right top"
-            on="click">
+            on="click"
+          >
             <NotificationPanel />
           </Popup>
+        </div> */}
+        <div className="bellWidth">
+          <div className="navbar-bell" ref={notifRef}>
+            <div
+              className="hover-grow"
+              onClick={() => {
+                setNotificationOpen(!notificationOpen);
+              }}
+            >
+              {notificationOpen ? (
+                <X
+                  className="bell-icon menu-icon-img"
+                  style={{ marginBottom: "7.5px" }}
+                ></X>
+              ) : (
+                <Bell className="bell-icon bell-icon-img"></Bell>
+              )}
+            </div>
+          </div>
         </div>
+
         {/* ---------------------- Menu - icon ---------------------------- */}
         <div
           className="menu-icon"
           ref={menuRef}
           onClick={() => {
             setOpen(!open);
-          }}>
-          <div className="menu-icon menu-icon-img">
+          }}
+        >
+          <div className="hover-grow menu-icon menu-icon-img">
             {open ? <X></X> : <List></List>}
           </div>
         </div>
