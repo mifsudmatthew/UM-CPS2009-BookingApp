@@ -109,7 +109,7 @@ async function getFutureBookings_IDCourt(userID_toSearch, courtID_toSearch) {
  * 2. The user has not already booked the max possible bookings
  * 3. The court has not already been booked at the set date and time
  */
-async function addBooking(userID_toBook, courtID_toBook, cost_toBook, date_toBook, time_toBook, max_userBookings) {
+async function addBooking(userID_toBook, courtID_toBook, cost_toBook, date_toBook, time_toBook, max_userBookings, secondary_users) {
     try{
         const today = new Date();
         // --------------------- Check Current Date
@@ -149,7 +149,8 @@ async function addBooking(userID_toBook, courtID_toBook, cost_toBook, date_toBoo
             time: time_toBook, 
             userID: userID_toBook,
             courtID: courtID_toBook,
-            cost : cost_toBook
+            cost : cost_toBook,
+            secondaryUsers: secondary_users
         });
 
         
