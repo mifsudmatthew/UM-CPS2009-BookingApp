@@ -129,7 +129,7 @@ function Navbar() {
         {!isAdmin(user) && authenticated ? (
           <div className="navbar-balance">
             <Wallet2 className="wallet"> : </Wallet2>
-            {user.balance}
+            €{user.balance.toFixed(2)}
           </div>
         ) : (
           <></>

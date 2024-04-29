@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:wght@600;700&display=swap");
 
 .feature-card {
+  justify-content: space-between;
   display: flex;
   align-items: center;
   background-color: #d8e7cb;
