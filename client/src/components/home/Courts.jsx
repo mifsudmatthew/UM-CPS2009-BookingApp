@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../../styles/courts.css";
 
 import {
@@ -10,64 +10,39 @@ import {
 } from "../Icons";
 
 /**
- * Array of court objects.
- *
- * @typedef {Object} Court
- * @property {string} image - The image of the court.
- * @property {string} title - The title of the court.
- * @property {string} description - The description of the court.
- */
-
-/**
- * Array of courts.
- *
- * @type {Court[]}
- */
-const courts = [
-  {
-    image: grassCourtImage,
-    title: "Grass Court",
-    description:
-      "A grass tennis court offers a unique playing experience, embodying the tradition and elegance of the sport. Characterized by its lush green surface, this type of court is made from natural grass trimmed to a very short height, which influences the game's speed and style.",
-  },
-  {
-    image: clayCourtImage,
-    title: "Clay Court",
-    description:
-      "A clay tennis court provides a distinct and strategic game of tennis, reflecting the rich history and finesse required in the sport. The clay affects ball speed and bounce, promoting longer rallies and a slower game, allowing players to showcase their endurance and tactical skills.",
-  },
-  {
-    image: indoorCourtImage,
-    title: "Indoor Court",
-    description:
-      "An indoor tennis court offers a consistent and controlled playing environment, showcasing the modern and dynamic aspects of the sport. Characterized by its smooth, synthetic surface, this type of court is designed for year-round play, unaffected by weather conditions.",
-  },
-];
-
-/**
  * Renders the Courts component.
  * This component displays a carousel of courts, allowing the user to navigate between them.
  *
  * @returns {JSX.Element} The Courts component.
  */
 const Courts = () => {
+  const [courtsData, setCourtsData] = useState([]);
   const [current, setCurrent] = useState(0);
-  const { image, title, description } = courts[current];
 
-  /**
-   * Handles the click event for the previous arrow button.
-   * Updates the current court index to display the previous court.
-   */
+  useEffect(() => {
+    // Fetch data from the server when the component mounts
+    const fetchData = async () => {
+      try {
+        const response = await Post("/api/getAllCourts");
+        if (!response.result) {
+          throw new Error("Failed to fetch courts data");
+        }
+        console.log(response);
+        setCourtsData(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const handlePrevClick = () => {
-    setCurrent((prev) => (prev - 1 + courts.length) % courts.length);
+    setCurrent((prev) => (prev - 1 + courtsData.length) % courtsData.length);
   };
 
-  /**
-   * Handles the click event for the next arrow button.
-   * Updates the current court index to display the next court.
-   */
   const handleNextClick = () => {
-    setCurrent((prev) => (prev + 1) % courts.length);
+    setCurrent((prev) => (prev + 1) % courtsData.length);
   };
 
   return (
@@ -76,11 +51,31 @@ const Courts = () => {
         <img src={leftArrow} alt="Previous" />
       </div>
       <div className="content">
-        <img src={image} alt="Grass Court" className="court-image" />
-        <div className="text-content">
-          <div className="court-title ">{title}</div>
-          <div className="court-desc">{description}</div>
-        </div>
+        {courtsData.length > 0 && (
+          <>
+            <img
+              src={
+                courtsData[current].type === "Grass"
+                  ? grassCourtImage
+                  : courtsData[current].type === "Clay"
+                  ? clayCourtImage
+                  : indoorCourtImage
+              }
+              alt={courtsData[current].court_name}
+              className="court-image"
+            />
+            <div className="text-content">
+              <div className="court-title">{courtsData[current].court_name}</div>
+              <div className="court-info">
+                <ul>
+                  <li>Price: ${courtsData[current].price}</li>
+                  <li>Address: {courtsData[current].address}</li>
+                  <li>Area: {courtsData[current].area} sqft</li>
+                </ul>
+              </div>
+            </div>
+          </>
+        )}
       </div>
       <div className="right-arrow" onClick={handleNextClick}>
         <img src={rightArrow} alt="Next" />

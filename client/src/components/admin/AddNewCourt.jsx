@@ -109,7 +109,7 @@ function AddNewCourt() {
           onChange={(event) => setType(event.target.value)}
         >
           <option value="">Select Court Type</option>
-          <option value="Hard Court">Hard Court</option>
+          <option value="Indoor Court">Indoor Court</option>
           <option value="Clay Court">Clay Court</option>
           <option value="Grass Court">Grass Court</option>
         </select>
