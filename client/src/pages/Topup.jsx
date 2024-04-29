@@ -19,7 +19,7 @@ function Topup() {
   const location = useLocation();
   const session_id = new URLSearchParams(location.search).get("session_id");
   const { updateToken } = useProfile();
-  const [amount, setAmount] = useState(0); // Initialize the amount state
+  const [amount, setAmount] = useState(20); // Initialize the amount state
 
   useEffect(() => {
     /**
@@ -61,9 +61,9 @@ function Topup() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      if (amount == 0 || amount == "" || amount == null) {
+      if ((amount >= 0 && amount < 20) || amount == "" || amount == null) {
         // Check if amount is not a number or empty
-        toast.error("Please enter the amount you would like to top-up.");
+        toast.error("Error! Please enter an amount of at least €20.");
         return;
       } else if (isNaN(amount)) {
         toast.error("Error! Input is not a number, please enter a number.");
@@ -72,6 +72,7 @@ function Topup() {
         toast.error("Error! Please enter a positive number.");
         return;
       }
+
       console.log("Amount: ", amount);
 
       const data = await Post("/api/topup", { amount: amount });
