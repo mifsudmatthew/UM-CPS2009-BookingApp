@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Post } from "../../utils/ApiFunctions";
 import "../../styles/accordion.css";
 import { Bar, Line } from "react-chartjs-2";
+import Chart from "chart.js/auto";
 
 function CourtBookingStats() {
   const [courtStats, setCourtStats] = useState([]);
@@ -122,11 +123,13 @@ function CourtBookingStats() {
                 className={`accordion-header ${
                   court.isOpen ? "open" : "close"
                 }`}
-                onClick={() => toggleAccordion(index)}>
+                onClick={() => toggleAccordion(index)}
+              >
                 {court.name}
               </div>
               <div
-                className={`accordion-body ${court.isOpen ? "open" : "close"}`}>
+                className={`accordion-body ${court.isOpen ? "open" : "close"}`}
+              >
                 <table>
                   <thead>
                     <tr>
