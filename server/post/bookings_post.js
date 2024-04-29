@@ -14,6 +14,10 @@ bookingRouter.post("/getAvailableCourts", async (req, res) => {
 
     res.json(responseQ.data);
 });
+bookingRouter.post("/verifyPlayer", async (req, res) => {
+    var response = await user_queries.retrieveUser(req.body.email);
+    res.json(response);
+});
 
 /** ============================================ booking ===========================================
  * ------------  Add Booking
@@ -27,18 +31,27 @@ bookingRouter.post(
         email = req.user.email;
         user = await user_queries.retrieveUser(email);
         // ----------------------------------------------- Secondary Users
-        secondary_users_emails = req.body.secondary_users;
+		console.log(req.body);
+        secondary_users_emails = req.body.players;
         secondary_users = [];
 		secondary_users_id = [];
         for (const email of secondary_users_emails) {
             const secondaryUser = await user_queries.retrieveUser(email);
-            secondary_users.push(secondaryUser);
-			secondary_users_id.push(secondaryUser._id)
+			if(secondaryUser.result == false){
+				return res.json({
+                    result: false,
+                    data: null,
+                    error: "Invalid Second User",
+                });
+			}
+            secondary_users.push(secondaryUser.data);
+			secondary_users_id.push(secondaryUser.data._id)
         }
-
+		console.log("HERE 1");
         // ----------------------------------------------- Multi User
         if (secondary_users.length > 0) {
             split_cost = court.data.price / (secondary_users.length + 1);
+			console.log("HERE 2");
             if (user.data.balance < split_cost) {
                 return res.json({
                     result: false,
@@ -46,8 +59,9 @@ bookingRouter.post(
                     error: "Insufficient Funds",
                 });
             }
+			console.log("HERE 3");
             for (const sec_user of secondary_users) {
-                if (sec_user.data.balance < split_cost) {
+                if (sec_user.balance < split_cost) {
                     return res.json({
                         result: false,
                         data: null,
@@ -55,6 +69,7 @@ bookingRouter.post(
                     });
                 }
             }
+			console.log("HERE 4");
             response = await bookings_queries.addBooking(
                 req.user.id,
                 req.body.court,
@@ -64,12 +79,17 @@ bookingRouter.post(
                 3,
 				secondary_users_id
             );
+			console.log("HERE 4");
+			console.log(response);
             if (response.result == true) {
                 result = await user_queries.updateUserBalance(
                     email,
                     -split_cost
                 );
+				
+				console.log("HERE 5");
 				if(result.result == false){return res.json(result);}
+
 				for (const sec_user of secondary_users) {
 					result = await user_queries.updateUserBalance(
 						sec_user.email,
@@ -77,8 +97,11 @@ bookingRouter.post(
 					);
 					if(result.result == false){return res.json(result);}
 				}
-                return res.json(result);
+				
+				
+				console.log("HERE 6");
             }
+			return res.json(response);
 
             // ----------------------------------------------- Single User Invalid
         } else if (user.data.balance < court.data.price) {
