@@ -161,15 +161,20 @@ function Navbar() {
           <div className="navbar-bell" ref={notifRef}>
             <div
               className="hover-grow"
-              style={{ marginTop: "7px" }}
               onClick={() => {
                 setNotificationOpen(!notificationOpen);
               }}
             >
               {notificationOpen ? (
-                <X className="bell-icon menu-icon-img"></X>
+                <X
+                  className="bell-icon menu-icon-img"
+                  style={{ marginTop: "10px" }}
+                ></X>
               ) : (
-                <Bell className="bell-icon bell-icon-img"></Bell>
+                <Bell
+                  className="bell-icon bell-icon-img"
+                  style={{ marginTop: "15px" }}
+                ></Bell>
               )}
             </div>
           </div>

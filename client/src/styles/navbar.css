@@ -7,11 +7,9 @@
 }
 .navbar-bell {
   align-content: center;
-  position: absolute;
 }
 
 .bellWidth {
-  margin-top: 8px;
   width: 15%;
 }
 
@@ -93,8 +91,6 @@
 .bell-icon-img {
   font-size: 27.5px;
   width: auto;
-  max-height: 1.4rem;
-  height: 50%;
 }
 
 .hover-grow {
