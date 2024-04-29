@@ -94,9 +94,9 @@ const Bookings = () => {
                                 <tr key={court.id}>
                                     <td>{court.name}</td>
                                     <td>{court.date}</td>
-                                    <td>{court.time}</td>
+                                    <td>{court.time}:00</td>
                                     <td>{court.address}</td>
-                                    <td>{court.price}</td>
+                                    <td>€{court.price.toFixed(2)}</td>
                                     <td> 
                                         <button
                                             onClick={() =>
