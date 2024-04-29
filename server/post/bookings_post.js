@@ -4,6 +4,7 @@ const server_functions = require("../server_functions");
 const bookings_queries = require("../../database/schema_functions/booking_functions");
 const courts_queries = require("../../database/schema_functions/court_functions");
 const user_queries = require("../../database/schema_functions/user_functions");
+const { findById } = require("../../database/schemas/user_schema");
 
 bookingRouter.post("/getAvailableCourts", async (req, res) => {
   var date = new Date(req.body.date);
@@ -103,6 +104,9 @@ bookingRouter.post(
     try {
       const email = req.user.email;
       const booking_id = req.body.booking_id;
+      const bookingDetails = await bookings_queries.getBookingDetails(
+        booking_id
+      );
       const result = await bookings_queries.removeBooking(booking_id);
       if (result.result == true) {
         await user_queries.updateUserBalance(email, req.body.price);
@@ -115,6 +119,12 @@ bookingRouter.post(
           balance: user.data.balance,
         };
         const accessToken = server_functions.generateAccessToken(userData);
+        server_functions.sendCancellationSuccessMail(
+          email,
+          bookingDetails.data.court_name,
+          bookingDetails.data.date,
+          bookingDetails.data.hour
+        );
 
         return res.json({ result: true, accessToken: accessToken });
       } else {
