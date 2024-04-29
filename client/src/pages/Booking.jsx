@@ -219,8 +219,8 @@ function Booking() {
           <div className="form-section">
             <label className="booking-form-subtitle">Add Player</label>
             <div>Do you wish to add another player?</div>
-            <button onClick={removePlayer}>-</button>
-            <button onClick={addAnotherPlayer}>+</button>
+            <button type="button" onClick={removePlayer}>-</button>
+            <button type="button" onClick={addAnotherPlayer}>+</button>
             <br />
             {Array.from({ length: playerCount }).map((_, i) => (
               <div key={i}>
