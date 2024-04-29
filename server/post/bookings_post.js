@@ -189,6 +189,7 @@ bookingRouter.post(
       if (result.result == true) {
 		secondaryUsers = result.data.secondaryUsers;
 		if(secondaryUsers.length > 0){
+			console.log("HERE CANCEL BOIO");
 			split_cost = bookingDetails.data.cost/(secondaryUsers.length+1);
 			await user_queries.updateUserBalance(email,split_cost);
 			for (const sec_user of secondary_users) {
