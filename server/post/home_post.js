@@ -6,7 +6,7 @@ const courts_queries = require("../../database/schema_functions/court_functions"
 const user_queries = require("../../database/schema_functions/user_functions");
 
 home_router.post("/getAllCourts", async (req, res) => {
-    response = courts_queries.getAllCourts();
+    response = await courts_queries.getAllCourts();
     res.json(response);
 });
 

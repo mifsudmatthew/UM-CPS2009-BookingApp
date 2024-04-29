@@ -25,10 +25,10 @@ const Courts = () => {
     const fetchData = async () => {
       try {
         const response = await Post("/api/getAllCourts");
+        console.log(response);
         if (!response.result) {
           throw new Error("Failed to fetch courts data");
         }
-        console.log(response);
         setCourtsData(response.data);
       } catch (error) {
         console.error(error);
@@ -56,9 +56,9 @@ const Courts = () => {
           <>
             <img
               src={
-                courtsData[current].type === "Grass"
+                courtsData[current].type === "Grass Court"
                   ? grassCourtImage
-                  : courtsData[current].type === "Clay"
+                  : courtsData[current].type === "Clay Court"
                   ? clayCourtImage
                   : indoorCourtImage
               }
