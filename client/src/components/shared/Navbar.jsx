@@ -134,8 +134,8 @@ function Navbar() {
         {!isAdmin(user) && authenticated ? (
           <NavLink to="/profile/topup">
             <div className="navbar-balance">
-              <Wallet2 className="wallet"> : </Wallet2>€
-              {user.balance.toFixed(2)}
+              <Wallet2 className="wallet"> : </Wallet2>
+              {user.balance !== undefined ? `€${user.balance.toFixed(2)}` : 0}
             </div>
           </NavLink>
         ) : (
@@ -158,15 +158,13 @@ function Navbar() {
           </Popup>
         </div> */}
 
-        <div
-          style={{ width: "20%" }}
-          className="navbar-bell"
-          ref={notifRef}
-          onClick={() => {
-            setNotificationOpen(!notificationOpen);
-          }}
-        >
-          <div className="hover-grow">
+        <div className="navbar-bell" ref={notifRef}>
+          <div
+            className="hover-grow"
+            onClick={() => {
+              setNotificationOpen(!notificationOpen);
+            }}
+          >
             {notificationOpen ? (
               <X className="bell-icon menu-icon-img"></X>
             ) : (
