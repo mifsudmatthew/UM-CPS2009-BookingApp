@@ -38,7 +38,11 @@ const AccountDetails = () => {
       toast.error("Invalid email format detected.");
       return;
     }
-
+    // Check if user made no changes
+    if (name === user.name && email === user.email) {
+      toast.error("No changes detected.");
+      return;
+    }
     try {
       const response = await Post("/api/changedetails", { name, email });
       const { accessToken, ...user } = response.data;
@@ -49,7 +53,6 @@ const AccountDetails = () => {
       toast.success("Change successful!");
       setTimeout(() => {
         navigate("/profile", { replace: true });
-        // window.location.reload();
       }, 2000);
     } catch (error) {
       console.error(`Error in: ${error}`);
