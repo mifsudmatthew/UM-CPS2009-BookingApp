@@ -170,6 +170,57 @@ async function sendBookingSuccessMail(user_email, court, date, hour, price) {
   }
 }
 
+// Function to send a confirmation to the user that the booking was cancelled.
+async function sendCancellationSuccessMail(
+  user_email,
+  court,
+  date,
+  hour,
+  price
+) {
+  user_data = await user_queries.retrieveUser(user_email); // Obtaining data associated with the email inputted.
+
+  if (user_data.result) {
+    // Variable storing all email details.
+    const emailDetails = {
+      from: "no-reply@servespot.com", // Address of account sending the email.
+      to: user_email, // This should be changed to email of the user requesting a reset.
+      subject: "Successful Booking for " + court, // Subject of email.
+      text:
+        "Dear " +
+        user_data.data.name +
+        ",\n\nWe would like to inform you that the following booking has been cancelled:\n\n Court: " +
+        court +
+        "\n\n Date: " +
+        date +
+        "\n\n Time: " +
+        hour +
+        "\n\n Price paid: " +
+        price +
+        "\n\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot", // Email content.
+    };
+
+    // Creating a transporter with the details of the mail service being used.
+    const transporter = nodeMailer.createTransport({
+      host: process.env.MAIL_HOST, // Host is set to be changed from .env file
+      port: 465,
+      auth: {
+        user: process.env.MAIL_USER, // Username is set to be changed from .env file
+        pass: process.env.MAIL_PASS, // Password is set to be changed from .env file
+      },
+    });
+
+    // Sending the email with the details created.
+    let sentMessage = await transporter.sendMail(emailDetails);
+    console.log("Email sent:", sentMessage.response);
+
+    // Sending a response on success
+    return { message: "Email sent successfully" };
+  } else {
+    return { message: "Failed to retreive email" };
+  }
+}
+
 function authenticateToken(req, res, next) {
   const authHeader = req.headers.authorization;
 
@@ -252,6 +303,7 @@ module.exports = {
   accountPins,
   sendPinByMail,
   sendBookingSuccessMail,
+  sendCancellationSuccessMail,
   sendPaymentSuccessMail,
   authenticateToken,
   getToken,

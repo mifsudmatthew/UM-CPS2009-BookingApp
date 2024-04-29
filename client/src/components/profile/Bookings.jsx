@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { getUpdatedToken } from "../../utils/ApiFunctions";
 import { XOctagon } from "react-bootstrap-icons";
 import "../../styles/bookings.css";
+import { format } from 'date-fns';
 
 /**
  * Renders the Bookings component.
@@ -90,7 +91,7 @@ const Bookings = () => {
                         <tbody>
                             {/* Map through upcomingBookings array and render each booking */}
                             {courts.map((court) => {
-                                const courtDateTime = new Date(`${court.date}T${court.time}:00`);
+                                const courtDateTime = new Date(`${format(new Date(court.date), 'yyyy-MM-dd')}T${court.time}:00`);
                                 const now = new Date();
                                 const diffInHours = (courtDateTime - now) / 1000 / 60 / 60;
                                 return (
