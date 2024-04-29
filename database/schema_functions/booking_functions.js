@@ -35,6 +35,42 @@ async function getFutureBookings_ID(userID_toSearch) {
     throw new Error("Failed to Connect to Database: " + error_message);
   }
 }
+/** ===================================== Query Future Bookings By Email =========================
+ * ------------ Recieving all future bookings By Email
+ * Takes an email
+ * Calculates the current date and time and uses them to
+ * retrieve all bookings from this future date and time
+ */
+async function getFutureSecondaryBookingsBy_ID(email) {
+  try {
+    // Calculate Current Date and Time
+    const currentDate = new Date();
+    const currentTime = currentDate.getTime();
+    currentDate.setHours(0, 0, 0, 0);
+
+    // Query Bookings from current date/time
+    const bookings = await booking_schema.find({
+      secondaryUsers: { $in: [email] }, // Check if the email exists in the secondaryUsers array
+      $or: [
+        { date: { $gt: currentDate } }, // Dates greater than current date
+        {
+          date: currentDate, // Dates equal to current date
+          time: { $gte: currentTime },
+        }, // Times greater than or equal to current time
+      ], // Return all bookings with dates greater than current date
+    });
+
+    // Validation of Query
+    if (!bookings || bookings.length === 0) {
+      return { result: false, data: null, error: "No bookings were found" };
+    }
+
+    // Bookings Found (Returning Bookings List)
+    return { result: true, data: bookings, error: null };
+  } catch (error_message) {
+    throw new Error("Failed to Connect to Database: " + error_message);
+  }
+}
 /** ===================================== Query Future Bookings By Court =========================
  * ------------ Recieving all future bookings By Court
  * Takes an Court ID
@@ -298,4 +334,5 @@ module.exports = {
   getBookedCourts: getBookedCourts,
   countAndSumBookingsByCourtID: countAndSumBookingsByCourtID,
   getBookingDetails: getBookingDetails,
+  getFutureSecondaryBookingsBy_ID: getFutureSecondaryBookingsBy_ID,
 };
