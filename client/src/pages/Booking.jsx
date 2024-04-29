@@ -91,9 +91,7 @@ function Booking() {
           "Court successfully booked! Redirecting to bookings page."
         );
         addSuccessfulBooking(booking); // Add the booking to the list of successful bookings
-        if (response.accessToken) {
-          updateToken(await getUpdatedToken());
-        }
+        updateToken(await getUpdatedToken());
         setTimeout(() => {
           navigate("/profile/bookings", { replace: true });
         }, 2000);
