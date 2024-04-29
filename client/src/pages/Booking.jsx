@@ -46,6 +46,7 @@ function Booking() {
         const response = await Post("/api/getAvailableCourts", postData);
         console.log(response);
         setCourts(response);
+
       } catch (error) {
         // Log an error if the request fails
         console.error("Error fetching courts: ", error);

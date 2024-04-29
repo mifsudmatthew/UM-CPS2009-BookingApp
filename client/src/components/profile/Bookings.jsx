@@ -16,6 +16,7 @@ import { format } from 'date-fns';
 const Bookings = () => {
     const { user, updateToken } = useProfile(); // Retrieve user data once when the component mounts
     const [courts, setCourts] = useState([]); // State variable to store the list of courts
+    const [secondary, setSecCourts] = useState([]); // State variable to store the available Secondaeycourts
 
     /**
      * Fetches the booked courts for a specific user.
@@ -36,6 +37,12 @@ const Bookings = () => {
                 );
                 console.log(response);
                 setCourts(response);
+
+
+                const response2 = await Post("/api/getFutureSecondaryBookings", user_details);
+                console.log(response2)
+                setSecCourts(response2)
+
             } catch (error) {
                 // Log an error if the request fails
                 console.error("Error fetching booked courts: ", error);
@@ -116,6 +123,37 @@ const Bookings = () => {
                                         </button>
                                         ) : null}
                                     </td>
+                                </tr>
+                            );
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section>
+                <h4>Upcoming Secondary Bookings</h4>
+                <div className="table-container">
+                    <table className="bookings-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Address</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {/* Map through upcomingBookings array and render each booking */}
+                            {secondary.map((court) => {
+                                return (
+                                <tr key={court.id}>
+                                    <td>{court.name}</td>
+                                    <td>{court.date}</td>
+                                    <td>{court.time}:00</td>
+                                    <td>{court.address}</td>
+                                    <td>€{court.price.toFixed(2)}</td>
                                 </tr>
                             );
                             })}
