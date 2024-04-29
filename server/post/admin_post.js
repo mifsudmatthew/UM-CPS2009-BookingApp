@@ -1,13 +1,13 @@
 const express = require("express");
 const adminRouter = express.Router();
 const server_functions = require("../server_functions");
-const bookings_quieries = require("../../database/schema_functions/booking_functions");
-const courts_quieries = require("../../database/schema_functions/court_functions");
-const user_quieries = require("../../database/schema_functions/user_functions");
+const bookings_queries = require("../../database/schema_functions/booking_functions");
+const courts_queries = require("../../database/schema_functions/court_functions");
+const user_queries = require("../../database/schema_functions/user_functions");
 
 adminRouter.post("/registerCourt", async (req, res) => {
   console.log(req.body);
-  response = await courts_quieries.registerCourt({
+  response = await courts_queries.registerCourt({
     name_new: req.body.courtName,
     price_new: req.body.price,
     address_new: req.body.address,
@@ -21,7 +21,7 @@ adminRouter.post("/registerCourt", async (req, res) => {
 
 adminRouter.get("/getAllCourts", async (req, res) => {
   try {
-    const response = await courts_quieries.getAllCourts();
+    const response = await courts_queries.getAllCourts();
 
     if (!response.result) {
       return res
@@ -43,12 +43,12 @@ adminRouter.get("/getAllCourts", async (req, res) => {
 
 adminRouter.post("/getBasicStatistics", async (req, res) => {
   try {
-    const { data: allCourts } = await courts_quieries.getAllCourts();
+    const { data: allCourts } = await courts_queries.getAllCourts();
     const courtStatistics = [];
 
     for (const court of allCourts) {
       const { data: bookingCount } =
-        await bookings_quieries.countAndSumBookingsByCourtID(court._id);
+        await bookings_queries.countAndSumBookingsByCourtID(court._id);
       const courtInfo = {
         name: court.court_name,
         bookings: bookingCount.count,
@@ -78,7 +78,7 @@ adminRouter.post(
 
     try {
       // Search for court by id
-      const response = await courts_quieries.updateCourt(id, name, price);
+      const response = await courts_queries.updateCourt(id, name, price);
 
       // When court doesn't exist
       if (!response.result) {

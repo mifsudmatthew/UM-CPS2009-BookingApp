@@ -1,14 +1,14 @@
 const express = require("express");
 const bookingRouter = express.Router();
 const server_functions = require("../server_functions");
-const bookings_quieries = require("../../database/schema_functions/booking_functions");
-const courts_quieries = require("../../database/schema_functions/court_functions");
+const bookings_queries = require("../../database/schema_functions/booking_functions");
+const courts_queries = require("../../database/schema_functions/court_functions");
 const user_queries = require("../../database/schema_functions/user_functions");
 
 bookingRouter.post("/getAvailableCourts", async (req, res) => {
   var date = new Date(req.body.date);
   var time = parseInt(req.body.hour);
-  var responseQ = await bookings_quieries.getAvailableCourts(date, time);
+  var responseQ = await bookings_queries.getAvailableCourts(date, time);
 
   res.json(responseQ.data);
 });
@@ -17,7 +17,7 @@ bookingRouter.post(
   "/booking",
   server_functions.authenticateToken,
   async (req, res) => {
-    court = await courts_quieries.retrieveCourt(req.body.court);
+    court = await courts_queries.retrieveCourt(req.body.court);
 
     email = req.user.email;
     user = await user_queries.retrieveUser(email);
@@ -30,7 +30,7 @@ bookingRouter.post(
       });
 
     } else {
-      response = await bookings_quieries.addBooking(
+      response = await bookings_queries.addBooking(
         req.user.id,
         req.body.court,
         court.data.price,
@@ -64,13 +64,13 @@ bookingRouter.post(
     try {
       const email = req.user.email;
       const user = await user_queries.retrieveUser(email);
-      const bookings = await bookings_quieries.getFutureBookings_ID(
+      const bookings = await bookings_queries.getFutureBookings_ID(
         user.data.id
       );
       if (bookings.result == true) {
         const formattedBookings = await Promise.all(
           bookings.data.map(async (booking) => {
-            const court = await courts_quieries.retrieveCourt(booking.courtID);
+            const court = await courts_queries.retrieveCourt(booking.courtID);
             return {
               id: booking.id,
               date: booking.date.toDateString(),
@@ -98,7 +98,7 @@ bookingRouter.post(
     try {
       const email = req.user.email;
       const booking_id = req.body.booking_id;
-      const result = await bookings_quieries.removeBooking(booking_id);
+      const result = await bookings_queries.removeBooking(booking_id);
       if (result.result == true) {
         await user_queries.updateUserBalance(email, req.body.price);
         const user = await user_queries.retrieveUser(email);

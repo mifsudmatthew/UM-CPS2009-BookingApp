@@ -72,6 +72,10 @@ async function getAllCourts() {
   }
 }
 
+/** ===================================== Update Court ======================================================
+ * ------------ Update Court
+ * Update a court's price
+ */
 async function updateCourt(court_id, newName, newPrice) {
   try {
     const court = await courts_schema.findByIdAndUpdate(
