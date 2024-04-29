@@ -26,6 +26,8 @@ function Booking() {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [buttonColor, setButtonColor] = useState(null); // Add state to store button color
   const [buttonCursor, setButtonCursor] = useState("pointer"); // Add state to store button cursor
+  const [players, setPlayers] = useState([""]); // State variable to store the players to split the cost with
+  const [playerCount, setPlayerCount] = useState(0); // State variable to store the number of players
   // Check if the user is an admin based on accessToken
   const { user, accessToken, updateToken } = useProfile();
 
@@ -104,6 +106,45 @@ function Booking() {
     }
   };
 
+  const addAnotherPlayer = () => {
+    // Add another player to the booking
+    if (playerCount < 4) { // set maximum number of players to 4
+      setPlayerCount(playerCount + 1);
+    }
+  }
+
+  const removePlayer = () => {
+    // Remove a player from the booking
+    if (playerCount > 0) { // Check if there are players to remove
+      setPlayerCount(playerCount - 1); // Decrement the player count
+      setPlayers(players.slice(0, -1)); // Remove the last player from the players array
+    }
+  }
+
+  /**
+   * Verifies the existence of a user with the given email.
+   * Sends a POST request to the server to verify the email.
+   *
+   * @param {string} email - The email of the user to verify.
+   */
+  const verifyPlayerEmail = (email) => {
+    // Verify that the user of the other player exists
+    // Send a POST request to the server to verify the email
+    const useEffect = async () => {
+      const postData = { email };
+      try {
+        const response = await Post("/api/verifyPlayer", postData);
+        console.log(response);
+        if (response.result !== true) {
+          toast.error(response.error);
+        }
+      } catch (error) {
+        console.error("Error verifying player: ", error);
+      }
+    }
+    useEffect();
+  }
+
   // Date and time limits for input fields
   const today = new Date();
   const maxDate = new Date();
@@ -160,6 +201,7 @@ function Booking() {
               )}
             </select>
           </div>
+          <div>
           {showCourtSelection && ( // Show court selection only if date and hour are selected
             <div className="form-section">
               <label className="booking-form-subtitle">Choose a Court</label>
@@ -173,6 +215,31 @@ function Booking() {
               </select>
             </div>
           )}
+          </div>
+          <div className="form-section">
+          <label className="booking-form-subtitle">Add Player</label>
+          <div>Do you wish to add another player?</div>
+          <button onClick={removePlayer}>-</button>
+          <button onClick={addAnotherPlayer}>+</button>
+          <br/>
+            {Array.from({ length: playerCount }).map((_, i) => (
+              <div key={i}>
+              <label>Enter player email:</label>
+              <input
+               key={i}
+               type="email"
+               placeholder="player email"
+               onChange={async (e) => {
+                const newPlayers = [...players];
+                newPlayers[i] = e.target.value;
+                setPlayers(newPlayers);
+                await verifyPlayerEmail(e.target.value);
+                }}
+              />
+              <br />
+              </div>
+            ))}
+            </div>
           <button
             className="booking-button"
             type="submit"
