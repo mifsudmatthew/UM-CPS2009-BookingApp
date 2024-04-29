@@ -35,8 +35,6 @@ payment_router.post(
         cancel_url: `http://${req.headers.host}/profile/topup?session_id={CHECKOUT_SESSION_ID}`,
       });
 
-      server_functions.sendPaymentSuccessMail(req.user.email, amount * 100);
-
       // ------------------ Send user to session
       res.json({ url: session.url });
     } catch (error) {

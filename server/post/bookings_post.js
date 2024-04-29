@@ -28,7 +28,6 @@ bookingRouter.post(
         data: null,
         error: "Not enough Points in Balance",
       });
-
     } else {
       response = await bookings_queries.addBooking(
         req.user.id,
@@ -49,7 +48,13 @@ bookingRouter.post(
           balance: user.data.balance,
         };
         const accessToken = server_functions.generateAccessToken(userData);
-
+        server_functions.sendBookingSuccessMail(
+          email,
+          court.data.court_name,
+          req.body.date,
+          req.body.hour,
+          court.data.price / (1 + req.body.players.length)
+        );
         return res.json({ result: true, accessToken: accessToken });
       }
       res.json(response);
