@@ -119,30 +119,6 @@ function Booking() {
     }
   };
 
-  /**
-   * Verifies the existence of a user with the given email.
-   * Sends a POST request to the server to verify the email.
-   *
-   * @param {string} email - The email of the user to verify.
-   */
-  const verifyPlayerEmail = (email) => {
-    // Verify that the user of the other player exists
-    // Send a POST request to the server to verify the email
-    const useEffect = async () => {
-      const postData = { email };
-      try {
-        const response = await Post("/api/verifyPlayer", postData);
-        console.log(response);
-        if (response.result !== true) {
-          toast.error(response.error);
-        }
-      } catch (error) {
-        console.error("Error verifying player: ", error);
-      }
-    };
-    useEffect();
-  };
-
   // Date and time limits for input fields
   const today = new Date();
   const maxDate = new Date();
@@ -236,8 +212,6 @@ function Booking() {
                     newPlayers[i] = e.target.value;
                     setPlayers(newPlayers);
                   }}
-                  // Verify the player email on blur event i.e. when the input field loses focus, e.g. when the user clicks outside the input field
-                  onBlur={async (e) => await verifyPlayerEmail(e.target.value)}
                 />
                 <br />
               </div>
