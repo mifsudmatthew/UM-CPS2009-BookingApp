@@ -269,11 +269,12 @@
 }
 
 .dropdownItem-notification {
+  color: black;
   width: 100%;
   transition: 500ms;
   margin-top: 3px;
   opacity: 0.8;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .notification-menu {
