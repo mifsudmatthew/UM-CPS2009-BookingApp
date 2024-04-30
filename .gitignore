@@ -3,22 +3,9 @@
 *package-lock.json
 
 # Client
-# Logs
-**logs
-**.log
-**npm-debug.log*
-
-client/dist/
-client/dev-dist/
-**.local
+**dev-dist/
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-*.idea
-*.DS_Store
-**.suo
-**.ntvs*
-**.njsproj
-**.sln
-**.sw?
+.DS_Store
