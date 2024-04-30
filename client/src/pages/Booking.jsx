@@ -231,12 +231,13 @@ function Booking() {
                   key={i}
                   type="email"
                   placeholder="player email"
-                  onChange={async (e) => {
+                  onChange={(e) => {
                     const newPlayers = [...players];
                     newPlayers[i] = e.target.value;
                     setPlayers(newPlayers);
-                    await verifyPlayerEmail(e.target.value);
                   }}
+                  // Verify the player email on blur event i.e. when the input field loses focus, e.g. when the user clicks outside the input field
+                  onBlur={async (e) => await verifyPlayerEmail(e.target.value)}
                 />
                 <br />
               </div>
