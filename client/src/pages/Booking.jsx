@@ -3,13 +3,13 @@ import "react-toastify/dist/ReactToastify.css";
 
 import bookingImage from "../assets/bookingform.jpg";
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate, Navigate } from "react-router-dom";
 
 import { Post } from "../utils/ApiFunctions";
 import { useProfile } from "../context/ProfileContext";
-import NotificationContext from "../context/NavbarContext";
+import { useNotifications } from "../context/NotificationContext";
 import { getUpdatedToken } from "../utils/ApiFunctions";
 /**
  * Renders a form for booking a tennis court.
@@ -17,22 +17,20 @@ import { getUpdatedToken } from "../utils/ApiFunctions";
  * @returns {JSX.Element} The booking form component.
  */
 function Booking() {
-    const navigate = useNavigate();
-    // State variables
-    const [date, setDate] = useState(""); // State variable to store the selected date
-    const [hour, setHour] = useState(""); // State variable to store the selected hour
-    const [court, setCourt] = useState(""); // State variable to store the selected court
-    const [courts, setCourts] = useState([]); // State variable to store the available courts
-    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-    const [buttonColor, setButtonColor] = useState(null); // Add state to store button color
-    const [buttonCursor, setButtonCursor] = useState("pointer"); // Add state to store button cursor
-    const [players, setPlayers] = useState([]); // State variable to store the players to split the cost with
-    const [playerCount, setPlayerCount] = useState(0); // State variable to store the number of players
-    // Check if the user is an admin based on accessToken
-    const { user, accessToken, updateToken } = useProfile();
-
-    // Context for notifications
-    const { addSuccessfulBooking } = useContext(NotificationContext);
+  const navigate = useNavigate();
+  // State variables
+  const [date, setDate] = useState(""); // State variable to store the selected date
+  const [hour, setHour] = useState(""); // State variable to store the selected hour
+  const [court, setCourt] = useState(""); // State variable to store the selected court
+  const [courts, setCourts] = useState([]); // State variable to store the available courts
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [buttonColor, setButtonColor] = useState(null); // Add state to store button color
+  const [buttonCursor, setButtonCursor] = useState("pointer"); // Add state to store button cursor
+  const [players, setPlayers] = useState([]); // State variable to store the players to split the cost with
+  const [playerCount, setPlayerCount] = useState(0); // State variable to store the number of players
+  // Check if the user is an admin based on accessToken
+  const { user, accessToken, updateToken } = useProfile();
+  const { storeNotification } = useNotifications();
 
     // Check if court selection should be shown
     const showCourtSelection = date && hour;
@@ -79,33 +77,33 @@ function Booking() {
             setButtonColor(null); // Re-enable the button after 2 seconds and reset color
         }, 2000);
 
-        if (!date || !hour || !court) {
-            console.error("Please fill all fields");
-            toast.error("Please fill all fields.");
-            return;
-        }
-        const booking = { date, hour, court, players };
-        try {
-            // Send a POST request to the server with the booking data
-            const response = await Post("/api/booking", booking);
-            console.log(response);
-            if (response.result !== true) {
-                toast.error(response.error);
-            } else {
-                toast.success(
-                    "Court successfully booked! Redirecting to bookings page."
-                );
-                addSuccessfulBooking(booking); // Add the booking to the list of successful bookings
-                updateToken(await getUpdatedToken());
-                setTimeout(() => {
-                    navigate("/profile/bookings", { replace: true });
-                }, 2000);
-            }
-        } catch (error) {
-            // Log an error if the request fails
-            console.error("Error submitting booking: ", error);
-        }
-    };
+    if (!date || !hour || !court) {
+      console.error("Please fill all fields");
+      toast.error("Please fill all fields.");
+      return;
+    }
+    const booking = { date, hour, court, players };
+    try {
+      // Send a POST request to the server with the booking data
+      const response = await Post("/api/booking", booking);
+      console.log(response);
+      if (response.result !== true) {
+        toast.error(response.error);
+      } else {
+        toast.success(
+          "Court successfully booked! Redirecting to bookings page."
+        );
+        storeNotification("Court successfully booked!");
+        updateToken(await getUpdatedToken());
+        setTimeout(() => {
+          navigate("/profile/bookings", { replace: true });
+        }, 2000);
+      }
+    } catch (error) {
+      // Log an error if the request fails
+      console.error("Error submitting booking: ", error);
+    }
+  };
 
     const addAnotherPlayer = () => {
         // Add another player to the booking
@@ -115,38 +113,14 @@ function Booking() {
         }
     };
 
-    const removePlayer = () => {
-        // Remove a player from the booking
-        if (playerCount > 0) {
-            // Check if there are players to remove
-            setPlayerCount(playerCount - 1); // Decrement the player count
-            setPlayers(players.slice(0, -1)); // Remove the last player from the players array
-        }
-    };
-
-    /**
-     * Verifies the existence of a user with the given email.
-     * Sends a POST request to the server to verify the email.
-     *
-     * @param {string} email - The email of the user to verify.
-     */
-    const verifyPlayerEmail = (email) => {
-        // Verify that the user of the other player exists
-        // Send a POST request to the server to verify the email
-        const useEffect = async () => {
-            const postData = { email };
-            try {
-                const response = await Post("/api/verifyPlayer", postData);
-                console.log(response);
-                if (response.result !== true) {
-                    toast.error(response.error);
-                }
-            } catch (error) {
-                console.error("Error verifying player: ", error);
-            }
-        };
-        useEffect();
-    };
+  const removePlayer = () => {
+    // Remove a player from the booking
+    if (playerCount > 0) {
+      // Check if there are players to remove
+      setPlayerCount(playerCount - 1); // Decrement the player count
+      setPlayers(players.slice(0, -1)); // Remove the last player from the players array
+    }
+  };
 
     // Date and time limits for input fields
     const today = new Date();
@@ -271,7 +245,6 @@ function Booking() {
                                         const newPlayers = [...players];
                                         newPlayers[i] = e.target.value;
                                         setPlayers(newPlayers);
-                                        await verifyPlayerEmail(e.target.value);
                                     }}
                                 />
                                 <br />

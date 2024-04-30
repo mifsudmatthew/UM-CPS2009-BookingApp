@@ -3,7 +3,7 @@ import App from "./App.jsx";
 
 /* Context */
 import { ProfileProvider } from "./context/ProfileContext";
-import { NotificationProvider } from "./context/NavbarContext";
+import { NotificationProvider } from "./context/NotificationContext";
 
 /* Components */
 import Bookings from "./components/profile/Bookings.jsx";
