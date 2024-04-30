@@ -21,8 +21,8 @@ const ProfileSidebar = () => {
   const logOut = () => {
     toast.success("Logged out successfully!"); // Displays a success message
 
-    // Clear the 'notification' array in localStorage
-    localStorage.setItem("notification", JSON.stringify([]));
+    // Clear the 'notifications' array in localStorage
+    localStorage.setItem("notifications", JSON.stringify([]));
 
     // Profile user validation requires change therefore updateToken and setUser should be taken out then.
     setTimeout(() => {
