@@ -134,7 +134,7 @@
 
 @media (max-width: 900px) {
   h3 {
-    font-size: 15px;
+    font-size: 10px;
   }
 
   .sidebar {
@@ -142,7 +142,7 @@
   }
 
   .sidebar ul {
-    font-size: 10px;
+    font-size: 8px;
   }
 
   .profile-image {
@@ -155,9 +155,13 @@
 @media (max-width: 541px) {
 
   .profile {
-    padding: 0.5em;
+    padding: 0.1em;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .sidebar {
+    padding: 0.1rem;
   }
 }
