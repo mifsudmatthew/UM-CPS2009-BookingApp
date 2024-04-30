@@ -1,13 +1,13 @@
-
-<h1 align="center"> Tennis Court Booking System</h1>
+# Tennis Court Booking System
 
 <p align="center"><a target="_blank" rel="noopener noreferrer"><img width="180" src="https://i.ibb.co/z6nLrz5/logo.png" alt="logo"></a></p>
 
 Contributors
 ---
+
 <div style="margin-right: 20px; text-align: center; display: flex;">
 <figure style="margin:33px">
-    <img alt="Matthew Mifsud" style="width: 100px; border-radius:50%;"src="https://avatars.githubusercontent.com/u/97695752?v=4"/>
+    <img alt="Matthew Mifsud" style="width: 100px; border-radius:50%;" src="https://avatars.githubusercontent.com/u/97695752?v=4"/>
     <figcaption><a href="https://github.com/mifsudmatthew"  alt="Matthew Mifsud">Matthew Mifsud</a></figcaption>
 </figure>
 <figure align="center" style="margin:33px">
@@ -35,6 +35,7 @@ Contributors
 
 Compilation Process
 -------------------
+
 <table>
   <tr>
     <td><b>Client Directory</b></td>
@@ -53,6 +54,7 @@ Compilation Process
 
 Formats
 --------
+
 <table>
   <tr>
     <th><b>Purpose</b></th>
