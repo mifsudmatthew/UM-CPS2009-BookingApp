@@ -10,6 +10,8 @@ import { toast } from "react-toastify";
 
 import { useProfile } from "../context/ProfileContext";
 
+import { useNotifications } from "../context/NotificationContext";
+
 /**
  * Renders the Topup page component.
  *
@@ -20,6 +22,7 @@ function Topup() {
   const session_id = new URLSearchParams(location.search).get("session_id");
   const { updateToken } = useProfile();
   const [amount, setAmount] = useState(20); // Initialize the amount state
+  const { storeNotification } = useNotifications();
 
   useEffect(() => {
     /**
@@ -42,6 +45,7 @@ function Topup() {
 
           // Display success toast if the payment was successful
           if (response.success) {
+            storeNotification(`Top Up of ${amount} Successful!`);
             toast.success("Top Up Successful!");
           }
         } catch (err) {

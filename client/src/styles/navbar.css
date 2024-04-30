@@ -269,6 +269,7 @@
 }
 
 .dropdownItem-notification {
+  width: 100%;
   transition: 500ms;
   margin-top: 3px;
   opacity: 0.8;

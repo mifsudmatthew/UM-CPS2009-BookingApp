@@ -9,6 +9,8 @@ import Form from "../components/form/Form";
 import InputBox from "../components/form/InputBox";
 import InputButton from "../components/form/InputButton";
 
+import { useNotifications } from "../context/NotificationContext";
+
 /**
  * Renders the Register page component.
  *
@@ -21,6 +23,7 @@ function Register() {
   const [password, setPassword] = useState(""); // State variable for password input
   const [confirmPassword, setConfirmPassword] = useState(""); // State variable for confirm password input
   const [confirmEmail, setConfirmEmail] = useState(""); // State variable for confirm email input
+  const { storeNotification } = useNotifications();
 
   const emailMatch = useMemo(() => {
     return email === confirmEmail; // Checks if email and confirm email match
@@ -63,6 +66,9 @@ function Register() {
       await Post("/api/register", { email, password, name });
       // Displays a success toast message
       toast.success("Sign up successful! Redirecting to login.");
+
+      storeNotification("Sign up successful!"); // Stores a notification
+
       // Redirects to the login page after a delay
       setTimeout(() => {
         navigate("/login", { replace: true });
