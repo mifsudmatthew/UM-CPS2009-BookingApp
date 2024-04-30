@@ -77,6 +77,8 @@ function Navbar() {
 
       logoutButtonState = true;
       toast.success("Logged out successfully!"); // Displays a success message
+      // Clear the 'notification' array in localStorage
+      localStorage.setItem("notification", JSON.stringify([]));
 
       // Profile user validation requires change therefore updateToken and setUser should be taken out then.
       setTimeout(() => {
