@@ -312,3 +312,9 @@
   transform: translateY(-20px);
   transition: 500ms ease;
 }
+
+@media (max-width: 450px) {
+  .menu-icon {
+    padding-right: 0.3rem;
+  }
+}
