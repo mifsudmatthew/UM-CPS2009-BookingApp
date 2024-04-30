@@ -120,7 +120,9 @@ function Navbar() {
     <nav className="navbar">
       {/* ---------------------- Logo ------------------------------- */}
       <div className="navbar-logo">
+      <NavLink to="/">
         <img src={logo} alt="logo" />
+      </NavLink>
       </div>
 
       {/* ---------------------- Title ------------------------------ */}
