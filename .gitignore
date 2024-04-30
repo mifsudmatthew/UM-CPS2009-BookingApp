@@ -3,6 +3,7 @@
 *package-lock.json
 
 # Client
+**dist/
 **dev-dist/
 
 # Editor directories and files
