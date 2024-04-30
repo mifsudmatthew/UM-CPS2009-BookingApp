@@ -7,6 +7,6 @@
 **dev-dist/
 
 # Editor directories and files
-.vscode/*
+**.vscode/*
 !.vscode/extensions.json
-.DS_Store
+**.DS_Store
