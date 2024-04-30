@@ -144,7 +144,7 @@ async function sendBookingSuccessMail(user_email, court, date, hour, price) {
         date +
         "\n\n Time: " +
         hour +
-        "\n\n Price paid: " +
+        "\n\n Price paid: €" +
         price +
         "\n\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot", // Email content.
     };
@@ -185,7 +185,7 @@ async function sendCancellationSuccessMail(
     const emailDetails = {
       from: "no-reply@servespot.com", // Address of account sending the email.
       to: user_email, // This should be changed to email of the user requesting a reset.
-      subject: "Successful Booking for " + court, // Subject of email.
+      subject: "Successful Cancellation for " + court, // Subject of email.
       text:
         "Dear " +
         user_data.data.name +
@@ -195,7 +195,8 @@ async function sendCancellationSuccessMail(
         date +
         "\n\n Time: " +
         hour +
-        "\n\n Price paid: " +
+        ":00" +
+        "\n\n Amount refunded: €" +
         price +
         "\n\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot", // Email content.
     };
