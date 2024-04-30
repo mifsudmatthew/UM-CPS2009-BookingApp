@@ -90,7 +90,7 @@ function Navbar() {
       if (!menuRef.current.contains(e.target)) {
         setOpen(false);
       }
-      if (!notifRef.current.contains(e.target)) {
+      if (notifRef.current && !notifRef.current.contains(e.target)) {
         setNotificationOpen(false);
       }
     };
@@ -120,9 +120,9 @@ function Navbar() {
     <nav className="navbar">
       {/* ---------------------- Logo ------------------------------- */}
       <div className="navbar-logo">
-      <NavLink to="/">
-        <img src={logo} alt="logo" />
-      </NavLink>
+        <NavLink to="/">
+          <img src={logo} alt="logo" />
+        </NavLink>
       </div>
 
       {/* ---------------------- Title ------------------------------ */}
