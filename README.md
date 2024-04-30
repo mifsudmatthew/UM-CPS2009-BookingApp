@@ -8,11 +8,13 @@ Contributors
 <div style="margin-right: 20px; text-align: center; display: flex;">
 <figure style="margin:33px">
     <img alt="Matthew Mifsud" style="width: 100px; border-radius:50%;" src="https://avatars.githubusercontent.com/u/97695752?v=4"/>
+    <br></br>
     <figcaption><a href="https://github.com/mifsudmatthew"  alt="Matthew Mifsud">Matthew Mifsud</a></figcaption>
 </figure>
 <figure align="center" style="margin:33px">
     <img alt="Keith Farrugia" style="width: 100px; border-radius: 50%;"
      src="https://avatars.githubusercontent.com/u/148719589?v=4"/>
+    <br></br>
     <figcaption>
     <a href="https://github.com/KeithFarrugia" alt="Keith Farrugia">Keith Farrugia</a>
     </figcaption>
@@ -20,6 +22,7 @@ Contributors
 <figure align="center" style="margin:33px">
     <img alt="Lenise Silvio" style="width: 100px; border-radius: 50%;"
      src="https://avatars.githubusercontent.com/u/147991201?v=4" />
+    <br></br>
     <figcaption>
     <a href="https://github.com/lensil" alt="Lenise Silvio">Lenise Silvio</a>
     </figcaption>
@@ -27,6 +30,7 @@ Contributors
 <figure align="center" style="margin:33px">
     <img alt="Luca Vella" style="width: 100px; border-radius: 50%;"
      src="https://avatars.githubusercontent.com/u/104022853?v=4"/>
+    <br></br>
     <figcaption>
     <a href="https://github.com/FirePhoenixBro" alt="Luca Vella">Luca Vella</a>
     </figcaption>
