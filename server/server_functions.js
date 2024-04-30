@@ -144,6 +144,7 @@ async function sendBookingSuccessMail(user_email, court, date, hour, price) {
         date +
         "\n\n Time: " +
         hour +
+        ":00" +
         "\n\n Price paid: €" +
         price +
         "\n\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot", // Email content.
