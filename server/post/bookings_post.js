@@ -48,7 +48,7 @@ bookingRouter.post(
     }
     // ----------------------------------------------- Multi User
     if (secondary_users.length > 0) {
-      split_cost = court.data.price / (secondary_users.length + 1);
+      split_cost = (court.data.price / (secondary_users.length + 1)).toFixed(2);
       if (user.data.balance < split_cost) {
         return res.json({
           result: false,
@@ -90,6 +90,13 @@ bookingRouter.post(
           }
         }
       }
+      server_functions.sendBookingSuccessMail(
+        email,
+        court.data.court_name,
+        req.body.date,
+        req.body.hour,
+        split_cost
+      );
       return res.json(response);
 
       // ----------------------------------------------- Single User Invalid
@@ -116,7 +123,7 @@ bookingRouter.post(
         court.data.court_name,
         req.body.date,
         req.body.hour,
-        court.data.price / (1 + req.body.players.length)
+        court.data.price.toFixed(2)
       );
       if (response.result == true) {
         user_queries.updateUserBalance(email, -court.data.price);
@@ -239,7 +246,10 @@ bookingRouter.post(
           (day < 10 ? "0" + day : day);
 
         if (secondaryUsers.length > 0) {
-          split_cost = bookingDetails.data.cost / (secondaryUsers.length + 1);
+          split_cost = (
+            bookingDetails.data.cost /
+            (secondaryUsers.length + 1)
+          ).toFixed(2);
           await user_queries.updateUserBalance(email, split_cost);
           for (const sec_user of secondary_users) {
             const result2 = await user_queries.updateUserBalance(
@@ -262,7 +272,7 @@ bookingRouter.post(
             courtName,
             formattedDate,
             courtTime,
-            court.data.price
+            court.data.price.toFixed(2)
           );
           return res.json({ result: true });
         }
