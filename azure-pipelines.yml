@@ -16,15 +16,32 @@ steps:
     displayName: "Install Node.js"
 
   - script: |
-      cd ./client
-      npm install
+      npm --prefix client install
     displayName: "Install Node dependencies in frontend"
 
   - script: |
-      cd ./client
-      npm run build
+      npm --prefix client run build
     displayName: "Building the frontend"
 
-  - script: |
-      npm i
-    displayName: "Server Install"
+  - task: DeleteFiles@1
+    inputs:
+      SourceFolder: 'client'
+      Contents: '!(**/dist/*)'
+      RemoveSourceFolder: false
+      RemoveDotFiles: true
+  
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+      replaceExistingArchive: true
+
+  - task: AzureWebApp@1
+    inputs:
+      azureSubscription: 'Azure for Students(ddc1cb0e-7021-43ee-88f7-3f7c9cda3828)'
+      appType: 'webApp'
+      appName: 'ServeSpot'
+      package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+      deploymentMethod: 'auto'

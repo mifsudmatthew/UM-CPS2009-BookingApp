@@ -7,6 +7,7 @@ import { Post } from "../../utils/ApiFunctions";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { useNotifications } from "../../context/NotificationContext";
 
 /**
  * Renders the AccountDetails component.
@@ -24,7 +25,7 @@ const AccountDetails = () => {
   // Initialize state with values from localStorage, or fallback to empty strings
   const [name, setName] = useState(user.name || "");
   const [email, setEmail] = useState(user.email || "");
-
+  const { storeNotification } = useNotifications();
   // const handleSubmit = (event) => {
   //   event.preventDefault();
   //   setUser({ ...user, name, email });
@@ -50,7 +51,8 @@ const AccountDetails = () => {
       updateToken(accessToken);
       updateUser(user);
 
-      toast.success("Change successful!");
+      storeNotification("Details Change Successful!");
+      toast.success("Change Successful!");
       setTimeout(() => {
         navigate("/profile", { replace: true });
       }, 2000);

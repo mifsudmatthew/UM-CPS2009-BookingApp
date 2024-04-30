@@ -7,6 +7,8 @@ import Form from "../components/form/Form";
 import InputBox from "../components/form/InputBox";
 import InputButton from "../components/form/InputButton";
 
+import { useNotifications } from "../context/NotificationContext";
+
 import "react-toastify/dist/ReactToastify.css";
 
 function toProfile() {
@@ -22,6 +24,7 @@ function ChangePW() {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const { storeNotification } = useNotifications();
 
   const canChangePassword = useMemo(
     () =>
@@ -49,6 +52,7 @@ function ChangePW() {
       const response = await Post("/api/changepassword", data); // Send a POST request to change the password
       toast.success("Password change successful! Redirecting to profile."); // Display success toast
       console.log("Password change successful:", response);
+      storeNotification("Password changed successfully!"); // Store a notification
       toProfile(); // Redirect to the profile page
       setTimeout(() => {
         navigate("/profile", { replace: true });

@@ -3,7 +3,15 @@
     width: 100%;
     border-collapse: separate;
 }
-@media (max-width: 450px) {
+@media (max-width: 345px) {
+    .bookings-table {
+        font-size: 70%;
+        width: 50%;
+        border-collapse: separate;
+    }
+}
+
+@media (max-width: 490px) {
     .bookings-table {
         font-size: 50%;
         width: 100%;
@@ -17,19 +25,19 @@
     .bookings-table button {
         display: flex;
         flex-direction: row;
-        font-size: 60%;
+        font-size: 10%;
         background: #a0c982;
         border: none;
         cursor: pointer;
         outline: none;
-        padding: 40%
+        padding-left: 0.6rem !important; 
     }
     
 }
 
 .bookings-table th,
 .bookings-table td {
-    padding: 0.5rem;
+    padding: 0.2rem;
     border-bottom: 1px solid #ddd;
 }
 
@@ -50,10 +58,10 @@
     flex-direction: row;
     align-content: center;
     color: black;
-    font-size: 140%;
+    font-size: 100%;
     background: #a0c982;
     border: none;
     cursor: pointer;
     outline: none;
-    padding: 1rem 2rem
+    padding-left: 1.1rem;
 }
