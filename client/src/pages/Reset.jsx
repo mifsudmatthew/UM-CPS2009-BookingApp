@@ -117,7 +117,7 @@ export default function Reset() {
   return (
     <main className={"mainContainer"}>
       <Form classname="innerContainer">
-      <div className="titleContainer">Reset</div>
+        <div className="titleContainer">Reset</div>
         <div className={"inputContainer"}>
           <br />
         </div>
@@ -130,7 +130,7 @@ export default function Reset() {
         />
         <br />
         <InputButton
-          label="RESET PASSWORD"
+          label="Send Pin to Email"
           colour="#3e4a36"
           onClick={handleSubmit}
         />
@@ -161,15 +161,7 @@ export default function Reset() {
             setPin(inputPin);
           }}
         />
-        <br />
-        {!pinValid ? (
-          <div style={{ color: "rgba(186, 26, 26, 1)" }}>
-            PIN must be 4 digits.
-          </div>
-        ) : (
-          <></>
-        )}
-        <br />
+
         <InputButton
           label="Change Password"
           colour="#3e4a36"
