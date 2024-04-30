@@ -224,14 +224,14 @@ function Booking() {
                   className="button_add"
                   onClick={addAnotherPlayer}
                 >
-                  ︿
+                  +
                 </button>
                 <button
                   type="button"
                   className="button_sub"
                   onClick={removePlayer}
                 >
-                  ﹀
+                  -
                 </button>
               </div>
             </div>
