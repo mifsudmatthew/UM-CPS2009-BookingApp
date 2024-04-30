@@ -1,12 +1,10 @@
-import { useState, useContext, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import Popup from "reactjs-popup";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import {
   Wallet2,
   Bell,
-  BellFill,
   House,
   BoxArrowInRight,
   BoxArrowInLeft,
@@ -16,9 +14,8 @@ import {
   X,
   GearWideConnected,
 } from "react-bootstrap-icons";
-import NotificationPanel from "./NotificationPanel";
 
-import NotificationContext from "../../context/NavbarContext";
+import { useNotifications } from "../../context/NotificationContext";
 import { useProfile } from "../../context/ProfileContext";
 
 import { logo } from "../Icons";
@@ -66,6 +63,14 @@ function Navbar() {
   let menuRef = useRef();
   let notifRef = useRef();
 
+  // State variables
+  const [authenticated, setAuthenticated] = useState(false); // State variable to store the login status of the user
+  const [showNotificationPanel, setShowNotificationPanel] = useState(false); // Controls the visibility of the notification panel
+
+  const { notifications } = useNotifications(); // Accesses the stored notifications
+
+  const { user, accessToken } = useProfile();
+
   const logOut = () => {
     if (logoutButtonState == false) {
       // Only allow logout to be pressed once.
@@ -94,12 +99,6 @@ function Navbar() {
       document.removeEventListener("mousedown", handler);
     };
   }, []);
-  // State variables
-  const [authenticated, setAuthenticated] = useState(false); // State variable to store the login status of the user
-  const { notification } = useContext(NotificationContext); // Notification context for displaying notifications
-  const [showNotificationPanel, setShowNotificationPanel] = useState(false); // Controls the visibility of the notification panel
-
-  const { user, accessToken } = useProfile();
 
   /**
    * Toggles the visibility of the notification panel.
@@ -229,21 +228,15 @@ function Navbar() {
           }`}
         >
           <ul className="notificationList">
-            <li className="dropdownItem">
-              <span className="dropdownItem-notification">
-                Booking Successful! at 12:00 PM
-              </span>
-            </li>
-            <li className="dropdownItem">
-              <span className="dropdownItem-notification">
-                Booking Cancellation at 2:00 PM
-              </span>
-            </li>
-            <li className="dropdownItem">
-              <span className="dropdownItem-notification">
-                Topped up Successfully! at 3:00 PM
-              </span>
-            </li>
+            {notifications.map((notification, index) => (
+              <li className="dropdownItem" key={index}>
+                <span className="dropdownItem-notification">
+                  {notification.text}
+                  <br></br>
+                  {notification.time}
+                </span>
+              </li>
+            ))}
           </ul>
         </div>
 

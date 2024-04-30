@@ -10,6 +10,8 @@ import Form from "../components/form/Form";
 import InputBox from "../components/form/InputBox";
 import InputButton from "../components/form/InputButton";
 
+import { useNotifications } from "../context/NotificationContext";
+
 /**
  * Renders the login page.
  *
@@ -20,6 +22,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { updateToken, updateUser } = useProfile();
+  const { storeNotification } = useNotifications();
 
   // Regular expression for email validation
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -53,6 +56,7 @@ function Login() {
         return;
       }
       toast.success("Login successful!");
+      storeNotification("Login successful!");
       setTimeout(() => {
         navigate("/", { replace: true });
       }, 2000);

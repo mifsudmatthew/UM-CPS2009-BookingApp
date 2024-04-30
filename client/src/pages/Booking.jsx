@@ -3,13 +3,13 @@ import "react-toastify/dist/ReactToastify.css";
 
 import bookingImage from "../assets/bookingform.jpg";
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate, Navigate } from "react-router-dom";
 
 import { Post } from "../utils/ApiFunctions";
 import { useProfile } from "../context/ProfileContext";
-import NotificationContext from "../context/NavbarContext";
+import { useNotifications } from "../context/NotificationContext";
 import { getUpdatedToken } from "../utils/ApiFunctions";
 /**
  * Renders a form for booking a tennis court.
@@ -30,9 +30,7 @@ function Booking() {
   const [playerCount, setPlayerCount] = useState(0); // State variable to store the number of players
   // Check if the user is an admin based on accessToken
   const { user, accessToken, updateToken } = useProfile();
-
-  // Context for notifications
-  const { addSuccessfulBooking } = useContext(NotificationContext);
+  const { storeNotification } = useNotifications();
 
   // Check if court selection should be shown
   const showCourtSelection = date && hour;
@@ -46,7 +44,6 @@ function Booking() {
         const response = await Post("/api/getAvailableCourts", postData);
         console.log(response);
         setCourts(response);
-
       } catch (error) {
         // Log an error if the request fails
         console.error("Error fetching courts: ", error);
@@ -93,7 +90,7 @@ function Booking() {
         toast.success(
           "Court successfully booked! Redirecting to bookings page."
         );
-        addSuccessfulBooking(booking); // Add the booking to the list of successful bookings
+        storeNotification("Court successfully booked!");
         updateToken(await getUpdatedToken());
         setTimeout(() => {
           navigate("/profile/bookings", { replace: true });
@@ -220,8 +217,12 @@ function Booking() {
           <div className="form-section">
             <label className="booking-form-subtitle">Add Player</label>
             <div>Do you wish to add another player?</div>
-            <button type="button" onClick={removePlayer}>-</button>
-            <button type="button" onClick={addAnotherPlayer}>+</button>
+            <button type="button" onClick={removePlayer}>
+              -
+            </button>
+            <button type="button" onClick={addAnotherPlayer}>
+              +
+            </button>
             <br />
             {Array.from({ length: playerCount }).map((_, i) => (
               <div key={i}>
