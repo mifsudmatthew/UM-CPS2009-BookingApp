@@ -12,6 +12,10 @@
   border: 1px solid #8d8d8d; /* Add border between accordion items */
 }
 
+.accordion-header:hover {
+  cursor: pointer;
+}
+
 /* Style for the accordion header */
 .accordion-header.close {
   font-size: 100%;
