@@ -29,7 +29,7 @@ const Bookings = () => {
    * @returns {Promise<void>} A Promise that resolves when the booked courts are fetched.
    */
   useEffect(() => {
-    // Fetch the booked courts when the component loads
+    // Fetch the booked courts when the user data changes
     const fetchBookedCourts = async () => {
       const name = user.name; // Get the user's name
       const email = user.email; // Get the user's email
