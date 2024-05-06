@@ -11,14 +11,14 @@ const courts_queries = require("../../database/schema_functions/court_functions"
  *
  * @return
  * - 200: Success in retrieving all courts
- * - 500: Failed to retrieve all courts
+ * - 400: Failed to retrieve all courts
  */
 
 home_router.post("/getAllCourts", async (req, res) => {
   response = await courts_queries.getAllCourts(); // Getting all courts from database
   // If there is no response
-  if (!response || response.error) {
-    return res.status(500).send({ error: "Failed to retrieve all courts" });
+  if (!response || response.error || !response.result) {
+    return res.status(400).send({ error: "Failed to retrieve all courts" });
   }
   res.status(200).json(response); // Sending all courts to client
 });

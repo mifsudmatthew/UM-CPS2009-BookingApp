@@ -18,7 +18,7 @@ bookingRouter.post("/getAvailableCourts", async (req, res) => {
   var date = new Date(req.body.date); // Obtaining date chosen by user
   var time = parseInt(req.body.hour); // Obtaining time chosen by user
   var responseQ = await bookings_queries.getAvailableCourts(date, time); // Getting available courts according to date and time
-  if (!responseQ || responseQ.error) {
+  if (!responseQ || responseQ.error || !responseQ.result) {
     // If there is an error
     res.status(500).json({ error: "Error fetching courts" });
   }
