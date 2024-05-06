@@ -1,5 +1,5 @@
 // Errors.jsx
-import errorImage from "../assets/sad_tennis.png";
+import errorImage from "../assets/sad_tennis.webp";
 
 function Errors() {
   return (
