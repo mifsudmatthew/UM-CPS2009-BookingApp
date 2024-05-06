@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { toast } from "react-toastify";
+import { useState } from "react"; // Importing hooks from react
+import { toast } from "react-toastify"; // Importing toast to show success or error messages
 
-import { Post } from "../../utils/ApiFunctions";
+import { Post } from "../../utils/ApiFunctions"; // Importing the Post function to make POST requests
 
-import Form from "../form/Form";
-import InputBox from "../form/InputBox";
-import InputButton from "../form/InputButton";
+import Form from "../form/Form"; // Importing the Form component
+import InputBox from "../form/InputBox"; // Importing the InputBox component
+import InputButton from "../form/InputButton"; // Importing the InputButton component
 
 /**
  * Renders a form to add a new court.
@@ -24,7 +24,10 @@ function AddNewCourt() {
 
   // Function to handle form submission
   const handleSubmit = async (event) => {
+    // Prevent the default form submission behavior
     event.preventDefault();
+
+    // Check if the required fields are empty
     if (
       !courtName ||
       !price ||
@@ -37,10 +40,12 @@ function AddNewCourt() {
       toast.error("Please fill in all the required fields.");
       return;
     } else if (price < 0 || area < 0) {
+      // Check if the price or area is a negative number
       toast.error("Error! Please enter a positive number.");
       return;
     }
     try {
+      // Try to add the court
       const courtData = {
         courtName,
         price,
@@ -50,10 +55,13 @@ function AddNewCourt() {
         area,
         type,
       };
-      const response = await Post("/api/registerCourt", courtData);
+      const response = await Post("/api/registerCourt", courtData); // Make a POST request to the server to add the court
+
+      // Check if the court was added successfully
       if (response.result == true) {
         toast.success("Court added successfully.");
         console.log("Success: ", response);
+        // Clear the form fields
         setCourtName("");
         setPrice("");
         setAddress("");
@@ -105,7 +113,8 @@ function AddNewCourt() {
           className="inputBox"
           value={type}
           id="NewCourtsCourtType"
-          onChange={(event) => setType(event.target.value)}>
+          onChange={(event) => setType(event.target.value)}
+        >
           <option value="">Select Court Type</option>
           <option value="Indoor Court">Indoor Court</option>
           <option value="Clay Court">Clay Court</option>

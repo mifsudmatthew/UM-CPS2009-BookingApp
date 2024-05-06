@@ -21,17 +21,21 @@ function ConfigCourts() {
    * Fetches all courts from the API.
    * @returns {Promise<void>} A Promise that resolves when the courts are fetched successfully.
    */
+
+  // Fetch all courts from the API when there is a change in the courts state variable
   useEffect(() => {
     const fetchCourts = async () => {
       try {
+        // Fetch all courts from the API
         const response = await Get("/api/getAllCourts");
+        // Update the courts state variable with the response data
         setCourts(response.data);
       } catch (error) {
         console.error(`Error fetching courts: ${error}`);
       }
     };
 
-    fetchCourts();
+    fetchCourts(); // Call the fetchCourts function
   }, [setCourts]);
 
   /**
@@ -44,33 +48,46 @@ function ConfigCourts() {
     event.preventDefault();
     // Check if the email and password fields are empty
     if (!price || !name || !courtId) {
-      // Check if amount is not a number or empty
       toast.error("Please fill all fields.");
       return;
     } else if (isNaN(price)) {
+      // Check if the price is a number
       toast.error("Error! Input is not a number, please enter a number.");
       return;
     } else if (price < 0) {
+      // Check if the price is a negative number
       toast.error("Error! Please enter a positive number.");
       return;
     }
+
+    // Find the selected court from the list of courts
     const selectedCourt = courts.find((court) => court._id === courtId);
+
+    // Check if the court name and price are the same as the selected court
     if (name === selectedCourt.court_name && price === selectedCourt.price) {
-      toast.error("No changes detected.");
+      toast.error("No changes detected."); // Display an error message if there are no changes
       return;
     }
 
     try {
+      // Try to update the court
       const response = await Post("/api/configCourts", {
         courtId,
         price,
         name,
       });
+
+      // Update the courts state variable with the updated court
       const newCourts = courts.map((court) => {
         return court._id === response.data._id ? response.data : court;
       });
+
+      // Update the courts state variable with the new list of courts
       setCourts(newCourts);
+
+      // Display a success toast message
       toast.success("Court updated successfully!");
+
       // Clear input fields
       setName("");
       setPrice("");
@@ -87,6 +104,8 @@ function ConfigCourts() {
    *
    * @param {Object} e - The event object.
    */
+
+  // Function to update the state variables for court, size, and price based on the selected court
   const handleCourtChange = (e) => {
     const selectedCourt = courts.find((court) => court._id === e.target.value);
     setCourtId(selectedCourt._id);
