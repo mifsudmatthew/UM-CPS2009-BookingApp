@@ -1,7 +1,8 @@
 {
-  "name": "bookingapp-client",
+  "name": "servespot-client",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "UOM CPS2009 Project Group 1 - ServeSpot client component",
   "type": "module",
   "scripts": {
     "dev": "vite --port 3000",

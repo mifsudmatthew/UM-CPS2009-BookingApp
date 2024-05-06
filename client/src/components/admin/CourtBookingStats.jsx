@@ -111,10 +111,10 @@ function CourtBookingStats() {
 
   return (
     <>
-      <a href="#" className="horizontalNav previous" onClick={navigateBackward}>
+      <a className="horizontalNav previous" onClick={navigateBackward}>
         &#8249;
       </a>
-      <a href="#" className="horizontalNav next" onClick={navigateForward}>
+      <a className="horizontalNav next" onClick={navigateForward}>
         &#8250;
       </a>
       <div className="accordion">

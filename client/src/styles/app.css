@@ -147,7 +147,6 @@ body {
   }
 }
 
-
 @media (min-height: 853px) {
   .mainContainerLogin {
     height: 100vh;
@@ -158,3 +157,10 @@ body {
   }
 }
 
+.left-arrow:hover {
+  cursor: pointer;
+}
+
+.right-arrow:hover {
+  cursor: pointer;
+}

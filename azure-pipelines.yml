@@ -1,47 +1,76 @@
-# Node.js with React
-# Build a Node.js project that uses React.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
 trigger:
   - main
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: "ubuntu-latest"
 
-steps:
-  - task: NodeTool@0
-    inputs:
-      versionSpec: "20.x"
-    displayName: "Install Node.js"
+stages:
+  - stage: "Build"
+    jobs:
+      - job: "Build"
+        steps:
+          - task: NodeTool@0
+            displayName: "Install Node.js v20"
+            inputs:
+              versionSpec: "20.x"
 
-  - script: |
-      npm --prefix client install
-    displayName: "Install Node dependencies in frontend"
+          - script: |
+              npm --prefix client install
+            displayName: "Install frontend dependencies"
 
-  - script: |
-      npm --prefix client run build
-    displayName: "Building the frontend"
+          - script: |
+              npm --prefix client run build
+            displayName: "Build the frontend"
 
-  - task: DeleteFiles@1
-    inputs:
-      SourceFolder: 'client'
-      Contents: '!(**/dist/*)'
-      RemoveSourceFolder: false
-      RemoveDotFiles: true
-  
-  - task: ArchiveFiles@2
-    inputs:
-      rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
-      includeRootFolder: false
-      archiveType: 'zip'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-      replaceExistingArchive: true
+          - task: CopyFiles@2
+            displayName: "Copy build"
+            inputs:
+              contents: "client/dist/**"
+              targetFolder: "$(Build.ArtifactStagingDirectory)"
 
-  - task: AzureWebApp@1
-    inputs:
-      azureSubscription: 'Azure for Students(ddc1cb0e-7021-43ee-88f7-3f7c9cda3828)'
-      appType: 'webApp'
-      appName: 'ServeSpot'
-      package: '$(System.DefaultWorkingDirectory)/**/*.zip'
-      deploymentMethod: 'auto'
+          - script: |
+              npm install
+            displayName: "Install Node dependencies in server"
+
+          - task: CopyFiles@2
+            inputs:
+              contents: |
+                .env
+                package.json
+                server.js
+                server/**
+                database/**
+                node_modules/**
+              targetFolder: "$(Build.ArtifactStagingDirectory)"
+            displayName: "Copy server components"
+
+          - publish: "$(Build.ArtifactStagingDirectory)"
+            displayName: "Publish App for Deployment"
+            artifact: dropApp
+
+  - stage: "Deploy"
+    dependsOn: "Build"
+    jobs:
+      - job: "Deploy"
+        steps:
+          - download: current
+            artifact: dropApp
+
+          - task: ArchiveFiles@2
+            displayName: "Packaging files into zip"
+            inputs:
+              rootFolderOrFile: "$(Pipeline.Workspace)/dropApp"
+              includeRootFolder: false
+              archiveType: "zip"
+              archiveFile: "$(Build.ArtifactStagingDirectory)/drop.zip"
+              replaceExistingArchive: true
+
+          - task: AzureWebApp@1
+            displayName: "Deploy to server"
+            inputs:
+              azureSubscription: "ServeSpot-RM"
+              appType: "webApp"
+              appName: "ServeSpot"
+              package: "$(Build.ArtifactStagingDirectory)/*.zip"
+              customWebConfig: "-appType node"
+              deploymentMethod: "runFromPackage"

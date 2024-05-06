@@ -2,38 +2,38 @@
 
 <p align="center"><a target="_blank" rel="noopener noreferrer"><img width="180" src="https://i.ibb.co/z6nLrz5/logo.png" alt="logo"></a></p>
 
-Contributors
----
+## Contributors
+
 <div style="margin-right: 20px; text-align: center; display: flex;">
 <figure>
-    <img alt="Matthew Mifsud" style="width: 70px; border-radius: 50%;" src="https://www3.lunapic.com/do-not-link-here-use-hosting-instead/170956509896309052?33958973042"/>
+    <img alt="Matthew Mifsud" style="width: 100px; border-radius:50%;"src="https://avatars.githubusercontent.com/u/97695752?v=4"/>
     <figcaption><a href="https://github.com/mifsudmatthew"  alt="Matthew Mifsud">Matthew Mifsud</a></figcaption>
 </figure>
 <figure align="center">
-    <img alt="Keith Farrugia" style="width: 70px; border-radius: 50%;"
-     src="https://www3.lunapic.com/do-not-link-here-use-hosting-instead/170956493231878591?84434110414"/>
+    <img alt="Keith Farrugia" style="width: 100px; border-radius: 50%;"
+     src="https://avatars.githubusercontent.com/u/148719589?v=4"/>
     <figcaption>
     <a href="https://github.com/KeithFarrugia" alt="Keith Farrugia">Keith Farrugia</a>
     </figcaption>
 </figure>
 <figure align="center">
-    <img alt="Lenise Silvio" style="width: 70px; border-radius: 50%;"
-     src="https://www3.lunapic.com/do-not-link-here-use-hosting-instead/170956505062155132?12967520260" />
+    <img alt="Lenise Silvio" style="width: 100px; border-radius: 50%;"
+     src="https://avatars.githubusercontent.com/u/147991201?v=4" />
     <figcaption>
     <a href="https://github.com/lensil" alt="Lenise Silvio">Lenise Silvio</a>
     </figcaption>
 </figure>
 <figure align="center">
-    <img alt="Luca Vella" style="width: 70px; border-radius: 50%;"
-     src="https://www3.lunapic.com/do-not-link-here-use-hosting-instead/170956506634825424?44800845569"/>
+    <img alt="Luca Vella" style="width: 100px; border-radius: 50%;"
+     src="https://avatars.githubusercontent.com/u/104022853?v=4"/>
     <figcaption>
     <a href="https://github.com/FirePhoenixBro" alt="Luca Vella">Luca Vella</a>
     </figcaption>
 </figure>
 </div>
 
-Compilation Process
--------------------
+## Compilation Process
+
 <table>
   <tr>
     <td><b>Client Directory</b></td>
@@ -44,14 +44,12 @@ Compilation Process
     <td>
     npm i
     npm run start_build
-    npm start
     </td>
   </tr>
 </table>
 
+## Formats
 
-Formats
---------
 <table>
   <tr>
     <th><b>Purpose</b></th>
