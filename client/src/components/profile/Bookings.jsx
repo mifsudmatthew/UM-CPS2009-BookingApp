@@ -19,13 +19,13 @@ const Bookings = () => {
   const [courts, setCourts] = useState([]); // State variable to store the list of courts
   const [secondary, setSecCourts] = useState([]); // State variable to store the available Secondaeycourts
   const { storeNotification } = useNotifications();
+
   /**
    * Fetches the booked courts for a specific user.
    * @async
    * @function fetchBookedCourts
    * @returns {Promise<void>} A Promise that resolves when the booked courts are fetched.
    */
-
   useEffect(() => {
     const fetchBookedCourts = async () => {
       const name = user.name;
@@ -98,18 +98,24 @@ const Bookings = () => {
             <tbody>
               {/* Map through upcomingBookings array and render each booking */}
               {courts.map((court) => {
+                // Split the time into hours and minutes
+                const [hours, minutes] = court.time.split(":");
+
+                // Create a new Date object with the court date and time
                 const courtDateTime = new Date(
-                  `${format(new Date(court.date), "yyyy-MM-dd")}T${
-                    court.time
-                  }:00`
+                  new Date(court.date).setHours(
+                    Number(hours),
+                    Number(minutes)
+                  )
                 );
-                const now = new Date();
+
+                const now = new Date(); // Get the current date and time
                 const diffInHours = (courtDateTime - now) / 1000 / 60 / 60;
                 return (
                   <tr key={court.id}>
                     <td>{court.name}</td>
                     <td>{court.date}</td>
-                    <td>{court.time}:00</td>
+                    <td>{court.time}</td>
                     <td>{court.address}</td>
                     <td>€{court.price.toFixed(2)}</td>
                     <td>

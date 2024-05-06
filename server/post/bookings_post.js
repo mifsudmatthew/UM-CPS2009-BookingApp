@@ -124,7 +124,7 @@ bookingRouter.post(
         if (result.result == false) {
           return res.status(500).json(result);
         }
-
+        
         for (const sec_user of secondary_users) {
           // Loop through secondary users
           result = await user_queries.updateUserBalance(
@@ -187,7 +187,6 @@ bookingRouter.post(
 
       res.status(200).json(response); // Return response
     }
-  }
 );
 
 /** ============================================ Future Bookings ====================================
@@ -238,7 +237,6 @@ bookingRouter.post(
       console.error("Error fetching future bookings: ", error);
       res.status(500).json({ error: "Error fetching future bookings" });
     }
-  }
 );
 /** ============================================ Future Secondary Bookings ====================================
 /**
@@ -286,7 +284,6 @@ bookingRouter.post(
       console.error("Error fetching future bookings: ", error);
       res.status(500).json({ error: "Error fetching future bookings" });
     }
-  }
 );
 /** ============================================ Cancel Bookings ====================================
 /**
@@ -371,6 +368,5 @@ bookingRouter.post(
       console.error("Error fetching future bookings: ", error);
       res.status(500).json({ error: "Error fetching future bookings" });
     }
-  }
 );
 module.exports = bookingRouter;
