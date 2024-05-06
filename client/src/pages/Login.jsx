@@ -21,7 +21,7 @@ function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { updateToken, updateUser } = useProfile();
+  const { updateToken, user } = useProfile();
   const { storeNotification } = useNotifications();
 
   // Regular expression for email validation
@@ -43,10 +43,9 @@ function Login() {
 
     try {
       const response = await Post("/api/login", { email, password });
-      const { accessToken, ...user } = response;
+      const { accessToken } = response;
 
       updateToken(accessToken);
-      updateUser(user);
 
       if (user.admin) {
         toast.success("Login successful! Redirecting to admin panel.");
