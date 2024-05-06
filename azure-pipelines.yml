@@ -50,11 +50,11 @@ stages:
           - task: PublishCodeCoverageResults@2
             displayName: "Publishing Code Coverage"
             inputs:
-              summaryFileLocation: '**'
+              summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*.xml'
 
           - publish: "$(Build.ArtifactStagingDirectory)"
             displayName: "Publish Components to next stage"
-            artifact: drop
+            artifact: dropApp
 
 
   - stage: "Deploy"
@@ -66,7 +66,7 @@ stages:
           - checkout: none
 
           - download: current
-            artifact: drop
+            artifact: dropApp
 
           - task: ArchiveFiles@2
             displayName: "Packaging files into zip"
