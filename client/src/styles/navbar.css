@@ -28,25 +28,25 @@
   text-decoration: none;
   margin: 0% 5%;
 }
-@media (max-width: 450px) {
+@media (max-width: 512px) {
   .navbar-title a {
     display: none;
   }
 }
 
 .navbar-balance {
-  outline: 2px solid #444444;
+  outline: 1px solid #444444;
   stroke: black;
   align-items: center;
   display: inline-flex;
   flex-direction: row;
-  background-color: #a0c982;
+  background-color: #b0c99f;
   font-size: 90%;
   font-weight: bold;
   color: black;
   padding: 0.3%;
   font-family: Roboto, sans-serif;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   margin: 5%;
 }
 
