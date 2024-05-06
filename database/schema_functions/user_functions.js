@@ -182,28 +182,24 @@ async function deleteUser(email_toSearch) {
   }
 }
 
-/** ===================================== Exporting ======================================================
- * ------------ Exportation of functions
- * Export the functions
- * Can rename them
- */
-
 /** ===================================== Change Details ================================================
  * ------------ Change Details
  * Takes in an email, the new name and new email and replaces it in the database
  */
 async function changeDetails(email_toSearch, name_toReset, email_toReset) {
   try {
+    // Attempt to update the user with the given information
     const details_updated = await user_schema.findOneAndUpdate(
       { email: email_toSearch },
       { $set: { name: name_toReset, email: email_toReset } },
       { new: true }
     );
 
+    // If no user found
     if (!details_updated) {
       return {
         success: false,
-        error: `No user found that matches the email: ${email_toSearch}`,
+        error: `Possibly no user found that matches the email: ${email_toSearch}`,
       };
     }
 
@@ -224,6 +220,12 @@ async function changeDetails(email_toSearch, name_toReset, email_toReset) {
     };
   }
 }
+
+/** ===================================== Exporting ======================================================
+ * ------------ Exportation of functions
+ * Export the functions
+ * Can rename them
+ */
 
 module.exports = {
   retrieveUser: retrieveUser,
