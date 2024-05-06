@@ -44,10 +44,10 @@
   font-size: 90%;
   font-weight: bold;
   color: black;
-  padding: 0.3%;
+  padding: 0.3rem 0.3rem 0.3rem 0.3rem;
   font-family: Roboto, sans-serif;
-  border-radius: 0.5rem;
-  margin: 5%;
+  border-radius: 1rem;
+  margin: 0%;
 }
 
 .wallet {
@@ -57,6 +57,7 @@
 .bell {
   height: 2rem;
   margin: 0 5%;
+  padding-right: 2rem;
 }
 .navbar-logo {
   flex-shrink: 0;
@@ -316,5 +317,6 @@
 @media (max-width: 450px) {
   .menu-icon {
     padding-right: 0.3rem;
+    padding-left: 0.3rem;
   }
 }
