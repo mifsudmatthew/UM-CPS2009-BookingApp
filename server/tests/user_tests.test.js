@@ -62,7 +62,6 @@ describe("Log In Post", () => {
         // Send a login request
         const result = await request(test_app).post("/login").send(loginData);
 
-        console.log(result.body);
 
         // Assertions
         expect(result.body.result).toBe(true);

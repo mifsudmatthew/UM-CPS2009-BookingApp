@@ -44,8 +44,6 @@ describe("Register Court Post", () => {
             .post('/registerCourt')
             .send(courtData);
 
-        console.log(result.body);
-
         // Assertions
         expect(result.body.result).toBe(true);
         expect(result.body.data).toBe(null);

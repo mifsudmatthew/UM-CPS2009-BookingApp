@@ -69,7 +69,6 @@ apiRouter.post("/refresh", (req, res) => {
  * - 500: Failed Login
  */
 apiRouter.post("/login", async (req, res) => {
-  console.log(req.body)
   const email = req.body.email; // Obtaining the email inputted by the user.
   const password = req.body.password; // Obtaining the password inputted by the user.
 
@@ -95,7 +94,7 @@ apiRouter.post("/login", async (req, res) => {
       };  
 
       // Generate access token with the user data
-      const accessToken = await sf.generateAccessToken(user);
+      const accessToken = await sf.generateAccessToken(user)  ;
       
       // NOT USED
       // const refreshToken = sf.generateRefreshToken(user);
