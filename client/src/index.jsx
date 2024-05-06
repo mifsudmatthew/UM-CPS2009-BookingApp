@@ -1,6 +1,8 @@
-/* index.jsx
+/**
+ * index.jsx
  * Entry point into react application
- * (Acts as the root of all javascript) */
+ * Acts as the root of all react components
+ */
 
 /* React commonents to render */
 import { StrictMode } from "react";
