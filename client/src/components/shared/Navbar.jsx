@@ -13,17 +13,16 @@ import {
   X,
   GearWideConnected,
 } from "react-bootstrap-icons";
-
 import { useNotifications } from "../../context/NotificationContext";
 import { useProfile } from "../../context/ProfileContext";
-
 import { logo } from "../Icons";
-
 import "../../styles/navbar.css";
 
+// Function to check if the user is authenticated
 const isAuthenticated = (accessToken) => {
-  if (!accessToken) return false;
+  if (!accessToken) return false; // If the access token is not defined, return false
 
+  // Otherwise, make a request to authenticate the user
   return fetch("/api/authenticate", {
     method: "POST",
     headers: { Authorization: `Bearer ${accessToken}` },
@@ -41,9 +40,10 @@ const isAuthenticated = (accessToken) => {
     });
 };
 
+// Function to check if the user is an admin
 const isAdmin = (user) => {
-  if (!user) return false;
-  return user.admin ? true : false;
+  if (!user) return false; // If the user is not defined, return false
+  return user.admin ? true : false; // Return true if the user is an admin, else return false
 };
 
 /**
@@ -56,20 +56,20 @@ const isAdmin = (user) => {
  */
 function Navbar() {
   const { updateToken } = useProfile(); // Accesses authentication context
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false); // State variable to store the visibility of the menu
   const [notificationOpen, setNotificationOpen] = useState(false); // State variable to store the visibility of the notification panel
-  let logoutButtonState = false;
-  let menuRef = useRef();
-  let notifRef = useRef();
+  let logoutButtonState = false; // State variable to store the logout button state
+  let menuRef = useRef(); // Reference to the navigation menu element
+  let notifRef = useRef(); // Reference to the notification menu element
 
   // State variables
   const [authenticated, setAuthenticated] = useState(false); // State variable to store the login status of the user
-  const [showNotificationPanel, setShowNotificationPanel] = useState(false); // Controls the visibility of the notification panel
 
   const { notifications } = useNotifications(); // Accesses the stored notifications
 
-  const { user, accessToken } = useProfile();
+  const { user, accessToken } = useProfile(); // Get the user and access token from the ProfileContext
 
+  // Function to log out the user
   const logOut = () => {
     if (logoutButtonState == false) {
       // Only allow logout to be pressed once.
@@ -86,37 +86,38 @@ function Navbar() {
     }
   };
 
+  // Function to handle the bell click (adding listeners only once, when component mounts)
   useEffect(() => {
+    // Event listener to close the menu when clicked outside
     let handler = (e) => {
+      // Close the navigation menu if the click is outside the menu
       if (!menuRef.current.contains(e.target)) {
         setOpen(false);
       }
+      // Close the notification menu if the click is outside the menu
       if (notifRef.current && !notifRef.current.contains(e.target)) {
         setNotificationOpen(false);
       }
     };
+
+    // Add the event listener when the component mounts
     document.addEventListener("mousedown", handler);
+
+    // Remove the event listener when the component unmounts
     return () => {
       document.removeEventListener("mousedown", handler);
     };
   }, []);
 
-  /**
-   * Toggles the visibility of the notification panel.
-   */
-  const handleBellClick = () => {
-    setShowNotificationPanel(!showNotificationPanel);
-  };
-
+  // Check if the user is authenticated every time the access token changes
   useEffect(() => {
+    // Function to check the authentication status
     const authenticatedResult = async () => {
-      setAuthenticated(await isAuthenticated(accessToken));
+      setAuthenticated(await isAuthenticated(accessToken)); // Set the authentication status based on the access token
     };
-    authenticatedResult();
+    authenticatedResult(); // Call the function to check the authentication status
   }, [accessToken, setAuthenticated]);
-  // console.log(authenticated);
-  // console.log(!isAdmin(user));
-  // console.log(!isAdmin(user) && authenticated);
+
   return (
     <nav className="navbar">
       {/* ---------------------- Logo ------------------------------- */}
@@ -144,7 +145,7 @@ function Navbar() {
           <></>
         )}
 
-        {/* ---------------------- Bell ---------------------------- */}
+        {/* ---------------------- Notification Bell ---------------------------- */}
         {!isAdmin(user) && authenticated ? (
           <div className="bellWidth">
             <div className="navbar-bell" ref={notifRef}>
@@ -152,15 +153,18 @@ function Navbar() {
                 className="hover-grow"
                 onClick={() => {
                   setNotificationOpen(!notificationOpen);
-                }}>
+                }}
+              >
                 {notificationOpen ? (
                   <X
                     className="bell-icon menu-icon-img"
-                    style={{ marginTop: "10px" }}></X>
+                    style={{ marginTop: "10px" }}
+                  ></X>
                 ) : (
                   <Bell
                     className="bell-icon bell-icon-img"
-                    style={{ marginTop: "15px" }}></Bell>
+                    style={{ marginTop: "15px" }}
+                  ></Bell>
                 )}
               </div>
             </div>
@@ -169,62 +173,25 @@ function Navbar() {
           <></>
         )}
 
-        {/* ---------------------- Menu - icon ---------------------------- */}
+        {/* ---------------------- Navigation Menu - Icon ---------------------------- */}
         <div
           className="menu-icon"
           ref={menuRef}
           onClick={() => {
             setOpen(!open);
-          }}>
+          }}
+        >
           <div className="hover-grow menu-icon menu-icon-img">
             {open ? <X></X> : <List></List>}
           </div>
         </div>
 
-        {/* <div className={`nav-elements ${showNavbar ? "active" : ""}`}>
-          <ul>
-            <li>
-              <NavLink to="/">Home</NavLink>
-            </li>
-            {!authenticated ? (
-              <>
-                <li>
-                  <NavLink to="/login">Login</NavLink>
-                </li>
-                <li>
-                  <NavLink to="/register">Register</NavLink>
-                </li>
-              </>
-            ) : (
-              <>
-                {!isAdmin(user) && (
-                  <>
-                    <li>
-                      <NavLink to="/profile">Profile</NavLink>
-                    </li>
-                    <li>
-                      <NavLink to="/profile/topup">Top Up</NavLink>
-                    </li>
-                  </>
-                )}
-              </>
-            )}
-          </ul>
-        </div> */}
-        {/* <div className="menu-container" ref={menuRef}>
-          <div
-            className="menu-trigger"
-            onClick={() => {
-              setOpen(!open);
-            }}
-          >
-            <img src={user}></img>
-          </div> */}
-
+        {/* ---------------------- Notification - Menu ---------------------------- */}
         <div
           className={`notification-menu ${
             notificationOpen ? "active" : "inactive"
-          }`}>
+          }`}
+        >
           <ul className="notificationList">
             {notifications.map((notification, index) => (
               <li className="dropdownItem" key={index}>
@@ -237,7 +204,6 @@ function Navbar() {
             ))}
           </ul>
         </div>
-
         <div className={`dropdown-menu ${open ? "active" : "inactive"}`}>
           <ul>
             <NavLink to="/">
@@ -246,6 +212,7 @@ function Navbar() {
                 <a className="dropdownItem-a"> Home</a>
               </li>
             </NavLink>
+            {/* Displaying login and register hyperlinks if user not authenticated */}
             {!authenticated ? (
               <>
                 <NavLink to="/login">
@@ -263,6 +230,7 @@ function Navbar() {
               </>
             ) : (
               <>
+                {/* Displaying profile and topup hyperlinks if authenticated but not admin */}
                 {!isAdmin(user) ? (
                   <>
                     <NavLink to="/profile">
@@ -279,6 +247,7 @@ function Navbar() {
                     </NavLink>
                   </>
                 ) : (
+                  /* Display admin panel hyperlink if user is admin */
                   <NavLink to="/admin">
                     <li className="dropdownItem">
                       <GearWideConnected className="dropdownItem-img"></GearWideConnected>
@@ -286,6 +255,7 @@ function Navbar() {
                     </li>
                   </NavLink>
                 )}
+                {/* Displaying logout hyperlink if authenticated */}
                 <li className="dropdownItem" onClick={logOut}>
                   <BoxArrowInLeft className="dropdownItem-img"></BoxArrowInLeft>
                   <a className="dropdownItem-a">Logout</a>
