@@ -63,6 +63,7 @@
 }
 
 .horizontalNav:hover {
+  cursor: pointer;
   background-color: #ddd;
   color: black;
 }
