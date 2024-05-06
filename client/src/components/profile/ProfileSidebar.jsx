@@ -1,10 +1,18 @@
+/**
+ * ProfileSidebar.jsx
+ * Left bar that holds links to all profile
+ */
+
 import { NavLink } from "react-router-dom";
-import { defaultProfilePic } from "../Icons";
+import { toast } from "react-toastify";
 
 import { useProfile } from "../../context/ProfileContext";
+import { useNotifications } from "../../context/NotificationContext";
+
 import InputButton from "../form//InputButton";
 
-import { toast } from "react-toastify";
+import profilePicture from "../../assets/default-pp.jpg";
+
 /**
  * Renders the profile sidebar component.
  * This component displays the user's profile picture, name, and navigation links.
@@ -13,27 +21,22 @@ import { toast } from "react-toastify";
  * @returns {JSX.Element} The profile sidebar component.
  */
 const ProfileSidebar = () => {
-  const { user, updateToken } = useProfile(); // Accesses authentication context
+  const { user, logout } = useProfile(); // Accesses authentication context
+  const { clearNotifications } = useNotifications();
   /**
    * Logs the user out by clearing the accessToken and user data,
    * and redirects the user to the root page.
    */
   const logOut = () => {
     toast.success("Logged out successfully!"); // Displays a success message
-
-    // Clear the 'notifications' array in localStorage
-    localStorage.setItem("notifications", JSON.stringify([]));
-
-    // Profile user validation requires change therefore updateToken and setUser should be taken out then.
-    setTimeout(() => {
-      updateToken(""); // Clears the authentication accessToken
-    }, 2000);
+    clearNotifications();
+    logout();
   };
 
   return (
     <aside className="sidebar">
       <div className="profile-picture">
-        <img src={defaultProfilePic} alt="Profile" className="profile-image" />
+        <img src={profilePicture} alt="Profile" className="profile-image" />
       </div>
       <h3>Hello, {user.name ? user.name : "#Undefined#"}</h3>
       {/* Displays the user's name or a placeholder if it's undefined */}
