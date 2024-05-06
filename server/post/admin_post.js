@@ -6,7 +6,7 @@ const courts_queries = require("../../database/schema_functions/court_functions"
 const user_queries = require("../../database/schema_functions/user_functions");
 
 adminRouter.post("/registerCourt", async (req, res) => {
-  console.log(req.body);
+  //console.log(req.body);
   response = await courts_queries.registerCourt({
     name_new: req.body.courtName,
     price_new: req.body.price,
