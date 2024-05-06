@@ -5,7 +5,6 @@ import InputBox from "../form/InputBox";
 import InputButton from "../form/InputButton";
 import { Post } from "../../utils/ApiFunctions";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { useNotifications } from "../../context/NotificationContext";
 
