@@ -66,11 +66,11 @@ const Courts = () => {
               className="court-image"
             />
             <div className="text-content">
-              <div className="court-title">
-                {courtsData[current].court_name}
-              </div>
               <div className="court-info">
                 <ul>
+                <div className="court-title">
+                {courtsData[current].court_name}
+              </div>
                   <div>Price: €{courtsData[current].price.toFixed(2)}</div>
                   <div>Address: {courtsData[current].address}</div>
                   <div>
