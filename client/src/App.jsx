@@ -1,13 +1,15 @@
-/* App.jsx
- * Main react page */
+/**
+ * App.jsx
+ * Main react component
+ */
+
+/* CSS */
+import "react-toastify/dist/ReactToastify.css";
+import "./styles/app.css";
 
 /* React imports */
 import { Outlet } from "react-router-dom";
-import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-
-/* CSS */
-import "./styles/app.css";
 
 /* Components */
 import Navbar from "./components/shared/Navbar";
@@ -19,9 +21,9 @@ function App() {
   return (
     <>
       <ToastContainer />
+      <ReloadPrompt />
       <Navbar />
       <Outlet />
-      <ReloadPrompt />
       <Footer />
     </>
   );
