@@ -8,7 +8,7 @@ import {
   grassCourtImage,
   clayCourtImage,
   indoorCourtImage,
-} from "../Icons";
+} from "../Icons"; // Import the icons used in the Courts component
 
 /**
  * Renders the Courts component.
@@ -17,32 +17,41 @@ import {
  * @returns {JSX.Element} The Courts component.
  */
 const Courts = () => {
+  // Declaring variables to store the courts data and the current court index
   const [courtsData, setCourtsData] = useState([]);
   const [current, setCurrent] = useState(0);
 
+  // Fetch the courts data from the server when a change occurs in the component
   useEffect(() => {
     // Fetch data from the server when the component mounts
     const fetchData = async () => {
       try {
+        // Send a POST request to the server to get all the courts data
         const response = await Post("/api/getAllCourts");
         console.log(response);
+        // If the request fails, throw an error
         if (!response.result) {
           throw new Error("Failed to fetch courts data");
         }
+        // Set the courts data to the response data
         setCourtsData(response.data);
       } catch (error) {
         console.error(error);
       }
     };
 
-    fetchData();
+    fetchData(); // Call the fetchData function
   }, []);
 
+  // Function to handle when previous arrow is clicked
   const handlePrevClick = () => {
+    // Update the current index to the previous court
     setCurrent((prev) => (prev - 1 + courtsData.length) % courtsData.length);
   };
 
+  // Function to handle when next arrow is clicked
   const handleNextClick = () => {
+    // Update the current index to the next court
     setCurrent((prev) => (prev + 1) % courtsData.length);
   };
 
@@ -68,9 +77,9 @@ const Courts = () => {
             <div className="text-content">
               <div className="court-info">
                 <ul>
-                <div className="court-title">
-                {courtsData[current].court_name}
-              </div>
+                  <div className="court-title">
+                    {courtsData[current].court_name}
+                  </div>
                   <div>Price: €{courtsData[current].price.toFixed(2)}</div>
                   <div>Address: {courtsData[current].address}</div>
                   <div>

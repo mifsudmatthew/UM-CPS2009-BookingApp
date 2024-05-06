@@ -278,9 +278,9 @@ bookingRouter.post(
             };
           })
         );
-        res.status(200).json(formattedBookings); // Send formatted secondary bookings to client
+        res.json(formattedBookings); // Send formatted secondary bookings to client
       } else {
-        res.status(500).json([]); // Send empty array to client
+        res.json([]); // Send empty array to client
       }
     } catch (error) {
       console.error("Error fetching future bookings: ", error);
