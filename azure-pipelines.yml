@@ -50,7 +50,7 @@ stages:
           - task: PublishCodeCoverageResults@2
             displayName: "Publishing Code Coverage"
             inputs:
-              summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*.xml'
+              summaryFileLocation: '$(System.DefaultWorkingDirectory)/coverage/*.xml'
 
           - publish: "$(Build.ArtifactStagingDirectory)"
             displayName: "Publish Components to next stage"
