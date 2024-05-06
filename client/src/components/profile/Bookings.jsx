@@ -98,24 +98,19 @@ const Bookings = () => {
             <tbody>
               {/* Map through upcomingBookings array and render each booking */}
               {courts.map((court) => {
-                // Split the time into hours and minutes
-                const [hours, minutes] = court.time.split(":");
-
-                // Create a new Date object with the court date and time
                 const courtDateTime = new Date(
-                  new Date(court.date).setHours(
-                    Number(hours),
-                    Number(minutes)
+                  new Date(court.date).setHours( // Set the date and time of the booking
+                    Number(court.time),
+                    0 // Since the minutes are always 0
                   )
                 );
-
                 const now = new Date(); // Get the current date and time
                 const diffInHours = (courtDateTime - now) / 1000 / 60 / 60;
                 return (
                   <tr key={court.id}>
                     <td>{court.name}</td>
                     <td>{court.date}</td>
-                    <td>{court.time}</td>
+                    <td>{court.time}:00</td>
                     <td>{court.address}</td>
                     <td>€{court.price.toFixed(2)}</td>
                     <td>
@@ -135,7 +130,6 @@ const Bookings = () => {
           </table>
         </div>
       </section>
-
       <section>
         <h4>Upcoming Secondary Bookings</h4>
         <div className="table-container">
