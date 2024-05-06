@@ -26,7 +26,10 @@ const Bookings = () => {
 
   const { user, updateToken } = useProfile(); // Retrieve user data once when the component mounts
   const [courts, setCourts] = useState([]); // State variable to store the list of courts
-  const [secondary, setSecCourts] = useState([]); // State variable to store the available Secondaeycourts
+  const [secondary, setSecCourts] = useState([]); // State variable to store the available Secondary courts
+
+  // Retrieve the storeNotification function from the context
+  const { storeNotification } = useNotifications();
 
   /**
    * Fetches the booked courts for a specific user.
@@ -35,27 +38,33 @@ const Bookings = () => {
    * @returns {Promise<void>} A Promise that resolves when the booked courts are fetched.
    */
   useEffect(() => {
+    // Fetch the booked courts when the component loads
     const fetchBookedCourts = async () => {
-      const name = user.name;
-      const email = user.email;
-      const user_details = { name, email };
+      const name = user.name; // Get the user's name
+      const email = user.email; // Get the user's email
+      const user_details = { name, email }; // Create an object with the user's details
       try {
+        // Send a POST request to the server to get the booked courts
         const response = await Post("/api/getFutureBookings", user_details);
         console.log(response);
+        // Set the booked courts in the state variable
         setCourts(response);
 
+        // Send a POST request to the server to get the booked courts
         const response2 = await Post(
           "/api/getFutureSecondaryBookings",
           user_details
         );
         console.log(response2);
+
+        // Set the booked courts in the state variable
         setSecCourts(response2);
       } catch (error) {
         // Log an error if the request fails
         console.error("Error fetching booked courts: ", error);
       }
     };
-    fetchBookedCourts();
+    fetchBookedCourts(); // Call the fetchBookedCourts function
   }, [user]);
 
   /**
@@ -65,14 +74,18 @@ const Bookings = () => {
    */
   const cancelBooking = async (id, price) => {
     try {
+      // Send a POST request to the server to cancel the booking
       const response = await Post("/api/cancelBooking", {
         booking_id: id,
         price: price,
       });
+
+      // Display a success message if the booking is successfully cancelled
       if (response.result == true) {
-        storeNotification("Court Successfully Cancelled!");
-        toast.success("Court Successfully Cancelled!");
-        updateToken(await getUpdatedToken());
+        storeNotification("Court Successfully Cancelled!"); // Store a notification in local storage
+        toast.success("Court Successfully Cancelled!"); // Display a success toast
+        updateToken(await getUpdatedToken()); // Update the access token
+        // Remove the cancelled booking from the list of courts
         setCourts((prevCourts) =>
           prevCourts.filter((court) => court.id !== id)
         );
