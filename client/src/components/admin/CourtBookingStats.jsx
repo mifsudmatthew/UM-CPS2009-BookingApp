@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Post } from "../../utils/ApiFunctions";
 import "../../styles/accordion.css";
+import "../../styles/admin.css";
 import { Bar, Line } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 
@@ -57,8 +58,9 @@ function CourtBookingStats() {
   const renderChart = () => {
     if (currentNav === "0") {
       return (
-        <div style={{ height: "80vh", width: "100%" }}>
+        <div>
           <Bar
+            className="graph"
             data={{
               labels: courtNames,
               datasets: [
@@ -80,8 +82,9 @@ function CourtBookingStats() {
       );
     } else if (currentNav === "1") {
       return (
-        <div style={{ height: "80vh", width: "100%" }}>
+        <div>
           <Line
+            className="graph"
             data={{
               labels: courtNames,
               datasets: [
