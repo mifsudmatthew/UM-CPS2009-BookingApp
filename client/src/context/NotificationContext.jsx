@@ -1,5 +1,10 @@
-import { useState, createContext, useContext } from "react"; // Importing hooks from react
+/**
+ * NotificationContext.jsx
+ * Contexts that stores the last 3 toast notifications
+ */
+
 import PropTypes from "prop-types"; // Importing prop-types for typechecking
+import { useState, createContext, useContext } from "react"; // Importing hooks from react
 
 const NotificationContext = createContext(); // Creating a context to hold the notifications
 
@@ -35,10 +40,17 @@ export const NotificationProvider = ({ children }) => {
     localStorage.setItem("notifications", JSON.stringify(updatedNotifications));
   };
 
+  // Clear the 'notifications' array in localStorage
+  const clearNotifications = () => {
+    setNotifications([]);
+    localStorage.removeItem("notifications");
+  };
+
   // Store the notifications array and the storeNotification function in the context
   const contextValue = {
     notifications,
     storeNotification,
+    clearNotifications,
   };
 
   return (
