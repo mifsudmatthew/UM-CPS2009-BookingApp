@@ -6,7 +6,6 @@ pool:
 
 stages:
   - stage: "Build"
-    displayName: "Build and Test"
     jobs:
       - job: "Build"
         steps:
@@ -50,7 +49,6 @@ stages:
             artifact: dropApp
 
   - stage: "Deploy"
-    displayName: "Deploy to Azure App"
     dependsOn: "Build"
     jobs:
       - job: "Deploy"
@@ -68,6 +66,7 @@ stages:
               replaceExistingArchive: true
 
           - task: AzureWebApp@1
+            displayName: "Deploy to server"
             inputs:
               azureSubscription: "ServeSpot-RM"
               appType: "webApp"
