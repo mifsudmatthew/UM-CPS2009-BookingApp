@@ -54,7 +54,7 @@ async function registerCourt({
     // Save the new user
     return { result: true, data: await newCourt.save(), error: null };
   } catch (error_message) {
-    throw new Error("Failed to Connect to Database");
+    throw new Error("Failed to Connect to Database"+error_message);
   }
 }
 
@@ -68,7 +68,7 @@ async function getAllCourts() {
     const allCourts = await courts_schema.find({});
     return { result: true, data: allCourts, error: null };
   } catch (error_message) {
-    throw new Error("Failed to Connect to Database");
+    throw new Error("Failed to Connect to Database"+error_message);
   }
 }
 
