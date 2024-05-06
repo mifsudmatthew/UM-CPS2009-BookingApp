@@ -272,7 +272,6 @@ module.exports = {
   sendCancellationSuccessMail,
   sendPaymentSuccessMail,
   authenticateToken,
-  getToken,
   getUpdatedToken,
   generateAccessToken,
   generateRefreshToken,
