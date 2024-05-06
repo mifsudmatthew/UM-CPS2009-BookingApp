@@ -19,6 +19,10 @@ stages:
             displayName: "Install frontend dependencies"
 
           - script: |
+              npm install
+            displayName: "Install server dependencies"
+
+          - script: |
               npm --prefix client run build
             displayName: "Build the frontend"
 
@@ -36,12 +40,13 @@ stages:
                 server.js
                 server/**
                 database/**
+                node_modules/**
               targetFolder: "$(Build.ArtifactStagingDirectory)"
             displayName: "Copy server components"
 
           - publish: "$(Build.ArtifactStagingDirectory)"
             displayName: "Publish Components to next stage"
-            artifact: app
+            artifact: drop
 
   - stage: "Test"
     dependsOn: "Build"
@@ -52,30 +57,15 @@ stages:
           - checkout: none
 
           - download: current
-            artifact: app
-
-          - script: |
-              npm install
-            displayName: "Install Node dependencies in server"
+            artifact: drop
             
-          - task: CopyFiles@2
-            inputs:
-              contents: |
-                node_modules/**
-              targetFolder: "$(Build.ArtifactStagingDirectory)"
-            displayName: "Copy node modules"
-            
-          - script: npm test
+          - script: npm --prefix ../app test
             displayName: "Running Tests"
           
           - task: PublishCodeCoverageResults@2
             displayName: "Publishing Code Coverage"
             inputs:
               summaryFileLocation: '**'
-          
-          - publish: "$(Build.ArtifactStagingDirectory)"
-            displayName: "Publish App for Deployment"
-            artifact: drop
 
   - stage: "Deploy"
     dependsOn: "Test"
