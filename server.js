@@ -11,15 +11,15 @@ require("./database/mongoose");
 const path = require("path");
 // Express server
 const express = require("express");
-// API Router
+// API Routers
 const apiRouter = require("./server/api");
 const paymentRouter = require("./server/post/payments_post");
 const bookingRounter = require("./server/post/bookings_post");
 const adminRouter = require("./server/post/admin_post");
 const homeRouter = require("./server/post/home_post");
-// CORS because pain
+// CORS just in case
 const cors = require("cors");
-// Compression incoming and outgoing requests
+// Compression for incoming and outgoing requests
 const compression = require("compression");
 
 // Creating an ExpressJS application, by calling the variable express as a function.
@@ -29,15 +29,15 @@ const app = express();
 // if PORT is not defined in .env then it will listen on 3001
 const PORT = process.env.PORT || 3001;
 
-/* MIDDLEWARE  */
-
 // Static files located in the 'client/build' directory
 const static_files = path.resolve(__dirname, "client/dist");
 
-// Cross origin requests
-app.use(cors());
+/* MIDDLEWARE  */
+
 // Compressing In/Out requests
 app.use(compression());
+// Cross origin requests
+app.use(cors());
 // Parsing incoming JSON requests and placing parsed data in req.body
 app.use(express.json());
 // Node knows which directory to serve static files from
