@@ -8,10 +8,8 @@ test_app.use(adminRouter);
 
 
 
-
-
-jest.mock("../../database/schema_functions/court_functions", () => ({
-    registerCourt: jest.fn(), // Corrected from jn.fn() to jest.fn()
+jest.mock("../../database/schema_functions/user_functions", () => ({
+    retrieveUser: jest.fn(), // Corrected from jn.fn() to jest.fn()
 }));
 
 // Test case for registerCourt function
@@ -32,7 +30,7 @@ describe("registerCourt function", () => {
         };
 
         // Mock the behavior of the save method
-        require("../../database/schema_functions/court_functions").registerCourt.mockResolvedValue(
+        require("../../database/schema_functions/user_functions").retrieveUser.mockResolvedValue(
             { result: true, data: null, error: null }
         );
 
