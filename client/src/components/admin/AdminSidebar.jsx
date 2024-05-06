@@ -3,7 +3,6 @@ import InputButton from "../form//InputButton";
 
 import { useProfile } from "../../context/ProfileContext";
 
-import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 
 /**

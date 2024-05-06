@@ -1,5 +1,4 @@
 import "../styles/bookingform.css";
-import "react-toastify/dist/ReactToastify.css";
 
 import bookingImage from "../assets/bookingform.jpg";
 
@@ -222,15 +221,13 @@ function Booking() {
                 <button
                   type="button"
                   className="button_add"
-                  onClick={addAnotherPlayer}
-                >
+                  onClick={addAnotherPlayer}>
                   +
                 </button>
                 <button
                   type="button"
                   className="button_sub"
-                  onClick={removePlayer}
-                >
+                  onClick={removePlayer}>
                   -
                 </button>
               </div>
@@ -261,8 +258,7 @@ function Booking() {
               style={{
                 backgroundColor: buttonColor,
                 cursor: buttonCursor, // Apply dynamic cursor style
-              }}
-            >
+              }}>
               Book
             </button>
           </div>
