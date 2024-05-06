@@ -15,22 +15,8 @@ stages:
               versionSpec: "20.x"
 
           - script: |
-              npm --prefix client install
-            displayName: "Install frontend dependencies"
-
-          - script: |
               npm install
             displayName: "Install server dependencies"
-
-          - script: |
-              npm --prefix client run build
-            displayName: "Build the frontend"
-
-          - task: CopyFiles@2
-            displayName: "Copy build"
-            inputs:
-              contents: "client/dist/**"
-              targetFolder: "$(Build.ArtifactStagingDirectory)"
 
           - task: CopyFiles@2
             inputs:
@@ -44,22 +30,21 @@ stages:
               targetFolder: "$(Build.ArtifactStagingDirectory)"
             displayName: "Copy server components"
 
-          - publish: "$(Build.ArtifactStagingDirectory)"
-            displayName: "Publish Components to next stage"
-            artifact: drop
+          - script: |
+              npm --prefix client install
+            displayName: "Install frontend dependencies"
 
-  - stage: "Test"
-    dependsOn: "Build"
-    condition:  succeeded()
-    jobs:
-      - job: "Test"
-        steps:
-          - checkout: none
+          - script: |
+              npm --prefix client run build
+            displayName: "Build the frontend"
 
-          - download: current
-            artifact: drop
-            
-          - script: npm --prefix ../app test
+          - task: CopyFiles@2
+            displayName: "Copy build"
+            inputs:
+              contents: "client/dist/**"
+              targetFolder: "$(Build.ArtifactStagingDirectory)"
+
+          - script: npm test
             displayName: "Running Tests"
           
           - task: PublishCodeCoverageResults@2
@@ -67,8 +52,13 @@ stages:
             inputs:
               summaryFileLocation: '**'
 
+          - publish: "$(Build.ArtifactStagingDirectory)"
+            displayName: "Publish Components to next stage"
+            artifact: drop
+
+
   - stage: "Deploy"
-    dependsOn: "Test"
+    dependsOn: "Build"
     condition:  succeeded()
     jobs:
       - job: "Deploy"
