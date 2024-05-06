@@ -1,14 +1,17 @@
 /* server_functions.js
- * Functions that are used in the routes of the server */
+ * Helper functions that are used in the routes of the server
+ */
 
-// Obtaining the node mailer module
+// Used to send Emails
 const nodeMailer = require("nodemailer");
 // JSON Web Tokens for autherization
 const jwt = require("jsonwebtoken");
 
+// Database functions that modify user collection
 const user_queries = require("../database/schema_functions/user_functions");
 
-var accountPins = []; // Creating an array to store pins generated and their corresponding emails.
+// Creating an array to store pins generated and their corresponding emails.
+var accountPins = [];
 
 // Function to generate a new pin. By generating 4 random numbers (0-9) and concatenating them.
 function getRandomPin() {
@@ -93,15 +96,7 @@ async function sendPaymentSuccessMail(user_email, amount) {
       from: "no-reply@servespot.com", // Address of account sending the email.
       to: user_email, // This should be changed to email of the user requesting a reset.
       subject: "Successful Account Top-Up: " + amount + " Added", // Subject of email.
-      text:
-        "Dear " +
-        user_data.data.name +
-        ",\n\nWe're pleased to inform you that your recent request to top up your ServeSpot account has been successfully processed.\n\nHere are the details of your transaction:\n\n Amount: " +
-        amount +
-        "\n\n New Balance: " +
-        user_data.data.balance +
-        ":00" +
-        "\n\nYour account is now ready to use with the updated balance. We ensure that our platform is continuously updated to provide you with the best possible experience.\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot", // Email content.
+      text: `Dear ${user_data.data.name},\n\nWe're pleased to inform you that your recent request to top up your ServeSpot account has been successfully processed.\n\nHere are the details of your transaction:\n\n Amount: ${amount}\n\nNew Balance: ${user_data.data.balance}:00\n\nYour account is now ready to use with the updated balance. We ensure that our platform is continuously updated to provide you with the best possible experience.\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`, // Email content.
     };
 
     // Creating a transporter with the details of the mail service being used.
@@ -135,19 +130,7 @@ async function sendBookingSuccessMail(user_email, court, date, hour, price) {
       from: "no-reply@servespot.com", // Address of account sending the email.
       to: user_email, // This should be changed to email of the user requesting a reset.
       subject: "Successful Booking for " + court, // Subject of email.
-      text:
-        "Dear " +
-        user_data.data.name +
-        ",\n\nWe're pleased to inform you that your recent booking request has been successful.\n\nHere are the details of your booking:\n\n Court: " +
-        court +
-        "\n\n Date: " +
-        date +
-        "\n\n Time: " +
-        hour +
-        ":00" +
-        "\n\n Price paid: €" +
-        price +
-        "\n\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot", // Email content.
+      text: `Dear ${user_data.data.name},\n\nWe're pleased to inform you that your recent booking request has been successful.\n\nHere are the details of your booking:\n\n Court: ${court}\n\n Date: ${date}\n\n Time: ${hour}00\n\nPrice paid: €${price}n\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`, // Email content.
     };
 
     // Creating a transporter with the details of the mail service being used.
@@ -186,20 +169,8 @@ async function sendCancellationSuccessMail(
     const emailDetails = {
       from: "no-reply@servespot.com", // Address of account sending the email.
       to: user_email, // This should be changed to email of the user requesting a reset.
-      subject: "Successful Cancellation for " + court, // Subject of email.
-      text:
-        "Dear " +
-        user_data.data.name +
-        ",\n\nWe would like to inform you that the following booking has been cancelled:\n\n Court: " +
-        court +
-        "\n\n Date: " +
-        date +
-        "\n\n Time: " +
-        hour +
-        ":00" +
-        "\n\n Amount refunded: €" +
-        price +
-        "\n\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot", // Email content.
+      subject: `Successful Cancellation for ${court}`, // Subject of email.
+      text: `Dear ${user_data.data.name},\n\nWe would like to inform you that the following booking has been cancelled:\n\n Court: ${court}\n\n Date: ${date}\n\nTime:${hour}:00\n\n Amount refunded: €${price}\n\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`, // Email content.
     };
 
     // Creating a transporter with the details of the mail service being used.
