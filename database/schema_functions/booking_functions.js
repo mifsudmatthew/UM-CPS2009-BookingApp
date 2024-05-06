@@ -9,7 +9,7 @@ const court_schema = require("../schemas/courts_schema");
 async function getFutureBookings_ID(userID_toSearch) {
   try {
     // ---------------- Calculate Current Date and Time
-    currentDate = new Date();
+    let currentDate = new Date();
     const currentTime = currentDate.getTime();
     currentDate.setHours(0, 0, 0, 0);
 
@@ -230,7 +230,7 @@ async function addBooking(
   }
 }
 
-/** 
+/**
  * @brief Remove a booking.
  * @param {string} bookingID - The ID of the booking to be removed.
  * @returns {Object} An object containing the result, data, and error.
@@ -244,7 +244,7 @@ async function removeBooking(bookingID) {
   }
 }
 
-/** 
+/**
  * @brief Get booking details.
  * @param {string} bookingID - The ID of the booking to retrieve details for.
  * @returns {Object} An object containing the result, data, and error.
