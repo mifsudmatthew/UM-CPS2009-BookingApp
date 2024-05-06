@@ -32,6 +32,10 @@ stages:
               npm install
             displayName: "Install Node dependencies in server"
 
+          - script: |
+              npm run test
+            displayName: "Tests"
+
           - task: CopyFiles@2
             inputs:
               contents: |

@@ -1,9 +1,11 @@
+/**
+ * ReloadPrompt.jsx
+ * Code taken from
+ */
+
 import "./styles/ReloadPrompt.css";
 
 import { useRegisterSW } from "virtual:pwa-register/react";
-import { pwaInfo } from "virtual:pwa-info";
-
-console.log(pwaInfo);
 
 function ReloadPrompt() {
   // replaced dynamically
@@ -23,7 +25,7 @@ function ReloadPrompt() {
           setInterval(() => {
             console.log("Checking for sw update");
             r.update();
-          }, 200000 /* 20s for testing purposes */);
+          }, 200000);
       } else {
         console.log("SW Registered: " + r);
       }
