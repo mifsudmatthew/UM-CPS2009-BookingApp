@@ -6,18 +6,23 @@ const test_app = express();
 test_app.use(express.json());
 test_app.use(adminRouter);
 
-
-
+// Mocking the registerCourt function from court_functions module
 jest.mock("../../database/schema_functions/court_functions", () => ({
-    registerCourt: jest.fn(), // Corrected from jn.fn() to jest.fn()
+    registerCourt: jest.fn(),
 }));
 
-// Test case for registerCourt function
-describe("registerCourt function", () => {
+/**
+ * Test case for the registerCourt function
+ */
+describe("Register Court Post", () => {
     afterEach(() => {
         jest.clearAllMocks();
     });
-    it("should register a new court", async () => {
+
+    /**
+     * Should register a new court
+     */
+    it("Should register a new court", async () => {
         // Mock data for the new court
         const courtData = {
             name_new: "Test Court",
@@ -29,7 +34,7 @@ describe("registerCourt function", () => {
             type_new: "Indoor",
         };
 
-        // Mock the behavior of the save method
+        // Mock the behavior of the registerCourt method
         require("../../database/schema_functions/court_functions").registerCourt.mockResolvedValue(
             { result: true, data: null, error: null }
         );
@@ -39,7 +44,6 @@ describe("registerCourt function", () => {
             .post('/registerCourt')
             .send(courtData);
 
-		console.log(result.body);
         // Assertions
         expect(result.body.result).toBe(true);
         expect(result.body.data).toBe(null);
