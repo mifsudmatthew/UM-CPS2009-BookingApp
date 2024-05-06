@@ -1,23 +1,12 @@
+/* admin_posts.js
+ * Defines all the routes required for admin access
+ */
+
 const express = require("express");
 const adminRouter = express.Router();
 const server_functions = require("../server_functions");
 const bookings_queries = require("../../database/schema_functions/booking_functions");
 const courts_queries = require("../../database/schema_functions/court_functions");
-const user_queries = require("../../database/schema_functions/user_functions");
-
-adminRouter.post("/registerCourt", async (req, res) => {
-  console.log(req.body);
-  response = await courts_queries.registerCourt({
-    name_new: req.body.courtName,
-    price_new: req.body.price,
-    address_new: req.body.address,
-    longitude_new: req.body.longitude,
-    latitude_new: req.body.latitude,
-    area_new: req.body.area,
-    type_new: req.body.type,
-  });
-  res.json(response);
-});
 
 adminRouter.get("/getAllCourts", async (req, res) => {
   try {
@@ -52,7 +41,7 @@ adminRouter.post("/getBasicStatistics", async (req, res) => {
       const courtInfo = {
         name: court.court_name,
         bookings: bookingCount.count,
-        money: bookingCount.totalCost
+        money: bookingCount.totalCost,
       };
       courtStatistics.push(courtInfo);
     }
@@ -66,6 +55,19 @@ adminRouter.post("/getBasicStatistics", async (req, res) => {
       error: "Failed to fetch basic statistics",
     });
   }
+});
+
+adminRouter.post("/registerCourt", async (req, res) => {
+  response = await courts_queries.registerCourt({
+    name_new: req.body.courtName,
+    price_new: req.body.price,
+    address_new: req.body.address,
+    longitude_new: req.body.longitude,
+    latitude_new: req.body.latitude,
+    area_new: req.body.area,
+    type_new: req.body.type,
+  });
+  res.json(response);
 });
 
 adminRouter.post(
