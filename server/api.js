@@ -21,12 +21,14 @@ apiRouter.use((req, _res, next) => {
 });
 
 /**
- * Route checks that the attached token header is valid.
- * Returns:
- *  200 -> When token Valid
- *  400 -> No authorization field attached
- *  403 -> No token is attached to field
- *      OR Token supplied is invalid
+ * @brief Route checks that the attached token header is valid.
+ *
+ * @param None
+ *
+ * @return
+ * - 200: When token Valid
+ * - 400: No authorization field attached
+ * - 403: No token is attached to field OR Token supplied is invalid
  */
 apiRouter.post("/authenticate", sf.authenticateToken, (req, res) => {
   res.status(200).json({ message: "Ok" }).end();
@@ -59,11 +61,12 @@ apiRouter.post("/refresh", (req, res) => {
 });
 
 /**
- * Validates the user's information with the database
- * Returns:
- *  200 -> Valid Login
- *  400 -> Passwords do not match or Email not in use
- *  500 -> Failed Login
+ * @brief Validates the user's information with the database.
+ * @param None
+ * @return
+ * - 200: Valid Login
+ * - 400: Passwords do not match or Email not in use
+ * - 500: Failed Login
  */
 apiRouter.post("/login", async (req, res) => {
   const email = req.body.email; // Obtaining the email inputted by the user.
@@ -111,11 +114,12 @@ apiRouter.post("/login", async (req, res) => {
 });
 
 /**
- * Creates a new user in the database
- * Returns:
- *  200 -> Valid Registration
- *  400 -> Email already in use
- *  500 -> Failed Registration
+ * @brief Creates a new user in the database.
+ * @param None
+ * @return
+ * - 200: Valid Registration
+ * - 400: Email already in use
+ * - 500: Failed Registration
  */
 apiRouter.post("/register", async (req, res) => {
   const name = req.body.name; // Obtaining the name inputted by the user.
@@ -151,10 +155,11 @@ apiRouter.post("/register", async (req, res) => {
 });
 
 /**
- * Route for sending an email to reset password.
- * Returns:
- *  200 -> On Success
- *  500 -> On Failure
+ * @brief Route for sending an email to reset password.
+ * @param None
+ * @return
+ * - 200: On Success
+ * - 500: On Failure
  */
 apiRouter.post("/reset", async (req, res) => {
   try {
@@ -169,10 +174,11 @@ apiRouter.post("/reset", async (req, res) => {
 });
 
 /**
- * Route to for changing password when not logged in. (Reset Password)
- * Returns:
- *  200 -> Reset Success
- *  400 -> Reset Failure
+ * @brief Route for changing password when not logged in (Reset Password).
+ * @param None
+ * @return
+ * - 200: Reset Success
+ * - 400: Reset Failure
  */
 apiRouter.post("/resetpassword", async (req, res) => {
   // Obtain the index of the element that matches the same pin and email, otherwise return -1
@@ -197,10 +203,11 @@ apiRouter.post("/resetpassword", async (req, res) => {
 });
 
 /**
- * Route to for changing password both when logged in and after obtaining the pin when reseting password.
- * Returns:
- *  200 -> Password Change Success
- *  500 -> Password Change Failure
+ * @brief Route for changing password both when logged in and after obtaining the pin when resetting password.
+ * @param None
+ * @return
+ * - 200: Password Change Success
+ * - 500: Password Change Failure
  */
 apiRouter.post("/changepassword", sf.authenticateToken, async (req, res) => {
   try {
@@ -220,10 +227,11 @@ apiRouter.post("/changepassword", sf.authenticateToken, async (req, res) => {
 });
 
 /**
- * Route to for changing details of the user
- * Returns:
- *  200 -> Details Change Success
- *  500 -> Details Change Failure
+ * @brief Route for changing details of the user.
+ * @param None
+ * @return
+ * - 200: Details Change Success
+ * - 500: Details Change Failure
  */
 apiRouter.post("/changedetails", sf.authenticateToken, async (req, res) => {
   try {
