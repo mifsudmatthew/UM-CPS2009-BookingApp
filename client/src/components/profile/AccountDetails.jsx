@@ -22,17 +22,16 @@ const AccountDetails = () => {
   const { user, updateUser, updateToken } = useProfile(); // Retrieve user data once when the component mounts
   const navigate = useNavigate();
 
-  // Initialize state with values from localStorage, or fallback to empty strings
+  // Initialize name and email with values from localStorage, or fallback to empty strings
   const [name, setName] = useState(user.name || "");
   const [email, setEmail] = useState(user.email || "");
-  const { storeNotification } = useNotifications();
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   setUser({ ...user, name, email });
-  // };
 
+  // Retrieve the storeNotification function from the context
+  const { storeNotification } = useNotifications();
+
+  // Function to handle form submission
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault(); // Prevent the default form submission
 
     // Check if the email is valid
     if (!emailRegex.test(email)) {
@@ -45,16 +44,18 @@ const AccountDetails = () => {
       return;
     }
     try {
+      // Send a POST request to the server to update the user's details
       const response = await Post("/api/changedetails", { name, email });
-      const { accessToken, ...user } = response.data;
 
-      updateToken(accessToken);
-      updateUser(user);
+      // Extract the access token and user data from the response
+      const { accessToken } = response.data;
 
-      storeNotification("Details Change Successful!");
-      toast.success("Change Successful!");
+      updateToken(accessToken); // Update the access token
+
+      storeNotification("Details Change Successful!"); // Store a notification in the context
+      toast.success("Change Successful!"); // Display a success toast
       setTimeout(() => {
-        navigate("/profile", { replace: true });
+        navigate("/profile", { replace: true }); // Redirect to the profile page after 2 seconds
       }, 2000);
     } catch (error) {
       console.error(`Error in: ${error}`);
