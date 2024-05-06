@@ -1,10 +1,10 @@
 const courts_schema = require("../schemas/courts_schema");
 
-/** ===================================== Retrieve Court =================================
- * ------------ Retrieve Court
- * Retrieves a court given a courtID
+/**
+ * @brief Retrieve a court by court ID.
+ * @param {string} courtID - The ID of the court to retrieve.
+ * @returns {Object} An object containing the result, data, and error.
  */
-
 async function retrieveCourt(courtID) {
   try {
     // -------------------- Run Query
@@ -26,10 +26,10 @@ async function retrieveCourt(courtID) {
   }
 }
 
-/** ===================================== Register Court =================================
- * ------------ Register a Court
- * Registers a new court
- * Does not check if court is already created.
+/**
+ * @brief Register a new court.
+ * @param {Object} courtDetails - Details of the court to register.
+ * @returns {Object} An object containing the result, data, and error.
  */
 async function registerCourt({
   name_new,
@@ -58,9 +58,9 @@ async function registerCourt({
   }
 }
 
-/** ===================================== Get All Courts ======================================================
- * ------------ Get all of the courts
- * Gets a list of all courts in the database
+/**
+ * @brief Get all courts.
+ * @returns {Object} An object containing the result, data, and error.
  */
 async function getAllCourts() {
   try {
@@ -72,9 +72,12 @@ async function getAllCourts() {
   }
 }
 
-/** ===================================== Update Court ======================================================
- * ------------ Update Court
- * Update a court's price
+/**
+ * @brief Update court details.
+ * @param {string} court_id - The ID of the court to update.
+ * @param {string} newName - The new name for the court.
+ * @param {number} newPrice - The new price for the court.
+ * @returns {Object} An object containing the result, data, and error.
  */
 async function updateCourt(court_id, newName, newPrice) {
   try {
@@ -104,12 +107,9 @@ async function updateCourt(court_id, newName, newPrice) {
   }
 }
 
-/** ===================================== Exporting ======================================================
- * ------------ Exportation of functions
- * Export the functions
- * Can rename them
+/**
+ * @brief Exported functions for court management.
  */
-
 module.exports = {
   retrieveCourt: retrieveCourt,
   registerCourt: registerCourt,
