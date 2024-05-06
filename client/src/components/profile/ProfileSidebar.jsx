@@ -11,7 +11,7 @@ import { useNotifications } from "../../context/NotificationContext";
 
 import InputButton from "../form//InputButton";
 
-import defaultProfilePic from "../Icons";
+import { defaultProfilePic } from "../Icons";
 
 /**
  * Renders the profile sidebar component.
