@@ -10,7 +10,7 @@
     "start": "node server.js",
     "build": "npm --prefix client run build",
     "start_build": "npm run build && npm start",
-    "test": "npx jest --coverage"
+    "test": "jest --coverage"
   },
   "author": "Group 1",
   "license": "ISC",
