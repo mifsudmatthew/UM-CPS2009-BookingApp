@@ -28,7 +28,7 @@
   text-decoration: none;
   margin: 0% 5%;
 }
-@media (max-width: 512px) {
+@media (max-width: 520px) {
   .navbar-title a {
     display: none;
   }
@@ -83,6 +83,7 @@
   width: auto;
   max-height: 3rem;
   height: 80%;
+  padding-right: 5%;
 }
 /* 
 .menu-icon-img:hover {
