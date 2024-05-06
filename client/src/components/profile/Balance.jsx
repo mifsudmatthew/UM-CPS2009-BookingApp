@@ -7,7 +7,7 @@ import { useProfile } from "../../context/ProfileContext";
  * @returns {JSX.Element} The rendered Balance component.
  */
 const Balance = () => {
-  const { user } = useProfile();
+  const { user } = useProfile(); // Retrieve user data once when the component loads
 
   return (
     <main className="profile">
