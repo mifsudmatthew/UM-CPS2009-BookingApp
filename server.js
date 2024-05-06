@@ -1,9 +1,12 @@
 /* server.js
  * Node.js backend application entry point
- * Is the start of the express server */
+ * Is the start of the express server
+ */
 
 // Allowing files to use .env configurations
 require("dotenv").config();
+// Running the database
+require("./database/mongoose");
 // Used to get correct absolute path
 const path = require("path");
 // Express server
@@ -13,13 +16,11 @@ const apiRouter = require("./server/api");
 const paymentRouter = require("./server/post/payments_post");
 const bookingRounter = require("./server/post/bookings_post");
 const adminRouter = require("./server/post/admin_post");
-const homeRouter = require("./server/post/home_post")
+const homeRouter = require("./server/post/home_post");
 // CORS because pain
 const cors = require("cors");
 // Compression incoming and outgoing requests
 const compression = require("compression");
-// Running the database
-const mongoose = require("./database/mongoose");
 
 // Creating an ExpressJS application, by calling the variable express as a function.
 const app = express();

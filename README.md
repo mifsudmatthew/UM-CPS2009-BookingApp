@@ -1,10 +1,9 @@
-
 <h1 align="center"> Tennis Court Booking System</h1>
 
 <p align="center"><a target="_blank" rel="noopener noreferrer"><img width="180" src="https://i.ibb.co/z6nLrz5/logo.png" alt="logo"></a></p>
 
-Contributors
----
+## Contributors
+
 <div style="margin-right: 20px; text-align: center; display: flex;">
 <figure>
     <img alt="Matthew Mifsud" style="width: 100px; border-radius:50%;"src="https://avatars.githubusercontent.com/u/97695752?v=4"/>
@@ -33,8 +32,8 @@ Contributors
 </figure>
 </div>
 
-Compilation Process
--------------------
+## Compilation Process
+
 <table>
   <tr>
     <td><b>Client Directory</b></td>
@@ -45,14 +44,12 @@ Compilation Process
     <td>
     npm i
     npm run start_build
-    npm start
     </td>
   </tr>
 </table>
 
+## Formats
 
-Formats
---------
 <table>
   <tr>
     <th><b>Purpose</b></th>
