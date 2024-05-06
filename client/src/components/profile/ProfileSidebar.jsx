@@ -11,7 +11,7 @@ import { useNotifications } from "../../context/NotificationContext";
 
 import InputButton from "../form//InputButton";
 
-import profilePicture from "../../assets/default-pp.jpg";
+import defaultProfilePic from "../Icons";
 
 /**
  * Renders the profile sidebar component.
@@ -36,7 +36,7 @@ const ProfileSidebar = () => {
   return (
     <aside className="sidebar">
       <div className="profile-picture">
-        <img src={profilePicture} alt="Profile" className="profile-image" />
+        <img src={defaultProfilePic} alt="Profile" className="profile-image" />
       </div>
       <h3>Hello, {user.name ? user.name : "#Undefined#"}</h3>
       {/* Displays the user's name or a placeholder if it's undefined */}
