@@ -1,14 +1,23 @@
+/**
+ * Login.jsv
+ * Login form that sends a request to the server to ceate a user
+ */
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { useProfile } from "../context/ProfileContext";
+import { useNotifications } from "../context/NotificationContext";
+
 import { Post } from "../utils/ApiFunctions";
+
 import Form from "../components/form/Form";
 import InputBox from "../components/form/InputBox";
 import InputButton from "../components/form/InputButton";
 
-import { useNotifications } from "../context/NotificationContext";
+// Regular expression for email validation
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
  * Renders the login page.
@@ -17,22 +26,22 @@ import { useNotifications } from "../context/NotificationContext";
  */
 function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const { updateToken, user } = useProfile();
+  const { user, updateToken } = useProfile();
   const { storeNotification } = useNotifications();
 
-  // Regular expression for email validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   // Send the login details to the server
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     // Check if the email and password fields are empty
     if (!email || !password) {
       toast.error("Please fill all fields.");
       return;
     }
+
     // Check if the email is valid
     if (!emailRegex.test(email)) {
       toast.error("Invalid email format detected.");
@@ -40,8 +49,7 @@ function Login() {
     }
 
     try {
-      const response = await Post("/api/login", { email, password });
-      const { accessToken } = response;
+      const { accessToken } = await Post("/api/login", { email, password });
 
       updateToken(accessToken);
 
@@ -52,6 +60,7 @@ function Login() {
         }, 2000);
         return;
       }
+
       toast.success("Login successful!");
       storeNotification("Login successful!");
       setTimeout(() => {
@@ -67,7 +76,6 @@ function Login() {
     <main className="mainContainerLogin">
       <Form>
         <div className={"titleContainer"}>Login</div>
-
         <InputBox
           id="loginEmail"
           label="Email"
