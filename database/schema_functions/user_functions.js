@@ -1,11 +1,10 @@
 const user_schema = require("../schemas/user_schema");
 
-/** ===================================== Retrieve User =================================
- * ------------ Retrieves a User given an email
- * Has validation for whether the query returns anything
- * It makes use of the findOne hence it will return an object and not an array
+/**
+ * @brief Retrieve a user by email.
+ * @param {string} email_toSearch - The email of the user to retrieve.
+ * @returns {Object} An object containing the result, data, and error.
  */
-
 async function retrieveUser(email_toSearch) {
   try {
     // -------------------- Run Query
@@ -27,10 +26,10 @@ async function retrieveUser(email_toSearch) {
   }
 }
 
-/** ===================================== Register User =================================
- * ------------ Registers a new user
- * Has validation for whether the query returns anything
- * It makes use of the findOne hence it will return an object and not an array list
+/**
+ * @brief Register a new user.
+ * @param {Object} userDetails - Details of the user to register.
+ * @returns {Object} An object containing the result, data, and error.
  */
 async function registerUser({ email_new, password_new, name_new }) {
   try {
@@ -57,10 +56,11 @@ async function registerUser({ email_new, password_new, name_new }) {
   }
 }
 
-/** ===================================== Validate Login ================================================
- * ------------ Validating login
- * Give it a username and password. It searches the database, if the username is foun
- * If a user is found then it returns the email name and balance.
+/**
+ * @brief Validate login credentials.
+ * @param {string} email_toSearch - The email to validate.
+ * @param {string} password_toSearch - The password to validate.
+ * @returns {Object} An object containing the result, data, and error.
  */
 async function validateLogin(email_toSearch, password_toSearch) {
   try {
@@ -92,10 +92,12 @@ async function validateLogin(email_toSearch, password_toSearch) {
     throw new Error("Failed to Connect to Database: " + error_message);
   }
 }
-/** ===================================== Reset Password ================================================
- * ------------ Reset Password
- * Takes in an email and the new password and replaces it in the database
- * Should also return the user (email, name, balance) but not the password (security)
+
+/**
+ * @brief Reset user password.
+ * @param {string} email_toSearch - The email of the user to reset the password for.
+ * @param {string} password_toReset - The new password.
+ * @returns {Object} An object containing the result, data, and error.
  */
 async function resetPassword(email_toSearch, password_toReset) {
   try {
@@ -128,10 +130,11 @@ async function resetPassword(email_toSearch, password_toReset) {
     throw new Error("Failed to Connect to Database: " + error_message);
   }
 }
-/** =============================== Update User Balance ================================================
- * ------------ Updating the user balance
- * Give an email and a quantity (+/-) by which to update the balance
- * Should also return the user (email, name, balance) but not the password (security)
+/**
+ * @brief Update user balance.
+ * @param {string} email_toSearch - The email of the user to update the balance for.
+ * @param {number} amount_toAdd - The amount to add to the balance.
+ * @returns {Object} An object containing the result, data, and error.
  */
 async function updateUserBalance(email_toSearch, amount_toAdd) {
   try {
@@ -165,10 +168,11 @@ async function updateUserBalance(email_toSearch, amount_toAdd) {
     throw new Error("Failed to Connect to Database: " + error_message);
   }
 }
-/**===================================== Delete User =====================================================
- * ------------ Deliting a user
- * Should delete a user relating to the given email
- * returns true or false
+
+/**
+ * @brief Delete a user by email.
+ * @param {string} email_toSearch - The email of the user to delete.
+ * @returns {Object} An object containing the result, data, and error.
  */
 async function deleteUser(email_toSearch) {
   try {
@@ -182,9 +186,12 @@ async function deleteUser(email_toSearch) {
   }
 }
 
-/** ===================================== Change Details ================================================
- * ------------ Change Details
- * Takes in an email, the new name and new email and replaces it in the database
+/**
+ * @brief Change user details.
+ * @param {string} email_toSearch - The email of the user to change details for.
+ * @param {string} name_toReset - The new name.
+ * @param {string} email_toReset - The new email.
+ * @returns {Object} An object containing the result, data, and error.
  */
 async function changeDetails(email_toSearch, name_toReset, email_toReset) {
   try {
@@ -221,12 +228,9 @@ async function changeDetails(email_toSearch, name_toReset, email_toReset) {
   }
 }
 
-/** ===================================== Exporting ======================================================
- * ------------ Exportation of functions
- * Export the functions
- * Can rename them
+/**
+ * @brief Exported functions for user queries.
  */
-
 module.exports = {
   retrieveUser: retrieveUser,
   registerUser: registerUser,

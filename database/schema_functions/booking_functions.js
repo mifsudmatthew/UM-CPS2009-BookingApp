@@ -1,10 +1,10 @@
 const booking_schema = require("../schemas/booking_schema");
 const court_schema = require("../schemas/courts_schema");
-/** ===================================== Query Future Bookings By Email =========================
- * ------------ Recieving all future bookings By Email
- * Takes an email
- * Calculates the current date and time and uses them to
- * retrieve all bookings from this future date and time
+
+/**
+ * @brief Query future bookings by user ID.
+ * @param {string} userID_toSearch - The user ID to search for.
+ * @returns {Object} An object containing the result, data, and error.
  */
 async function getFutureBookings_ID(userID_toSearch) {
   try {
@@ -35,11 +35,11 @@ async function getFutureBookings_ID(userID_toSearch) {
     throw new Error("Failed to Connect to Database: " + error_message);
   }
 }
-/** ===================================== Query Future Bookings By Email =========================
- * ------------ Recieving all future bookings By Email
- * Takes an email
- * Calculates the current date and time and uses them to
- * retrieve all bookings from this future date and time
+
+/**
+ * @brief Query future secondary bookings by email.
+ * @param {string} email - The email to search for.
+ * @returns {Object} An object containing the result, data, and error.
  */
 async function getFutureSecondaryBookingsBy_ID(email) {
   try {
@@ -71,11 +71,11 @@ async function getFutureSecondaryBookingsBy_ID(email) {
     throw new Error("Failed to Connect to Database: " + error_message);
   }
 }
-/** ===================================== Query Future Bookings By Court =========================
- * ------------ Recieving all future bookings By Court
- * Takes an Court ID
- * Calculates the current date and time and uses them to
- * retrieve all bookings from this future date and time
+
+/**
+ * @brief Query future bookings by court ID.
+ * @param {string} courtID_toSearch - The court ID to search for.
+ * @returns {Object} An object containing the result, data, and error.
  */
 async function getFutureBookings_Courts(courtID_toSearch) {
   try {
@@ -107,11 +107,11 @@ async function getFutureBookings_Courts(courtID_toSearch) {
   }
 }
 
-/** ===================================== Query Future Bookings By Court and Email =========================
- * ------------ Recieving all future bookings By Court and Email
- * Takes an email and courtID
- * Calculates the current date and time and uses them to
- * retrieve all bookings from this future date and time
+/**
+ * @brief Query future bookings by user ID and court ID.
+ * @param {string} userID_toSearch - The user ID to search for.
+ * @param {string} courtID_toSearch - The court ID to search for.
+ * @returns {Object} An object containing the result, data, and error.
  */
 async function getFutureBookings_IDCourt(userID_toSearch, courtID_toSearch) {
   try {
@@ -142,13 +142,17 @@ async function getFutureBookings_IDCourt(userID_toSearch, courtID_toSearch) {
     throw new Error("Failed to Connect to Database: " + error_message);
   }
 }
-/** ===================================== Add a new Booking =========================
- * ------------ Add a new Booking attached to an email
- * The following checks are made
- * 1. The date of the booking is checked in order to make sure its not more then a week in advanced
- *     (this is done first to reduce the need to query if the booking is invalid)
- * 2. The user has not already booked the max possible bookings
- * 3. The court has not already been booked at the set date and time
+
+/**
+ * @brief Add a new booking.
+ * @param {string} userID_toBook - The user ID to book for.
+ * @param {string} courtID_toBook - The court ID to book.
+ * @param {number} cost_toBook - The cost of the booking.
+ * @param {Date} date_toBook - The date of the booking.
+ * @param {number} time_toBook - The time of the booking.
+ * @param {number} max_userBookings - The maximum number of bookings allowed per user.
+ * @param {Array<string>} secondary_users - Array of secondary user IDs.
+ * @returns {Object} An object containing the result, data, and error.
  */
 async function addBooking(
   userID_toBook,
@@ -225,9 +229,11 @@ async function addBooking(
     throw new Error("Failed to Connect to Database" + error_message);
   }
 }
-/** ===================================== Remove Booking =========================
- * ------------ Remove a booking
- * you will need to specify all the values related to the booking
+
+/** 
+ * @brief Remove a booking.
+ * @param {string} bookingID - The ID of the booking to be removed.
+ * @returns {Object} An object containing the result, data, and error.
  */
 async function removeBooking(bookingID) {
   try {
@@ -238,9 +244,10 @@ async function removeBooking(bookingID) {
   }
 }
 
-/** ===================================== Booking Details =========================
- * ------------ Get booking details
- * you will need to specify all the values related to the booking
+/** 
+ * @brief Get booking details.
+ * @param {string} bookingID - The ID of the booking to retrieve details for.
+ * @returns {Object} An object containing the result, data, and error.
  */
 async function getBookingDetails(bookingID) {
   try {
@@ -250,10 +257,12 @@ async function getBookingDetails(bookingID) {
     throw new Error("Failed to Connect to Database: " + error.message);
   }
 }
-/** ===================================== Query Available Courts =========================
- * ------------ Retrieve a list of courts available at a specific date and time
- * Takes a date and time
- * Retrieves all courts that are not booked at the specified date and time
+
+/**
+ * @brief Retrieve a list of courts available at a specific date and time.
+ * @param {Date} date_toCheck - The date to check for available courts.
+ * @param {number} time_toCheck - The time to check for available courts.
+ * @returns {Object} An object containing the result, data, and error.
  */
 async function getAvailableCourts(date_toCheck, time_toCheck) {
   try {
@@ -275,6 +284,11 @@ async function getAvailableCourts(date_toCheck, time_toCheck) {
   }
 }
 
+/**
+ * @brief Retrieve a list of courts booked by a user.
+ * @param {Object} user_data - User data containing email information.
+ * @returns {Object} An object containing the result, data, and error.
+ */
 async function getBookedCourts(user_data) {
   try {
     // Get current date and time
@@ -300,10 +314,10 @@ async function getBookedCourts(user_data) {
   }
 }
 
-/** ===================================== Count & Sum Bookings By Court ID =========================
- * ------------ Count the number of bookings made for a specific court.
- * Takes a courtID.
- * Retrieves the count of bookings associated with the specified courtID.
+/**
+ * @brief Count the number of bookings made for a specific court.
+ * @param {string} courtID_toCount - The ID of the court to count bookings for.
+ * @returns {Object} An object containing the result, data, and error.
  */
 async function countAndSumBookingsByCourtID(courtID_toCount) {
   try {
@@ -318,12 +332,9 @@ async function countAndSumBookingsByCourtID(courtID_toCount) {
   }
 }
 
-/** ===================================== Exporting ======================================================
- * ------------ Exportation of functions
- * Export the functions
- * Can rename them
+/**
+ * @brief Exported functions for booking queries.
  */
-
 module.exports = {
   addBooking: addBooking,
   getFutureBookings_IDCourt: getFutureBookings_IDCourt,

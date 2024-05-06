@@ -28,10 +28,6 @@ stages:
               contents: "client/dist/**"
               targetFolder: "$(Build.ArtifactStagingDirectory)"
 
-          - script: |
-              npm install
-            displayName: "Install Node dependencies in server"
-
           - task: CopyFiles@2
             inputs:
               contents: |
@@ -40,13 +36,12 @@ stages:
                 server.js
                 server/**
                 database/**
-                node_modules/**
               targetFolder: "$(Build.ArtifactStagingDirectory)"
             displayName: "Copy server components"
 
           - publish: "$(Build.ArtifactStagingDirectory)"
-            displayName: "Publish App for Deployment"
-            artifact: drop
+            displayName: "Publish Components to next stage"
+            artifact: app
 
   - stage: "Test"
     dependsOn: "Build"
@@ -54,15 +49,33 @@ stages:
     jobs:
       - job: "Test"
         steps:
-          - download: current
-            artifact: drop
+          - checkout: none
 
-          - script: npm run test
-            displayName: "Tests"
+          - download: current
+            artifact: app
+
+          - script: |
+              npm install
+            displayName: "Install Node dependencies in server"
+            
+          - task: CopyFiles@2
+            inputs:
+              contents: |
+                node_modules/**
+              targetFolder: "$(Build.ArtifactStagingDirectory)"
+            displayName: "Copy node modules"
+            
+          - script: npm test
+            displayName: "Running Tests"
           
           - task: PublishCodeCoverageResults@2
+            displayName: "Publishing Code Coverage"
             inputs:
               summaryFileLocation: '**'
+          
+          - publish: "$(Build.ArtifactStagingDirectory)"
+            displayName: "Publish App for Deployment"
+            artifact: drop
 
   - stage: "Deploy"
     dependsOn: "Test"
@@ -70,6 +83,8 @@ stages:
     jobs:
       - job: "Deploy"
         steps:
+          - checkout: none
+
           - download: current
             artifact: drop
 
