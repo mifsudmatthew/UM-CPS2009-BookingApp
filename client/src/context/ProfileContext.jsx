@@ -1,6 +1,11 @@
+/**
+ * ProfileContext.jsx
+ * Stores the user's data and tokens
+ */
+
+import PropTypes from "prop-types"; // Importing prop-types for typechecking
 import { useState, createContext, useContext } from "react"; // Importing hooks from react
 import { jwtDecode } from "jwt-decode"; // Importing jwt-decode to decode the JWT token
-import PropTypes from "prop-types"; // Importing prop-types for typechecking
 
 const ProfileContext = createContext(); // Creating a context to hold the user profile
 
@@ -30,28 +35,23 @@ export const ProfileProvider = ({ children }) => {
     setUser(accessToken ? jwtDecode(accessToken) : {}); // Update the user state
   };
 
-  // Function to remove the accessToken from localStorage
-  const removeToken = () => {
-    localStorage.removeItem("accessToken");
-  };
-
   // Function to update the user state
   const updateUser = (user) => {
     setUser(user);
   };
 
-  // Function to clear user state
-  const removeUser = () => {
+  const logout = () => {
     setUser({});
+    setAccessToken("");
+    localStorage.removeItem("accessToken");
   };
 
   const contextValue = {
     accessToken,
     updateToken,
-    removeToken,
     user,
     updateUser,
-    removeUser,
+    logout,
   };
 
   return (
