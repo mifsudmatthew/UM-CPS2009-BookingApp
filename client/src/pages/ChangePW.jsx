@@ -9,8 +9,6 @@ import InputButton from "../components/form/InputButton";
 
 import { useNotifications } from "../context/NotificationContext";
 
-import "react-toastify/dist/ReactToastify.css";
-
 function toProfile() {
   return <Navigate to="/profile" replace={true} />;
 }
