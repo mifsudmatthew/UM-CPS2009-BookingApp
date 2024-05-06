@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 
+// The InputBox component is a component that returns an input element with the specified id, label, classname, type, placeholder, value, disabled, onChange, and required props.
 const InputBox = ({
   id,
   label,
