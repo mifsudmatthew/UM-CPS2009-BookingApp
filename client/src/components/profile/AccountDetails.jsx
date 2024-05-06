@@ -1,12 +1,19 @@
+/**
+ * AccountsDetails.jsx
+ */
+
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
 import { useProfile } from "../../context/ProfileContext";
+import { useNotifications } from "../../context/NotificationContext";
+
 import Form from "../form/Form";
 import InputBox from "../form/InputBox";
 import InputButton from "../form/InputButton";
+
 import { Post } from "../../utils/ApiFunctions";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { useNotifications } from "../../context/NotificationContext";
 
 /**
  * Renders the AccountDetails component.
