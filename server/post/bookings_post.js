@@ -48,7 +48,7 @@ bookingRouter.post(
     }
     // ----------------------------------------------- Multi User
     if (secondary_users.length > 0) {
-      split_cost = court.data.price / (secondary_users.length + 1);
+      split_cost = (court.data.price / (secondary_users.length + 1)).toFixed(2);
       if (user.data.balance < split_cost) {
         return res.json({
           result: false,
@@ -90,6 +90,13 @@ bookingRouter.post(
           }
         }
       }
+      server_functions.sendBookingSuccessMail(
+        email,
+        court.data.court_name,
+        req.body.date,
+        req.body.hour,
+        split_cost
+      );
       return res.json(response);
 
       // ----------------------------------------------- Single User Invalid
@@ -116,7 +123,7 @@ bookingRouter.post(
         court.data.court_name,
         req.body.date,
         req.body.hour,
-        court.data.price / (1 + req.body.players.length)
+        court.data.price.toFixed(2)
       );
       if (response.result == true) {
         user_queries.updateUserBalance(email, -court.data.price);
@@ -216,16 +223,44 @@ bookingRouter.post(
       const bookingDetails = await bookings_queries.getBookingDetails(
         booking_id
       );
+
+      const courtName = (
+        await courts_queries.retrieveCourt(bookingDetails.data.courtID)
+      ).data.court_name;
+
+      const courtTime = bookingDetails.data.time;
+
       const result = await bookings_queries.removeBooking(booking_id);
       if (result.result == true) {
         secondaryUsers = bookingDetails.data.secondaryUsers;
 
+        var dateFromMongoDB = new Date(bookingDetails.data.date);
+        var year = dateFromMongoDB.getFullYear();
+        var month = dateFromMongoDB.getMonth() + 1; // Months are zero-based, so add 1
+        var day = dateFromMongoDB.getDate();
+        var formattedDate =
+          year +
+          "-" +
+          (month < 10 ? "0" + month : month) +
+          "-" +
+          (day < 10 ? "0" + day : day);
+
         if (secondaryUsers.length > 0) {
-          split_cost = bookingDetails.data.cost / (secondaryUsers.length + 1);
+          split_cost = (
+            bookingDetails.data.cost /
+            (secondaryUsers.length + 1)
+          ).toFixed(2);
           await user_queries.updateUserBalance(email, split_cost);
           for (const sec_user of secondary_users) {
             const result2 = await user_queries.updateUserBalance(
               sec_user.email,
+              split_cost
+            );
+            server_functions.sendCancellationSuccessMail(
+              email,
+              courtName,
+              formattedDate,
+              courtTime,
               split_cost
             );
           }
@@ -234,9 +269,10 @@ bookingRouter.post(
           await user_queries.updateUserBalance(email, bookingDetails.data.cost);
           server_functions.sendCancellationSuccessMail(
             email,
-            bookingDetails.data.court_name,
-            bookingDetails.data.date,
-            bookingDetails.data.hour
+            courtName,
+            formattedDate,
+            courtTime,
+            court.data.price.toFixed(2)
           );
           return res.json({ result: true });
         }

@@ -77,6 +77,8 @@ function Navbar() {
 
       logoutButtonState = true;
       toast.success("Logged out successfully!"); // Displays a success message
+      // Clear the 'notifications' array in localStorage
+      localStorage.setItem("notifications", JSON.stringify([]));
 
       // Profile user validation requires change therefore updateToken and setUser should be taken out then.
       setTimeout(() => {
@@ -90,7 +92,7 @@ function Navbar() {
       if (!menuRef.current.contains(e.target)) {
         setOpen(false);
       }
-      if (!notifRef.current.contains(e.target)) {
+      if (notifRef.current && !notifRef.current.contains(e.target)) {
         setNotificationOpen(false);
       }
     };
@@ -120,9 +122,9 @@ function Navbar() {
     <nav className="navbar">
       {/* ---------------------- Logo ------------------------------- */}
       <div className="navbar-logo">
-      <NavLink to="/">
-        <img src={logo} alt="logo" />
-      </NavLink>
+        <NavLink to="/">
+          <img src={logo} alt="logo" />
+        </NavLink>
       </div>
 
       {/* ---------------------- Title ------------------------------ */}
