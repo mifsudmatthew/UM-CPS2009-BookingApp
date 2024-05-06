@@ -1,22 +1,30 @@
-const express = require("express");
-const stripe = require("stripe")(process.env.STRIPE_KEY);
-const payment_router = express.Router();
-const user_queries = require("../../database/schema_functions/user_functions");
-const stripe_queries = require("../../database/schema_functions/stripe_functions");
-const server_functions = require("../server_functions");
+const express = require("express"); // Importing express
+const stripe = require("stripe")(process.env.STRIPE_KEY); // Importing stripe
+const payment_router = express.Router(); // Creating a router to handle requests
+const user_queries = require("../../database/schema_functions/user_functions"); // Importing user functions
+const stripe_queries = require("../../database/schema_functions/stripe_functions"); // Importing stripe functions
+const server_functions = require("../server_functions"); // Importing server functions
 
-/** ==================================== Topup =====================================================
- * ------------- post request for top-up button
- * Creates a session and sends the user to that stripe generated session
- * After the checkout session is done the user is sent to /topup
- * together with the session id
+/**
+ * @brief Post request for top-up button
+ *
+ * Creates a session and sends the user to that stripe generated session.
+ * After the checkout session is done the user is sent back to the top up page
+ * together with the session id.
+ *
+ * @param None
+ *
+ * @return
+ * - 200: Success in Sending User to Stripe Session
+ * - 500: Failed to Create Stripe Session
  */
 payment_router.post(
   "/topup",
   server_functions.authenticateToken,
   async (req, res) => {
     try {
-      const amount = req.body.amount;
+      const amount = req.body.amount; // Obtaining amount chosen by user to top-up.
+      // Creating a new stripe session
       const session = await stripe.checkout.sessions.create({
         // ------------------ Item to be bought in this case top-up
         line_items: [
@@ -36,28 +44,36 @@ payment_router.post(
       });
 
       // ------------------ Send user to session
-      res.json({ url: session.url });
+      res.status(200).json({ url: session.url });
     } catch (error) {
       console.error("Error creating checkout session");
       return res.status(500).send({ error: "Error creating checkout session" });
     }
   }
 );
-/** ==================================== SuccessFull Payment ======================================
- * ------------- post request after returning to /topup from session
- * Validates session id to check if payment was succesfull.
+/**
+ * @brief Post request after returning to /topup from session (Success)
+ *
+ * Validates session id to check if payment was successful.
  * Makes use of database in order to hold a list of traversed payments.
  * Makes sure session is not used twice.
  * Adds session to Database.
+ *
+ * @param None
+ *
+ * @return
+ * - 200: Success in making payment.
+ * - 400: Failed to make payment.
+ * - 500: Failed to handle successful payment (Possible Database Error).
  */
 payment_router.post(
   "/success",
   server_functions.authenticateToken,
   async (req, res) => {
     try {
-      const session_id = req.body.session_id;
-      const email = req.user.email;
-      const session = await stripe.checkout.sessions.retrieve(session_id);
+      const session_id = req.body.session_id; // Obtaining session id.
+      const email = req.user.email; // Obtaining email from user.
+      const session = await stripe.checkout.sessions.retrieve(session_id); // Retrieving session from stripe.
 
       // ------------------ Query to see if session exists in database
       result_session = await stripe_queries.retrieveStripe(session_id);
@@ -87,12 +103,14 @@ payment_router.post(
         };
         const accessToken = server_functions.generateAccessToken(userData);
 
-        return res.json({ success: true, accessToken: accessToken });
+        return res
+          .status(200)
+          .json({ success: true, accessToken: accessToken });
         // ------------------ Payment Not Successfull
       } else {
         console.log("Failed Payment");
 
-        return res.json({ success: false });
+        return res.status(400).json({ success: false });
       }
     } catch (error) {
       console.error("Error handling successful payment");
