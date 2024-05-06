@@ -7,7 +7,7 @@ const nodeMailer = require("nodemailer");
 // JSON Web Tokens for autherization
 const jwt = require("jsonwebtoken");
 
-// Database functions that modify user collection
+// Obtaining the database schema functions for user
 const user_queries = require("../database/schema_functions/user_functions");
 
 // Creating an array to store pins generated and their corresponding emails.
@@ -94,9 +94,10 @@ async function sendPaymentSuccessMail(user_email, amount) {
     // Variable storing all email details.
     const emailDetails = {
       from: "no-reply@servespot.com", // Address of account sending the email.
-      to: user_email, // This should be changed to email of the user requesting a reset.
+      to: user_email, // Email of the user requesting a reset.
       subject: "Successful Account Top-Up: " + amount + " Added", // Subject of email.
-      text: `Dear ${user_data.data.name},\n\nWe're pleased to inform you that your recent request to top up your ServeSpot account has been successfully processed.\n\nHere are the details of your transaction:\n\n Amount: ${amount}\n\nNew Balance: ${user_data.data.balance}:00\n\nYour account is now ready to use with the updated balance. We ensure that our platform is continuously updated to provide you with the best possible experience.\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`, // Email content.
+      // Email body using details from the user's data retrieved.
+      text: `Dear ${user_data.data.name},\n\nWe're pleased to inform you that your recent request to top up your ServeSpot account has been successfully processed.\n\nHere are the details of your transaction:\n\n Amount: ${amount}\n\nNew Balance: ${user_data.data.balance}:00\n\nYour account is now ready to use with the updated balance. We ensure that our platform is continuously updated to provide you with the best possible experience.\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`,
     };
 
     // Creating a transporter with the details of the mail service being used.
@@ -128,9 +129,10 @@ async function sendBookingSuccessMail(user_email, court, date, hour, price) {
     // Variable storing all email details.
     const emailDetails = {
       from: "no-reply@servespot.com", // Address of account sending the email.
-      to: user_email, // This should be changed to email of the user requesting a reset.
+      to: user_email, // Email of the user requesting a reset.
       subject: "Successful Booking for " + court, // Subject of email.
-      text: `Dear ${user_data.data.name},\n\nWe're pleased to inform you that your recent booking request has been successful.\n\nHere are the details of your booking:\n\n Court: ${court}\n\n Date: ${date}\n\n Time: ${hour}00\n\nPrice paid: €${price}n\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`, // Email content.
+      // Email body using details from the user's data retrieved.
+      text: `Dear ${user_data.data.name},\n\nWe're pleased to inform you that your recent booking request has been successful.\n\nHere are the details of your booking:\n\n Court: ${court}\n\n Date: ${date}\n\n Time: ${hour}00\n\nPrice paid: €${price}n\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`,
     };
 
     // Creating a transporter with the details of the mail service being used.
@@ -170,7 +172,8 @@ async function sendCancellationSuccessMail(
       from: "no-reply@servespot.com", // Address of account sending the email.
       to: user_email, // This should be changed to email of the user requesting a reset.
       subject: `Successful Cancellation for ${court}`, // Subject of email.
-      text: `Dear ${user_data.data.name},\n\nWe would like to inform you that the following booking has been cancelled:\n\n Court: ${court}\n\n Date: ${date}\n\nTime:${hour}:00\n\n Amount refunded: €${price}\n\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`, // Email content.
+      // Email body using details from the user's data retrieved.
+      text: `Dear ${user_data.data.name},\n\nWe would like to inform you that the following booking has been cancelled:\n\n Court: ${court}\n\n Date: ${date}\n\nTime:${hour}:00\n\n Amount refunded: €${price}\n\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`,
     };
 
     // Creating a transporter with the details of the mail service being used.
@@ -194,11 +197,13 @@ async function sendCancellationSuccessMail(
   }
 }
 
+// Function to validate the user's token.
 function authenticateToken(req, res, next) {
+  // Obtaining the authorization header from the request.
   const authHeader = req.headers.authorization;
 
+  // Check if header is exists and starts with 'Bearer '
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    // Check if header is exists and starts with 'Bearer '
     return res.status(400).json({ error: "No authorization attached" });
   }
 
@@ -210,7 +215,7 @@ function authenticateToken(req, res, next) {
     return res.status(403).json({ error: "Unauthorized: No token supplied" });
   }
 
-  // Verify
+  // Verifying the token with the secret key
   jwt.verify(token, process.env.JWT_ACCESS, (err, decoded) => {
     if (err) return res.status(403).json({ error: `Token is invalid ${err}` });
     req.user = decoded;
@@ -218,33 +223,19 @@ function authenticateToken(req, res, next) {
   });
 }
 
-function getToken(req) {
-  if (!req) {
-    // Check if req is a valid object
-    throw new Error("Request object is malformed");
-  }
-
-  // Obtain authorization header
-  const authHeader = req.headers.authorization;
-
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    // Check if header is valid and starts with 'Bearer '
-    return null;
-  }
-
-  // Return the token part of the authorization header
-  return authHeader.split(" ")[1];
-}
-
+// Function to return a new token for the user based on the email.
 async function getUpdatedToken(email) {
+  // Check if email is not supplied
   if (email == undefined || email == null)
     return { result: false, data: {}, error: "Email not supplied" };
 
   try {
-    const user = await user_queries.retrieveUser(email);
+    const user = await user_queries.retrieveUser(email); // Retrieve user data from the database
 
+    // Check if user exists
     if (!user.result) return { result: false, data: {}, error: user.error };
 
+    // Create a new payload with the user's data
     const newPayload = {
       id: user.data._id,
       email: user.data.email,
@@ -253,6 +244,7 @@ async function getUpdatedToken(email) {
       admin: user.data.admin,
     };
 
+    // Generate a new token with the new payload
     const newToken = generateAccessToken(newPayload);
 
     return { result: true, data: { accesstoken: newToken }, error: null };
@@ -263,6 +255,7 @@ async function getUpdatedToken(email) {
   }
 }
 
+// Function to generate a new access token.
 function generateAccessToken(payload) {
   return jwt.sign(payload, process.env.JWT_ACCESS);
 }
