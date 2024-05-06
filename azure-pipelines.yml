@@ -32,10 +32,6 @@ stages:
               npm install
             displayName: "Install Node dependencies in server"
 
-          - script: |
-              npm run test
-            displayName: "Tests"
-
           - task: CopyFiles@2
             inputs:
               contents: |
@@ -50,15 +46,32 @@ stages:
 
           - publish: "$(Build.ArtifactStagingDirectory)"
             displayName: "Publish App for Deployment"
-            artifact: dropApp
+            artifact: drop
+
+  - stage: "Test"
+    dependsOn: "Build"
+    condition:  succeeded()
+    jobs:
+      - job: "Test"
+        steps:
+          - download: current
+            artifact: drop
+
+          - script: npm run test
+            displayName: "Tests"
+          
+          - task: PublishCodeCoverageResults@2
+            inputs:
+              summaryFileLocation: '**'
 
   - stage: "Deploy"
-    dependsOn: "Build"
+    dependsOn: "Test"
+    condition:  succeeded()
     jobs:
       - job: "Deploy"
         steps:
           - download: current
-            artifact: dropApp
+            artifact: drop
 
           - task: ArchiveFiles@2
             displayName: "Packaging files into zip"
