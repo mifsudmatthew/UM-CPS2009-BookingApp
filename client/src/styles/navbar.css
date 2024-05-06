@@ -28,7 +28,7 @@
   text-decoration: none;
   margin: 0% 5%;
 }
-@media (max-width: 512px) {
+@media (max-width: 520px) {
   .navbar-title a {
     display: none;
   }
@@ -47,7 +47,7 @@
   padding: 0.3rem 0.3rem 0.3rem 0.3rem;
   font-family: Roboto, sans-serif;
   border-radius: 1rem;
-  margin: 10%;
+  margin: 0%;
 }
 
 .wallet {
@@ -57,6 +57,7 @@
 .bell {
   height: 2rem;
   margin: 0 5%;
+  padding-right: 2rem;
 }
 .navbar-logo {
   flex-shrink: 0;
@@ -82,6 +83,7 @@
   width: auto;
   max-height: 3rem;
   height: 80%;
+  padding-right: 5%;
 }
 /* 
 .menu-icon-img:hover {
@@ -316,5 +318,6 @@
 @media (max-width: 450px) {
   .menu-icon {
     padding-right: 0.3rem;
+    padding-left: 0.3rem;
   }
 }
