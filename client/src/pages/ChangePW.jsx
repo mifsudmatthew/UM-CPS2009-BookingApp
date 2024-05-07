@@ -1,17 +1,18 @@
+/**
+ * ChangePW.jsx
+ */
+
 import { useState, useMemo } from "react";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+
+import { useNotifications } from "../context/NotificationContext";
+
 import { Post } from "../utils/ApiFunctions";
 
 import Form from "../components/form/Form";
 import InputBox from "../components/form/InputBox";
 import InputButton from "../components/form/InputButton";
-
-import { useNotifications } from "../context/NotificationContext";
-
-function toProfile() {
-  return <Navigate to="/profile" replace={true} />;
-}
 
 /**
  * Renders the Change Password page.
@@ -20,17 +21,16 @@ function toProfile() {
  */
 function ChangePW() {
   const navigate = useNavigate();
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const { storeNotification } = useNotifications();
 
-  const canChangePassword = useMemo(
-    () =>
-      password.length > 0 &&
-      confirmPassword.length > 0 &&
-      password === confirmPassword,
-    [password, confirmPassword]
-  );
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const canChangePassword = useMemo(() => {
+    return (
+      password != "" && confirmPassword != "" && password === confirmPassword
+    );
+  }, [password, confirmPassword]);
 
   const handleChangePassword = async (event) => {
     event.preventDefault();
@@ -44,17 +44,12 @@ function ChangePW() {
       return;
     }
 
-    const data = { password };
-
     try {
-      const response = await Post("/api/changepassword", data); // Send a POST request to change the password
+      const response = await Post("/api/changepassword", { password }); // Send a POST request to change the password
       toast.success("Password change successful! Redirecting to profile."); // Display success toast
       console.log("Password change successful:", response);
       storeNotification("Password changed successfully!"); // Store a notification
-      toProfile(); // Redirect to the profile page
-      setTimeout(() => {
-        navigate("/profile", { replace: true });
-      }, 2000);
+      navigate("/profile", { replace: true });
     } catch (error) {
       toast.error("An error occurred while changing password!"); // Display error toast if an error occurs
       console.error("Change password error:", error);
