@@ -72,7 +72,7 @@ bookingRouter.post(
       const secondaryUser = await user_queries.retrieveUser(email); // Getting secondary user according to email
       if (secondaryUser.result == false) {
         // If secondary user does not exist
-        return res.json({
+        return res.status(500).json({
           // Return error
           result: false,
           data: null,

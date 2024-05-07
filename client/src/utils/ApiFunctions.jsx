@@ -22,19 +22,15 @@ export const Post = (url, data) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data), // Convert the data to a JSON string
-  })
-    .then((response) => {
-      // If the response is not OK, throw an error
-      if (!response.ok) {
-        throw new Error(`${url}: ${response.status} - ${response.statusText}`);
-      }
-      // Return the response as JSON
+  }).then((response) => {
+    try {
       return response.json();
-    })
-    .catch((error) => {
-      console.error("Error while fetching data:", error);
-      throw error;
-    });
+    } catch (err) {
+      throw new Error(
+        `${url}: ${response.status} - ${response.statusText} - ${err}`
+      );
+    }
+  });
 };
 
 /**
@@ -54,19 +50,15 @@ export const Get = (url) => {
         localStorage.getItem("accessToken") // Get the access token from local storage
       )}`,
     },
-  })
-    .then((response) => {
-      // If the response is not OK, throw an error
-      if (!response.ok) {
-        throw new Error(`${url}: ${response.status} - ${response.statusText}`);
-      }
-      // Return the response as JSON
+  }).then((response) => {
+    try {
       return response.json();
-    })
-    .catch((error) => {
-      console.error("Error while fetching data:", error);
-      throw error;
-    });
+    } catch (err) {
+      throw new Error(
+        `${url}: ${response.status} - ${response.statusText} - ${err}`
+      );
+    }
+  });
 };
 
 /**
