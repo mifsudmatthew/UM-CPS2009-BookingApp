@@ -22,8 +22,6 @@ import { getUpdatedToken } from "../../utils/ApiFunctions";
  * @returns {JSX.Element} The Bookings component.
  */
 const Bookings = () => {
-  const { storeNotification } = useNotifications();
-
   const { user, updateToken } = useProfile(); // Retrieve user data once when the component mounts
   const [courts, setCourts] = useState([]); // State variable to store the list of courts
   const [secondary, setSecCourts] = useState([]); // State variable to store the available Secondary courts
@@ -38,7 +36,7 @@ const Bookings = () => {
    * @returns {Promise<void>} A Promise that resolves when the booked courts are fetched.
    */
   useEffect(() => {
-    // Fetch the booked courts when the component loads
+    // Fetch the booked courts when the user data changes
     const fetchBookedCourts = async () => {
       const name = user.name; // Get the user's name
       const email = user.email; // Get the user's email
@@ -139,7 +137,8 @@ const Bookings = () => {
                       {/* Calculate the time difference, if more than 24 hours allow cancellation */}
                       {diffInHours > 24 ? (
                         <button
-                          onClick={() => cancelBooking(court.id, court.price)}>
+                          onClick={() => cancelBooking(court.id, court.price)}
+                        >
                           <XOctagon />
                         </button>
                       ) : null}
