@@ -87,39 +87,44 @@ function Booking() {
       return;
     }
 
-    // Check if the email is valid
-    console.log(players);
+    // Check if player emails are valid
     for (let i = 0; i < players.length; i++) {
+      // Loop through the players array
       if (
-        (!players[i] || !players[i].trim()) && // Check for empty or whitespace-only string
-        players.length > 0
+        (!players[i] || !players[i].trim()) && // Check if the player email is empty
+        players.length > 0 // Check if there are players
       ) {
         toast.error(`Please fill all fields`);
         return;
       } else if (!emailRegex.test(players[i])) {
+        // Check if the player email is valid
         toast.error(`Invalid email format detected: ${players[i]}`);
         return;
       } else if (players[i] === user.email) {
+        // Check if the player email is the same as the user's email
         toast.error(`You cannot add yourself as a player`);
         return;
       }
     }
 
-    const booking = { date, hour, court, players };
+    const booking = { date, hour, court, players }; // Create a booking object with the date, hour, court, and players
+
     try {
       // Send a POST request to the server with the booking data
       const response = await Post("/api/booking", booking);
       console.log(response);
+
+      // Display a success or error message based on the response
       if (response.result !== true) {
         toast.error(response.error);
       } else {
         toast.success(
           "Court successfully booked! Redirecting to bookings page."
         );
-        storeNotification("Court successfully booked!");
-        updateToken(await getUpdatedToken());
+        storeNotification("Court successfully booked!"); // Store a notification in the context
+        updateToken(await getUpdatedToken()); // Update the access token
         setTimeout(() => {
-          navigate("/profile/bookings", { replace: true });
+          navigate("/profile/bookings", { replace: true }); // Redirect to the bookings page after 2 seconds
         }, 2000);
       }
     } catch (error) {
@@ -128,37 +133,37 @@ function Booking() {
     }
   };
 
+  // Function to add another player to the booking
   const addAnotherPlayer = () => {
-    // Add another player to the booking
+    // If the player count is less than 4, add another player
     if (playerCount < 4) {
-      // set maximum number of players to 4
-      setPlayers([...players, ""]);
-      setPlayerCount((prev) => prev + 1);
+      setPlayers([...players, ""]); // Add an empty string to the players array
+      setPlayerCount((prev) => prev + 1); // Increment the player count
     }
   };
 
+  // Function to remove a player from the booking
   const removePlayer = () => {
-    // Remove a player from the booking
+    // If there are players
     if (playerCount > 0) {
-      // Check if there are players to remove
       setPlayerCount(playerCount - 1); // Decrement the player count
       setPlayers(players.slice(0, -1)); // Remove the last player from the players array
     }
   };
 
   // Date and time limits for input fields
-  const today = new Date();
-  const maxDate = new Date();
-  maxDate.setDate(today.getDate() + 7);
+  const today = new Date(); // Creating a new date object to store today's date
+  const maxDate = new Date(); // Create a new date object to store the maximum date
+  maxDate.setDate(today.getDate() + 7); // Set the maximum date to 7 days from today
 
   // Start and end hours for hour selection
   const startHour = 8; // Specify the start hour
   const endHour = 19; // Specify the end hour
 
-  // Generate an array of hours
+  // Generate an array of hours to select from based on the start and end hours
   const hoursArray = Array.from({ length: endHour - startHour + 1 }, (_, i) => {
-    const hour = startHour + i;
-    return hour < 10 ? `0${hour}` : `${hour}`;
+    const hour = startHour + i; // Calculate the hour
+    return hour < 10 ? `0${hour}` : `${hour}`; // Formatting the hour and returning it
   });
 
   /**
