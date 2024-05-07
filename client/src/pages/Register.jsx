@@ -1,4 +1,8 @@
-import { useState, useMemo } from "react";
+/**
+ * Register.jsx
+ */
+
+import { useState, useMemo, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -7,7 +11,7 @@ import Form from "../components/form/Form";
 import InputBox from "../components/form/InputBox";
 import InputButton from "../components/form/InputButton";
 
-import { useNotifications } from "../context/NotificationContext";
+import NotificationContext from "../context/NotificationContext";
 
 /**
  * Renders the Register page component.
@@ -21,7 +25,7 @@ function Register() {
   const [password, setPassword] = useState(""); // State variable for password input
   const [confirmPassword, setConfirmPassword] = useState(""); // State variable for confirm password input
   const [confirmEmail, setConfirmEmail] = useState(""); // State variable for confirm email input
-  const { storeNotification } = useNotifications();
+  const { storeNotification } = useContext(NotificationContext);
 
   const emailMatch = useMemo(() => {
     return email === confirmEmail; // Checks if email and confirm email match

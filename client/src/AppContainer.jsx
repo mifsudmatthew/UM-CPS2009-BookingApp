@@ -1,13 +1,17 @@
+/**
+ * AppContainer.jsx
+ */
+
 import { Routes, Route } from "react-router-dom";
 import App from "./App.jsx";
 
 /* Context */
-import { ProfileProvider } from "./context/ProfileContext";
-import { NotificationProvider } from "./context/NotificationContext";
+import ProfileProvider from "./context/ProfileProvider.jsx";
+import NotificationProvider from "./context/NotificationProvider.jsx";
 
 /* Components */
 import Bookings from "./components/profile/Bookings.jsx";
-import AccountDetails from "./components/profile/AccountDetails";
+import AccountDetails from "./components/profile/AccountDetails.jsx";
 import ConfigCourts from "./components/admin/ConfigCourts.jsx";
 import AddNewCourt from "./components/admin/AddNewCourt.jsx";
 import CourtBookingStats from "./components/admin/CourtBookingStats.jsx";

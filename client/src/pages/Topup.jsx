@@ -1,4 +1,8 @@
-import { useState, useEffect } from "react";
+/**
+ * Topup.jsx
+ */
+
+import { useState, useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { Post } from "../utils/ApiFunctions";
 
@@ -8,9 +12,9 @@ import InputButton from "../components/form/InputButton";
 
 import { toast } from "react-toastify";
 
-import { useProfile } from "../context/ProfileContext";
+import ProfileContext from "../context/ProfileContext";
 
-import { useNotifications } from "../context/NotificationContext";
+import NotificationContext from "../context/NotificationContext";
 
 /**
  * Renders the Topup page component.
@@ -20,9 +24,11 @@ import { useNotifications } from "../context/NotificationContext";
 function Topup() {
   const location = useLocation();
   const session_id = new URLSearchParams(location.search).get("session_id");
-  const { updateToken } = useProfile();
+
+  const { updateToken } = useContext(ProfileContext);
+  const { storeNotification } = useContext(NotificationContext);
+
   const [amount, setAmount] = useState(20); // Initialize the amount state
-  const { storeNotification } = useNotifications();
 
   useEffect(() => {
     /**

@@ -1,47 +1,18 @@
-import logo from "../../assets/logo.webp";
+/**
+ * Footer.jsx
+ */
+
 import "../../styles/footer.css";
-import { useState, useEffect } from "react";
-import { useProfile } from "../../context/ProfileContext";
 
-// Function to check if the user is authenticated
-const isAuthenticated = (accessToken) => {
-  if (!accessToken) return false; // If the access token is not defined, return false
-  // Otherwise, make a request to authenticate the user
-  return fetch("/api/authenticate", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${accessToken}` },
-  })
-    .then((response) => {
-      if (response.ok) {
-        return true;
-      } else {
-        return false;
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      return false;
-    });
-};
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 
-// Function to check if the user is an admin
-const isAdmin = (user) => {
-  if (!user) return false; // If the user is not defined, return false
-  return user.admin ? true : false; // Return true if the user is an admin, else return false
-};
+import ProfileContext from "../../context/ProfileContext";
+
+import logo from "../../assets/logo.webp";
 
 function Footer() {
-  const [authenticated, setAuthenticated] = useState(false); // State variable to store the login status of the user
-  const { user, accessToken } = useProfile(); // Get the user and access token from the ProfileContext
-
-  // Check if the user is authenticated every time the access token changes
-  useEffect(() => {
-    // Function to check the authentication status
-    const authenticatedResult = async () => {
-      setAuthenticated(await isAuthenticated(accessToken)); // Set the authentication status based on the access token
-    };
-    authenticatedResult(); // Call the function to check the authentication status
-  }, [accessToken, setAuthenticated]);
+  const { isAdmin, isAuthenticated } = useContext(ProfileContext); // Get the user and access token from the ProfileContext
 
   return (
     <footer className="footer">
@@ -57,34 +28,28 @@ function Footer() {
       <div>
         <nav>
           <div className="footer-heading">Links</div>
-          <a href="/">Home</a>
+          <Link to="/">Home</Link>
           <br />
-          {
-            /*Display login page and register page if not authenticated*/ !authenticated ? (
-              <>
-                <a href="/login">Login</a>
-                <br />
-                <a href="/register">Register</a>
-              </>
+          {isAuthenticated ? (
+            isAdmin ? (
+              /*Otherwise display admin page */
+              <Link to="/admin">Admin Panel</Link>
             ) : (
+              /*Display profile page and topup page if authenticated but not admin*/
               <>
-                {
-                  /*Display profile page and topup page if authenticated but not admin*/ !isAdmin(
-                    user
-                  ) ? (
-                    <>
-                      <a href="/profile">Profile</a>
-                      <br />
-                      <a href="/profile/topup">Topup</a>
-                    </>
-                  ) : (
-                    /**Otherwise display admin page */
-                    <a href="/admin">Admin Panel</a>
-                  )
-                }
+                <Link to="/profile">Profile</Link>
+                <br />
+                <Link to="/profile/topup">Topup</Link>
               </>
             )
-          }
+          ) : (
+            /*Display login page and register page if not authenticated*/
+            <>
+              <Link to="/login">Login</Link>
+              <br />
+              <Link to="/register">Register</Link>
+            </>
+          )}
         </nav>
       </div>
       <div>

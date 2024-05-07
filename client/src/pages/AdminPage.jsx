@@ -1,10 +1,15 @@
+/**
+ * AdminPage.jsx
+ */
+
 import "../styles/profile.css";
 
-import { Outlet } from "react-router-dom";
+import { useContext } from "react";
+import { Outlet, Navigate } from "react-router-dom";
+
+import ProfileContext from "../context/ProfileContext.jsx";
 
 import { AdminSidebar } from "../components/admin/AdminSidebar";
-import Authenticated from "../components/shared/Authenticated.jsx";
-import Admin from "../components/shared/Admin.jsx";
 
 /**
  * Renders the admin page.
@@ -12,15 +17,18 @@ import Admin from "../components/shared/Admin.jsx";
  * @returns {JSX.Element} The rendered admin page.
  */
 const AdminPage = () => {
+  const { isAdmin, isAuthenticated } = useContext(ProfileContext);
   return (
-    <Authenticated>
-      <Admin>
+    <>
+      {isAuthenticated && isAdmin ? (
         <div className="profile-container">
           <AdminSidebar />
           <Outlet />
         </div>
-      </Admin>
-    </Authenticated>
+      ) : (
+        <Navigate to="/" replace={true} />
+      )}
+    </>
   );
 };
 

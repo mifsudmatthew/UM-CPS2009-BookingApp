@@ -1,10 +1,11 @@
 import "../styles/profile.css";
 
+import { useContext } from "react";
 import { Outlet, Navigate } from "react-router-dom";
 
 import ProfileSidebar from "../components/profile/ProfileSidebar";
-import Authenticated from "../components/shared/Authenticated.jsx";
-import Admin from "../components/shared/Admin.jsx";
+
+import ProfileContext from "../context/ProfileContext";
 
 /**
  * Renders the profile page.
@@ -12,16 +13,24 @@ import Admin from "../components/shared/Admin.jsx";
  * @returns {JSX.Element} The rendered profile page.
  */
 const Profile = () => {
+  const { isAdmin, isAuthenticated } = useContext(ProfileContext);
   return (
-    <Authenticated>
-      <Admin fallback={<></>}>
+    <>
+      {isAuthenticated ? (
+        <>
+          {isAdmin ? (
+            <Navigate to="/" replace={true} />
+          ) : (
+            <div className="profile-container">
+              <ProfileSidebar />
+              <Outlet />
+            </div>
+          )}
+        </>
+      ) : (
         <Navigate to="/" replace={true} />
-      </Admin>
-      <div className="profile-container">
-        <ProfileSidebar />
-        <Outlet />
-      </div>
-    </Authenticated>
+      )}
+    </>
   );
 };
 

@@ -5,12 +5,12 @@
 
 import "../../styles/bookings.css";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { toast } from "react-toastify";
 import { XOctagon } from "react-bootstrap-icons";
 
-import { useProfile } from "../../context/ProfileContext";
-import { useNotifications } from "../../context/NotificationContext";
+import ProfileContext from "../../context/ProfileContext";
+import NotificationContext from "../../context/NotificationContext";
 
 import { Post } from "../../utils/ApiFunctions";
 import { getUpdatedToken } from "../../utils/ApiFunctions";
@@ -22,12 +22,12 @@ import { getUpdatedToken } from "../../utils/ApiFunctions";
  * @returns {JSX.Element} The Bookings component.
  */
 const Bookings = () => {
-  const { user, updateToken } = useProfile(); // Retrieve user data once when the component mounts
+  const { user, updateToken } = useContext(ProfileContext); // Retrieve user data once when the component mounts
+  // Retrieve the storeNotification function from the context
+  const { storeNotification } = useContext(NotificationContext);
+
   const [courts, setCourts] = useState([]); // State variable to store the list of courts
   const [secondary, setSecCourts] = useState([]); // State variable to store the available Secondary courts
-
-  // Retrieve the storeNotification function from the context
-  const { storeNotification } = useNotifications();
 
   /**
    * Fetches the booked courts for a specific user.
@@ -137,8 +137,7 @@ const Bookings = () => {
                       {/* Calculate the time difference, if more than 24 hours allow cancellation */}
                       {diffInHours > 24 ? (
                         <button
-                          onClick={() => cancelBooking(court.id, court.price)}
-                        >
+                          onClick={() => cancelBooking(court.id, court.price)}>
                           <XOctagon />
                         </button>
                       ) : null}

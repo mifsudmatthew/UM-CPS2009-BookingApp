@@ -1,8 +1,16 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useProfile } from "../../context/ProfileContext";
+/**
+ * Banner.jsx
+ * Main Section containing tennis guy image
+ * Contains a button that navigates the user to different pages depending on
+ * if they are admin/logged in/not logged in
+ */
 
 import "../../styles/banner.css";
+
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
+import ProfileContext from "../../context/ProfileContext";
 
 /**
  * Renders a banner component with a title, description, and a login button.
@@ -11,22 +19,7 @@ import "../../styles/banner.css";
  */
 function Banner() {
   const navigate = useNavigate();
-  const { user, accessToken } = useProfile();
-  const [buttonText, setButtonText] = useState("");
-
-  // Set the button text based on the user's login status
-  useEffect(() => {
-    if (accessToken === "") {
-      // If the user is not logged in
-      setButtonText("Login"); // Set the button text to "Login"
-    } else if (!user.admin) {
-      // If the user is logged in and not an admin
-      setButtonText("Book a court"); // Set the button text to "Book a court"
-    } else {
-      // If the user is an admin
-      setButtonText("Admin Panel"); // Set the button text to "Admin Panel"
-    }
-  }, [accessToken, user.admin]);
+  const { user, accessToken } = useContext(ProfileContext);
 
   /**
    *
@@ -49,7 +42,15 @@ function Banner() {
       <div className="banner-title">Your best tennis game</div>
       <p>Having the best equipment</p>
       <button className="login-button" onClick={toLogin}>
-        {buttonText}
+        {/* Set the button text based on the user's login status */}
+        {accessToken === ""
+          ? // If the user is not logged in
+            "Login"
+          : user.admin
+          ? // If the user is an admin
+            "Admin Panel"
+          : // If the user is logged in and not an admin
+            "Book a court"}
       </button>
     </div>
   );

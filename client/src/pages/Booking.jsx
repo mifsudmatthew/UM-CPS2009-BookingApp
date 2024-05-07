@@ -2,14 +2,14 @@ import "../styles/bookingform.css";
 
 import bookingImage from "../assets/bookingform.webp";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { toast } from "react-toastify";
 import { useNavigate, Navigate } from "react-router-dom";
 
-import { Post } from "../utils/ApiFunctions";
-import { useProfile } from "../context/ProfileContext";
-import { useNotifications } from "../context/NotificationContext";
-import { getUpdatedToken } from "../utils/ApiFunctions";
+import ProfileContext from "../context/ProfileContext";
+import NotificationContext from "../context/NotificationContext";
+
+import { Post, getUpdatedToken } from "../utils/ApiFunctions";
 /**
  * Renders a form for booking a tennis court.
  *
@@ -28,8 +28,8 @@ function Booking() {
   const [players, setPlayers] = useState([]); // State variable to store the players to split the cost with
   const [playerCount, setPlayerCount] = useState(0); // State variable to store the number of players
   // Check if the user is an admin based on accessToken
-  const { user, accessToken, updateToken } = useProfile();
-  const { storeNotification } = useNotifications();
+  const { user, accessToken, updateToken } = useContext(ProfileContext);
+  const { storeNotification } = useContext(NotificationContext);
 
   // Check if court selection should be shown
   const showCourtSelection = date && hour;

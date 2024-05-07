@@ -2,12 +2,12 @@
  * AccountsDetails.jsx
  */
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-import { useProfile } from "../../context/ProfileContext";
-import { useNotifications } from "../../context/NotificationContext";
+import ProfileContext from "../../context/ProfileContext";
+import NotificationContext from "../../context/NotificationContext";
 
 import Form from "../form/Form";
 import InputBox from "../form/InputBox";
@@ -25,15 +25,14 @@ import { Post } from "../../utils/ApiFunctions";
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const AccountDetails = () => {
-  const { user, updateUser, updateToken } = useProfile(); // Retrieve user data once when the component mounts
+  const { user, updateToken } = useContext(ProfileContext); // Retrieve user data once when the component mounts
+  // Retrieve the storeNotification function from the context
+  const { storeNotification } = useContext(NotificationContext);
   const navigate = useNavigate();
 
   // Initialize name and email with values from localStorage, or fallback to empty strings
   const [name, setName] = useState(user.name || "");
   const [email, setEmail] = useState(user.email || "");
-
-  // Retrieve the storeNotification function from the context
-  const { storeNotification } = useNotifications();
 
   // Function to handle form submission
   const handleSubmit = async (event) => {
