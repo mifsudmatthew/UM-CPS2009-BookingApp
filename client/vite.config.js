@@ -4,7 +4,7 @@ import react from "@vitejs/plugin-react-swc";
 
 const mainfestForPWA = {
   injectRegister: "auto",
-  registerType: "autoUpdate",
+  registerType: "prompt",
   manifest: {
     name: "Servespot - Tennis Court Booking",
     short_name: "ServeSpot",
