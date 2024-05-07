@@ -8,7 +8,7 @@ import tennis from "../assets/tennis.svg";
 import players from "../assets/players.svg";
 import leftArrow from "../assets/arrow-l.svg";
 import rightArrow from "../assets/arrow-r.svg";
-import errorImage from "../assets/sad_tennis.png";
+import errorImage from "../assets/sad_tennis.webp";
 export {
   logo,
   defaultProfilePic,

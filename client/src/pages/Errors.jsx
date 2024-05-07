@@ -2,7 +2,7 @@
  *  Errors.jsx
  */
 
-import errorImage from "../components/Icons";
+import { errorImage } from "../components/Icons";
 
 function Errors() {
   return (
