@@ -121,7 +121,6 @@ function Booking() {
     try {
       // Send a POST request to the server with the booking data
       const response = await Post("/api/booking", booking);
-      console.log(response);
 
       // Display a success or error message based on the response
       if (response.result !== true) {
