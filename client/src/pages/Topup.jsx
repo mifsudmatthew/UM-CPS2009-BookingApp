@@ -18,19 +18,20 @@ import { useNotifications } from "../context/NotificationContext";
  * @returns {JSX.Element} The Topup page component.
  */
 function Topup() {
-  const location = useLocation();
-  const session_id = new URLSearchParams(location.search).get("session_id");
-  const { updateToken } = useProfile();
-  const [amount, setAmount] = useState(20); // Initialize the amount state
-  const { storeNotification } = useNotifications();
+  const location = useLocation(); // Getting the location from the router, to get the session_id from the URL
+  const session_id = new URLSearchParams(location.search).get("session_id"); // Getting the session ID from the URL
+  const { updateToken } = useProfile(); // Getting the updateToken function from the ProfileContext
+  const [amount, setAmount] = useState(20); // Creating a state variable for the amount, defaulting to 20
+  const { storeNotification } = useNotifications(); // Getting the storeNotification function from the NotificationContext
 
+  /**
+   * If a session_id is present, it sends a POST request to "/api/success" with the session_id.
+   * Logs the response or logs an error if the request fails.
+   */
   useEffect(() => {
-    /**
-     * Fetches data when the component mounts.
-     * If a session_id is present, it sends a POST request to "/api/success" with the session_id.
-     * Logs the response or logs an error if the request fails.
-     */
-    async function fetchData() {
+    // Function to fetch the data when top-up is successful
+    async function fetchTopupSuccess() {
+      // Check if the session_id is present
       if (session_id) {
         try {
           // Send a POST request to "/api/success" with the session_id
@@ -38,6 +39,7 @@ function Topup() {
             session_id: session_id,
           });
 
+          // Update the access token if it is present in the response
           if (response.accessToken) {
             updateToken(response.accessToken);
           }
@@ -55,7 +57,7 @@ function Topup() {
       }
     }
 
-    fetchData();
+    fetchTopupSuccess(); // Call the function to fetch the data when top-up is successful
   }, [session_id, updateToken]);
 
   /**
@@ -68,25 +70,29 @@ function Topup() {
    * @param {Event} event - The form submission event.
    */
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault(); // Prevent the default form submission behavior
     try {
+      // Check if the amount is less than 20 or empty
       if ((amount >= 0 && amount < 20) || amount == "" || amount == null) {
-        // Check if amount is not a number or empty
         toast.error("Error! Please enter an amount of at least €20.");
         return;
       } else if (isNaN(amount)) {
+        // Check if the amount is not a number
         toast.error("Error! Input is not a number, please enter a number.");
         return;
       } else if (amount < 0) {
+        // Check if the amount is negative
         toast.error("Error! Please enter a positive number.");
         return;
       }
 
       console.log("Amount: ", amount);
 
+      // Send a POST request to "/api/topup" with the amount
       const data = await Post("/api/topup", { amount: amount });
       console.log(data);
 
+      // Redirect the user to the URL returned in the response
       if (data.url) {
         window.location.href = data.url;
       }
