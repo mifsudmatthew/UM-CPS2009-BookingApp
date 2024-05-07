@@ -16,7 +16,7 @@ import { getUpdatedToken } from "../utils/ApiFunctions";
  * @returns {JSX.Element} The booking form component.
  */
 function Booking() {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Get the navigate function from the useNavigate hook
   // State variables
   const [date, setDate] = useState(""); // State variable to store the selected date
   const [hour, setHour] = useState(""); // State variable to store the selected hour
@@ -28,8 +28,8 @@ function Booking() {
   const [players, setPlayers] = useState([]); // State variable to store the players to split the cost with
   const [playerCount, setPlayerCount] = useState(0); // State variable to store the number of players
   // Check if the user is an admin based on accessToken
-  const { user, accessToken, updateToken } = useProfile();
-  const { storeNotification } = useNotifications();
+  const { user, accessToken, updateToken } = useProfile(); // Get the user, accessToken, and updateToken function from the ProfileContext.
+  const { storeNotification } = useNotifications(); // Get the storeNotification function from the NotificationContext.
 
   // Check if court selection should be shown
   const showCourtSelection = date && hour;
@@ -39,6 +39,7 @@ function Booking() {
 
   // Fetch available courts based on selected date and hour
   useEffect(() => {
+    // Function to fetch available courts
     const fetchCourts = async () => {
       const postData = { date, hour };
       try {
@@ -53,10 +54,12 @@ function Booking() {
     };
 
     if (date && hour) {
+      // Fetch courts only if date and hour are selected
       fetchCourts();
     }
   }, [date, hour]);
 
+  // Redirect the user to the home page if they are an admin or not logged in
   if (user.admin || accessToken === "") {
     return <Navigate to="/" replace={true} />;
   }
@@ -66,16 +69,18 @@ function Booking() {
    * @param {Event} event - The form submit event.
    */
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault(); // Prevent the default form submission behavior
     setIsButtonDisabled(true); // Disable the button when the form is submitted
     setButtonCursor("not-allowed"); // Change cursor to not-allowed
     setButtonColor("#CCCCCC"); // Change button color to visually indicate disabled state
     setTimeout(() => {
-      setIsButtonDisabled(false);
+      // Reset button state after 2 seconds
+      setIsButtonDisabled(false); // Re-enable the button
       setButtonCursor("pointer"); // Change cursor back to pointer
-      setButtonColor(null); // Re-enable the button after 2 seconds and reset color
+      setButtonColor(null); // Reset button color
     }, 2000);
 
+    // Check if the date, hour, and court are selected
     if (!date || !hour || !court) {
       console.error("Please fill all fields");
       toast.error("Please fill all fields.");
@@ -221,13 +226,15 @@ function Booking() {
                 <button
                   type="button"
                   className="button_add"
-                  onClick={addAnotherPlayer}>
+                  onClick={addAnotherPlayer}
+                >
                   +
                 </button>
                 <button
                   type="button"
                   className="button_sub"
-                  onClick={removePlayer}>
+                  onClick={removePlayer}
+                >
                   -
                 </button>
               </div>
@@ -258,7 +265,8 @@ function Booking() {
               style={{
                 backgroundColor: buttonColor,
                 cursor: buttonCursor, // Apply dynamic cursor style
-              }}>
+              }}
+            >
               Book
             </button>
           </div>
