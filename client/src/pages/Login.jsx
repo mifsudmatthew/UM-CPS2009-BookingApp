@@ -1,6 +1,7 @@
 /**
- * Login.jsv
- * Login form that sends a request to the server to ceate a user
+ * Login.jsx
+ * This file contains the Login page component.
+ * (Login form that sends a request to the server to ceate a user)
  */
 
 import { useState } from "react";
@@ -25,16 +26,16 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  * @returns {JSX.Element} The login page component.
  */
 function Login() {
-  const navigate = useNavigate();
-  const { user, updateToken } = useProfile();
-  const { storeNotification } = useNotifications();
+  const navigate = useNavigate(); // Get the navigate function from the router
+  const { user, updateToken } = useProfile(); // Get the user and updateToken function from the ProfileContext
+  const { storeNotification } = useNotifications(); // Get the storeNotification function from the NotificationContext
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(""); // Creating a state variable for the email
+  const [password, setPassword] = useState(""); // Creating a state variable for the password
 
   // Send the login details to the server
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault(); // Prevent the default form submission behaviour
 
     // Check if the email and password fields are empty
     if (!email || !password) {
@@ -49,22 +50,30 @@ function Login() {
     }
 
     try {
+      // Attempt to send a POST request to login with the email and password
       const { accessToken } = await Post("/api/login", { email, password });
 
-      updateToken(accessToken);
+      updateToken(accessToken); // Update the access token.
 
+      // Check if the user is an admin
       if (user.admin) {
-        toast.success("Login successful! Redirecting to admin panel.");
+        toast.success(
+          "Login successful! Admin account, redirecting to home page"
+        ); // Display a success toast if the login is successful
         setTimeout(() => {
-          navigate("/admin", { replace: true });
+          navigate("/", { replace: true }); // Redirect to the admin home page after 2 seconds
         }, 2000);
         return;
       }
 
-      toast.success("Login successful!");
+      // Display a success toast if the login is successful
+      toast.success("Login successful! Redirecting to home.");
+
+      // Store a notification in local storage
       storeNotification("Login successful!");
+
       setTimeout(() => {
-        navigate("/", { replace: true });
+        navigate("/", { replace: true }); // Redirect to the home page after 2 seconds
       }, 2000);
     } catch (error) {
       console.error(`Error in: ${error}`);
