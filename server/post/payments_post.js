@@ -103,21 +103,27 @@ payment_router.post(
         };
         const accessToken = server_functions.generateAccessToken(userData);
 
-        return res
-          .status(200)
-          .json({ success: true, accessToken: accessToken });
+        return res.status(200).json({
+          result: true,
+          data: { accessToken: accessToken },
+          error: null,
+        });
         // ------------------ Payment Not Successfull
       } else {
         console.log("Failed Payment");
-
-        return res.status(400).json({ success: false });
+        return res.status(400).json({
+          result: false,
+          data: null,
+          error: "Failed Payment",
+        });
       }
     } catch (error) {
-      console.error("Error handling successful payment");
-      console.log(error);
-      return res
-        .status(500)
-        .json({ error: "Failed to handle successful payment" });
+      console.error(`Error handling successful payment ${error}`);
+      return res.status(500).json({
+        result: false,
+        data: null,
+        error: "Failed to handle successful payment",
+      });
     }
   }
 );

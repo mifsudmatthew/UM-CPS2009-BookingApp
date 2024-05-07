@@ -19,7 +19,7 @@ const ProfileProvider = ({ children }) => {
   // Decode the accessToken to get the user details
   const [user, setUser] = useState(accessToken ? jwtDecode(accessToken) : {});
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   // Function to update the accessToken in localStorage, state and user state.
   const updateToken = (accessToken) => {

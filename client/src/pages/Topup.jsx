@@ -2,19 +2,18 @@
  * Topup.jsx
  */
 
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { useLocation } from "react-router-dom";
-import { Post } from "../utils/ApiFunctions";
+import { toast } from "react-toastify";
+
+import ProfileContext from "../context/ProfileContext";
+import NotificationContext from "../context/NotificationContext";
 
 import Form from "../components/form/Form";
 import InputBox from "../components/form/InputBox";
 import InputButton from "../components/form/InputButton";
 
-import { toast } from "react-toastify";
-
-import ProfileContext from "../context/ProfileContext";
-
-import NotificationContext from "../context/NotificationContext";
+import { Post } from "../utils/ApiFunctions";
 
 /**
  * Renders the Topup page component.
@@ -24,8 +23,9 @@ import NotificationContext from "../context/NotificationContext";
 function Topup() {
   // Getting the location from the router, to get the session_id from the URL
   const location = useLocation();
+  const querys = new URLSearchParams(location.search);
   // Getting the session ID from the URL
-  const session_id = new URLSearchParams(location.search).get("session_id");
+  const session_id = querys.get("session_id");
 
   // Getting the updateToken function from the ProfileContext
   const { updateToken } = useContext(ProfileContext);
@@ -35,39 +35,29 @@ function Topup() {
   // Creating a state variable for the amount, defaulting to 20
   const [amount, setAmount] = useState(20);
 
-  /**
-   * If a session_id is present, it sends a POST request to "/api/success" with the session_id.
-   * Logs the response or logs an error if the request fails.
-   */
-  useEffect(() => {
-    async function fetchTopupSuccess() {
-      if (session_id) {
-        try {
-          // Send a POST request to "/api/success" with the session_id
-          const response = await Post("/api/success", {
-            session_id: session_id,
-          });
+  const handleSuccess = async () => {
+    // Send a POST request to "/api/success" with the session_id
+    const response = await Post("/api/success", {
+      session_id: session_id,
+    });
 
-          // Update the access token if it is present in the response
-          if (response.accessToken) {
-            updateToken(response.accessToken);
-          }
-          console.log(response);
-
-          // Display success toast if the payment was successful
-          if (response.success) {
-            storeNotification(`Top Up of ${amount} Successful!`);
-            toast.success("Top Up Successful!");
-          }
-        } catch (err) {
-          // Log an error if the request fails
-          console.error(`Error in top-up with session_id: ${err}`);
-        }
-      }
+    if (!response.result) {
+      storeNotification(`Top Up of ${amount} Failed!`);
+      toast.success("Top Up Failed!");
+      throw new Error(response.error);
     }
 
-    fetchTopupSuccess(); // Call the function to fetch the data when top-up is successful
-  }, [session_id, updateToken]);
+    if (!response.data.accessToken) {
+      throw new Error("Token that was retured is invalid");
+    }
+
+    // Update the access token if it is present in the response
+    updateToken(response.data.accessToken);
+
+    // Display success toast if the payment was successful
+    storeNotification(`Top Up of ${amount} Successful!`);
+    toast.success("Top Up Successful!");
+  };
 
   /**
    * Handles the form submission.
@@ -110,6 +100,20 @@ function Topup() {
       console.error(`Error in top-up: ${error}`);
     }
   };
+
+  /**
+   * If a session_id is present, it sends a POST request to "/api/success" with the session_id.
+   * Logs the response or logs an error if the request fails.
+   */
+  if (session_id) {
+    try {
+      handleSuccess();
+      querys.delete("session_id");
+    } catch (err) {
+      // Log an error if the request fails
+      console.error(`Error in top-up with session_id: ${err}`);
+    }
+  }
 
   return (
     <main className="profile">
