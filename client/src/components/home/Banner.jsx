@@ -19,7 +19,7 @@ import ProfileContext from "../../context/ProfileContext";
  */
 function Banner() {
   const navigate = useNavigate();
-  const { user, accessToken } = useContext(ProfileContext);
+  const { isAdmin, isAuthenticated } = useContext(ProfileContext);
 
   /**
    *
@@ -27,13 +27,34 @@ function Banner() {
    * If the user is logged in, redirects them to the booking page if they are not an admin.
    * If the user is an admin, redirects them to the admin page.
    */
-  const toLogin = () => {
-    if (accessToken === "") {
-      navigate("/login", { replace: true });
-    } else if (!user.admin) {
-      navigate("/profile/booking", { replace: true });
+  const NavigationButton = () => {
+    /* Set the button text based on the user's login status */
+    if (isAuthenticated) {
+      if (isAdmin) {
+        return (
+          <button
+            className="login-button"
+            onClick={() => navigate("/admin", { replace: true })}>
+            Admin Panel
+          </button>
+        );
+      } else {
+        return (
+          <button
+            className="login-button"
+            onClick={() => navigate("/profile/booking", { replace: true })}>
+            Book a court
+          </button>
+        );
+      }
     } else {
-      navigate("/admin", { replace: true });
+      return (
+        <button
+          className="login-button"
+          onClick={() => navigate("/login", { replace: true })}>
+          Login
+        </button>
+      );
     }
   };
 
@@ -41,17 +62,7 @@ function Banner() {
     <div className="background-container">
       <div className="banner-title">Your best tennis game</div>
       <p>Having the best equipment</p>
-      <button className="login-button" onClick={toLogin}>
-        {/* Set the button text based on the user's login status */}
-        {accessToken === ""
-          ? // If the user is not logged in
-            "Login"
-          : user.admin
-          ? // If the user is an admin
-            "Admin Panel"
-          : // If the user is logged in and not an admin
-            "Book a court"}
-      </button>
+      <NavigationButton />
     </div>
   );
 }
