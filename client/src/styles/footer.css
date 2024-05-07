@@ -9,7 +9,7 @@
   justify-content: space-between;
   align-items: center;
   font-size: 14px;
-  flex-wrap: wrap;
+
 }
 
 .footer > div {
@@ -39,7 +39,8 @@
 }
 
 .footer-content div {
-  margin-left: 20px;
+  
+  justify-content: center;
 }
 
 .footer-bottom {
@@ -48,7 +49,8 @@
 }
 
 .footer-content img {
-  width: 100px;
+  padding-left: 0.5rem;
+  width: 5rem;
   height: auto;
 }
 
