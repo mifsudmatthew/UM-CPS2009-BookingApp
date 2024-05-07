@@ -23,12 +23,12 @@ function Register() {
   const [confirmEmail, setConfirmEmail] = useState(""); // State variable for confirm email input
   const { storeNotification } = useNotifications();
 
-  // Using useMemo to memoize whether emails match, preventing unnecessary re-renders when email or confirm email changes.
+  // Using useMemo to memoize whether emails match, preventing unnecessary checks when other fields change
   const emailMatch = useMemo(() => {
     return email === confirmEmail; // Return if email and confirm email match
   }, [email, confirmEmail]);
 
-  // Using useMemo to memoize whether passwords match, preventing unnecessary re-renders when password or confirm password changes.
+  // Using useMemo to memoize whether passwords match, preventing unnecessary checks when other fields change.
   const passwordMatch = useMemo(() => {
     return password === confirmPassword; // Return if password and confirm password match
   }, [password, confirmPassword]);
