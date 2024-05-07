@@ -1,10 +1,13 @@
-// Errors.jsx
-import errorImage from "../assets/sad_tennis.png";
+/**
+ *  Errors.jsx
+ */
+
+import { errorImage } from "../components/Icons";
 
 function Errors() {
   return (
     <div>
-      <h1> Sorry, the page you are looking for does not exist.</h1>
+      <h2> Sorry, the page you are looking for does not exist.</h2>
       <img src={errorImage} alt="Error" />
     </div>
   );

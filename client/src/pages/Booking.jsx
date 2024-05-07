@@ -1,6 +1,6 @@
 import "../styles/bookingform.css";
 
-import bookingImage from "../assets/bookingform.jpg";
+import bookingImage from "../assets/bookingform.webp";
 
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";

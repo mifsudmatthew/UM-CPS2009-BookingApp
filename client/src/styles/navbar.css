@@ -113,7 +113,8 @@
 .navbar-logo img {
   margin: 0 5%;
   max-width: auto;
-  height: 4rem;
+  height: 3rem;
+  padding-left: 0.3rem;
 }
 
 .navbar {

@@ -1,4 +1,4 @@
-import logo from "../../assets/logo.png";
+import logo from "../../assets/logo.webp";
 import "../../styles/footer.css";
 import { useState, useEffect } from "react";
 import { useProfile } from "../../context/ProfileContext";
@@ -69,13 +69,16 @@ function Footer() {
             ) : (
               <>
                 {
-                  /*Display profile page and topup page if authenticated but not admin*/ !isAdmin(user) ? (
+                  /*Display profile page and topup page if authenticated but not admin*/ !isAdmin(
+                    user
+                  ) ? (
                     <>
                       <a href="/profile">Profile</a>
                       <br />
                       <a href="/profile/topup">Topup</a>
                     </>
-                  ) : (/**Otherwise display admin page */
+                  ) : (
+                    /**Otherwise display admin page */
                     <a href="/admin">Admin Panel</a>
                   )
                 }
