@@ -8,7 +8,7 @@
   background-image: url("../assets/banner.webp");
   background-size: cover;
   background-position: center;
-  background-repeat: repeat;
+  background-repeat: no-repeat;
   overflow: hidden;
 }
 
