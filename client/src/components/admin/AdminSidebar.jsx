@@ -1,16 +1,21 @@
+/**
+ * AdminSidebar.jsx
+ */
+
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import InputButton from "../form//InputButton";
-
-import { useProfile } from "../../context/ProfileContext";
-
 import { toast } from "react-toastify";
+
+import ProfileContext from "../../context/ProfileContext";
+
+import InputButton from "../form//InputButton";
 
 /**
  * Renders the admin sidebar component.
  * @returns {JSX.Element} The admin sidebar component.
  */
 export const AdminSidebar = () => {
-  const { updateToken } = useProfile(); // Accesses authentication context
+  const { updateToken } = useContext(ProfileContext); // Accesses authentication context
 
   /**
    * Logs the user out by clearing the accessToken and user data,

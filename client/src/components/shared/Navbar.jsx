@@ -1,6 +1,17 @@
-import { useState, useEffect, useRef } from "react";
+/**
+ * Navbar.jsx
+ */
+
+import "../../styles/navbar.css";
+
+import { useState, useEffect, useContext, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
+
+import ProfileContext from "../../context/ProfileContext";
+import NotificationContext from "../../context/NotificationContext";
+
+import { logo } from "../Icons";
 import {
   Wallet2,
   Bell,
@@ -13,38 +24,6 @@ import {
   X,
   GearWideConnected,
 } from "react-bootstrap-icons";
-import { useNotifications } from "../../context/NotificationContext";
-import { useProfile } from "../../context/ProfileContext";
-import { logo } from "../Icons";
-import "../../styles/navbar.css";
-
-// Function to check if the user is authenticated
-const isAuthenticated = (accessToken) => {
-  if (!accessToken) return false; // If the access token is not defined, return false
-
-  // Otherwise, make a request to authenticate the user
-  return fetch("/api/authenticate", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${accessToken}` },
-  })
-    .then((response) => {
-      if (response.ok) {
-        return true;
-      } else {
-        return false;
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      return false;
-    });
-};
-
-// Function to check if the user is an admin
-const isAdmin = (user) => {
-  if (!user) return false; // If the user is not defined, return false
-  return user.admin ? true : false; // Return true if the user is an admin, else return false
-};
 
 /**
  * Renders the navigation bar component.
@@ -55,34 +34,32 @@ const isAdmin = (user) => {
  * @returns {JSX.Element} The rendered navigation bar.
  */
 function Navbar() {
-  const { updateToken } = useProfile(); // Accesses authentication context
-  const [open, setOpen] = useState(false); // State variable to store the visibility of the menu
-  const [notificationOpen, setNotificationOpen] = useState(false); // State variable to store the visibility of the notification panel
-  let logoutButtonState = false; // State variable to store the logout button state
+  // Accesses authentication context and get the user and access token from the ProfileContext
+  const { user, logout, isAdmin, isAuthenticated } = useContext(ProfileContext);
+  // Accesses the stored notifications
+  const { notifications, clearNotifications } = useContext(NotificationContext);
+
+  // State variable to store the visibility of the menu
+  const [open, setOpen] = useState(false);
+  // State variable to store the visibility of the notification panel
+  const [notificationOpen, setNotificationOpen] = useState(false);
+
+  // State variable to store the logout button state
+  const [clickedLogout, setClickedLogout] = useState(false);
+
   let menuRef = useRef(); // Reference to the navigation menu element
   let notifRef = useRef(); // Reference to the notification menu element
 
-  // State variables
-  const [authenticated, setAuthenticated] = useState(false); // State variable to store the login status of the user
-
-  const { notifications } = useNotifications(); // Accesses the stored notifications
-
-  const { user, accessToken } = useProfile(); // Get the user and access token from the ProfileContext
-
   // Function to log out the user
   const logOut = () => {
-    if (logoutButtonState == false) {
-      // Only allow logout to be pressed once.
+    if (!clickedLogout) {
+      setClickedLogout(true);
 
-      logoutButtonState = true;
       toast.success("Logged out successfully!"); // Displays a success message
-      // Clear the 'notifications' array in localStorage
-      localStorage.setItem("notifications", JSON.stringify([]));
-
+      // Clear the 'notifications' array
+      clearNotifications();
       // Profile user validation requires change therefore updateToken and setUser should be taken out then.
-      setTimeout(() => {
-        updateToken(""); // Clears the authentication accessToken
-      }, 2000);
+      logout();
     }
   };
 
@@ -109,15 +86,6 @@ function Navbar() {
     };
   }, []);
 
-  // Check if the user is authenticated every time the access token changes
-  useEffect(() => {
-    // Function to check the authentication status
-    const authenticatedResult = async () => {
-      setAuthenticated(await isAuthenticated(accessToken)); // Set the authentication status based on the access token
-    };
-    authenticatedResult(); // Call the function to check the authentication status
-  }, [accessToken, setAuthenticated]);
-
   return (
     <nav className="navbar">
       {/* ---------------------- Logo ------------------------------- */}
@@ -134,43 +102,36 @@ function Navbar() {
 
       <div className="navbar-right">
         {/* ---------------------- Balance ---------------------------- */}
-        {!isAdmin(user) && authenticated ? (
+        {!isAdmin && isAuthenticated && (
           <NavLink style={{ padding: "10px" }} to="/profile/topup">
             <div className="navbar-balance">
               <Wallet2 className="wallet"> : </Wallet2>
               {user.balance !== undefined ? `€${user.balance.toFixed(2)}` : 0}
             </div>
           </NavLink>
-        ) : (
-          <></>
         )}
 
         {/* ---------------------- Notification Bell ---------------------------- */}
-        {!isAdmin(user) && authenticated ? (
+        {!isAdmin && isAuthenticated && (
           <div className="bellWidth">
             <div className="navbar-bell" ref={notifRef}>
               <div
                 className="hover-grow"
                 onClick={() => {
                   setNotificationOpen(!notificationOpen);
-                }}
-              >
+                }}>
                 {notificationOpen ? (
                   <X
                     className="bell-icon menu-icon-img"
-                    style={{ marginTop: "10px" }}
-                  ></X>
+                    style={{ marginTop: "10px" }}></X>
                 ) : (
                   <Bell
                     className="bell-icon bell-icon-img"
-                    style={{ marginTop: "15px" }}
-                  ></Bell>
+                    style={{ marginTop: "15px" }}></Bell>
                 )}
               </div>
             </div>
           </div>
-        ) : (
-          <></>
         )}
 
         {/* ---------------------- Navigation Menu - Icon ---------------------------- */}
@@ -179,8 +140,7 @@ function Navbar() {
           ref={menuRef}
           onClick={() => {
             setOpen(!open);
-          }}
-        >
+          }}>
           <div className="hover-grow menu-icon menu-icon-img">
             {open ? <X></X> : <List></List>}
           </div>
@@ -190,8 +150,7 @@ function Navbar() {
         <div
           className={`notification-menu ${
             notificationOpen ? "active" : "inactive"
-          }`}
-        >
+          }`}>
           <ul className="notificationList">
             {notifications.map((notification, index) => (
               <li className="dropdownItem" key={index}>
@@ -213,7 +172,7 @@ function Navbar() {
               </li>
             </NavLink>
             {/* Displaying login and register hyperlinks if user not authenticated */}
-            {!authenticated ? (
+            {!isAuthenticated ? (
               <>
                 <NavLink to="/login">
                   <li className="dropdownItem">
@@ -231,7 +190,7 @@ function Navbar() {
             ) : (
               <>
                 {/* Displaying profile and topup hyperlinks if authenticated but not admin */}
-                {!isAdmin(user) ? (
+                {!isAdmin ? (
                   <>
                     <NavLink to="/profile">
                       <li className="dropdownItem">

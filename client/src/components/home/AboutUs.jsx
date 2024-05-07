@@ -1,4 +1,10 @@
+/**
+ * AboutUs.jsx
+ * Descriptions about what the serveSpot does and displays some statistics
+ */
+
 import "../../styles/aboutus.css";
+
 import { happy, tennis, players } from "../Icons";
 
 /**
@@ -17,7 +23,7 @@ const AboutUs = () => {
         perfect court to enhancing your skills through our curated resources and
         community features.
       </div>
-      <br></br>
+      <br />
       <div className="aboutus-text">
         Join us in celebrating the joy of tennis and embark on a journey filled
         with matches, memories, and endless opportunities to ace your game.

@@ -3,12 +3,12 @@
  * Login form that sends a request to the server to ceate a user
  */
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { useProfile } from "../context/ProfileContext";
-import { useNotifications } from "../context/NotificationContext";
+import ProfileContext from "../context/ProfileContext";
+import NotificationContext from "../context/NotificationContext";
 
 import { Post } from "../utils/ApiFunctions";
 
@@ -26,8 +26,8 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  */
 function Login() {
   const navigate = useNavigate();
-  const { user, updateToken } = useProfile();
-  const { storeNotification } = useNotifications();
+  const { user, updateToken } = useContext(ProfileContext);
+  const { storeNotification } = useContext(NotificationContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

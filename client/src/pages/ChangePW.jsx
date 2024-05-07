@@ -2,11 +2,11 @@
  * ChangePW.jsx
  */
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { useNotifications } from "../context/NotificationContext";
+import NotificationContext from "../context/NotificationContext";
 
 import { Post } from "../utils/ApiFunctions";
 
@@ -21,7 +21,7 @@ import InputButton from "../components/form/InputButton";
  */
 function ChangePW() {
   const navigate = useNavigate();
-  const { storeNotification } = useNotifications();
+  const { storeNotification } = useContext(NotificationContext);
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");

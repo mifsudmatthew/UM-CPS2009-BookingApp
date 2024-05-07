@@ -1,5 +1,12 @@
-import { useState, useEffect } from "react";
+/**
+ * Courts.jsx
+ * Display Possible Courts that one can book if they sign up to ServeSpot
+ */
+
 import "../../styles/courts.css";
+
+import { useState, useEffect } from "react";
+
 import { Post } from "../../utils/ApiFunctions";
 
 import {

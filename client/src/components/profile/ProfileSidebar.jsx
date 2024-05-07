@@ -3,11 +3,12 @@
  * Left bar that holds links to all profile
  */
 
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { useProfile } from "../../context/ProfileContext";
-import { useNotifications } from "../../context/NotificationContext";
+import ProfileContext from "../../context/ProfileContext";
+import NotificationContext from "../../context/NotificationContext";
 
 import InputButton from "../form//InputButton";
 
@@ -21,8 +22,8 @@ import { defaultProfilePic } from "../Icons";
  * @returns {JSX.Element} The profile sidebar component.
  */
 const ProfileSidebar = () => {
-  const { user, logout } = useProfile(); // Accesses authentication context
-  const { clearNotifications } = useNotifications();
+  const { user, logout } = useContext(ProfileContext); // Accesses authentication context
+  const { clearNotifications } = useContext(NotificationContext);
   /**
    * Logs the user out by clearing the accessToken and user data,
    * and redirects the user to the root page.

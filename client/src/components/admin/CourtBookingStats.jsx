@@ -1,9 +1,15 @@
-import { useState, useEffect } from "react"; // Importing hooks from react
-import { Post } from "../../utils/ApiFunctions"; // Importing the Post function to make POST requests
-import "../../styles/accordion.css"; // Importing the accordion styles
+/**
+ * CourtBookingStats.jsx
+ */
+
 import "../../styles/admin.css"; // Importing the admin styles
+import "../../styles/accordion.css"; // Importing the accordion styles
+
+import { useState, useEffect } from "react"; // Importing hooks from react
 import { Bar, Line } from "react-chartjs-2"; // Importing the Bar and Line components from react-chartjs-2
 import Chart from "chart.js/auto"; // Importing the Chart component from chart.js/auto to render the chart
+
+import { Post } from "../../utils/ApiFunctions"; // Importing the Post function to make POST requests
 
 function CourtBookingStats() {
   // State variables to store the court statistics, names, and profits
@@ -158,8 +164,7 @@ function CourtBookingStats() {
                 <div
                   className={`accordion-body ${
                     court.isOpen ? "open" : "close"
-                  }`}
-                >
+                  }`}>
                   <table>
                     <thead>
                       <tr>
