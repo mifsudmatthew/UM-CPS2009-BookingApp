@@ -225,7 +225,7 @@ bookingRouter.post(
               time: booking.time,
               name: court.data.court_name,
               address: court.data.address,
-              price: booking.cost,
+              price: booking.cost / (booking.secondaryUsers.length + 1),
               secondary: booking.secondaryUsers,
             };
           })
@@ -273,7 +273,7 @@ bookingRouter.post(
               time: booking.time,
               name: court.data.court_name,
               address: court.data.address,
-              price: booking.cost,
+              price: booking.cost / (booking.secondaryUsers.length + 1),
               secondary: booking.secondaryUsers,
             };
           })
@@ -314,8 +314,12 @@ bookingRouter.post(
         await courts_queries.retrieveCourt(bookingDetails.data.courtID)
       ).data.court_name; // Getting court name according of booking
 
-      const courtTime = bookingDetails.data.time; // Getting time of booking
+      let courtTime = bookingDetails.data.time; // Getting time of booking
 
+      // Formatting time to send in email in 24-hour format
+      if (courtTime < 10) {
+        courtTime = "0" + courtTime;
+      }
       const result = await bookings_queries.removeBooking(booking_id); // Removing booking from database
       if (result.result == true) {
         // If booking was successfully removed
