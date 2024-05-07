@@ -165,7 +165,7 @@ async function sendBookingSuccessMail(user_email, court, date, hour, price) {
     to: user_email, // Email of the user requesting a reset.
     subject: `Successful Booking for ${court}`, // Subject of email.
     // Email body using details from the user's data retrieved.
-    text: `Dear ${user_data.data.name},\n\nWe're pleased to inform you that your recent booking request has been successful.\n\nHere are the details of your booking:\n\n Court: ${court}\n\n Date: ${date}\n\n Time: ${hour}:00\n\nPrice paid: €${price}\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`,
+    text: `Dear ${user_data.data.name},\n\nWe're pleased to inform you that your recent booking request has been successful.\n\nHere are the details of your booking:\n\nCourt: ${court}\n\nDate: ${date}\n\nTime: ${hour}:00\n\nPrice paid: €${price}\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`,
   };
 
   // Sending the email with the details created.
@@ -211,7 +211,7 @@ async function sendCancellationSuccessMail(
     to: user_email, // This should be changed to email of the user requesting a reset.
     subject: `Successful Cancellation for ${court}`, // Subject of email.
     // Email body using details from the user's data retrieved.
-    text: `Dear ${user_data.data.name},\n\nWe would like to inform you that the following booking has been cancelled:\n\n Court: ${court}\n\n Date: ${date}\n\nTime: ${hour}:00\n\n Amount refunded: €${price}\n\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`,
+    text: `Dear ${user_data.data.name},\n\nWe would like to inform you that the following booking has been cancelled:\n\nCourt: ${court}\n\nDate: ${date}\n\nTime: ${hour}:00\n\nAmount refunded: €${price}\n\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`,
   };
 
   // Sending the email with the details created.
