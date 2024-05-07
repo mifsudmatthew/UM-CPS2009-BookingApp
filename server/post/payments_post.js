@@ -63,6 +63,7 @@ payment_router.post(
  *
  * @return
  * - 200: Success in making payment or failed payment.
+ * - 400: Failed Payment.
  * - 500: Failed to handle successful payment (Possible Database Error).
  */
 payment_router.post(

@@ -222,7 +222,17 @@ async function sendCancellationSuccessMail(
   return { message: "Email sent successfully" };
 }
 
-// Function to validate the user's token.
+/**
+ * @brief Function to validate the user's token.
+ *
+ * @param {Object} req The request object.
+ *
+ * @param {Object} res The response object.
+ *
+ * @param {Object} next The next object.
+ *
+ * @return {Object} Error message on failure.
+ */
 function authenticateToken(req, res, next) {
   // Obtaining the authorization header from the request.
   const authHeader = req.headers.authorization;
