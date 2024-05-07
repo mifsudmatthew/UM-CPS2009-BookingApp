@@ -1,5 +1,5 @@
 /* Stores functions that communicate with the server to
- * retrieve/set/delete user data */
+ * retrieve/set user data */
 
 /**
  * @brief Sends a request to the server to retrieve user data
