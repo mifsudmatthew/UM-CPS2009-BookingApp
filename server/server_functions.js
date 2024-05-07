@@ -2,9 +2,9 @@
  * Helper functions that are used in the routes of the server
  */
 
-// Used to send Emails
+// Importing nodemailer to send emails
 const nodeMailer = require("nodemailer");
-// JSON Web Tokens for autherization
+// Importing JSON Web Tokens for authorisation
 const jwt = require("jsonwebtoken");
 
 // Obtaining the database schema functions for user
@@ -23,7 +23,13 @@ const transporter = nodeMailer.createTransport({
   },
 });
 
-// Function to generate a new pin. By generating 4 random numbers (0-9) and concatenating them.
+/**
+ * @brief Function to generate a new pin. By generating 4 random numbers (0-9) and concatenating them.
+ *
+ * @param None
+ *
+ * @return {String} The generated pin
+ */
 function getRandomPin() {
   let tmp = ""; // Creating an empty string
   for (let i = 0; i < 4; i++) {
@@ -35,7 +41,15 @@ function getRandomPin() {
   return tmp;
 }
 
-// Function to add an entry to the accountPins array with a  5 minute timer
+/**
+ * @brief Function to add an entry to the accountPins array with a 5 minute timer
+ *
+ * @param {String} email The email of the user
+ *
+ * @param {String} pin The pin generated
+ *
+ * @return None
+ */
 function addPinEntry(email, pin) {
   // Parameters taken are the user email and the corresponding pin
   // Adding a new entry to the accountPins array with parameter data
@@ -59,7 +73,13 @@ function addPinEntry(email, pin) {
   }, 300000); // Setting timer to 5 minutes in milliseconds
 }
 
-// Function to send an email to user requesting a password reset.
+/**
+ * @brief Function to send an email to user requesting a password reset.
+ *
+ * @param {String} user_email The email of the user requesting to send pin to email.
+ *
+ * @return {Object} A message indicating the success of the email sent
+ */
 async function sendPinByMail(user_email) {
   var generated_pin = getRandomPin(); // Generating a new pin
 
@@ -82,10 +102,19 @@ async function sendPinByMail(user_email) {
   return { message: "Email sent successfully" };
 }
 
-// Function to send a confirmation to the user that the payment was successful.
+/**
+ * @brief Function to send a confirmation to the user that the payment was successful.
+ *
+ * @param {String} user_email The email of the user topping up their account.
+ *
+ * @param {Number} amount The amount topped up by the user.
+ *
+ * @return {Object} A message indicating the success of the email sent
+ */
 async function sendPaymentSuccessMail(user_email, amount) {
   user_data = await user_queries.retrieveUser(user_email); // Obtaining data associated with the email inputted.
 
+  // Check if user data is not retrieved
   if (!user_data.result) {
     return { message: "Failed to retreive email" };
   }
@@ -107,10 +136,25 @@ async function sendPaymentSuccessMail(user_email, amount) {
   return { message: "Email sent successfully" };
 }
 
-// Function to send a confirmation to the user that the booking was successful.
+/**
+ * @brief Function to send a confirmation to the user that the booking was successful.
+ *
+ * @param {String} user_email The email of the user booking the court.
+ *
+ * @param {String} court Name of court booked by the user.
+ *
+ * @param {String} date Date of the booking.
+ *
+ * @param {String} hour Hour of the booking.
+ *
+ * @param {Number} price Price of the booking.
+ *
+ * @return {Object} A message indicating the success of the email sent
+ */
 async function sendBookingSuccessMail(user_email, court, date, hour, price) {
   user_data = await user_queries.retrieveUser(user_email); // Obtaining data associated with the email inputted.
 
+  // Check if user data is not retrieved
   if (!user_data.result) {
     return { message: "Failed to retreive email" };
   }
@@ -121,7 +165,7 @@ async function sendBookingSuccessMail(user_email, court, date, hour, price) {
     to: user_email, // Email of the user requesting a reset.
     subject: `Successful Booking for ${court}`, // Subject of email.
     // Email body using details from the user's data retrieved.
-    text: `Dear ${user_data.data.name},\n\nWe're pleased to inform you that your recent booking request has been successful.\n\nHere are the details of your booking:\n\n Court: ${court}\n\n Date: ${date}\n\n Time: ${hour}00\n\nPrice paid: €${price}n\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`,
+    text: `Dear ${user_data.data.name},\n\nWe're pleased to inform you that your recent booking request has been successful.\n\nHere are the details of your booking:\n\n Court: ${court}\n\n Date: ${date}\n\n Time: ${hour}:00\n\nPrice paid: €${price}\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`,
   };
 
   // Sending the email with the details created.
@@ -132,7 +176,21 @@ async function sendBookingSuccessMail(user_email, court, date, hour, price) {
   return { message: "Email sent successfully" };
 }
 
-// Function to send a confirmation to the user that the booking was cancelled.
+/**
+ * @brief Function to send a confirmation to the user that the booking was cancelled.
+ *
+ * @param {String} user_email The email of the user cancelling the booking.
+ *
+ * @param {String} court Name of court booked by the user.
+ *
+ * @param {String} date Date of the booking.
+ *
+ * @param {String} hour Hour of the booking.
+ *
+ * @param {Number} price Price of the booking.
+ *
+ * @return {Object} A message indicating the success of the email sent
+ */
 async function sendCancellationSuccessMail(
   user_email,
   court,
@@ -142,6 +200,7 @@ async function sendCancellationSuccessMail(
 ) {
   user_data = await user_queries.retrieveUser(user_email); // Obtaining data associated with the email inputted.
 
+  // Check if user data is not retrieved
   if (!user_data.result) {
     return { message: "Failed to retreive email" };
   }
@@ -152,7 +211,7 @@ async function sendCancellationSuccessMail(
     to: user_email, // This should be changed to email of the user requesting a reset.
     subject: `Successful Cancellation for ${court}`, // Subject of email.
     // Email body using details from the user's data retrieved.
-    text: `Dear ${user_data.data.name},\n\nWe would like to inform you that the following booking has been cancelled:\n\n Court: ${court}\n\n Date: ${date}\n\nTime:${hour}:00\n\n Amount refunded: €${price}\n\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`,
+    text: `Dear ${user_data.data.name},\n\nWe would like to inform you that the following booking has been cancelled:\n\n Court: ${court}\n\n Date: ${date}\n\nTime: ${hour}:00\n\n Amount refunded: €${price}\n\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`,
   };
 
   // Sending the email with the details created.
@@ -189,7 +248,13 @@ function authenticateToken(req, res, next) {
   });
 }
 
-// Function to return a new token for the user based on the email.
+/**
+ * @brief Function to return a new token for the user based on the email.
+ *
+ * @param {String} email The email of the user
+ *
+ * @return {Object} JSON containing the new token and result of the operation
+ */
 async function getUpdatedToken(email) {
   // Check if email is not supplied
   if (email == undefined || email == null)
@@ -221,12 +286,24 @@ async function getUpdatedToken(email) {
   }
 }
 
-// Function to generate a new access token.
+/**
+ * @brief Function to generate a new access token.
+ *
+ * @param {Object} payload The payload to be used to generate the token
+ *
+ * @return {String} The generated access token
+ */
 function generateAccessToken(payload) {
   return jwt.sign(payload, process.env.JWT_ACCESS);
 }
 
-// Not used
+/**
+ * @brief Function to generate a new refresh token. (NOT USED)
+ *
+ * @param {Object} payload The payload to be used to generate the token
+ *
+ * @return {String} The generated refresh token
+ */
 function generateRefreshToken(payload) {
   return jwt.sign(payload, process.env.JWT_REFRESH);
 }
