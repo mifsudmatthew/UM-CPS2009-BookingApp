@@ -87,6 +87,8 @@ function Booking() {
       return;
     }
 
+    let uniqueEmails = []; // Array to store unique emails
+
     // Check if player emails are valid
     for (let i = 0; i < players.length; i++) {
       // Loop through the players array
@@ -104,33 +106,37 @@ function Booking() {
         // Check if the player email is the same as the user's email
         toast.error(`You cannot add yourself as a player`);
         return;
+      } else if (uniqueEmails.includes(players[i])) {
+        // Check if the player email is already added
+        toast.error(`Duplicate player email detected: ${players[i]}`);
+        return;
+      } else {
+        uniqueEmails.push(players[i]); // Add email to uniqueEmails array
       }
     }
 
     const booking = { date, hour, court, players }; // Create a booking object with the date, hour, court, and players
 
-    try {
-      // Send a POST request to the server with the booking data
-      const response = await Post("/api/booking", booking);
-      console.log(response);
-
-      // Display a success or error message based on the response
-      if (response.result !== true) {
-        toast.error(response.error);
-      } else {
+    // Call the Post function with the URL and data
+    Post("/api/booking", booking)
+      .then((response) => {
+        if (response.result === false) {
+          toast.error(response.error); // Display an error message if the booking fails
+          return;
+        }
+        // Success: responseData contains the response from the server
         toast.success(
           "Court successfully booked! Redirecting to bookings page."
         );
         storeNotification("Court successfully booked!"); // Store a notification in the context
-        updateToken(await getUpdatedToken()); // Update the access token
+        updateToken(getUpdatedToken()); // Update the access token
         setTimeout(() => {
           navigate("/profile/bookings", { replace: true }); // Redirect to the bookings page after 2 seconds
         }, 2000);
-      }
-    } catch (error) {
-      // Log an error if the request fails
-      console.error("Error submitting booking: ", error);
-    }
+      })
+      .catch((error) => {
+        console.error("/api/booking Error:", error);
+      });
   };
 
   // Function to add another player to the booking
@@ -231,13 +237,15 @@ function Booking() {
                 <button
                   type="button"
                   className="button_add"
-                  onClick={addAnotherPlayer}>
+                  onClick={addAnotherPlayer}
+                >
                   +
                 </button>
                 <button
                   type="button"
                   className="button_sub"
-                  onClick={removePlayer}>
+                  onClick={removePlayer}
+                >
                   -
                 </button>
               </div>
@@ -268,7 +276,8 @@ function Booking() {
               style={{
                 backgroundColor: buttonColor,
                 cursor: buttonCursor, // Apply dynamic cursor style
-              }}>
+              }}
+            >
               Book
             </button>
           </div>

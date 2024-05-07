@@ -44,7 +44,7 @@ payment_router.post(
       });
 
       // ------------------ Send user to session
-      res.status(200).json({ url: session.url });
+      res.json({ url: session.url });
     } catch (error) {
       console.error("Error creating checkout session");
       return res.status(500).send({ error: "Error creating checkout session" });
@@ -62,8 +62,7 @@ payment_router.post(
  * @param None
  *
  * @return
- * - 200: Success in making payment.
- * - 400: Failed to make payment.
+ * - 200: Success in making payment or failed payment.
  * - 500: Failed to handle successful payment (Possible Database Error).
  */
 payment_router.post(
@@ -103,14 +102,12 @@ payment_router.post(
         };
         const accessToken = server_functions.generateAccessToken(userData);
 
-        return res
-          .status(200)
-          .json({ success: true, accessToken: accessToken });
+        return res.json({ success: true, accessToken: accessToken });
         // ------------------ Payment Not Successfull
       } else {
         console.log("Failed Payment");
 
-        return res.status(400).json({ success: false });
+        return res.json({ success: false });
       }
     } catch (error) {
       console.error("Error handling successful payment");

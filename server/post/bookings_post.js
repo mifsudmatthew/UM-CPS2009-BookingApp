@@ -22,7 +22,7 @@ bookingRouter.post("/getAvailableCourts", async (req, res) => {
     // If there is an error
     res.status(500).json({ error: "Error fetching courts" });
   }
-  res.status(200).json(responseQ.data); // Sending available courts to client
+  res.json(responseQ.data); // Sending available courts to client
 });
 
 /**
@@ -40,7 +40,7 @@ bookingRouter.post("/verifyPlayer", async (req, res) => {
     // If there is an error
     res.status(500).json({ error: "Error fetching user" });
   }
-  res.status(200).json(response); // Sending user to client
+  res.json(response); // Sending user to client
 });
 
 /** ============================================ Booking ===========================================
@@ -51,8 +51,7 @@ bookingRouter.post("/verifyPlayer", async (req, res) => {
  * @param None
  *
  * @return
- * - 200: Successful booking addition
- * - 400: Bad request (Secondary User does not exist)
+ * - 200: Successful booking additionmm, insufficient funds,secondary user has insufficient funds or email does not exist
  * - 500: Internal server error (Insufficient funds or Failed to update user balance)
  */
 bookingRouter.post(
@@ -73,7 +72,7 @@ bookingRouter.post(
       const secondaryUser = await user_queries.retrieveUser(email); // Getting secondary user according to email
       if (secondaryUser.result == false) {
         // If secondary user does not exist
-        return res.status(400).json({
+        return res.json({
           // Return error
           result: false,
           data: null,
@@ -89,7 +88,7 @@ bookingRouter.post(
       split_cost = (court.data.price / (secondary_users.length + 1)).toFixed(2); // Calculate split cost
       if (user.data.balance < split_cost) {
         // If user has insufficient funds
-        return res.status(500).json({
+        return res.json({
           // Return error
           result: false,
           data: null,
@@ -100,7 +99,7 @@ bookingRouter.post(
         // Loop through secondary users
         if (sec_user.balance < split_cost) {
           // If secondary user has insufficient funds
-          return res.status(500).json({
+          return res.json({
             // Return error
             result: false,
             data: null,
@@ -147,12 +146,12 @@ bookingRouter.post(
         req.body.hour,
         split_cost
       );
-      return res.status(200).json(response);
+      return res.json(response);
 
       // ----------------------------------------------- Single User Invalid
     } else if (user.data.balance < court.data.price) {
       // If user has insufficient funds
-      return res.status(500).json({
+      return res.json({
         // Return error
         result: false,
         data: null,
@@ -185,7 +184,7 @@ bookingRouter.post(
         user_queries.updateUserBalance(email, -court.data.price); // Update user balance
       }
 
-      res.status(200).json(response); // Return response
+      res.json(response); // Return response
     }
   }
 );
@@ -230,9 +229,9 @@ bookingRouter.post(
             };
           })
         );
-        res.status(200).json(formattedBookings); // Send formatted bookings to client
+        res.json(formattedBookings); // Send formatted bookings to client
       } else {
-        res.status(500).json([]); // Send empty array to client
+        res.json([]); // Send empty array to client
       }
     } catch (error) {
       console.error("Error fetching future bookings: ", error);
@@ -296,7 +295,6 @@ bookingRouter.post(
  *
  * @return
  * - 200: Successful cancellation of booking
- * - 400: Invalid booking ID
  * - 500: Failure to fetch future bookings
  */
 bookingRouter.post(
@@ -354,7 +352,7 @@ bookingRouter.post(
               split_cost
             );
           }
-          return res.status(200).json({ result: true }); // Return success
+          return res.json({ result: true }); // Return success
         } else {
           // If there are no secondary users
           await user_queries.updateUserBalance(email, bookingDetails.data.cost); // Update user balance
@@ -366,10 +364,10 @@ bookingRouter.post(
             courtTime,
             court.data.price.toFixed(2)
           );
-          return res.status(200).json({ result: true });
+          return res.json({ result: true });
         }
       } else {
-        res.status(400).json({ result: false });
+        res.json({ result: false });
       }
     } catch (error) {
       console.error("Error fetching future bookings: ", error);
