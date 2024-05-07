@@ -10,7 +10,7 @@ const user_queries = require("../../database/schema_functions/user_functions"); 
  *
  * @param None
  *
- * @return
+ * @return {Object} The response from the server
  * - 200: Success obtaining available courts
  * - 500: Failure obtaining available courts
  */
@@ -30,7 +30,7 @@ bookingRouter.post("/getAvailableCourts", async (req, res) => {
  *
  * @param None
  *
- * @return
+ * @return {Object} The response from the server
  * - 200: Successful player verification
  * - 500: Failure to verify player
  */
@@ -50,9 +50,9 @@ bookingRouter.post("/verifyPlayer", async (req, res) => {
  *
  * @param None
  *
- * @return
- * - 200: Successful booking additionmm, insufficient funds,secondary user has insufficient funds or email does not exist
- * - 500: Internal server error (Insufficient funds or Failed to update user balance)
+ * @return {Object} The response from the server
+ * - 200: Successful booking addition
+ * - 500: Insufficient funds, Failed to update user balance, secondary user has insufficient funds or email does not exist
  */
 bookingRouter.post(
   "/booking",
@@ -88,7 +88,7 @@ bookingRouter.post(
       split_cost = (court.data.price / (secondary_users.length + 1)).toFixed(2); // Calculate split cost
       if (user.data.balance < split_cost) {
         // If user has insufficient funds
-        return res.json({
+        return res.status(500).json({
           // Return error
           result: false,
           data: null,
@@ -99,7 +99,7 @@ bookingRouter.post(
         // Loop through secondary users
         if (sec_user.balance < split_cost) {
           // If secondary user has insufficient funds
-          return res.json({
+          return res.status(500).json({
             // Return error
             result: false,
             data: null,
@@ -151,7 +151,7 @@ bookingRouter.post(
       // ----------------------------------------------- Single User Invalid
     } else if (user.data.balance < court.data.price) {
       // If user has insufficient funds
-      return res.json({
+      return res.status(500).json({
         // Return error
         result: false,
         data: null,
@@ -179,6 +179,7 @@ bookingRouter.post(
         req.body.hour,
         court.data.price.toFixed(2)
       );
+
       if (response.result == true) {
         // If booking was successful
         user_queries.updateUserBalance(email, -court.data.price); // Update user balance
@@ -195,7 +196,7 @@ bookingRouter.post(
  *
  * @param None
  *
- * @return
+ * @return {Object} The response from the server
  * - 200: Successful retrieval of future bookings
  * - 500: Failure to retrieve future bookings
  */
@@ -245,7 +246,7 @@ bookingRouter.post(
  *
  * @param None
  *
- * @return
+ * @return {Object} The response from the server
  * - 200: Successful retrieval of future secondary bookings
  * - 500: Failure to retrieve future secondary bookings
  */
@@ -293,7 +294,7 @@ bookingRouter.post(
  *
  * @param None
  *
- * @return
+ * @return {Object} The response from the server
  * - 200: Successful cancellation of booking
  * - 500: Failure to fetch future bookings
  */
