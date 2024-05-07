@@ -27,36 +27,45 @@ function Register() {
   const [confirmEmail, setConfirmEmail] = useState(""); // State variable for confirm email input
   const { storeNotification } = useContext(NotificationContext);
 
+  // Using useMemo to memoize whether emails match, preventing unnecessary checks when other fields change
   const emailMatch = useMemo(() => {
-    return email === confirmEmail; // Checks if email and confirm email match
+    return email === confirmEmail; // Return if email and confirm email match
   }, [email, confirmEmail]);
 
+  // Using useMemo to memoize whether passwords match, preventing unnecessary checks when other fields change.
   const passwordMatch = useMemo(() => {
-    return password === confirmPassword; // Checks if password and confirm password match
+    return password === confirmPassword; // Return if password and confirm password match
   }, [password, confirmPassword]);
 
   // Regular expression for email validation
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+  // Function to handle the form submission
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault(); // Prevents the default form submission behaviour
+
+    // Checks if any of the required fields are empty
     if (!email || !password || !name) {
-      toast.error("Please fill all fields."); // Displays an error toast if any of the required fields are empty
+      // Displays an error toast if any of the required fields are empty
+      toast.error("Please fill all fields.");
       return;
     }
 
+    // Checks if the email is in a valid format
     if (!emailRegex.test(email)) {
-      // Displays an error toast if the email format is invalid
+      // Displays an error toast if the email is not in a valid format
       toast.error("Invalid email format detected.");
       return;
     }
 
+    // Checks if the email and confirm email match
     if (!emailMatch) {
       // Displays an error toast if the email and confirm email do not match
       toast.error("Emails do not match.");
       return;
     }
 
+    // Checks if the password and confirm password match
     if (!passwordMatch) {
       // Displays an error toast if the password and confirm password do not match
       toast.error("Passwords do not match.");
@@ -64,14 +73,15 @@ function Register() {
     }
 
     try {
-      // Sends a POST request to "/api/register" with the data
+      // Attempt to send a POST request to "/api/register" with the data
       await Post("/api/register", { email, password, name });
+
       // Displays a success toast message
       toast.success("Sign up successful! Redirecting to login.");
 
-      storeNotification("Sign up successful!"); // Stores a notification
+      storeNotification("Sign up successful!"); // Stores a notification in local storage
 
-      // Redirects to the login page after a delay
+      // Redirects to the login page after 2 seconds
       setTimeout(() => {
         navigate("/login", { replace: true });
       }, 2000);

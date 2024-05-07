@@ -16,7 +16,7 @@ import { Post, getUpdatedToken } from "../utils/ApiFunctions";
  * @returns {JSX.Element} The booking form component.
  */
 function Booking() {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Get the navigate function from the useNavigate hook
   // State variables
   const [date, setDate] = useState(""); // State variable to store the selected date
   const [hour, setHour] = useState(""); // State variable to store the selected hour
@@ -28,8 +28,8 @@ function Booking() {
   const [players, setPlayers] = useState([]); // State variable to store the players to split the cost with
   const [playerCount, setPlayerCount] = useState(0); // State variable to store the number of players
   // Check if the user is an admin based on accessToken
-  const { user, accessToken, updateToken } = useContext(ProfileContext);
-  const { storeNotification } = useContext(NotificationContext);
+  const { user, accessToken, updateToken } = useContext(ProfileContext); // Get the user, accessToken, and updateToken function from the ProfileContext.
+  const { storeNotification } = useContext(NotificationContext); // Get the storeNotification function from the NotificationContext.
 
   // Check if court selection should be shown
   const showCourtSelection = date && hour;
@@ -39,6 +39,7 @@ function Booking() {
 
   // Fetch available courts based on selected date and hour
   useEffect(() => {
+    // Function to fetch available courts
     const fetchCourts = async () => {
       const postData = { date, hour };
       try {
@@ -53,10 +54,12 @@ function Booking() {
     };
 
     if (date && hour) {
+      // Fetch courts only if date and hour are selected
       fetchCourts();
     }
   }, [date, hour]);
 
+  // Redirect the user to the home page if they are an admin or not logged in
   if (user.admin || accessToken === "") {
     return <Navigate to="/" replace={true} />;
   }
@@ -66,55 +69,62 @@ function Booking() {
    * @param {Event} event - The form submit event.
    */
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault(); // Prevent the default form submission behavior
     setIsButtonDisabled(true); // Disable the button when the form is submitted
     setButtonCursor("not-allowed"); // Change cursor to not-allowed
     setButtonColor("#CCCCCC"); // Change button color to visually indicate disabled state
     setTimeout(() => {
-      setIsButtonDisabled(false);
+      // Reset button state after 2 seconds
+      setIsButtonDisabled(false); // Re-enable the button
       setButtonCursor("pointer"); // Change cursor back to pointer
-      setButtonColor(null); // Re-enable the button after 2 seconds and reset color
+      setButtonColor(null); // Reset button color
     }, 2000);
 
+    // Check if the date, hour, and court are selected
     if (!date || !hour || !court) {
       console.error("Please fill all fields");
       toast.error("Please fill all fields.");
       return;
     }
 
-    // Check if the email is valid
-    console.log(players);
+    // Check if player emails are valid
     for (let i = 0; i < players.length; i++) {
+      // Loop through the players array
       if (
-        (!players[i] || !players[i].trim()) && // Check for empty or whitespace-only string
-        players.length > 0
+        (!players[i] || !players[i].trim()) && // Check if the player email is empty
+        players.length > 0 // Check if there are players
       ) {
         toast.error(`Please fill all fields`);
         return;
       } else if (!emailRegex.test(players[i])) {
+        // Check if the player email is valid
         toast.error(`Invalid email format detected: ${players[i]}`);
         return;
       } else if (players[i] === user.email) {
+        // Check if the player email is the same as the user's email
         toast.error(`You cannot add yourself as a player`);
         return;
       }
     }
 
-    const booking = { date, hour, court, players };
+    const booking = { date, hour, court, players }; // Create a booking object with the date, hour, court, and players
+
     try {
       // Send a POST request to the server with the booking data
       const response = await Post("/api/booking", booking);
       console.log(response);
+
+      // Display a success or error message based on the response
       if (response.result !== true) {
         toast.error(response.error);
       } else {
         toast.success(
           "Court successfully booked! Redirecting to bookings page."
         );
-        storeNotification("Court successfully booked!");
-        updateToken(await getUpdatedToken());
+        storeNotification("Court successfully booked!"); // Store a notification in the context
+        updateToken(await getUpdatedToken()); // Update the access token
         setTimeout(() => {
-          navigate("/profile/bookings", { replace: true });
+          navigate("/profile/bookings", { replace: true }); // Redirect to the bookings page after 2 seconds
         }, 2000);
       }
     } catch (error) {
@@ -123,37 +133,37 @@ function Booking() {
     }
   };
 
+  // Function to add another player to the booking
   const addAnotherPlayer = () => {
-    // Add another player to the booking
+    // If the player count is less than 4, add another player
     if (playerCount < 4) {
-      // set maximum number of players to 4
-      setPlayers([...players, ""]);
-      setPlayerCount((prev) => prev + 1);
+      setPlayers([...players, ""]); // Add an empty string to the players array
+      setPlayerCount((prev) => prev + 1); // Increment the player count
     }
   };
 
+  // Function to remove a player from the booking
   const removePlayer = () => {
-    // Remove a player from the booking
+    // If there are players
     if (playerCount > 0) {
-      // Check if there are players to remove
       setPlayerCount(playerCount - 1); // Decrement the player count
       setPlayers(players.slice(0, -1)); // Remove the last player from the players array
     }
   };
 
   // Date and time limits for input fields
-  const today = new Date();
-  const maxDate = new Date();
-  maxDate.setDate(today.getDate() + 7);
+  const today = new Date(); // Creating a new date object to store today's date
+  const maxDate = new Date(); // Create a new date object to store the maximum date
+  maxDate.setDate(today.getDate() + 7); // Set the maximum date to 7 days from today
 
   // Start and end hours for hour selection
   const startHour = 8; // Specify the start hour
   const endHour = 19; // Specify the end hour
 
-  // Generate an array of hours
+  // Generate an array of hours to select from based on the start and end hours
   const hoursArray = Array.from({ length: endHour - startHour + 1 }, (_, i) => {
-    const hour = startHour + i;
-    return hour < 10 ? `0${hour}` : `${hour}`;
+    const hour = startHour + i; // Calculate the hour
+    return hour < 10 ? `0${hour}` : `${hour}`; // Formatting the hour and returning it
   });
 
   /**
