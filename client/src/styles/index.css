@@ -27,21 +27,13 @@ h1 {
 }
 
 button {
-  /* border-radius: 8px; */
-  /* border: 1px solid transparent; */
   border: none;
   border-radius: 5rem;
   background: #344a2b;
   color: white;
   padding: 15px 5vh;
-  /* padding: 0.6em 1.2em; */
   font-size: 1rem;
-  /* font-size: 1em; */
-  /* font-weight: 500; */
-  /* font-family: inherit; */
-  /* background-color: #f9f9f9; */
   cursor: pointer;
-  /* transition: border-color 0.25s; */
   margin: 8px;
 }
 

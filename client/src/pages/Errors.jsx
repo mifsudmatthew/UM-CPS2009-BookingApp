@@ -1,9 +1,11 @@
 /**
  *  Errors.jsx
+ *  This file contains the Error page component.
  */
 
 import { errorImage } from "../components/Icons";
 
+// Function to render the Error page
 function Errors() {
   return (
     <div>
@@ -13,4 +15,4 @@ function Errors() {
   );
 }
 
-export default Errors;
+export default Errors; // Export the Errors component
