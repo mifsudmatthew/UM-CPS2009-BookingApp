@@ -1,7 +1,6 @@
 import "../styles/profile.css";
 
 import { Outlet } from "react-router-dom";
-
 import { AdminSidebar } from "../components/admin/AdminSidebar";
 import Authenticated from "../components/shared/Authenticated.jsx";
 import Admin from "../components/shared/Admin.jsx";
