@@ -118,13 +118,15 @@ function Booking() {
     const booking = { date, hour, court, players }; // Create a booking object with the date, hour, court, and players
 
     // Call the Post function with the URL and data
-    Post("/api/booking", booking)
-      .then((response) => {
-        if (response.result === false) {
-          toast.error(response.error); // Display an error message if the booking fails
-          return;
-        }
-        // Success: responseData contains the response from the server
+    try {
+      // Send a POST request to the server with the booking data
+      const response = await Post("/api/booking", booking);
+      console.log(response);
+
+      // Display a success or error message based on the response
+      if (response.result !== true) {
+        toast.error(response.error);
+      } else {
         toast.success(
           "Court successfully booked! Redirecting to bookings page."
         );
@@ -133,10 +135,11 @@ function Booking() {
         setTimeout(() => {
           navigate("/profile/bookings", { replace: true }); // Redirect to the bookings page after 2 seconds
         }, 2000);
-      })
-      .catch((error) => {
-        console.error("/api/booking Error:", error);
-      });
+      }
+    } catch (error) {
+      // Log an error if the request fails
+      console.error("Error submitting booking: ", error);
+    }
   };
 
   // Function to add another player to the booking
