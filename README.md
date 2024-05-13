@@ -57,7 +57,8 @@
       <ul>
         <li><b>client</b>
             <ul><li>public</li>
-            <li>src</li></ul>
+            <li>src <li>assets</li>
+            </li></ul>
         </li>
         <li><b>database</b>
             <ul><li>schema_functions</li>
