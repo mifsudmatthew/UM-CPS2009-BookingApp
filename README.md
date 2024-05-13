@@ -63,7 +63,10 @@
             <ul><li>schema_functions</li>
             <li>schemas</li></ul>
         </li>
-        <li><b>server</b></li>
+        <li><b>server</b>
+            <ul><li>post</li>
+            <li>tests</li></ul>
+        </li>
         <li>
           <b>src</b>
           <ul>
