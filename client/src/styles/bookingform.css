@@ -133,3 +133,31 @@
         height: 100%;
     }
 }
+
+@media (max-width: 386px) {
+    .booking-container {
+        padding: 1rem;
+        padding-left: 1.5rem;
+        width: 60%
+    }
+
+    .booking-form {
+        padding: 1rem;
+        padding-right: 1.5rem;
+    }
+
+    .booking-form-title {
+        font-size: 2rem;
+    }
+
+    .booking-form-subtitle {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 285px) {
+    .booking-container {
+        padding: 0.5rem;
+        padding-left: 1rem;
+    }
+}
