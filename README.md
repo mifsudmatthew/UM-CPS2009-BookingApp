@@ -48,6 +48,41 @@
     </tr>
 </table>
 
+## Directory
+
+<table style="margin: 0 auto;">
+  <tr>
+    <td>
+      <b>Project Root</b>
+      <ul>
+        <li>index.html</li>
+        <li>styles.css</li>
+        <li>
+          <b>src</b>
+          <ul>
+            <li>app.js</li>
+            <li>
+              <b>components</b>
+              <ul>
+                <li>header.js</li>
+                <li>footer.js</li>
+              </ul>
+            </li>
+            <li>
+              <b>pages</b>
+              <ul>
+                <li>home.js</li>
+                <li>about.js</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>README.md</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
 ## Formats
 
 <table>
