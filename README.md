@@ -97,30 +97,21 @@
     <td>
       <b>client:</b> Contains all Front-end files and folders.
       <br>
-      <br>
       <b>public:</b> Contains static files sent to the client.
-      <br>
       <br>
       <b>src:</b> Contains all client-sided source code.
       <br>
-      <br>
       <b>assets:</b> Contains all images used.
-      <br>
       <br>
       <b>components:</b> Contains a collection of UI components created.
       <br>
-      <br>
       <b>admin, form, home, profile, shared:</b> Each contain specific types of components.
-      <br>
       <br>
       <b>context:</b> Context providers for state management.
       <br>
-      <br>
       <b>pages:</b> Individual pages or routes of the application.
       <br>
-      <br>
       <b>styles:</b> CSS or other styling files.
-      <br>
       <br>
       <b>utils:</b> Utility functions or helpers.
       <br>
@@ -130,15 +121,12 @@
       <br>
       <b>schema_functions:</b> Functions related to database schema.
       <br>
-      <br>
       <b>schemas:</b> Database schema definitions.
       <br>
       <br>
       <b>server:</b> Server-side related files and folders.
       <br>
-      <br>
       <b>post:</b> Endpoint for handling POST requests.
-      <br>
       <br>
       <b>tests:</b> Unit or integration tests for the server.
     </td>
