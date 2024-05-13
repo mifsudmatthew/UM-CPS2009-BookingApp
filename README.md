@@ -39,7 +39,13 @@
     <td>
     npm run start_build
     </td>
-  </tr>
+    </tr>
+    <tr>
+    <td>Run tests and obtain coverage</td>
+    <td>
+    npm run test
+    </td>
+    </tr>
 </table>
 
 ## Formats
