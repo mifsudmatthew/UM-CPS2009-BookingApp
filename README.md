@@ -55,15 +55,12 @@
     <td>
       <br><b>root</b>
       <ul>
-        <li><b>client</b></li>
+        <li><b>client</b>
+            <ul><li>public</li>
+            <li>src</li></ul>
+        </li>
         <li><b>database</b></li>
         <li><b>server</b></li>
-        <li>.env</li>
-        <li>.gitignore</li>
-        <li>README.md</li>
-        <li>azure-pipelines.yml</li>
-        <li>package.json</li>
-        <li>server.js</li>
         <li>
           <b>src</b>
           <ul>
