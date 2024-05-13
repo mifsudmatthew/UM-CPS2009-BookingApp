@@ -94,6 +94,7 @@
         </li>
       </ul>
     </td>
+    <b>Folder Details:</b>
     <td>
       <b>client:</b> Contains all Front-end files and folders.
       <br>
