@@ -9,7 +9,7 @@ import ProfileContext from "../context/ProfileContext";
 
 /**
  * Renders the profile page.
- *
+ * @category Front-end
  * @returns {JSX.Element} The rendered profile page.
  */
 const Profile = () => {

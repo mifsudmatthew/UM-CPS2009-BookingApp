@@ -17,7 +17,7 @@ import { Post } from "../../utils/ApiFunctions";
 
 /**
  * Renders the AccountDetails component.
- *
+ * @category Front-end
  * @returns {JSX.Element} The rendered AccountDetails component.
  */
 

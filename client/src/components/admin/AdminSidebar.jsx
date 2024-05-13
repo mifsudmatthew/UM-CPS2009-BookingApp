@@ -12,6 +12,7 @@ import InputButton from "../form//InputButton";
 
 /**
  * Renders the admin sidebar component.
+ * @category Front-end
  * @returns {JSX.Element} The admin sidebar component.
  */
 export const AdminSidebar = () => {

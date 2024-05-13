@@ -12,7 +12,7 @@ import NotificationContext from "../context/NotificationContext";
 import { Post, getUpdatedToken } from "../utils/ApiFunctions";
 /**
  * Renders a form for booking a tennis court.
- *
+ * @category Front-end
  * @returns {JSX.Element} The booking form component.
  */
 function Booking() {

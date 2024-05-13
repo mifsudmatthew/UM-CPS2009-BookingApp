@@ -22,7 +22,7 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
  * Renders the login page.
- *
+ * @category Front-end
  * @returns {JSX.Element} The login page component.
  */
 function Login() {
