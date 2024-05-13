@@ -12,17 +12,14 @@ async function retrieveStripe(session_id) {
 
     // -------------------- Validation
     if (stripe_found == null) {
-      return {
-        result: false,
-        data: null,
-        error: "No sessions found matching the ID: " + session_id,
-      };
+      throw new Error(`No sessions found matching the ID: ${session_id}`);
     }
 
     // -------------------- Succesfully returnig the found user
     return { result: true, data: stripe_found, error: null };
-  } catch (error_message) {
-    throw new Error("Failed to Connect to Database");
+  } catch (err) {
+    console.error(`retrieveStripe: ${err}`);
+    return { result: false, data: null, error: `${err}` };
   }
 }
 
@@ -33,11 +30,11 @@ async function retrieveStripe(session_id) {
  */
 async function registerStripe({ session_id, email_new, amount_new }) {
   try {
-    stripe_found = await stripe_schema.findOne({ sessionID: session_id });
+    const stripe_found = await stripe_schema.findOne({ sessionID: session_id });
 
     // ----------------------- validation of query
     if (stripe_found != null) {
-      return { result: false, data: null, error: "sessions already in use" };
+      throw new Error("Sessions already in use");
     }
     // Construct Schema
     const newSession = new stripe_schema({
@@ -45,10 +42,12 @@ async function registerStripe({ session_id, email_new, amount_new }) {
       email: email_new,
       amount: amount_new,
     });
+
     // Save the new user
     return { result: true, data: await newSession.save(), error: null };
-  } catch (error_message) {
-    throw new Error("Failed to Connect to Database");
+  } catch (err) {
+    console.error(`registerStripe: ${err}`);
+    return { result: false, data: null, error: `${err}` };
   }
 }
 

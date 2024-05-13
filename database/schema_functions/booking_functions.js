@@ -27,12 +27,13 @@ async function getFutureBookings_ID(userID_toSearch) {
 
     // ---------------- Validation of Query
     if (bookings == [] || bookings == null) {
-      return { result: false, data: null, error: "No bookings where found" };
+      throw new Error("No bookings where found");
     }
     // --------------------- Bookings Found (Returning Bookings List)
     return { result: true, data: bookings, error: null };
-  } catch (error_message) {
-    throw new Error("Failed to Connect to Database: " + error_message);
+  } catch (err) {
+    console.error(`getFutureBookings_ID: ${err}`);
+    return { result: false, data: null, error: `${err}` };
   }
 }
 
@@ -62,13 +63,14 @@ async function getFutureSecondaryBookingsBy_ID(email) {
 
     // Validation of Query
     if (!bookings || bookings.length === 0) {
-      return { result: false, data: null, error: "No bookings were found" };
+      throw new Error("No bookings were found");
     }
 
     // Bookings Found (Returning Bookings List)
     return { result: true, data: bookings, error: null };
-  } catch (error_message) {
-    throw new Error("Failed to Connect to Database: " + error_message);
+  } catch (err) {
+    console.error(`getFutureSecondaryBookingsBy_ID: ${err}`);
+    return { result: false, data: null, error: `${err}` };
   }
 }
 
@@ -98,12 +100,13 @@ async function getFutureBookings_Courts(courtID_toSearch) {
 
     // ---------------- Validation of Query
     if (bookings.length === 0 || bookings == null) {
-      return { result: false, data: null, error: "No bookings where found" };
+      throw new Error("No bookings where found");
     }
     // --------------------- Bookings Found (Returning Bookings List)
     return { result: true, data: bookings, error: null };
-  } catch (error_message) {
-    throw new Error("Failed to Connect to Database: " + error_message);
+  } catch (err) {
+    console.error(`getFutureBookings_Courts: ${err}`);
+    return { result: false, data: null, error: `${err}` };
   }
 }
 
@@ -133,13 +136,14 @@ async function getFutureBookings_IDCourt(userID_toSearch, courtID_toSearch) {
 
     // ---------------- Validation of Query
     if (bookings == [] || bookings == null) {
-      return { result: false, data: null, error: "No bookings where found" };
+      throw new Error("No bookings where found");
     }
 
     // --------------------- Bookings Found (Returning Bookings List)
     return { result: true, data: bookings, error: null };
-  } catch (error_message) {
-    throw new Error("Failed to Connect to Database: " + error_message);
+  } catch (err) {
+    console.error(`getFutureBookings_IDCourt: ${err}`);
+    return { result: false, data: null, error: `${err}` };
   }
 }
 
@@ -169,35 +173,24 @@ async function addBooking(
 
     // If the date is today, check if the time is in the past
 
-    if (today.toDateString() === date_toBook.toDateString()) {
-      if (today.getHours() >= time_toBook) {
-        return {
-          result: false,
-          data: null,
-          error: "Cannot book for a past time on the current date",
-        };
-      }
+    if (
+      today.toDateString() === date_toBook.toDateString() &&
+      today.getHours() >= time_toBook
+    ) {
+      throw new Error("Cannot book for a past time on the current date");
     }
 
     // --------------------- Check if the booking is more then a week in advanced
     const maxFutureDate = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000); // Calculate date 7 days from now
     if (date_toBook > maxFutureDate) {
       // current date + 7 days
-      return {
-        result: false,
-        data: null,
-        error: "Cannot book more than a week in advance",
-      };
+      throw new Error("Cannot book more than a week in advance");
     }
 
     // --------------------- Check if user has not reached max bookings
     future_bookings = await getFutureBookings_ID(userID_toBook);
     if (future_bookings.data.length >= max_userBookings) {
-      return {
-        result: false,
-        data: null,
-        error: "User has reached max bookings",
-      };
+      throw new Error("User has reached max bookings");
     }
 
     // --------------------- Check if court has not already been booked at the date and time specified
@@ -207,11 +200,7 @@ async function addBooking(
       time: time_toBook,
     });
     if (courts_booked_at_date_time.length != 0) {
-      return {
-        result: false,
-        data: null,
-        error: "Court is already booked at this time/date",
-      };
+      throw new Error("Court is already booked at this time/date");
     }
     // --------------------- Create Booking item
     const newBooking = new booking_schema({
@@ -225,8 +214,9 @@ async function addBooking(
 
     // --------------------- Save and return
     return { result: true, data: await newBooking.save(), error: null };
-  } catch (error_message) {
-    throw new Error("Failed to Connect to Database" + error_message);
+  } catch (err) {
+    console.error(`addBooking: ${err}`);
+    return { result: false, data: null, error: `${err}` };
   }
 }
 
@@ -239,8 +229,9 @@ async function removeBooking(bookingID) {
   try {
     await booking_schema.findByIdAndDelete(bookingID);
     return { result: true, data: null, error: null };
-  } catch (error) {
-    throw new Error("Failed to Connect to Database: " + error_message);
+  } catch (err) {
+    console.error(`removeBooking: ${err}`);
+    return { result: false, data: null, error: `${err}` };
   }
 }
 
@@ -253,8 +244,9 @@ async function getBookingDetails(bookingID) {
   try {
     const details = await booking_schema.findById(bookingID);
     return { result: true, data: details, error: null };
-  } catch (error) {
-    throw new Error("Failed to Connect to Database: " + error.message);
+  } catch (err) {
+    console.error(`getBookingDetails: ${err}`);
+    return { result: false, data: null, error: `${err}` };
   }
 }
 
@@ -279,8 +271,9 @@ async function getAvailableCourts(date_toCheck, time_toCheck) {
       _id: { $nin: bookedCourtIDs },
     });
     return { result: true, data: availableCourts, error: null };
-  } catch (error_message) {
-    throw new Error("Failed to Connect to Database: " + error_message);
+  } catch (err) {
+    console.error(`getAvailableCourts: ${err}`);
+    return { result: false, data: null, error: `${err}` };
   }
 }
 
@@ -309,8 +302,9 @@ async function getBookedCourts(user_data) {
     });
 
     return { result: true, data: upcomingCourts, error: null };
-  } catch (error_message) {
-    throw new Error("Failed to Connect to Database: " + error_message);
+  } catch (err) {
+    console.error(`getBookedCourts: ${err}`);
+    return { result: false, data: null, error: `${err}` };
   }
 }
 
@@ -327,8 +321,9 @@ async function countAndSumBookingsByCourtID(courtID_toCount) {
     const totalCost = bookings.reduce((acc, booking) => acc + booking.cost, 0);
 
     return { result: true, data: { count, totalCost }, error: null };
-  } catch (error_message) {
-    throw new Error("Failed to Connect to Database: " + error_message);
+  } catch (err) {
+    console.error(`countAndSumBookingsByCourtID: ${err}`);
+    return { result: false, data: null, error: `${err}` };
   }
 }
 

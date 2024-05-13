@@ -12,17 +12,14 @@ async function retrieveCourt(courtID) {
 
     // -------------------- Validation
     if (courts_found == null) {
-      return {
-        result: false,
-        data: null,
-        error: "No courts found matching the ID: " + courtID,
-      };
+      throw new Error(`No courts found matching the ID: ${courtID}`);
     }
 
     // -------------------- Succesfully returnig the found user
     return { result: true, data: courts_found, error: null };
-  } catch (error_message) {
-    throw new Error("Failed to Connect to Database: " + error_message);
+  } catch (err) {
+    console.error(`retrieveCourt: ${err}`);
+    return { result: false, data: null, error: `${err}` };
   }
 }
 
@@ -53,8 +50,9 @@ async function registerCourt({
     });
     // Save the new user
     return { result: true, data: await newCourt.save(), error: null };
-  } catch (error_message) {
-    throw new Error("Failed to Connect to Database" + error_message);
+  } catch (err) {
+    console.error(`registerCourt: ${err}`);
+    return { result: false, data: null, error: `${err}` };
   }
 }
 
@@ -67,8 +65,9 @@ async function getAllCourts() {
     // Find all courts
     const allCourts = await courts_schema.find({});
     return { result: true, data: allCourts, error: null };
-  } catch (error_message) {
-    throw new Error("Failed to Connect to Database" + error_message);
+  } catch (err) {
+    console.error(`getAllcourts: ${err}`);
+    return { result: false, data: null, error: `${err}` };
   }
 }
 
@@ -89,21 +88,14 @@ async function updateCourt(court_id, newName, newPrice) {
 
     // --------------------- No court Found (Cannot reset password)
     if (court == null) {
-      return {
-        result: false,
-        data: null,
-        error: `No court found that matches that id: ${court_id}`,
-      };
+      throw new Error(`No court found that matches that id: ${court_id}`);
     }
 
     // --------------------- Court Found (returning stuff)
-    return {
-      result: true,
-      data: court,
-      error: null,
-    };
-  } catch (error_message) {
-    throw new Error(`Failed to Connect to Database: ${error_message}`);
+    return { result: true, data: court, error: null };
+  } catch (err) {
+    console.error(`updateCourt: ${err}`);
+    return { result: false, data: null, error: `${err}` };
   }
 }
 
