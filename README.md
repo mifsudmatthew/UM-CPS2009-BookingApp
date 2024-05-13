@@ -94,8 +94,8 @@
         </li>
       </ul>
     </td>
-    <b>Folder Details:</b>
     <td>
+      <b>Folder Details:</b>
       <b>client:</b> Contains all Front-end files and folders.
       <br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>public:</b> Contains static files sent to the client.
