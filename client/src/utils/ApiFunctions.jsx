@@ -1,7 +1,7 @@
 /* Stores utility functions that communicate with the server to send/receive data*/
 
 /**
- * @brief Sends a POST request to the server with the given data
+ * Sends a POST request to the server with the given data
  *
  * @param {String} url - The URL to send the request to
  *
@@ -34,7 +34,7 @@ export const Post = (url, data) => {
 };
 
 /**
- * @brief Sends a GET request to the server on the given route
+ * Sends a GET request to the server on the given route
  *
  * @param {String} url - The URL to send the request to
  *
@@ -62,7 +62,7 @@ export const Get = (url) => {
 };
 
 /**
- * @brief Obtains the server status by sending a GET request to the server
+ * Obtains the server status by sending a GET request to the server
  *
  * @param None
  *
@@ -87,7 +87,7 @@ export const getServerStatus = async () => {
 };
 
 /**
- * @brief Obtains the updated access token by sending a GET request to the server
+ * Obtains the updated access token by sending a GET request to the server
  *
  * @param None
  *
