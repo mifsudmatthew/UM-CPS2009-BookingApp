@@ -35,7 +35,7 @@
     </td>
     </tr>
     <tr>
-    <td>Build Front End & Start server</td>
+    <td>Build Front End and Start server</td>
     <td>
     npm run start_build
     </td>
