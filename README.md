@@ -118,16 +118,16 @@
       <br>
       <b>database:</b> Database-related files and folders.
       <br>
-      <b>schema_functions:</b> Functions related to database schema.
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>schema_functions:</b> Functions related to database schema.
       <br>
-      <b>schemas:</b> Database schema definitions.
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>schemas:</b> Database schema definitions.
       <br>
       <br>
       <b>server:</b> Server-side related files and folders.
       <br>
-      <b>post:</b> Endpoint for handling POST requests.
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>post:</b> Endpoint for handling POST requests.
       <br>
-      <b>tests:</b> Unit or integration tests for the server.
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>tests:</b> Unit or integration tests for the server.
     </td>
   </tr>
 </table>
