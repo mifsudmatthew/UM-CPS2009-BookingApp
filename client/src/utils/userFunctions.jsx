@@ -4,6 +4,8 @@
 /**
  * Sends a request to the server to retrieve user data
  *
+ * @category Utilities
+ *
  * @param None
  *
  * @return {Object} User data
@@ -41,6 +43,8 @@ export const getUserData = async () => {
 
 /**
  * Sends a request to the server to set user data
+ *
+ * @category Utilities
  *
  * @param {Object} newUserData - The new user data to be set
  *

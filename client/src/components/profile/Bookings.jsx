@@ -31,6 +31,7 @@ const Bookings = () => {
 
   /**
    * Fetches the booked courts for a specific user.
+   * @category Front-end
    * @async
    * @function fetchBookedCourts
    * @returns {Promise<void>} A Promise that resolves when the booked courts are fetched.
