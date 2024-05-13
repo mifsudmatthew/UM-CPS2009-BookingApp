@@ -3,6 +3,8 @@
 /**
  * Sends a POST request to the server with the given data
  *
+ * @category Utilities
+ *
  * @param {String} url - The URL to send the request to
  *
  * @param {Object} data - The data to send in the request
@@ -36,6 +38,8 @@ export const Post = (url, data) => {
 /**
  * Sends a GET request to the server on the given route
  *
+ * @category Utilities
+ *
  * @param {String} url - The URL to send the request to
  *
  * @return {Object} The response from the server
@@ -64,6 +68,8 @@ export const Get = (url) => {
 /**
  * Obtains the server status by sending a GET request to the server
  *
+ * @category Utilities
+ *
  * @param None
  *
  * @return {Boolean} True if the server is responding, false otherwise
@@ -88,6 +94,8 @@ export const getServerStatus = async () => {
 
 /**
  * Obtains the updated access token by sending a GET request to the server
+ *
+ * @category Utilities
  *
  * @param None
  *
