@@ -19,19 +19,15 @@ function ReloadPrompt() {
     updateServiceWorker,
   } = useRegisterSW({
     onRegisteredSW(swUrl, r) {
-      console.log(`Service Worker at: ${swUrl}`);
       if (reloadSW === "true") {
         r &&
           setInterval(() => {
-            console.log("Checking for sw update");
             r.update();
           }, 200000);
-      } else {
-        console.log("SW Registered: " + r);
       }
     },
     onRegisterError(error) {
-      console.log("SW registration error", error);
+      console.error("SW registration error", error);
     },
   });
 
@@ -56,8 +52,7 @@ function ReloadPrompt() {
           {needRefresh && (
             <button
               className="ReloadPrompt-toast-button"
-              onClick={() => updateServiceWorker(true)}
-            >
+              onClick={() => updateServiceWorker(true)}>
               Reload
             </button>
           )}
