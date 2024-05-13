@@ -7,7 +7,7 @@ import { errorImage } from "../components/Icons";
 
 /**
  * Renders the Error page component.
- *
+ * @category Front-end
  * @returns {JSX.Element} The rendered Error page component.
  */
 function Errors() {

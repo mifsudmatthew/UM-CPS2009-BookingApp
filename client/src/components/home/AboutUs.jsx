@@ -9,7 +9,7 @@ import { happy, tennis, players } from "../Icons";
 
 /**
  * Renders the About Us section of the application.
- *
+ * @category Front-end
  * @returns {JSX.Element} The About Us component.
  */
 const AboutUs = () => {

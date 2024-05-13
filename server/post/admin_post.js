@@ -1,5 +1,6 @@
-/* admin_posts.js
- * Defines all the routes required for admin access
+/**
+ * @file admin_posts.js
+ * @desc Defines all the routes required for admin access
  */
 
 const express = require("express"); // Importing express
@@ -12,6 +13,8 @@ const courts_queries = require("../../database/schema_functions/court_functions"
  * Post request for retrieving all courts.
  *
  * This route retrieves all courts from the database.
+ *
+ * @category Back-end
  *
  * @param None
  *
@@ -44,6 +47,8 @@ adminRouter.get("/getAllCourts", async (req, res) => {
 
 /**
  * Post request for obtaining all courts' statistics.
+ *
+ * @category Back-end
  *
  * @param None
  *
@@ -82,6 +87,8 @@ adminRouter.post("/getBasicStatistics", async (req, res) => {
 /**
  * Post request for registering a new court.
  *
+ * @category Back-end
+ *
  * @param None
  *
  * @return
@@ -110,6 +117,8 @@ adminRouter.post("/registerCourt", async (req, res) => {
 
 /**
  * Post request for configuring a court.
+ *
+ * @category Back-end
  *
  * @param None
  *

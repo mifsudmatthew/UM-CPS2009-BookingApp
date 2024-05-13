@@ -17,7 +17,7 @@ import InputButton from "../components/form/InputButton";
 
 /**
  * Renders the Change Password page.
- *
+ * @category Front-end
  * @returns {JSX.Element} The Change Password page component.
  */
 function ChangePW() {

@@ -18,7 +18,7 @@ import { defaultProfilePic } from "../Icons";
  * Renders the profile sidebar component.
  * This component displays the user's profile picture, name, and navigation links.
  * It also provides a log out button to log the user out of the application.
- *
+ * @category Front-end
  * @returns {JSX.Element} The profile sidebar component.
  */
 const ProfileSidebar = () => {

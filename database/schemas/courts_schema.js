@@ -1,3 +1,8 @@
+/**
+ * @file courts_schema.js
+ * @desc Defines the schema for a court
+ */
+
 // reference: https://mongoosejs.com/docs/guide.html
 
 const mongoose = require("mongoose"); // Obtaining Mongoose module

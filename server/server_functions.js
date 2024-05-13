@@ -1,5 +1,6 @@
-/* server_functions.js
- * Helper functions that are used in the routes of the server
+/**
+ * @file server_functions.js
+ * @desc Helper functions that are used in the routes of the server
  */
 
 // Importing nodemailer to send emails
@@ -25,7 +26,7 @@ const transporter = nodeMailer.createTransport({
 
 /**
  * Function to generate a new pin. By generating 4 random numbers (0-9) and concatenating them.
- *
+ * @category Back-end
  * @return {String} The generated pin
  */
 function getRandomPin() {
@@ -41,6 +42,8 @@ function getRandomPin() {
 
 /**
  * Function to add an entry to the accountPins array with a 5 minute timer
+ *
+ * @category Back-end
  *
  * @param {String} email The email of the user
  *
@@ -74,6 +77,8 @@ function addPinEntry(email, pin) {
 /**
  * Function to send an email to user requesting a password reset.
  *
+ * @category Back-end
+ *
  * @param {String} user_email The email of the user requesting to send pin to email.
  *
  * @return {Object} A message indicating the success of the email sent
@@ -103,6 +108,8 @@ async function sendPinByMail(user_email) {
 /**
  * Function to send a confirmation to the user that the payment was successful.
  *
+ * @category Back-end
+ *
  * @param {String} user_email The email of the user topping up their account.
  *
  * @param {Number} amount The amount topped up by the user.
@@ -121,9 +128,9 @@ async function sendPaymentSuccessMail(user_email, amount) {
   const emailDetails = {
     from: "no-reply@servespot.com", // Address of account sending the email.
     to: user_email, // Email of the user requesting a reset.
-    subject: `Successful Account Top-Up: ${amount} Added`, // Subject of email.
+    subject: `Successful Account Top-Up: €${amount} Added`, // Subject of email.
     // Email body using details from the user's data retrieved.
-    text: `Dear ${user_data.data.name},\n\nWe're pleased to inform you that your recent request to top up your ServeSpot account has been successfully processed.\n\nHere are the details of your transaction:\n\n Amount: ${amount}\n\nNew Balance: ${user_data.data.balance}:00\n\nYour account is now ready to use with the updated balance. We ensure that our platform is continuously updated to provide you with the best possible experience.\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`,
+    text: `Dear ${user_data.data.name},\n\nWe're pleased to inform you that your recent request to top up your ServeSpot account has been successfully processed.\n\nHere are the details of your transaction:\n\n Amount: ${amount}\n\nNew Balance: €${user_data.data.balance}\n\nYour account is now ready to use with the updated balance. We ensure that our platform is continuously updated to provide you with the best possible experience.\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`,
   };
 
   // Sending the email with the details created.
@@ -136,6 +143,8 @@ async function sendPaymentSuccessMail(user_email, amount) {
 
 /**
  * Function to send a confirmation to the user that the booking was successful.
+ *
+ * @category Back-end
  *
  * @param {String} user_email The email of the user booking the court.
  *
@@ -176,6 +185,8 @@ async function sendBookingSuccessMail(user_email, court, date, hour, price) {
 
 /**
  * Function to send a confirmation to the user that the booking was cancelled.
+ *
+ * @category Back-end
  *
  * @param {String} user_email The email of the user cancelling the booking.
  *
@@ -223,6 +234,8 @@ async function sendCancellationSuccessMail(
 /**
  * Function to validate the user's token.
  *
+ * @category Back-end
+ *
  * @param {Object} req The request object.
  *
  * @param {Object} res The response object.
@@ -258,6 +271,8 @@ function authenticateToken(req, res, next) {
 
 /**
  * Function to return a new token for the user based on the email.
+ *
+ * @category Back-end
  *
  * @param {String} email The email of the user
  *
@@ -297,23 +312,14 @@ async function getUpdatedToken(email) {
 /**
  * Function to generate a new access token.
  *
+ * @category Back-end
+ *
  * @param {Object} payload The payload to be used to generate the token
  *
  * @return {String} The generated access token
  */
 function generateAccessToken(payload) {
   return jwt.sign(payload, process.env.JWT_ACCESS);
-}
-
-/**
- * Function to generate a new refresh token. (NOT USED)
- *
- * @param {Object} payload The payload to be used to generate the token
- *
- * @return {String} The generated refresh token
- */
-function generateRefreshToken(payload) {
-  return jwt.sign(payload, process.env.JWT_REFRESH);
 }
 
 module.exports = {

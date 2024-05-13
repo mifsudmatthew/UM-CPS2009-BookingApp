@@ -15,18 +15,12 @@ import InputButton from "../form/InputButton";
 
 import { Post } from "../../utils/ApiFunctions";
 
-/**
- * Renders the AccountDetails component.
- *
- * @returns {JSX.Element} The rendered AccountDetails component.
- */
-
 // Regular expression for email validation
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
  * Renders the component for the user to change their account details.
- *
+ * @category Front-end
  * @returns {JSX.Element} The rendered AccountDetails component.
  */
 const AccountDetails = () => {

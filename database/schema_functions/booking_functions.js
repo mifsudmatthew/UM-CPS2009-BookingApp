@@ -1,8 +1,14 @@
+/**
+ * @file booking_functions.js
+ * @desc Defines all the database booking functions
+ */
+
 const booking_schema = require("../schemas/booking_schema");
 const court_schema = require("../schemas/courts_schema");
 
 /**
  * Query future bookings by user ID.
+ * @category Database
  * @param {string} userID_toSearch - The user ID to search for.
  * @returns {Object} An object containing the result, data, and error.
  */
@@ -39,6 +45,7 @@ async function getFutureBookings_ID(userID_toSearch) {
 
 /**
  * Query future secondary bookings by email.
+ * @category Database
  * @param {string} email - The email to search for.
  * @returns {Object} An object containing the result, data, and error.
  */
@@ -76,6 +83,7 @@ async function getFutureSecondaryBookingsBy_ID(email) {
 
 /**
  * Query future bookings by court ID.
+ * @category Database
  * @param {string} courtID_toSearch - The court ID to search for.
  * @returns {Object} An object containing the result, data, and error.
  */
@@ -112,6 +120,7 @@ async function getFutureBookings_Courts(courtID_toSearch) {
 
 /**
  * Query future bookings by user ID and court ID.
+ * @category Database
  * @param {string} userID_toSearch - The user ID to search for.
  * @param {string} courtID_toSearch - The court ID to search for.
  * @returns {Object} An object containing the result, data, and error.
@@ -149,6 +158,7 @@ async function getFutureBookings_IDCourt(userID_toSearch, courtID_toSearch) {
 
 /**
  * Add a new booking.
+ * @category Database
  * @param {string} userID_toBook - The user ID to book for.
  * @param {string} courtID_toBook - The court ID to book.
  * @param {number} cost_toBook - The cost of the booking.
@@ -222,6 +232,7 @@ async function addBooking(
 
 /**
  * Remove a booking.
+ * @category Database
  * @param {string} bookingID - The ID of the booking to be removed.
  * @returns {Object} An object containing the result, data, and error.
  */
@@ -237,6 +248,7 @@ async function removeBooking(bookingID) {
 
 /**
  * Get booking details.
+ * @category Database
  * @param {string} bookingID - The ID of the booking to retrieve details for.
  * @returns {Object} An object containing the result, data, and error.
  */
@@ -252,6 +264,7 @@ async function getBookingDetails(bookingID) {
 
 /**
  * Retrieve a list of courts available at a specific date and time.
+ * @category Database
  * @param {Date} date_toCheck - The date to check for available courts.
  * @param {number} time_toCheck - The time to check for available courts.
  * @returns {Object} An object containing the result, data, and error.
@@ -279,6 +292,7 @@ async function getAvailableCourts(date_toCheck, time_toCheck) {
 
 /**
  * Retrieve a list of courts booked by a user.
+ * @category Database
  * @param {Object} user_data - User data containing email information.
  * @returns {Object} An object containing the result, data, and error.
  */
@@ -310,6 +324,7 @@ async function getBookedCourts(user_data) {
 
 /**
  * Count the number of bookings made for a specific court.
+ * @category Database
  * @param {string} courtID_toCount - The ID of the court to count bookings for.
  * @returns {Object} An object containing the result, data, and error.
  */
