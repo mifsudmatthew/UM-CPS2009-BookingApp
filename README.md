@@ -29,13 +29,13 @@
     <td>npm run build</td>
     </tr> 
     <tr>
-    <td>Launch Website on 127.0.0.1:3000</td>
+    <td>Start server  (127.0.0.1:3000)</td>
     <td>
     npm run start
     </td>
     </tr>
     <tr>
-    <td><b>Build Front End & Launch Website on 127.0.0.1:3000</b></td>
+    <td><b>Build Front End & Start server/b></td>
     <td>
     npm run start_build
     </td>
