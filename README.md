@@ -53,17 +53,17 @@
 <table style="margin: 0 auto;" align="center">
   <tr>
     <td>
-      <br>root</b>
+      <br><b>root</b>
       <ul>
-        <b>client</b>
-        <b>database</b>
-        <b>server</b>
+        <li><b>client</b></li>
+        <li><b>database</b></li>
+        <li><b>server</b></li>
         <li>.env</li>
         <li>.gitignore</li>
         <li>README.md</li>
         <li>azure-pipelines.yml</li>
-        <li>package.json<li>
-        <li>server.js<li>
+        <li>package.json</li>
+        <li>server.js</li>
         <li>
           <b>src</b>
           <ul>
@@ -84,11 +84,11 @@
             </li>
           </ul>
         </li>
-        <li></li>
       </ul>
     </td>
   </tr>
 </table>
+
 
 ## Formats
 
