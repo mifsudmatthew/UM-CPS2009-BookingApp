@@ -29,7 +29,7 @@
     <td>npm run build</td>
     </tr> 
     <tr>
-    <td>Start server  (127.0.0.1:3000)</td>
+    <td>Start Server  (127.0.0.1:3000)</td>
     <td>
     npm run start
     </td>
@@ -41,7 +41,7 @@
     </td>
     </tr>
     <tr>
-    <td>Run tests and obtain coverage</td>
+    <td>Run Tests and Obtain Coverage</td>
     <td>
     npm run test
     </td>
