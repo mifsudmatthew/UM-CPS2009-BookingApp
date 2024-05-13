@@ -141,7 +141,7 @@
   </tr>
 </table>
 
-## Formats
+## Commit Comment Format
 
 <table align="center">
   <tr>
