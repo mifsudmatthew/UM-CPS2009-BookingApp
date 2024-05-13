@@ -25,7 +25,7 @@
 
 <table>
     <tr>
-    <td><b>Build Front End</b></td>
+    <td>Build Front End</td>
     <td>npm run build</td>
     </tr> 
     <tr>
@@ -35,7 +35,7 @@
     </td>
     </tr>
     <tr>
-    <td><b>Build Front End & Start server/b></td>
+    <td>Build Front End & Start server</td>
     <td>
     npm run start_build
     </td>
