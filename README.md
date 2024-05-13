@@ -3,13 +3,13 @@
 <p align="center"><a target="_blank" rel="noopener noreferrer"><img width="180" src="https://i.ibb.co/z6nLrz5/logo.png" alt="logo"></a></p>
 
 ## Contributors
-<div style="text-align: center;">
+<div>
     <table style="margin: 0 auto;">
         <tr>
-            <td><a href="https://github.com/mifsudmatthew"><img alt="Matthew Mifsud" style="width: 100px; border-radius: 50%;" src="https://avatars.githubusercontent.com/u/97695752?v=4"/></a></td>
-            <td><a href="https://github.com/KeithFarrugia"><img alt="Keith Farrugia" style="width: 100px; border-radius: 50%;" src="https://avatars.githubusercontent.com/u/148719589?v=4"/></a></td>
-            <td><a href="https://github.com/FirePhoenixBro"><img alt="Luca Vella" style="width: 100px; border-radius: 50%;" src="https://avatars.githubusercontent.com/u/104022853?v=4"/></a></td>
-            <td><a href="https://github.com/lensil"><img alt="Lenise Silvio" style="width: 100px; border-radius: 50%;" src="https://avatars.githubusercontent.com/u/147991201?v=4"/></a></td>
+            <td align="center"><a href="https://github.com/mifsudmatthew"><img alt="Matthew Mifsud" style="width: 100px; border-radius: 50%;" src="https://avatars.githubusercontent.com/u/97695752?v=4"/></a></td>
+            <td align="center"><a href="https://github.com/KeithFarrugia"><img alt="Keith Farrugia" style="width: 100px; border-radius: 50%;" src="https://avatars.githubusercontent.com/u/148719589?v=4"/></a></td>
+            <td align="center"><a href="https://github.com/FirePhoenixBro"><img alt="Luca Vella" style="width: 100px; border-radius: 50%;" src="https://avatars.githubusercontent.com/u/104022853?v=4"/></a></td>
+            <td align="center"><a href="https://github.com/lensil"><img alt="Lenise Silvio" style="width: 100px; border-radius: 50%;" src="https://avatars.githubusercontent.com/u/147991201?v=4"/></a></td>
         </tr>
         <tr>
             <td align="center"> Matthew Mifsud </td>
