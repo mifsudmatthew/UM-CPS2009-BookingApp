@@ -97,7 +97,7 @@
     <td>
       <b>client:</b> Contains all Front-end files and folders.
       <br>
-      &nbsp;<b>public:</b> Contains static files sent to the client.
+      &nbsp;&nbsp;<b>public:</b> Contains static files sent to the client.
       <br>
       <b>src:</b> Contains all client-sided source code.
       <br>
