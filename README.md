@@ -23,7 +23,7 @@
 
 ## Terminal Commands
 
-<table>
+<table align="center">
     <tr>
     <td>Build Front End</td>
     <td>npm run build</td>
@@ -48,9 +48,51 @@
     </tr>
 </table>
 
+## Project Structure
+
+<table style="margin: 0 auto;" align="center">
+  <tr>
+    <td>
+      <br><b>root</b>
+      <ul>
+        <li><b>client</b></li>
+        <li><b>database</b></li>
+        <li><b>server</b></li>
+        <li>.env</li>
+        <li>.gitignore</li>
+        <li>README.md</li>
+        <li>azure-pipelines.yml</li>
+        <li>package.json</li>
+        <li>server.js</li>
+        <li>
+          <b>src</b>
+          <ul>
+            <li>app.js</li>
+            <li>
+              <b>components</b>
+              <ul>
+                <li>header.js</li>
+                <li>footer.js</li>
+              </ul>
+            </li>
+            <li>
+              <b>pages</b>
+              <ul>
+                <li>home.js</li>
+                <li>about.js</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+
 ## Formats
 
-<table>
+<table align="center">
   <tr>
     <th><b>Purpose</b></th>
     <th> Format</th>
