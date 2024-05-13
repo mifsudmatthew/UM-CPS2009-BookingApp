@@ -65,6 +65,7 @@ describe("Log In Post", () => {
 
         // Assertions
         expect(result.body.result).toBe(true);
-        expect(result.body.accessToken).toBe("testing token data");
+        expect(result.body.data.accessToken).toBe("testing token data");
+        expect(result.body.error).toBe("");
     });
 });
