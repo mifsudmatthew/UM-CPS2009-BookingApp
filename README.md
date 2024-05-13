@@ -57,7 +57,7 @@
       <ul>
         <li><b>client</b>
             <ul><li>public</li>
-            <li>src <ul><li>assets</li><li>components</li><li>context</li><li>pages</li><li>styles</li><li>utils</li></ul>
+            <li>src <ul><li>assets</li><li>components<ul><li>admin</li><li>form</li><li>home</li><li>profile</li><li>shared</li></ul></li><li>context</li><li>pages</li><li>styles</li><li>utils</li></ul>
             </li></ul>
         </li>
         <li><b>database</b>
