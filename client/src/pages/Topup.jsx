@@ -3,7 +3,7 @@
  */
 
 import { useState, useContext } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import ProfileContext from "../context/ProfileContext";
@@ -23,6 +23,7 @@ import { Post } from "../utils/ApiFunctions";
 function Topup() {
   // Getting the location from the router, to get the session_id from the URL
   const location = useLocation();
+  const navigate = useNavigate();
   const querys = new URLSearchParams(location.search);
   // Getting the session ID from the URL
   const session_id = querys.get("session_id");
@@ -36,27 +37,32 @@ function Topup() {
   const [amount, setAmount] = useState(20);
 
   const handleSuccess = async () => {
-    // Send a POST request to "/api/success" with the session_id
-    const response = await Post("/api/success", {
-      session_id: session_id,
-    });
+    try {
+      // Send a POST request to "/api/success" with the session_id
+      const response = await Post("/api/success", {
+        session_id: session_id,
+      });
 
-    if (!response.result) {
-      storeNotification(`Top Up of ${amount} Failed!`);
-      toast.success("Top Up Failed!");
-      throw new Error(response.error);
+      if (!response.result) {
+        storeNotification(`Top Up of ${amount} Failed!`);
+        toast.success("Top Up Failed!");
+        throw new Error(response.error);
+      }
+
+      if (!response.data.accessToken) {
+        throw new Error("Token that was retured is invalid");
+      }
+
+      // Update the access token if it is present in the response
+      updateToken(response.data.accessToken);
+
+      // Display success toast if the payment was successful
+      storeNotification(`Top Up of ${amount} Successful!`);
+      toast.success("Top Up Successful!");
+    } catch (error) {
+      // Log an error if the request fails
+      console.error(`Error in topup success: ${error}`);
     }
-
-    if (!response.data.accessToken) {
-      throw new Error("Token that was retured is invalid");
-    }
-
-    // Update the access token if it is present in the response
-    updateToken(response.data.accessToken);
-
-    // Display success toast if the payment was successful
-    storeNotification(`Top Up of ${amount} Successful!`);
-    toast.success("Top Up Successful!");
   };
 
   /**
@@ -108,11 +114,11 @@ function Topup() {
   if (session_id) {
     try {
       handleSuccess();
-      querys.delete("session_id");
     } catch (err) {
       // Log an error if the request fails
       console.error(`Error in top-up with session_id: ${err}`);
     }
+    navigate("/profile/topup/", { replace: true });
   }
 
   return (
