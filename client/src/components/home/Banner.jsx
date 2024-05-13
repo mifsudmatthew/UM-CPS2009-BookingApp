@@ -14,7 +14,7 @@ import ProfileContext from "../../context/ProfileContext";
 
 /**
  * Renders a banner component with a title, description, and a login button.
- *
+ * @category Front-end
  * @returns {JSX.Element} The Banner component.
  */
 function Banner() {
@@ -34,7 +34,8 @@ function Banner() {
         return (
           <button
             className="login-button"
-            onClick={() => navigate("/admin", { replace: true })}>
+            onClick={() => navigate("/admin", { replace: true })}
+          >
             Admin Panel
           </button>
         );
@@ -42,7 +43,8 @@ function Banner() {
         return (
           <button
             className="login-button"
-            onClick={() => navigate("/profile/booking", { replace: true })}>
+            onClick={() => navigate("/profile/booking", { replace: true })}
+          >
             Book a court
           </button>
         );
@@ -51,7 +53,8 @@ function Banner() {
       return (
         <button
           className="login-button"
-          onClick={() => navigate("/login", { replace: true })}>
+          onClick={() => navigate("/login", { replace: true })}
+        >
           Login
         </button>
       );

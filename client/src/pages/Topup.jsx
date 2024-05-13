@@ -17,7 +17,7 @@ import { Post } from "../utils/ApiFunctions";
 
 /**
  * Renders the Topup page component.
- *
+ * @category Front-end
  * @returns {JSX.Element} The Topup page component.
  */
 function Topup() {

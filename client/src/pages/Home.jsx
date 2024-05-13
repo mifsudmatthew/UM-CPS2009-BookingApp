@@ -9,7 +9,7 @@ import Courts from "../components/home/Courts";
 
 /**
  * Renders the Home page component that contains the Banner, About Us, and Courts components.
- *
+ * @category Front-end
  * @returns {JSX.Element} The rendered Home page component.
  */
 function Home() {

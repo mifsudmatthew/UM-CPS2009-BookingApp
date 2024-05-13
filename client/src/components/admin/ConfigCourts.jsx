@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 /**
  * Renders a form to configure courts.
  * Allows the user to select a court, edit its details (size and price), and save the changes.
- *
+ * @category Front-end
  * @returns {JSX.Element} The ConfigCourts component.
  */
 function ConfigCourts() {

@@ -30,7 +30,7 @@ import {
  * Navbar component represents the navigation bar of the application.
  * It displays the logo, title, user balance, notification bell, and menu icon.
  * It also handles the show/hide functionality of the navbar, notification panel, and menu elements.
- *
+ * @category Front-end
  * @returns {JSX.Element} The rendered navigation bar.
  */
 function Navbar() {

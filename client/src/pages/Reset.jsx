@@ -15,7 +15,7 @@ import InputButton from "../components/form/InputButton";
 
 /**
  * Reset component for resetting password.
- *
+ * @category Front-end
  * @returns {JSX.Element} The Reset component.
  */
 export default function Reset() {

@@ -20,7 +20,7 @@ import {
 /**
  * Renders the Courts component.
  * This component displays a carousel of courts, allowing the user to navigate between them.
- *
+ * @category Front-end
  * @returns {JSX.Element} The Courts component.
  */
 const Courts = () => {
