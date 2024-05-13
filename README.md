@@ -91,11 +91,50 @@
             <li><b>post</b></li>
             <li><b>tests</b></li>
           </ul>
-        </li> 
+        </li>
       </ul>
+    </td>
+    <td>
+      <b>Folder Details:</b>
+      <br>
+      <br>
+      <b>client:</b> Front-end related files and folders.
+      <br>
+      <b>public:</b> Contains static files accessible by the client.
+      <br>
+      <b>src:</b> Source code for the client-side application.
+      <br>
+      <b>assets:</b> Images, fonts, or other media files.
+      <br>
+      <b>components:</b> Reusable UI components.
+      <br>
+      <b>admin, form, home, profile, shared:</b> Specific types of components.
+      <br>
+      <b>context:</b> Context providers for state management.
+      <br>
+      <b>pages:</b> Individual pages or routes of the application.
+      <br>
+      <b>styles:</b> CSS or other styling files.
+      <br>
+      <b>utils:</b> Utility functions or helpers.
+      <br>
+      <br>
+      <b>database:</b> Database-related files and folders.
+      <br>
+      <b>schema_functions:</b> Functions related to database schema.
+      <br>
+      <b>schemas:</b> Database schema definitions.
+      <br>
+      <br>
+      <b>server:</b> Server-side related files and folders.
+      <br>
+      <b>post:</b> Endpoint for handling POST requests.
+      <br>
+      <b>tests:</b> Unit or integration tests for the server.
     </td>
   </tr>
 </table>
+
 
 
 
