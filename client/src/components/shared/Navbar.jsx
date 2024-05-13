@@ -53,13 +53,15 @@ function Navbar() {
   // Function to log out the user
   const logOut = () => {
     if (!clickedLogout) {
-      setClickedLogout(true);
+      setClickedLogout(true); // To prevent multiple clicks
 
       toast.success("Logged out successfully!"); // Displays a success message
       // Clear the 'notifications' array
       clearNotifications();
       // Profile user validation requires change therefore updateToken and setUser should be taken out then.
       logout();
+
+      setClickedLogout(false); // Reset the state variable
     }
   };
 
@@ -119,15 +121,18 @@ function Navbar() {
                 className="hover-grow"
                 onClick={() => {
                   setNotificationOpen(!notificationOpen);
-                }}>
+                }}
+              >
                 {notificationOpen ? (
                   <X
                     className="bell-icon menu-icon-img"
-                    style={{ marginTop: "10px" }}></X>
+                    style={{ marginTop: "10px" }}
+                  ></X>
                 ) : (
                   <Bell
                     className="bell-icon bell-icon-img"
-                    style={{ marginTop: "15px" }}></Bell>
+                    style={{ marginTop: "15px" }}
+                  ></Bell>
                 )}
               </div>
             </div>
@@ -140,7 +145,8 @@ function Navbar() {
           ref={menuRef}
           onClick={() => {
             setOpen(!open);
-          }}>
+          }}
+        >
           <div className="hover-grow menu-icon menu-icon-img">
             {open ? <X></X> : <List></List>}
           </div>
@@ -150,7 +156,8 @@ function Navbar() {
         <div
           className={`notification-menu ${
             notificationOpen ? "active" : "inactive"
-          }`}>
+          }`}
+        >
           <ul className="notificationList">
             {notifications.map((notification, index) => (
               <li className="dropdownItem" key={index}>
