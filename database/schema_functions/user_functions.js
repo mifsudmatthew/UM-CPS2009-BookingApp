@@ -1,7 +1,7 @@
 const user_schema = require("../schemas/user_schema");
 
 /**
- * @brief Retrieve a user by email.
+ * Retrieve a user by email.
  * @param {string} email_toSearch - The email of the user to retrieve.
  * @returns {Object} An object containing the result, data, and error.
  */
@@ -27,7 +27,7 @@ async function retrieveUser(email_toSearch) {
 }
 
 /**
- * @brief Register a new user.
+ * Register a new user.
  * @param {Object} userDetails - Details of the user to register.
  * @returns {Object} An object containing the result, data, and error.
  */
@@ -57,7 +57,7 @@ async function registerUser({ email_new, password_new, name_new }) {
 }
 
 /**
- * @brief Validate login credentials.
+ * Validate login credentials.
  * @param {string} email_toSearch - The email to validate.
  * @param {string} password_toSearch - The password to validate.
  * @returns {Object} An object containing the result, data, and error.
@@ -94,7 +94,7 @@ async function validateLogin(email_toSearch, password_toSearch) {
 }
 
 /**
- * @brief Reset user password.
+ * Reset user password.
  * @param {string} email_toSearch - The email of the user to reset the password for.
  * @param {string} password_toReset - The new password.
  * @returns {Object} An object containing the result, data, and error.
@@ -131,7 +131,7 @@ async function resetPassword(email_toSearch, password_toReset) {
   }
 }
 /**
- * @brief Update user balance.
+ * Update user balance.
  * @param {string} email_toSearch - The email of the user to update the balance for.
  * @param {number} amount_toAdd - The amount to add to the balance.
  * @returns {Object} An object containing the result, data, and error.
@@ -170,7 +170,7 @@ async function updateUserBalance(email_toSearch, amount_toAdd) {
 }
 
 /**
- * @brief Delete a user by email.
+ * Delete a user by email.
  * @param {string} email_toSearch - The email of the user to delete.
  * @returns {Object} An object containing the result, data, and error.
  */
@@ -187,7 +187,7 @@ async function deleteUser(email_toSearch) {
 }
 
 /**
- * @brief Change user details.
+ * Change user details.
  * @param {string} email_toSearch - The email of the user to change details for.
  * @param {string} name_toReset - The new name.
  * @param {string} email_toReset - The new email.
@@ -229,7 +229,7 @@ async function changeDetails(email_toSearch, name_toReset, email_toReset) {
 }
 
 /**
- * @brief Exported functions for user queries.
+ * Exported functions for user queries.
  */
 module.exports = {
   retrieveUser: retrieveUser,

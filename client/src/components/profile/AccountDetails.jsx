@@ -24,6 +24,11 @@ import { Post } from "../../utils/ApiFunctions";
 // Regular expression for email validation
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+/**
+ * Renders the component for the user to change their account details.
+ *
+ * @returns {JSX.Element} The rendered AccountDetails component.
+ */
 const AccountDetails = () => {
   const { user, updateToken } = useContext(ProfileContext); // Retrieve user data once when the component mounts
   // Retrieve the storeNotification function from the context
