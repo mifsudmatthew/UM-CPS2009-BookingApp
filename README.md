@@ -68,24 +68,6 @@
             <ul><li>post</li>
             <li>tests</li></ul>
         </li>
-        <li>
-          <b>src</b>
-          <ul>
-            <li>app.js</li>
-            <li>
-              <b>components</b>
-              <ul>
-                <li>header.js</li>
-                <li>footer.js</li>
-              </ul>
-            </li>
-            <li>
-              <b>pages</b>
-              <ul>
-                <li>home.js</li>
-                <li>about.js</li>
-              </ul>
-            </li>
           </ul>
         </li>
       </ul>
