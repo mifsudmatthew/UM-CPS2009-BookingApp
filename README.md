@@ -3,7 +3,7 @@
 <p align="center"><a target="_blank" rel="noopener noreferrer"><img width="180" src="https://i.ibb.co/z6nLrz5/logo.png" alt="logo"></a></p>
 
 ## Contributors
-<div style="text-align: center;">
+<div style="text-align: center; margin-left: auto, margin-right:auto">
     <table style="margin: 0 auto;">
         <tr>
             <td><a href="https://github.com/mifsudmatthew"><img alt="Matthew Mifsud" style="width: 100px; border-radius: 50%;" src="https://avatars.githubusercontent.com/u/97695752?v=4"/></a></td>
