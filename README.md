@@ -57,7 +57,7 @@
       <ul>
         <li><b>client</b>
             <ul><li>public</li>
-            <li>src <li>assets</li>
+            <li>src <ul><li>assets</li></ul>
             </li></ul>
         </li>
         <li><b>database</b>
