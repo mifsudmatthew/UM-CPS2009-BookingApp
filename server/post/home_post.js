@@ -3,7 +3,7 @@ const home_router = express.Router(); // Creating a router to handle requests
 const courts_queries = require("../../database/schema_functions/court_functions"); // Importing court functions
 
 /**
- * @brief Post request for retrieving all courts.
+ * Post request for retrieving all courts.
  *
  * This route retrieves all courts from the database.
  *

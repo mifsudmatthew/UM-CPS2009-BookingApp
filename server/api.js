@@ -21,7 +21,7 @@ apiRouter.use((req, _res, next) => {
 });
 
 /**
- * @brief Route checks that the attached token header is valid.
+ * Route checks that the attached token header is valid.
  *
  * @param None
  *
@@ -61,7 +61,7 @@ apiRouter.post("/refresh", (req, res) => {
 });
 
 /**
- * @brief Validates the user's information with the database.
+ * Validates the user's information with the database.
  * @param None
  * @return
  * - 200: Valid Login
@@ -124,7 +124,7 @@ apiRouter.post("/login", async (req, res) => {
 });
 
 /**
- * @brief Creates a new user in the database.
+ * Creates a new user in the database.
  * @param None
  * @return
  * - 200: Valid Registration
@@ -165,7 +165,7 @@ apiRouter.post("/register", async (req, res) => {
 });
 
 /**
- * @brief Route for sending an email to reset password.
+ * Route for sending an email to reset password.
  * @param None
  * @return
  * - 200: On Success
@@ -184,7 +184,7 @@ apiRouter.post("/reset", async (req, res) => {
 });
 
 /**
- * @brief Route for changing password when not logged in (Reset Password).
+ * Route for changing password when not logged in (Reset Password).
  * @param None
  * @return
  * - 200: Reset Success
@@ -213,7 +213,7 @@ apiRouter.post("/resetpassword", async (req, res) => {
 });
 
 /**
- * @brief Route for changing password both when logged in and after obtaining the pin when resetting password.
+ * Route for changing password both when logged in and after obtaining the pin when resetting password.
  * @param None
  * @return
  * - 200: Password Change Success
@@ -237,7 +237,7 @@ apiRouter.post("/changepassword", sf.authenticateToken, async (req, res) => {
 });
 
 /**
- * @brief Route for changing details of the user.
+ * Route for changing details of the user.
  * @param None
  * @return
  * - 200: Details Change Success

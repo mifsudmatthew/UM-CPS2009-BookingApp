@@ -24,7 +24,7 @@ const transporter = nodeMailer.createTransport({
 });
 
 /**
- * @brief Function to generate a new pin. By generating 4 random numbers (0-9) and concatenating them.
+ * Function to generate a new pin. By generating 4 random numbers (0-9) and concatenating them.
  *
  * @param None
  *
@@ -42,7 +42,7 @@ function getRandomPin() {
 }
 
 /**
- * @brief Function to add an entry to the accountPins array with a 5 minute timer
+ * Function to add an entry to the accountPins array with a 5 minute timer
  *
  * @param {String} email The email of the user
  *
@@ -74,7 +74,7 @@ function addPinEntry(email, pin) {
 }
 
 /**
- * @brief Function to send an email to user requesting a password reset.
+ * Function to send an email to user requesting a password reset.
  *
  * @param {String} user_email The email of the user requesting to send pin to email.
  *
@@ -103,7 +103,7 @@ async function sendPinByMail(user_email) {
 }
 
 /**
- * @brief Function to send a confirmation to the user that the payment was successful.
+ * Function to send a confirmation to the user that the payment was successful.
  *
  * @param {String} user_email The email of the user topping up their account.
  *
@@ -137,7 +137,7 @@ async function sendPaymentSuccessMail(user_email, amount) {
 }
 
 /**
- * @brief Function to send a confirmation to the user that the booking was successful.
+ * Function to send a confirmation to the user that the booking was successful.
  *
  * @param {String} user_email The email of the user booking the court.
  *
@@ -177,7 +177,7 @@ async function sendBookingSuccessMail(user_email, court, date, hour, price) {
 }
 
 /**
- * @brief Function to send a confirmation to the user that the booking was cancelled.
+ * Function to send a confirmation to the user that the booking was cancelled.
  *
  * @param {String} user_email The email of the user cancelling the booking.
  *
@@ -223,7 +223,7 @@ async function sendCancellationSuccessMail(
 }
 
 /**
- * @brief Function to validate the user's token.
+ * Function to validate the user's token.
  *
  * @param {Object} req The request object.
  *
@@ -259,7 +259,7 @@ function authenticateToken(req, res, next) {
 }
 
 /**
- * @brief Function to return a new token for the user based on the email.
+ * Function to return a new token for the user based on the email.
  *
  * @param {String} email The email of the user
  *
@@ -297,7 +297,7 @@ async function getUpdatedToken(email) {
 }
 
 /**
- * @brief Function to generate a new access token.
+ * Function to generate a new access token.
  *
  * @param {Object} payload The payload to be used to generate the token
  *
@@ -308,7 +308,7 @@ function generateAccessToken(payload) {
 }
 
 /**
- * @brief Function to generate a new refresh token. (NOT USED)
+ * Function to generate a new refresh token. (NOT USED)
  *
  * @param {Object} payload The payload to be used to generate the token
  *

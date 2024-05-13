@@ -6,7 +6,7 @@ const courts_queries = require("../../database/schema_functions/court_functions"
 const user_queries = require("../../database/schema_functions/user_functions"); // Importing user functions
 
 /**
- * @brief Route obtains all available courts for a given date and time.
+ * Route obtains all available courts for a given date and time.
  *
  * @param None
  *
@@ -26,7 +26,7 @@ bookingRouter.post("/getAvailableCourts", async (req, res) => {
 });
 
 /**
- * @brief Route verifies if a player exists in the database.
+ * Route verifies if a player exists in the database.
  *
  * @param None
  *
@@ -46,7 +46,7 @@ bookingRouter.post("/verifyPlayer", async (req, res) => {
 /** ============================================ Booking ===========================================
 
 /**
- * @brief Route for adding a booking to the database.
+ * Route for adding a booking to the database.
  *
  * @param None
  *
@@ -192,7 +192,7 @@ bookingRouter.post(
 
 /** ============================================ Future Bookings ====================================
 /**
- * @brief Route for obtaining current bookings of a user.
+ * Route for obtaining current bookings of a user.
  *
  * @param None
  *
@@ -242,7 +242,7 @@ bookingRouter.post(
 );
 /** ============================================ Future Secondary Bookings ====================================
 /**
- * @brief Route for obtaining current secondary bookings of a user.
+ * Route for obtaining current secondary bookings of a user.
  *
  * @param None
  *
@@ -290,7 +290,7 @@ bookingRouter.post(
 );
 /** ============================================ Cancel Bookings ====================================
 /**
- * @brief Route for canceling a booking.
+ * Route for canceling a booking.
  *
  * @param None
  *
