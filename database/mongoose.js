@@ -1,3 +1,8 @@
+/**
+ * @file mongoose.js
+ * @desc This file is responsible for setting up the connection to the MongoDB database.
+ */
+
 const mongoose = require("mongoose"); // Obtaining the mongoose module
 
 // Configuring mongoose such that if you attempt to query a property that is not defined

@@ -1,3 +1,8 @@
+/**
+ * @file stripe_functions.js
+ * @desc Defines all the database stripe functions
+ */
+
 const stripe_schema = require("../schemas/stripe_schema");
 
 /**
