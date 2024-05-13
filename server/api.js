@@ -1,5 +1,7 @@
-/* api.js
- * Holds the routes that fall under '/api/*' */
+/**
+ * @file api.js
+ * @desc Holds the routes that fall under '/api/*'
+ */
 
 const express = require("express");
 const apiRouter = express.Router();

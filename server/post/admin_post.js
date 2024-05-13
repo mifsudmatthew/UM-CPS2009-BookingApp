@@ -1,5 +1,6 @@
-/* admin_posts.js
- * Defines all the routes required for admin access
+/**
+ * @file admin_posts.js
+ * @desc Defines all the routes required for admin access
  */
 
 const express = require("express"); // Importing express
