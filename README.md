@@ -100,10 +100,13 @@
       <br>
       <b>client:</b> Front-end related files and folders.
       <br>
+      <br>
       <b>public:</b> Contains static files accessible by the client.
+      <br>
       <br>
       <b>src:</b> Source code for the client-side application.
       <br>
+        <br>
       <b>assets:</b> Images, fonts, or other media files.
       <br>
       <b>components:</b> Reusable UI components.
