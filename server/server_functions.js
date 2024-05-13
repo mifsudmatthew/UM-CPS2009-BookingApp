@@ -26,8 +26,6 @@ const transporter = nodeMailer.createTransport({
 /**
  * Function to generate a new pin. By generating 4 random numbers (0-9) and concatenating them.
  *
- * @param None
- *
  * @return {String} The generated pin
  */
 function getRandomPin() {
