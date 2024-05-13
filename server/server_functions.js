@@ -121,9 +121,9 @@ async function sendPaymentSuccessMail(user_email, amount) {
   const emailDetails = {
     from: "no-reply@servespot.com", // Address of account sending the email.
     to: user_email, // Email of the user requesting a reset.
-    subject: `Successful Account Top-Up: ${amount} Added`, // Subject of email.
+    subject: `Successful Account Top-Up: €${amount} Added`, // Subject of email.
     // Email body using details from the user's data retrieved.
-    text: `Dear ${user_data.data.name},\n\nWe're pleased to inform you that your recent request to top up your ServeSpot account has been successfully processed.\n\nHere are the details of your transaction:\n\n Amount: ${amount}\n\nNew Balance: ${user_data.data.balance}\n\nYour account is now ready to use with the updated balance. We ensure that our platform is continuously updated to provide you with the best possible experience.\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`,
+    text: `Dear ${user_data.data.name},\n\nWe're pleased to inform you that your recent request to top up your ServeSpot account has been successfully processed.\n\nHere are the details of your transaction:\n\n Amount: ${amount}\n\nNew Balance: €${user_data.data.balance}\n\nYour account is now ready to use with the updated balance. We ensure that our platform is continuously updated to provide you with the best possible experience.\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`,
   };
 
   // Sending the email with the details created.
