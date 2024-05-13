@@ -2,7 +2,7 @@
  * retrieve/set user data */
 
 /**
- * @brief Sends a request to the server to retrieve user data
+ * Sends a request to the server to retrieve user data
  *
  * @param None
  *
@@ -40,7 +40,7 @@ export const getUserData = async () => {
 };
 
 /**
- * @brief Sends a request to the server to set user data
+ * Sends a request to the server to set user data
  *
  * @param {Object} newUserData - The new user data to be set
  *
