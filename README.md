@@ -21,17 +21,22 @@
 </div>
 
 
-## Compilation Process
+## Terminal Commands
 
 <table>
-  <tr>
-    <td><b>Client Directory</b></td>
-    <td>npm i</td>
-  </tr>
-  <tr>
-    <td><b>Main Directory:</b></td>
+    <tr>
+    <td><b>Build Front End</b></td>
+    <td>npm run build</td>
+    </tr> 
+    <tr>
+    <td>Launch Website on 127.0.0.1:3000</td>
     <td>
-    npm i
+    npm run start
+    </td>
+    </tr>
+    <tr>
+    <td><b>Build Front End & Launch Website on 127.0.0.1:3000</b></td>
+    <td>
     npm run start_build
     </td>
   </tr>
