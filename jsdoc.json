@@ -1,7 +1,7 @@
 {
   "sourceType": "module",
   "recurseDepth": 4,
-  "plugins": ["plugins/markdown", "better-docs/category"],
+  "plugins": ["plugins/markdown", "node_modules/better-docs/category"],
   "opts": {
     "template": "node_modules/better-docs",
     "encoding": "utf8",
