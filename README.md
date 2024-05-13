@@ -1,3 +1,9 @@
+<style>
+    .markdown-body table th, .markdown-body table td{
+        text-align:center;
+    }
+</style>
+
 <h1 align="center"> Tennis Court Booking System</h1>
 
 <p align="center"><a target="_blank" rel="noopener noreferrer"><img width="180" src="https://i.ibb.co/z6nLrz5/logo.png" alt="logo"></a></p>
