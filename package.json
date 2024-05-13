@@ -10,7 +10,8 @@
     "start": "node server.js",
     "build": "npm --prefix client run build",
     "start_build": "npm run build && npm start",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "docs": "jsdoc -c jsdoc.json"
   },
   "author": "Group 1",
   "license": "ISC",
@@ -28,6 +29,8 @@
     "supertest": "^7.0.0"
   },
   "devDependencies": {
-    "jest": "^29.7.0"
+    "better-docs": "^2.7.3",
+    "jest": "^29.7.0",
+    "jsdoc": "^4.0.3"
   }
 }
