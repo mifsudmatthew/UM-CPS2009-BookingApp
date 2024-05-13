@@ -106,32 +106,42 @@
       <br>
       <b>src:</b> Source code for the client-side application.
       <br>
-        <br>
+      <br>
       <b>assets:</b> Images, fonts, or other media files.
+      <br>
       <br>
       <b>components:</b> Reusable UI components.
       <br>
+      <br>
       <b>admin, form, home, profile, shared:</b> Specific types of components.
+      <br>
       <br>
       <b>context:</b> Context providers for state management.
       <br>
+      <br>
       <b>pages:</b> Individual pages or routes of the application.
       <br>
+      <br>
       <b>styles:</b> CSS or other styling files.
+      <br>
       <br>
       <b>utils:</b> Utility functions or helpers.
       <br>
       <br>
       <b>database:</b> Database-related files and folders.
       <br>
+      <br>
       <b>schema_functions:</b> Functions related to database schema.
+      <br>
       <br>
       <b>schemas:</b> Database schema definitions.
       <br>
       <br>
       <b>server:</b> Server-side related files and folders.
       <br>
+      <br>
       <b>post:</b> Endpoint for handling POST requests.
+      <br>
       <br>
       <b>tests:</b> Unit or integration tests for the server.
     </td>
