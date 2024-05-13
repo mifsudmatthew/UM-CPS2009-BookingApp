@@ -5,7 +5,11 @@
 
 import { errorImage } from "../components/Icons";
 
-// Function to render the Error page
+/**
+ * Renders the Error page component.
+ *
+ * @returns {JSX.Element} The rendered Error page component.
+ */
 function Errors() {
   return (
     <div>

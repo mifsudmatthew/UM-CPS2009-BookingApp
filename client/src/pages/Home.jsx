@@ -7,7 +7,11 @@ import Banner from "../components/home/Banner";
 import AboutUs from "../components/home/AboutUs";
 import Courts from "../components/home/Courts";
 
-// Function to render the Home page, which contains the Banner, About Us, and Courts components
+/**
+ * Renders the Home page component that contains the Banner, About Us, and Courts components.
+ *
+ * @returns {JSX.Element} The rendered Home page component.
+ */
 function Home() {
   return (
     <>
