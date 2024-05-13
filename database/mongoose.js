@@ -9,7 +9,7 @@ const mongoose = require("mongoose"); // Obtaining the mongoose module
 // in the schema, an error is thrown
 mongoose.set("strictQuery", true);
 
-/** ============================================ Port Setup =======================
+/** ========================= Port Setup =======================
  * This makes use of the .env file to get the mongodb
  * links and information
  */
@@ -18,22 +18,14 @@ mongoose.set("strictQuery", true);
 /**
  * @constant {string} mongoose_Url - The URL for the MongoDB database.
  */
-const mongoose_Url =
-  `mongodb+srv://` +
-  `${process.env.MONGODB_USERNAME}` +
-  `:` +
-  `${process.env.MONGODB_PASSWORD}` +
-  `@` +
-  `${process.env.CLUSTER}` +
-  `/` +
-  `${process.env.DATABASENAME}`;
+const mongoose_Url = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.CLUSTER}/${process.env.DATABASENAME}`;
 
 //--------------------------- Flags and Options Configuration
 const mongoose_Options = {
   retryWrites: true,
   w: "majority",
 };
-// ============================================ Connection Setup =================
+// ========================== Connection Setup =================
 
 /**
  * Function that creates a connection to the MongoDB database.
@@ -60,7 +52,7 @@ async function connectToDatabase() {
       }
     });
 }
-/**============================================ Connection Event Handlers ========
+/**======================================= Connection Event Handlers ========
  * Event Handlers
  */
 
@@ -83,5 +75,6 @@ mongoose.connection.on("error", (err) => {
  * Exportation of current Mongoose instance
  */
 
-connectToDatabase();
+await connectToDatabase();
+
 module.exports = mongoose;
