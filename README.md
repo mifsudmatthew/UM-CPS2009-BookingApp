@@ -1,9 +1,3 @@
-<style>
-    .markdown-body table th, .markdown-body table td{
-        text-align:center;
-    }
-</style>
-
 <h1 align="center"> Tennis Court Booking System</h1>
 
 <p align="center"><a target="_blank" rel="noopener noreferrer"><img width="180" src="https://i.ibb.co/z6nLrz5/logo.png" alt="logo"></a></p>
@@ -17,11 +11,11 @@
             <td><a href="https://github.com/FirePhoenixBro"><img alt="Luca Vella" style="width: 100px; border-radius: 50%;" src="https://avatars.githubusercontent.com/u/104022853?v=4"/></a></td>
             <td><a href="https://github.com/lensil"><img alt="Lenise Silvio" style="width: 100px; border-radius: 50%;" src="https://avatars.githubusercontent.com/u/147991201?v=4"/></a></td>
         </tr>
-        <tr style="text-align:center">
-            <td> Matthew Mifsud </td>
-            <td> Keith Farrugia </td>
-            <td> Luca Vella </td>
-            <td> Lenise Silvio </td>
+        <tr>
+            <td align="center"> Matthew Mifsud </td>
+            <td align="center"> Keith Farrugia </td>
+            <td align="center"> Luca Vella </td>
+            <td align="center"> Lenise Silvio </td>
         </tr>
     </table>
 </div>
