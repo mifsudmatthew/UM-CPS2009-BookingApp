@@ -1,6 +1,6 @@
 /**
- * Home.jsx
- * This file contains the Home page component.
+ * @file Home.jsx
+ * @desc Renders the Home page component.
  */
 
 import Banner from "../components/home/Banner";

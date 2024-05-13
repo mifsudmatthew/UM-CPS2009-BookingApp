@@ -1,5 +1,6 @@
 /**
- * AdminPage.jsx
+ * @file AdminPage.jsx
+ * @desc Renders the admin page.
  */
 
 import "../styles/profile.css";

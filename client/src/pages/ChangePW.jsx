@@ -1,6 +1,6 @@
 /**
- * ChangePW.jsx
- * This file contains the Change Password page component.
+ * @file ChangePW.jsx
+ * @desc Renders a form that allows the user to change their password.
  */
 
 import { useState, useMemo, useContext } from "react";

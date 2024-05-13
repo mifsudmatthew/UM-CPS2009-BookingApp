@@ -1,3 +1,8 @@
+/**
+ * @file AddNewCourt.jsx
+ * @desc Renders a form to add a new court.
+ */
+
 import { useState } from "react"; // Importing hooks from react
 import { toast } from "react-toastify"; // Importing toast to show success or error messages
 

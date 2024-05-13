@@ -1,6 +1,6 @@
 /**
- * App.jsx
- * Main react component
+ * @file App.jsx
+ * @desc The main react app component.
  */
 
 /* CSS */

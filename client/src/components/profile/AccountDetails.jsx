@@ -1,5 +1,6 @@
 /**
- * AccountsDetails.jsx
+ * @file AccountDetails.jsx
+ * @desc Renders a component that allows the user to change their account details.
  */
 
 import { useState, useContext } from "react";
