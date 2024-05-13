@@ -112,38 +112,34 @@
       <br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>admin, form, home, profile, shared:</b> Each contain specific types of components.
       <br>
-       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>context:</b> Context providers for state management.
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>context:</b> Contains all context providers required for state management.
       <br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>pages:</b> Individual pages or routes of the application.
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>pages:</b> Contains all pages of the website.
       <br>
-       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>styles:</b> CSS or other styling files.
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>styles:</b> Contains all CSS files.
       <br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>utils:</b> Utility functions or helpers.
-      <br>
-      <br>
-      <b>database:</b> Database-related files and folders.
-      <br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>schema_functions:</b> Functions related to database schema.
-      <br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>schemas:</b> Database schema definitions.
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>utils:</b> Contains utility API and User functions.
       <br>
       <br>
-      <b>server:</b> Server-side related files and folders.
+      <b>database:</b> Contains all files and folders related to databases.
       <br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>post:</b> Endpoint for handling POST requests.
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>schema_functions:</b> Contains all functions required for all schemas created.
       <br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>tests:</b> Unit or integration tests for the server.
-                      <br>
-                    <br>
-              <br>
-              <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>schemas:</b> Contains all schema definitions.
+      <br>
+      <br>
+      <b>server:</b> Contains all files and folders related to the server.
+      <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>post:</b> Contains all POST request handlers.
+      <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>tests:</b> Contains unit tests for the server.
+      <br>
+      <br>
+      <br>
+      <br>
     </td>
   </tr>
 </table>
-
-
-
-
 
 ## Formats
 
