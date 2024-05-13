@@ -48,15 +48,22 @@
     </tr>
 </table>
 
-## Directory
+## Project Structure
 
 <table style="margin: 0 auto;" align="center">
   <tr>
     <td>
-      <b>Project Root</b>
+      <br>root</b>
       <ul>
-        <li>index.html</li>
-        <li>styles.css</li>
+        <b>client</b>
+        <b>database</b>
+        <b>server</b>
+        <li>.env</li>
+        <li>.gitignore</li>
+        <li>README.md</li>
+        <li>azure-pipelines.yml</li>
+        <li>package.json<li>
+        <li>server.js<li>
         <li>
           <b>src</b>
           <ul>
@@ -77,7 +84,7 @@
             </li>
           </ul>
         </li>
-        <li>README.md</li>
+        <li></li>
       </ul>
     </td>
   </tr>
