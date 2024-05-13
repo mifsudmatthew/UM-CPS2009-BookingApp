@@ -1,7 +1,6 @@
 /**
- * Login.jsx
- * This file contains the Login page component.
- * (Login form that sends a request to the server to ceate a user)
+ * @file Login.jsx
+ * @desc Renders the login page component. A login form that sends a request to the server to create a user.
  */
 
 import { useState, useContext } from "react";

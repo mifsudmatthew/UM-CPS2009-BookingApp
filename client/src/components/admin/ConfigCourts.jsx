@@ -1,3 +1,8 @@
+/**
+ * @file ConfigCourts.jsx
+ * @desc Renders a form to configure courts. Allows the user to select a court, edit its details (size and price), and save the changes.
+ */
+
 import { useState, useEffect } from "react";
 import Form from "../form/Form";
 import InputBox from "../form/InputBox";

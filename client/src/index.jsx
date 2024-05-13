@@ -1,7 +1,6 @@
 /**
- * index.jsx
- * Entry point into react application
- * Acts as the root of all react components
+ * @file index.jsx
+ * @desc Entry point into react application and root of all react components
  */
 
 /* React commonents to render */

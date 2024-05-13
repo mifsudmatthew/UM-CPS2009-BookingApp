@@ -1,5 +1,6 @@
 /**
- * Navbar.jsx
+ * @file Navbar.jsx
+ * @desc Navbar component to display the navigation bar of the application.
  */
 
 import "../../styles/navbar.css";

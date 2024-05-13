@@ -1,6 +1,6 @@
 /**
- * AboutUs.jsx
- * Descriptions about what the serveSpot does and displays some statistics
+ * @file AboutUs.jsx
+ * @desc Renders the About Us section of the application.
  */
 
 import "../../styles/aboutus.css";

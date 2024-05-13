@@ -1,5 +1,6 @@
 /**
- * CourtBookingStats.jsx
+ * @file CourtBookingStats.jsx
+ * @desc Renders the court booking statistics component
  */
 
 import "../../styles/admin.css"; // Importing the admin styles

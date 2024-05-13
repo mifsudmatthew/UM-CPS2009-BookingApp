@@ -1,6 +1,6 @@
 /**
- * ProfileSidebar.jsx
- * Left bar that holds links to all profile
+ * @file ProfileSidebar.jsx
+ * @desc A component that renders the profile sidebar component.
  */
 
 import { useContext } from "react";

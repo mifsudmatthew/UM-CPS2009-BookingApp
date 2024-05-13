@@ -1,6 +1,6 @@
 /**
- * ReloadPrompt.jsx
- *  Service worker reload prompt component. Taken from
+ * @file ReloadPrompt.jsx
+ * @desc Service worker reload prompt component.
  */
 
 import "./styles/ReloadPrompt.css";
@@ -52,7 +52,8 @@ function ReloadPrompt() {
           {needRefresh && (
             <button
               className="ReloadPrompt-toast-button"
-              onClick={() => updateServiceWorker(true)}>
+              onClick={() => updateServiceWorker(true)}
+            >
               Reload
             </button>
           )}

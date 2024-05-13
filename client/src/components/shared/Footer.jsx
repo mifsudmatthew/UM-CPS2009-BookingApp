@@ -1,5 +1,6 @@
 /**
- * Footer.jsx
+ * @file Footer.jsx
+ * @desc A component that renders the footer of the website.
  */
 
 import "../../styles/footer.css";

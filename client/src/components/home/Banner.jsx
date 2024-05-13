@@ -1,8 +1,6 @@
 /**
- * Banner.jsx
- * Main Section containing tennis guy image
- * Contains a button that navigates the user to different pages depending on
- * if they are admin/logged in/not logged in
+ * @file Banner.jsx
+ * @desc Main Section containing tennis image, title, description, and login button. Contains a button that navigates the user to different pages depending on if they are admin/logged in/not logged in.
  */
 
 import "../../styles/banner.css";

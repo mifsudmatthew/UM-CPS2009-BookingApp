@@ -1,6 +1,6 @@
 /**
- * NotifcationProvider.jsx
- * Provider component that holds all functions that modify notifaction context
+ * @file NotificationProvider.jsx
+ * @desc A provider component that holds all functions that modify the notification context.
  */
 
 import PropTypes from "prop-types"; // Importing prop-types for typechecking

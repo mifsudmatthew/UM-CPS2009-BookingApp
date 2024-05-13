@@ -1,5 +1,6 @@
 /**
- * AppContainer.jsx
+ * @file AppContainer.jsx
+ * @desc Component containing all nested routes.
  */
 
 import { Routes, Route } from "react-router-dom";

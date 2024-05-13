@@ -1,6 +1,6 @@
 /**
- * NotificationContext.jsx
- * Contexts that stores the last 3 toast notifications
+ * @file NotificationContext.jsx
+ * @desc A context to hold the notifications.
  */
 
 import { createContext } from "react"; // Importing hooks from react
