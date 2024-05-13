@@ -32,6 +32,7 @@ const mongoose_Options = {
 
 /**
  * Function that creates a connection to the MongoDB database.
+ * @category Database
  * @returns {Promise} A promise that resolves when the connection is established.
  */
 async function connectToDatabase() {

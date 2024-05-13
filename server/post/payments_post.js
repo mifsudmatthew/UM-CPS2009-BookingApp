@@ -12,6 +12,8 @@ const server_functions = require("../server_functions"); // Importing server fun
  * After the checkout session is done the user is sent back to the top up page
  * together with the session id.
  *
+ * @category Back-end
+ *
  * @param None
  *
  * @return
@@ -58,6 +60,8 @@ payment_router.post(
  * Makes use of database in order to hold a list of traversed payments.
  * Makes sure session is not used twice.
  * Adds session to Database.
+ *
+ * @category Back-end
  *
  * @param None
  *

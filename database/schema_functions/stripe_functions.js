@@ -2,6 +2,7 @@ const stripe_schema = require("../schemas/stripe_schema");
 
 /**
  * Retrieve a Stripe session by session ID.
+ * @category Database
  * @param {string} session_id - The session ID to search for.
  * @returns {Object} An object containing the result, data, and error.
  */
@@ -28,6 +29,7 @@ async function retrieveStripe(session_id) {
 
 /**
  * Register a new Stripe session entry.
+ * @category Database
  * @param {Object} sessionDetails - Details of the session to register.
  * @returns {Object} An object containing the result, data, and error.
  */
