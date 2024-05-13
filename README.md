@@ -23,7 +23,7 @@
 
 ## Terminal Commands
 
-<table>
+<table align="center">
     <tr>
     <td>Build Front End</td>
     <td>npm run build</td>
@@ -50,7 +50,7 @@
 
 ## Directory
 
-<table style="margin: 0 auto;">
+<table style="margin: 0 auto;" align="center">
   <tr>
     <td>
       <b>Project Root</b>
@@ -85,7 +85,7 @@
 
 ## Formats
 
-<table>
+<table align="center">
   <tr>
     <th><b>Purpose</b></th>
     <th> Format</th>
