@@ -1,3 +1,8 @@
+/**
+ * @file user_functions.js
+ * @desc Defines all the database user functions
+ */
+
 const user_schema = require("../schemas/user_schema");
 
 /**

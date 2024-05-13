@@ -1,3 +1,8 @@
+/**
+ * @file booking_functions.js
+ * @desc Defines all the database booking functions
+ */
+
 const booking_schema = require("../schemas/booking_schema");
 const court_schema = require("../schemas/courts_schema");
 

@@ -1,3 +1,8 @@
+/**
+ * @file court_functions.js
+ * @desc Defines all the database court functions
+ */
+
 const courts_schema = require("../schemas/courts_schema");
 
 /**
