@@ -12,17 +12,16 @@ async function retrieveUser(email_toSearch) {
 
     // -------------------- Validation
     if (user_found == null) {
-      return {
-        result: false,
-        data: null,
-        error: "No user found that matches the email: " + email_toSearch,
-      };
+      throw new Error(
+        `No user found that matches the email: ${email_toSearch}`
+      );
     }
 
     // -------------------- Succesfully returnig the found user
     return { result: true, data: user_found, error: null };
-  } catch (error_message) {
-    throw new Error("Failed to Connect to Database: " + error_message);
+  } catch (err) {
+    console.error(`retrieveUser: ${err}`);
+    return { result: false, data: null, error: `${err}` };
   }
 }
 
@@ -34,11 +33,11 @@ async function retrieveUser(email_toSearch) {
 async function registerUser({ email_new, password_new, name_new }) {
   try {
     // ----------------------- Check if email is in use
-    user_found = await user_schema.findOne({ email: email_new });
+    const user_found = await user_schema.findOne({ email: email_new });
 
     // ----------------------- validation of query
     if (user_found != null) {
-      return { result: false, data: null, error: "email already in use" };
+      throw new Error("Email already in use");
     }
 
     //-------------------------- Email is not in use
@@ -49,10 +48,12 @@ async function registerUser({ email_new, password_new, name_new }) {
       name: name_new,
       balance: 0, // default value
     });
+
     // Save the new user
     return { result: true, data: await newUser.save(), error: null };
-  } catch (error_message) {
-    throw new Error("Failed to Connect to Database: " + error_message);
+  } catch (err) {
+    console.error(`registerUser: ${err}`);
+    return { result: false, data: null, error: `${err}` };
   }
 }
 
@@ -71,11 +72,9 @@ async function validateLogin(email_toSearch, password_toSearch) {
 
     // --------------------- (Validation of Query) No user Found
     if (user_found == null) {
-      return {
-        result: false,
-        data: null,
-        error: "No user found that matches the email: " + email_toSearch,
-      };
+      throw new Error(
+        `No user found that matches the email: ${email_toSearch}`
+      );
     }
 
     // --------------------- User Found (returning stuff)
@@ -88,8 +87,9 @@ async function validateLogin(email_toSearch, password_toSearch) {
       },
       error: null,
     };
-  } catch (error_message) {
-    throw new Error("Failed to Connect to Database: " + error_message);
+  } catch (err) {
+    console.error(`validateLogin: ${err}`);
+    return { result: false, data: null, error: `${err}` };
   }
 }
 
@@ -109,11 +109,9 @@ async function resetPassword(email_toSearch, password_toReset) {
 
     // --------------------- No user Found (Cannot reset password)
     if (user_updated == null) {
-      return {
-        result: false,
-        data: null,
-        error: "No user found that matches the email: " + email_toSearch,
-      };
+      throw new Error(
+        `No user found that matches the email: ${email_toSearch}`
+      );
     }
 
     // --------------------- User Found (returning stuff)
@@ -126,8 +124,9 @@ async function resetPassword(email_toSearch, password_toReset) {
       },
       error: null,
     };
-  } catch (error_message) {
-    throw new Error("Failed to Connect to Database: " + error_message);
+  } catch (err) {
+    console.error(`resetPassword: ${err}`);
+    return { result: false, data: null, error: `${err}` };
   }
 }
 /**
@@ -147,11 +146,9 @@ async function updateUserBalance(email_toSearch, amount_toAdd) {
 
     // --------------------- No user Found (Cannot update Balance)
     if (user_updated == null) {
-      return {
-        result: false,
-        data: null,
-        error: "No user found that matches the email: " + email_toSearch,
-      };
+      throw new Error(
+        `No user found that matches the email: ${email_toSearch}`
+      );
     }
 
     // --------------------- User Found (returning stuff)
@@ -164,8 +161,9 @@ async function updateUserBalance(email_toSearch, amount_toAdd) {
       },
       error: null,
     };
-  } catch (error_message) {
-    throw new Error("Failed to Connect to Database: " + error_message);
+  } catch (err) {
+    console.error(`updateUserBalance: ${err}`);
+    return { result: false, data: null, error: `${err}` };
   }
 }
 
@@ -181,8 +179,9 @@ async function deleteUser(email_toSearch) {
 
     // --------------------- Returning stuff
     return { result: true, data: null, error: null };
-  } catch (error) {
-    throw new Error("Failed to Connect to Database: " + error_message);
+  } catch (err) {
+    console.error(`deleteUser: ${err}`);
+    return { result: false, data: null, error: `${err}` };
   }
 }
 
@@ -204,14 +203,13 @@ async function changeDetails(email_toSearch, name_toReset, email_toReset) {
 
     // If no user found
     if (!details_updated) {
-      return {
-        success: false,
-        error: `Possibly no user found that matches the email: ${email_toSearch}`,
-      };
+      throw new Error(
+        `Possibly no user found that matches the email: ${email_toSearch}`
+      );
     }
 
     return {
-      success: true,
+      result: true,
       data: {
         _id: details_updated._id,
         email: details_updated.email,
@@ -219,12 +217,11 @@ async function changeDetails(email_toSearch, name_toReset, email_toReset) {
         balance: details_updated.balance,
         admin: details_updated.admin,
       },
+      error: null,
     };
-  } catch (error_message) {
-    return {
-      success: false,
-      error: `Failed to Connect to Database: ${error_message}`,
-    };
+  } catch (err) {
+    console.error(`changeDetails: ${err}`);
+    return { result: false, data: null, error: `${err}` };
   }
 }
 
