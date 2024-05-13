@@ -110,7 +110,7 @@
       <br>
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>components:</b> Contains a collection of UI components created.
       <br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>admin, form, home, profile, shared:</b> Each contain specific types of components.
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>admin, form, home, profile, shared:</b> Contain specific component types.
       <br>
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>context:</b> Contains all context providers required for state management.
       <br>
