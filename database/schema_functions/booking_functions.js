@@ -14,12 +14,12 @@ const court_schema = require("../schemas/courts_schema");
  */
 async function getFutureBookings_ID(userID_toSearch) {
   try {
-    // ---------------- Calculate Current Date and Time
+    // --------------------- Calculate Current Date and Time
     let currentDate = new Date();
     const currentTime = currentDate.getTime();
     currentDate.setHours(0, 0, 0, 0);
 
-    // ---------------- Query Bookings from current date/time
+    // --------------------- Query Bookings from current date/time
     const bookings = await booking_schema.find({
       userID: userID_toSearch,
       $or: [
@@ -31,7 +31,7 @@ async function getFutureBookings_ID(userID_toSearch) {
       ], // Return all bookings of dates greater then current date
     });
 
-    // ---------------- Validation of Query
+    // --------------------- Validation of Query
     if (bookings == [] || bookings == null) {
       throw new Error("No bookings where found");
     }
@@ -89,12 +89,12 @@ async function getFutureSecondaryBookingsBy_ID(email) {
  */
 async function getFutureBookings_Courts(courtID_toSearch) {
   try {
-    // ---------------- Calculate Current Date and Time
+    // --------------------- Calculate Current Date and Time
     currentDate = new Date();
     const currentTime = currentDate.getHours();
     currentDate.setHours(0, 0, 0, 0);
     console.log(currentDate);
-    // ---------------- Query Bookings from current date/time
+    // --------------------- Query Bookings from current date/time
     const bookings = await booking_schema.find({
       courtID: courtID_toSearch,
       $or: [
@@ -106,7 +106,7 @@ async function getFutureBookings_Courts(courtID_toSearch) {
       ], // Return all bookings of dates greater then current date
     });
 
-    // ---------------- Validation of Query
+    // --------------------- Validation of Query
     if (bookings.length === 0 || bookings == null) {
       throw new Error("No bookings where found");
     }
@@ -127,7 +127,7 @@ async function getFutureBookings_Courts(courtID_toSearch) {
  */
 async function getFutureBookings_IDCourt(userID_toSearch, courtID_toSearch) {
   try {
-    // ---------------- Calculate Current Date and Time
+    // --------------------- Calculate Current Date and Time
     currentDate = new Date();
     const currentTime = currentDate.getTime();
     currentDate.setHours(0, 0, 0, 0);
@@ -143,7 +143,7 @@ async function getFutureBookings_IDCourt(userID_toSearch, courtID_toSearch) {
       ], // Return all bookings of dates greater then current date
     });
 
-    // ---------------- Validation of Query
+    // --------------------- Validation of Query
     if (bookings == [] || bookings == null) {
       throw new Error("No bookings where found");
     }
