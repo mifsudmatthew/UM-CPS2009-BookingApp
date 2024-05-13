@@ -13,6 +13,8 @@ const courts_queries = require("../../database/schema_functions/court_functions"
  *
  * This route retrieves all courts from the database.
  *
+ * @category Back-end
+ *
  * @param None
  *
  * @return
@@ -44,6 +46,8 @@ adminRouter.get("/getAllCourts", async (req, res) => {
 
 /**
  * Post request for obtaining all courts' statistics.
+ *
+ * @category Back-end
  *
  * @param None
  *
@@ -82,6 +86,8 @@ adminRouter.post("/getBasicStatistics", async (req, res) => {
 /**
  * Post request for registering a new court.
  *
+ * @category Back-end
+ *
  * @param None
  *
  * @return
@@ -110,6 +116,8 @@ adminRouter.post("/registerCourt", async (req, res) => {
 
 /**
  * Post request for configuring a court.
+ *
+ * @category Back-end
  *
  * @param None
  *

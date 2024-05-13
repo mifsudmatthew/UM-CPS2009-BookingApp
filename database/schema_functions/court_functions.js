@@ -2,6 +2,7 @@ const courts_schema = require("../schemas/courts_schema");
 
 /**
  * Retrieve a court by court ID.
+ * @category Database
  * @param {string} courtID - The ID of the court to retrieve.
  * @returns {Object} An object containing the result, data, and error.
  */
@@ -28,6 +29,7 @@ async function retrieveCourt(courtID) {
 
 /**
  * Register a new court.
+ * @category Database
  * @param {Object} courtDetails - Details of the court to register.
  * @returns {Object} An object containing the result, data, and error.
  */
@@ -60,6 +62,7 @@ async function registerCourt({
 
 /**
  * Get all courts.
+ * @category Database
  * @returns {Object} An object containing the result, data, and error.
  */
 async function getAllCourts() {
@@ -74,6 +77,7 @@ async function getAllCourts() {
 
 /**
  * Update court details.
+ * @category Database
  * @param {string} court_id - The ID of the court to update.
  * @param {string} newName - The new name for the court.
  * @param {number} newPrice - The new price for the court.

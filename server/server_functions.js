@@ -25,7 +25,7 @@ const transporter = nodeMailer.createTransport({
 
 /**
  * Function to generate a new pin. By generating 4 random numbers (0-9) and concatenating them.
- *
+ * @category Back-end
  * @return {String} The generated pin
  */
 function getRandomPin() {
@@ -41,6 +41,8 @@ function getRandomPin() {
 
 /**
  * Function to add an entry to the accountPins array with a 5 minute timer
+ *
+ * @category Back-end
  *
  * @param {String} email The email of the user
  *
@@ -74,6 +76,8 @@ function addPinEntry(email, pin) {
 /**
  * Function to send an email to user requesting a password reset.
  *
+ * @category Back-end
+ *
  * @param {String} user_email The email of the user requesting to send pin to email.
  *
  * @return {Object} A message indicating the success of the email sent
@@ -102,6 +106,8 @@ async function sendPinByMail(user_email) {
 
 /**
  * Function to send a confirmation to the user that the payment was successful.
+ *
+ * @category Back-end
  *
  * @param {String} user_email The email of the user topping up their account.
  *
@@ -136,6 +142,8 @@ async function sendPaymentSuccessMail(user_email, amount) {
 
 /**
  * Function to send a confirmation to the user that the booking was successful.
+ *
+ * @category Back-end
  *
  * @param {String} user_email The email of the user booking the court.
  *
@@ -176,6 +184,8 @@ async function sendBookingSuccessMail(user_email, court, date, hour, price) {
 
 /**
  * Function to send a confirmation to the user that the booking was cancelled.
+ *
+ * @category Back-end
  *
  * @param {String} user_email The email of the user cancelling the booking.
  *
@@ -223,6 +233,8 @@ async function sendCancellationSuccessMail(
 /**
  * Function to validate the user's token.
  *
+ * @category Back-end
+ *
  * @param {Object} req The request object.
  *
  * @param {Object} res The response object.
@@ -258,6 +270,8 @@ function authenticateToken(req, res, next) {
 
 /**
  * Function to return a new token for the user based on the email.
+ *
+ * @category Back-end
  *
  * @param {String} email The email of the user
  *
@@ -297,23 +311,14 @@ async function getUpdatedToken(email) {
 /**
  * Function to generate a new access token.
  *
+ * @category Back-end
+ *
  * @param {Object} payload The payload to be used to generate the token
  *
  * @return {String} The generated access token
  */
 function generateAccessToken(payload) {
   return jwt.sign(payload, process.env.JWT_ACCESS);
-}
-
-/**
- * Function to generate a new refresh token. (NOT USED)
- *
- * @param {Object} payload The payload to be used to generate the token
- *
- * @return {String} The generated refresh token
- */
-function generateRefreshToken(payload) {
-  return jwt.sign(payload, process.env.JWT_REFRESH);
 }
 
 module.exports = {

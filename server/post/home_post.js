@@ -7,6 +7,8 @@ const courts_queries = require("../../database/schema_functions/court_functions"
  *
  * This route retrieves all courts from the database.
  *
+ * @category Back-end
+ *
  * @param None
  *
  * @return
