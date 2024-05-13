@@ -59,7 +59,10 @@
             <ul><li>public</li>
             <li>src</li></ul>
         </li>
-        <li><b>database</b></li>
+        <li><b>database</b>
+            <ul><li>schema_functions</li>
+            <li>schemas</li></ul>
+        </li>
         <li><b>server</b></li>
         <li>
           <b>src</b>
