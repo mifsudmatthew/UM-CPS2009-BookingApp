@@ -2,8 +2,8 @@
  * Topup.jsx
  */
 
-import { useState, useContext } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useState, useContext, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import ProfileContext from "../context/ProfileContext";
@@ -22,11 +22,9 @@ import { Post } from "../utils/ApiFunctions";
  */
 function Topup() {
   // Getting the location from the router, to get the session_id from the URL
-  const location = useLocation();
   const navigate = useNavigate();
-  const querys = new URLSearchParams(location.search);
-  // Getting the session ID from the URL
-  const session_id = querys.get("session_id");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const session_id = searchParams.get("session_id");
 
   // Getting the updateToken function from the ProfileContext
   const { updateToken } = useContext(ProfileContext);
@@ -35,35 +33,6 @@ function Topup() {
 
   // Creating a state variable for the amount, defaulting to 20
   const [amount, setAmount] = useState(20);
-
-  const handleSuccess = async () => {
-    try {
-      // Send a POST request to "/api/success" with the session_id
-      const response = await Post("/api/success", {
-        session_id: session_id,
-      });
-
-      if (!response.result) {
-        storeNotification(`Top Up of ${amount} Failed!`);
-        toast.success("Top Up Failed!");
-        throw new Error(response.error);
-      }
-
-      if (!response.data.accessToken) {
-        throw new Error("Token that was retured is invalid");
-      }
-
-      // Update the access token if it is present in the response
-      updateToken(response.data.accessToken);
-
-      // Display success toast if the payment was successful
-      storeNotification(`Top Up of ${amount} Successful!`);
-      toast.success("Top Up Successful!");
-    } catch (error) {
-      // Log an error if the request fails
-      console.error(`Error in topup success: ${error}`);
-    }
-  };
 
   /**
    * Handles the form submission.
@@ -111,15 +80,42 @@ function Topup() {
    * If a session_id is present, it sends a POST request to "/api/success" with the session_id.
    * Logs the response or logs an error if the request fails.
    */
-  if (session_id) {
-    try {
+  useEffect(() => {
+    const handleSuccess = async () => {
+      try {
+        // Send a POST request to "/api/success" with the session_id
+        const response = await Post("/api/success", {
+          session_id: session_id,
+        });
+
+        if (!response.result) {
+          throw new Error(response.error);
+        }
+
+        if (!response.data.accessToken) {
+          throw new Error("Token that was retured is invalid");
+        }
+
+        // Update the access token if it is present in the response
+        updateToken(response.data.accessToken);
+
+        // Display success toast if the payment was successful
+        storeNotification(`Top Up of ${amount} Successful!`);
+        toast.success("Top Up Successful!");
+      } catch (error) {
+        storeNotification(`Top Up of ${amount} Failed!`);
+        toast.success("Top Up Failed!");
+        // Log an error if the request fails
+        console.error(`Error in topup success: ${error}`);
+      }
+    };
+
+    if (session_id) {
       handleSuccess();
-    } catch (err) {
-      // Log an error if the request fails
-      console.error(`Error in top-up with session_id: ${err}`);
+      setSearchParams("");
+      navigate("/profile/topup", { replace: true });
     }
-    navigate("/profile/topup/", { replace: true });
-  }
+  });
 
   return (
     <main className="profile">
