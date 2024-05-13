@@ -95,9 +95,6 @@
       </ul>
     </td>
     <td>
-      <b>Folder Details:</b>
-      <br>
-      <br>
       <b>client:</b> Front-end related files and folders.
       <br>
       <br>
