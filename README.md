@@ -21,7 +21,7 @@
 </div>
 
 
-## Terminal Commands
+## Terminal Commands (must be in root when executed)
 
 <table align="center">
     <tr>
@@ -53,44 +53,95 @@
 <table style="margin: 0 auto;" align="center">
   <tr>
     <td>
+      <b>Folder Structure:</b>
+      <br>
       <br><b>root</b>
       <ul>
-        <li><b>client</b></li>
-        <li><b>database</b></li>
-        <li><b>server</b></li>
-        <li>.env</li>
-        <li>.gitignore</li>
-        <li>README.md</li>
-        <li>azure-pipelines.yml</li>
-        <li>package.json</li>
-        <li>server.js</li>
-        <li>
-          <b>src</b>
+        <li><b>client</b>
           <ul>
-            <li>app.js</li>
-            <li>
-              <b>components</b>
+            <li><b>public</b></li>
+            <li><b>src</b>
               <ul>
-                <li>header.js</li>
-                <li>footer.js</li>
-              </ul>
-            </li>
-            <li>
-              <b>pages</b>
-              <ul>
-                <li>home.js</li>
-                <li>about.js</li>
+                <li><b>assets</b></li>
+                <li><b>components</b>
+                  <ul>
+                    <li><b>admin</b></li>
+                    <li><b>form</b></li>
+                    <li><b>home</b></li>
+                    <li><b>profile</b></li>
+                    <li><b>shared</b></li>
+                  </ul>
+                </li>
+                <li><b>context</b></li>
+                <li><b>pages</b></li>
+                <li><b>styles</b></li>
+                <li><b>utils</b></li>
               </ul>
             </li>
           </ul>
         </li>
+        <li><b>database</b>
+          <ul>
+            <li><b>schema_functions</b></li>
+            <li><b>schemas</b></li>
+          </ul>
+        </li>
+        <li><b>server</b>
+          <ul>
+            <li><b>post</b></li>
+            <li><b>tests</b></li>
+          </ul>
+        </li>
       </ul>
+    </td>
+    <td>
+      <b>Folder Details:</b>
+              <br>
+              <br>
+              <br>
+              <br>
+      <b>client:</b> Contains all Front-end files and folders.
+      <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>public:</b> Contains static files sent to the client.
+      <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>src:</b> Contains all client-sided source code.
+      <br>
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>assets:</b> Contains all images used.
+      <br>
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>components:</b> Contains a collection of UI components created.
+      <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>admin, form, home, profile, shared:</b> Each contain specific types of components.
+      <br>
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>context:</b> Contains all context providers required for state management.
+      <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>pages:</b> Contains all pages of the website.
+      <br>
+       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>styles:</b> Contains all CSS files.
+      <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>utils:</b> Contains utility API and User functions.
+      <br>
+      <br>
+      <b>database:</b> Contains all files and folders related to databases.
+      <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>schema_functions:</b> Contains all functions required for all schemas created.
+      <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>schemas:</b> Contains all schema definitions.
+      <br>
+      <br>
+      <b>server:</b> Contains all files and folders related to the server.
+      <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>post:</b> Contains all POST request handlers.
+      <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>tests:</b> Contains unit tests for the server.
+      <br>
+      <br>
+      <br>
+      <br>
     </td>
   </tr>
 </table>
 
-
-## Formats
+## Commit Comment Format
 
 <table align="center">
   <tr>
