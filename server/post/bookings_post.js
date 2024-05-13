@@ -1,3 +1,7 @@
+/**
+ * @file bookings_post.js
+ * @desc Defines all the routes required for booking access
+ */
 const express = require("express"); // Importing express
 const bookingRouter = express.Router(); // Creating a router to handle requests
 const server_functions = require("../server_functions"); // Importing server functions
@@ -7,6 +11,8 @@ const user_queries = require("../../database/schema_functions/user_functions"); 
 
 /**
  * Route obtains all available courts for a given date and time.
+ *
+ * @category Back-end
  *
  * @param None
  *
@@ -28,6 +34,8 @@ bookingRouter.post("/getAvailableCourts", async (req, res) => {
 /**
  * Route verifies if a player exists in the database.
  *
+ * @category Back-end
+ *
  * @param None
  *
  * @return {Object} The response from the server
@@ -47,6 +55,8 @@ bookingRouter.post("/verifyPlayer", async (req, res) => {
 
 /**
  * Route for adding a booking to the database.
+ * 
+ * @category Back-end
  *
  * @param None
  *
@@ -193,6 +203,8 @@ bookingRouter.post(
 /** ============================================ Future Bookings ====================================
 /**
  * Route for obtaining current bookings of a user.
+ * 
+ * @category Back-end
  *
  * @param None
  *
@@ -243,6 +255,8 @@ bookingRouter.post(
 /** ============================================ Future Secondary Bookings ====================================
 /**
  * Route for obtaining current secondary bookings of a user.
+ * 
+ * @category Back-end
  *
  * @param None
  *
@@ -291,6 +305,8 @@ bookingRouter.post(
 /** ============================================ Cancel Bookings ====================================
 /**
  * Route for canceling a booking.
+ * 
+ * @category Back-end
  *
  * @param None
  *

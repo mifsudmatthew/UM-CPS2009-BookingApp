@@ -1,5 +1,7 @@
-/* api.js
- * Holds the routes that fall under '/api/*' */
+/**
+ * @file api.js
+ * @desc Holds the routes that fall under '/api/*'
+ */
 
 const express = require("express");
 const apiRouter = express.Router();
@@ -22,6 +24,8 @@ apiRouter.use((req, _res, next) => {
 
 /**
  * Route checks that the attached token header is valid.
+ *
+ * @category Back-end
  *
  * @param None
  *
@@ -62,6 +66,7 @@ apiRouter.post("/refresh", (req, res) => {
 
 /**
  * Validates the user's information with the database.
+ * @category Back-end
  * @param None
  * @return
  * - 200: Valid Login
@@ -125,6 +130,7 @@ apiRouter.post("/login", async (req, res) => {
 
 /**
  * Creates a new user in the database.
+ * @category Back-end
  * @param None
  * @return
  * - 200: Valid Registration
@@ -166,6 +172,7 @@ apiRouter.post("/register", async (req, res) => {
 
 /**
  * Route for sending an email to reset password.
+ * @category Back-end
  * @param None
  * @return
  * - 200: On Success
@@ -185,6 +192,7 @@ apiRouter.post("/reset", async (req, res) => {
 
 /**
  * Route for changing password when not logged in (Reset Password).
+ * @category Back-end
  * @param None
  * @return
  * - 200: Reset Success
@@ -214,6 +222,7 @@ apiRouter.post("/resetpassword", async (req, res) => {
 
 /**
  * Route for changing password both when logged in and after obtaining the pin when resetting password.
+ * @category Back-end
  * @param None
  * @return
  * - 200: Password Change Success
@@ -238,6 +247,7 @@ apiRouter.post("/changepassword", sf.authenticateToken, async (req, res) => {
 
 /**
  * Route for changing details of the user.
+ * @category Back-end
  * @param None
  * @return
  * - 200: Details Change Success

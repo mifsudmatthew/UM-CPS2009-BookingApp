@@ -1,3 +1,8 @@
+/**
+ * @file user_schema.js
+ * @desc Defines the schema for a user
+ */
+
 // reference: https://mongoosejs.com/docs/guide.html
 
 const mongoose = require("mongoose"); // Obtaining Mongoose module

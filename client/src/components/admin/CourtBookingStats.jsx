@@ -13,7 +13,7 @@ import { Post } from "../../utils/ApiFunctions"; // Importing the Post function 
 
 /**
  * Renders the court booking statistics component.
- *
+ * @category Front-end
  * @returns {JSX.Element}  The rendered court booking statistics component.
  */
 function CourtBookingStats() {

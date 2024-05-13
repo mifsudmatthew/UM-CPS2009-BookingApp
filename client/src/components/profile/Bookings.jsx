@@ -18,7 +18,7 @@ import { getUpdatedToken } from "../../utils/ApiFunctions";
 /**
  * Renders the Bookings component.
  * This component displays the upcoming and previous bookings in a table format.
- *
+ * @category Front-end
  * @returns {JSX.Element} The Bookings component.
  */
 const Bookings = () => {
@@ -31,6 +31,7 @@ const Bookings = () => {
 
   /**
    * Fetches the booked courts for a specific user.
+   * @category Front-end
    * @async
    * @function fetchBookedCourts
    * @returns {Promise<void>} A Promise that resolves when the booked courts are fetched.
@@ -137,7 +138,8 @@ const Bookings = () => {
                       {/* Calculate the time difference, if more than 24 hours allow cancellation */}
                       {diffInHours > 24 ? (
                         <button
-                          onClick={() => cancelBooking(court.id, court.price)}>
+                          onClick={() => cancelBooking(court.id, court.price)}
+                        >
                           <XOctagon />
                         </button>
                       ) : null}

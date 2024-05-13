@@ -1,3 +1,8 @@
+/**
+ * @file payments_post.js
+ * @desc Handles all post requests for payments page
+ */
+
 const express = require("express"); // Importing express
 const stripe = require("stripe")(process.env.STRIPE_KEY); // Importing stripe
 const payment_router = express.Router(); // Creating a router to handle requests
@@ -11,6 +16,8 @@ const server_functions = require("../server_functions"); // Importing server fun
  * Creates a session and sends the user to that stripe generated session.
  * After the checkout session is done the user is sent back to the top up page
  * together with the session id.
+ *
+ * @category Back-end
  *
  * @param None
  *
@@ -58,6 +65,8 @@ payment_router.post(
  * Makes use of database in order to hold a list of traversed payments.
  * Makes sure session is not used twice.
  * Adds session to Database.
+ *
+ * @category Back-end
  *
  * @param None
  *

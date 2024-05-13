@@ -9,7 +9,7 @@ import InputButton from "../form/InputButton"; // Importing the InputButton comp
 
 /**
  * Renders a form to add a new court.
- *
+ * @category Front-end
  * @returns {JSX.Element} The AddNewCourt component.
  */
 function AddNewCourt() {

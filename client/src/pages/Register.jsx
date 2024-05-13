@@ -15,7 +15,7 @@ import NotificationContext from "../context/NotificationContext";
 
 /**
  * Renders the Register page component.
- *
+ * @category Front-end
  * @returns {JSX.Element} The Register page component.
  */
 function Register() {

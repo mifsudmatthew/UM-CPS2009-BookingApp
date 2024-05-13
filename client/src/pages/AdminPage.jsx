@@ -13,7 +13,7 @@ import { AdminSidebar } from "../components/admin/AdminSidebar";
 
 /**
  * Renders the admin page.
- *
+ * @category Front-end
  * @returns {JSX.Element} The rendered admin page.
  */
 const AdminPage = () => {

@@ -1,3 +1,8 @@
+/**
+ * @file booking_schema.js
+ * @desc Defines the schema for a booking
+ */
+
 // reference: https://mongoosejs.com/docs/guide.html
 
 const mongoose = require("mongoose"); // Obtaining Mongoose module

@@ -1,7 +1,13 @@
+/**
+ * @file user_functions.js
+ * @desc Defines all the database user functions
+ */
+
 const user_schema = require("../schemas/user_schema");
 
 /**
  * Retrieve a user by email.
+ * @category Database
  * @param {string} email_toSearch - The email of the user to retrieve.
  * @returns {Object} An object containing the result, data, and error.
  */
@@ -27,6 +33,7 @@ async function retrieveUser(email_toSearch) {
 
 /**
  * Register a new user.
+ * @category Database
  * @param {Object} userDetails - Details of the user to register.
  * @returns {Object} An object containing the result, data, and error.
  */
@@ -59,6 +66,7 @@ async function registerUser({ email_new, password_new, name_new }) {
 
 /**
  * Validate login credentials.
+ * @category Database
  * @param {string} email_toSearch - The email to validate.
  * @param {string} password_toSearch - The password to validate.
  * @returns {Object} An object containing the result, data, and error.
@@ -95,6 +103,7 @@ async function validateLogin(email_toSearch, password_toSearch) {
 
 /**
  * Reset user password.
+ * @category Database
  * @param {string} email_toSearch - The email of the user to reset the password for.
  * @param {string} password_toReset - The new password.
  * @returns {Object} An object containing the result, data, and error.
@@ -131,6 +140,7 @@ async function resetPassword(email_toSearch, password_toReset) {
 }
 /**
  * Update user balance.
+ * @category Database
  * @param {string} email_toSearch - The email of the user to update the balance for.
  * @param {number} amount_toAdd - The amount to add to the balance.
  * @returns {Object} An object containing the result, data, and error.
@@ -169,6 +179,7 @@ async function updateUserBalance(email_toSearch, amount_toAdd) {
 
 /**
  * Delete a user by email.
+ * @category Database
  * @param {string} email_toSearch - The email of the user to delete.
  * @returns {Object} An object containing the result, data, and error.
  */
@@ -187,6 +198,7 @@ async function deleteUser(email_toSearch) {
 
 /**
  * Change user details.
+ * @category Database
  * @param {string} email_toSearch - The email of the user to change details for.
  * @param {string} name_toReset - The new name.
  * @param {string} email_toReset - The new email.
