@@ -51,9 +51,13 @@ function Login() {
 
     try {
       // Attempt to send a POST request to login with the email and password
-      const { accessToken } = await Post("/api/login", { email, password });
+      const response = await Post("/api/login", { email, password });
 
-      updateToken(accessToken); // Update the access token.
+      if (!response.result) {
+        throw new Error(response.error);
+      }
+
+      updateToken(response.data.accessToken); // Update the access token.
 
       // Check if the user is an admin
       if (user.admin) {
