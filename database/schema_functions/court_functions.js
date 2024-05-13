@@ -1,7 +1,7 @@
 const courts_schema = require("../schemas/courts_schema");
 
 /**
- * @brief Retrieve a court by court ID.
+ * Retrieve a court by court ID.
  * @param {string} courtID - The ID of the court to retrieve.
  * @returns {Object} An object containing the result, data, and error.
  */
@@ -27,7 +27,7 @@ async function retrieveCourt(courtID) {
 }
 
 /**
- * @brief Register a new court.
+ * Register a new court.
  * @param {Object} courtDetails - Details of the court to register.
  * @returns {Object} An object containing the result, data, and error.
  */
@@ -54,12 +54,12 @@ async function registerCourt({
     // Save the new user
     return { result: true, data: await newCourt.save(), error: null };
   } catch (error_message) {
-    throw new Error("Failed to Connect to Database"+error_message);
+    throw new Error("Failed to Connect to Database" + error_message);
   }
 }
 
 /**
- * @brief Get all courts.
+ * Get all courts.
  * @returns {Object} An object containing the result, data, and error.
  */
 async function getAllCourts() {
@@ -68,12 +68,12 @@ async function getAllCourts() {
     const allCourts = await courts_schema.find({});
     return { result: true, data: allCourts, error: null };
   } catch (error_message) {
-    throw new Error("Failed to Connect to Database"+error_message);
+    throw new Error("Failed to Connect to Database" + error_message);
   }
 }
 
 /**
- * @brief Update court details.
+ * Update court details.
  * @param {string} court_id - The ID of the court to update.
  * @param {string} newName - The new name for the court.
  * @param {number} newPrice - The new price for the court.
@@ -108,7 +108,7 @@ async function updateCourt(court_id, newName, newPrice) {
 }
 
 /**
- * @brief Exported functions for court management.
+ * Exported functions for court management.
  */
 module.exports = {
   retrieveCourt: retrieveCourt,
