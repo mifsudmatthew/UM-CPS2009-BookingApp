@@ -133,13 +133,11 @@
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>post:</b> Endpoint for handling POST requests.
       <br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>tests:</b> Unit or integration tests for the server.
+                      <br>
+                    <br>
+              <br>
+              <br>
     </td>
-                    <br>
-              <br>
-              <br>
-                    <br>
-              <br>
-              <br>
   </tr>
 </table>
 
