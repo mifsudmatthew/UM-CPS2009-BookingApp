@@ -1,18 +1,18 @@
 {
-  "plugins": ["plugins/markdown", "better-docs/component"],
-  "recurseDepth": 4,
-  "source": {
-    "include": ["client/", "server/", "database/"],
-    "exclude": ["client/node_modules/", "client/dev-dist/", "client/dist/"],
-    "includePattern": ".+\\.js(doc|x)?$",
-    "excludePattern": "(^|\\/|\\\\)_"
-  },
   "sourceType": "module",
+  "recurseDepth": 4,
+  "plugins": ["plugins/markdown", "better-docs/category"],
   "opts": {
     "template": "node_modules/better-docs",
     "encoding": "utf8",
     "destination": "./docs/",
     "recurse": true
+  },
+  "source": {
+    "include": ["client/", "server/", "database/"],
+    "exclude": ["client/node_modules/", "client/dev-dist/", "client/dist/"],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
   },
   "tags": {
     "allowUnknownTags": true,
