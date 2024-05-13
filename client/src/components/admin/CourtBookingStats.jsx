@@ -11,6 +11,11 @@ import Chart from "chart.js/auto"; // Importing the Chart component from chart.j
 
 import { Post } from "../../utils/ApiFunctions"; // Importing the Post function to make POST requests
 
+/**
+ * Renders the court booking statistics component.
+ *
+ * @returns {JSX.Element}  The rendered court booking statistics component.
+ */
 function CourtBookingStats() {
   // State variables to store the court statistics, names, and profits
   const [courtStats, setCourtStats] = useState([]);
@@ -164,7 +169,8 @@ function CourtBookingStats() {
                 <div
                   className={`accordion-body ${
                     court.isOpen ? "open" : "close"
-                  }`}>
+                  }`}
+                >
                   <table>
                     <thead>
                       <tr>

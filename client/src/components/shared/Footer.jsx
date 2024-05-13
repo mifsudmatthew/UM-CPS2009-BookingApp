@@ -11,6 +11,11 @@ import ProfileContext from "../../context/ProfileContext";
 
 import logo from "../../assets/logo.webp";
 
+/**
+ * Renders the footer component.
+ *
+ * @returns {JSX.Element} The rendered footer component.
+ */
 function Footer() {
   const { isAdmin, isAuthenticated } = useContext(ProfileContext); // Get the user and access token from the ProfileContext
 
