@@ -92,27 +92,29 @@
             <li><b>tests</b></li>
           </ul>
         </li>
+        <!-- Rows for folder details -->
+        <tr>
+          <td><b>Folder:</b> root</td>
+          <td><b>Details:</b> The root directory.</td>
+        </tr>
+        <tr>
+          <td><b>Folder:</b> client</td>
+          <td><b>Details:</b> Front-end related files and folders.</td>
+        </tr>
+        <tr>
+          <td><b>Folder:</b> public</td>
+          <td><b>Details:</b> Contains static files accessible by the client.</td>
+        </tr>
+        <tr>
+          <td><b>Folder:</b> src</td>
+          <td><b>Details:</b> Source code for the client-side application.</td>
+        </tr>
+        <!-- Add more rows as needed -->
       </ul>
     </td>
-    <td>
-  <tr>
-    <td><b>Folder:</b> root</td>
-    <td><b>Details:</b> The root directory.</td>
-  </tr>
-  <tr>
-    <td><b>Folder:</b> client</td>
-    <td><b>Details:</b> Front-end related files and folders.</td>
-  </tr>
-  <tr>
-    <td><b>Folder:</b> public</td>
-    <td><b>Details:</b> Contains static files accessible by the client.</td>
-  </tr>
-  <tr>
-    <td><b>Folder:</b> src</td>
-    <td><b>Details:</b> Source code for the client-side application.</td>
-  </tr>
   </tr>
 </table>
+
 
 
 
