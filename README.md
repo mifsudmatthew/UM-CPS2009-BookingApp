@@ -100,9 +100,6 @@
               <br>
               <br>
               <br>
-              <br>
-              <br>
-              <br>
       <b>client:</b> Contains all Front-end files and folders.
       <br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>public:</b> Contains static files sent to the client.
@@ -137,6 +134,9 @@
       <br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>tests:</b> Unit or integration tests for the server.
     </td>
+                    <br>
+              <br>
+              <br>
   </tr>
 </table>
 
