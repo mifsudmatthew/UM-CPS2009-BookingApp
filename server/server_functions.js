@@ -1,5 +1,6 @@
-/* server_functions.js
- * Helper functions that are used in the routes of the server
+/**
+ * @file server_functions.js
+ * @desc Helper functions that are used in the routes of the server
  */
 
 // Importing nodemailer to send emails

@@ -1,3 +1,7 @@
+/**
+ * @file home_post.js
+ * @desc Handles all post requests for home page
+ */
 const express = require("express"); // Importing express
 const home_router = express.Router(); // Creating a router to handle requests
 const courts_queries = require("../../database/schema_functions/court_functions"); // Importing court functions

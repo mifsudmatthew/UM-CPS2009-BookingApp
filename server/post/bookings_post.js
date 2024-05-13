@@ -1,3 +1,7 @@
+/**
+ * @file bookings_post.js
+ * @desc Defines all the routes required for booking access
+ */
 const express = require("express"); // Importing express
 const bookingRouter = express.Router(); // Creating a router to handle requests
 const server_functions = require("../server_functions"); // Importing server functions

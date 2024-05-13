@@ -1,3 +1,8 @@
+/**
+ * @file payments_post.js
+ * @desc Handles all post requests for payments page
+ */
+
 const express = require("express"); // Importing express
 const stripe = require("stripe")(process.env.STRIPE_KEY); // Importing stripe
 const payment_router = express.Router(); // Creating a router to handle requests
