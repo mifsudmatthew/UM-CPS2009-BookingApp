@@ -15,7 +15,7 @@ import InputButton from "../form//InputButton";
  * @returns {JSX.Element} The admin sidebar component.
  */
 export const AdminSidebar = () => {
-  const { updateToken } = useContext(ProfileContext); // Accesses authentication context
+  const { logout } = useContext(ProfileContext); // Accesses authentication context
 
   /**
    * Logs the user out by clearing the accessToken and user data,
@@ -25,9 +25,7 @@ export const AdminSidebar = () => {
     toast.success("Logged out successfully!"); // Displays a success message
 
     // Profile user validation requires change therefore updateToken and setUser should be taken out then.
-    setTimeout(() => {
-      updateToken(""); // Clears the authentication accessToken
-    }, 2000);
+    logout(); // Clears the authentication accessToken
   };
 
   return (

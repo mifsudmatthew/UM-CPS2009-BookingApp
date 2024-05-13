@@ -79,9 +79,11 @@ apiRouter.post("/login", async (req, res) => {
     // Check if email exists
     if (!dbUser.result) {
       // Email no exist
-      return res.status(400).json({ error: "Email not in use" });
+      return res
+        .status(400)
+        .json({ result: false, data: {}, error: "Email not in use" });
     }
-    
+
     // If email exists, check if password matches the hashed password in the database
     if (await bcrypt.compare(password, dbUser.data.password)) {
       // Store user data in a variable
@@ -91,26 +93,33 @@ apiRouter.post("/login", async (req, res) => {
         name: dbUser.data.name,
         balance: dbUser.data.balance,
         admin: dbUser.data.admin,
-      };  
+      };
 
       // Generate access token with the user data
-      const accessToken = await sf.generateAccessToken(user)  ;
-      
+      const accessToken = await sf.generateAccessToken(user);
+
       // NOT USED
       // const refreshToken = sf.generateRefreshToken(user);
 
       // Send user data and tokens back
       res.json({
         result: true,
-        accessToken: accessToken,
-        // NOT USED
-        // refreshToken: refreshToken,
+        data: {
+          accessToken: accessToken,
+          // NOT USED
+          // refreshToken: refreshToken,
+        },
+        error: "",
       });
     } else {
-      return res.status(400).json({ error: "Passwords do not match" });
+      return res
+        .status(400)
+        .json({ result: false, data: {}, error: "Passwords do not match" });
     }
   } catch (err) {
-    return res.status(500).json({ error: `Failed to login user: ${err}` });
+    return res
+      .status(500)
+      .json({ result: false, data: {}, error: `Failed to login user: ${err}` });
   }
 });
 
