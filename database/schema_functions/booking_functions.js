@@ -2,7 +2,7 @@ const booking_schema = require("../schemas/booking_schema");
 const court_schema = require("../schemas/courts_schema");
 
 /**
- * @brief Query future bookings by user ID.
+ * Query future bookings by user ID.
  * @param {string} userID_toSearch - The user ID to search for.
  * @returns {Object} An object containing the result, data, and error.
  */
@@ -37,7 +37,7 @@ async function getFutureBookings_ID(userID_toSearch) {
 }
 
 /**
- * @brief Query future secondary bookings by email.
+ * Query future secondary bookings by email.
  * @param {string} email - The email to search for.
  * @returns {Object} An object containing the result, data, and error.
  */
@@ -73,7 +73,7 @@ async function getFutureSecondaryBookingsBy_ID(email) {
 }
 
 /**
- * @brief Query future bookings by court ID.
+ * Query future bookings by court ID.
  * @param {string} courtID_toSearch - The court ID to search for.
  * @returns {Object} An object containing the result, data, and error.
  */
@@ -108,7 +108,7 @@ async function getFutureBookings_Courts(courtID_toSearch) {
 }
 
 /**
- * @brief Query future bookings by user ID and court ID.
+ * Query future bookings by user ID and court ID.
  * @param {string} userID_toSearch - The user ID to search for.
  * @param {string} courtID_toSearch - The court ID to search for.
  * @returns {Object} An object containing the result, data, and error.
@@ -144,7 +144,7 @@ async function getFutureBookings_IDCourt(userID_toSearch, courtID_toSearch) {
 }
 
 /**
- * @brief Add a new booking.
+ * Add a new booking.
  * @param {string} userID_toBook - The user ID to book for.
  * @param {string} courtID_toBook - The court ID to book.
  * @param {number} cost_toBook - The cost of the booking.
@@ -231,7 +231,7 @@ async function addBooking(
 }
 
 /**
- * @brief Remove a booking.
+ * Remove a booking.
  * @param {string} bookingID - The ID of the booking to be removed.
  * @returns {Object} An object containing the result, data, and error.
  */
@@ -245,7 +245,7 @@ async function removeBooking(bookingID) {
 }
 
 /**
- * @brief Get booking details.
+ * Get booking details.
  * @param {string} bookingID - The ID of the booking to retrieve details for.
  * @returns {Object} An object containing the result, data, and error.
  */
@@ -259,7 +259,7 @@ async function getBookingDetails(bookingID) {
 }
 
 /**
- * @brief Retrieve a list of courts available at a specific date and time.
+ * Retrieve a list of courts available at a specific date and time.
  * @param {Date} date_toCheck - The date to check for available courts.
  * @param {number} time_toCheck - The time to check for available courts.
  * @returns {Object} An object containing the result, data, and error.
@@ -285,7 +285,7 @@ async function getAvailableCourts(date_toCheck, time_toCheck) {
 }
 
 /**
- * @brief Retrieve a list of courts booked by a user.
+ * Retrieve a list of courts booked by a user.
  * @param {Object} user_data - User data containing email information.
  * @returns {Object} An object containing the result, data, and error.
  */
@@ -315,7 +315,7 @@ async function getBookedCourts(user_data) {
 }
 
 /**
- * @brief Count the number of bookings made for a specific court.
+ * Count the number of bookings made for a specific court.
  * @param {string} courtID_toCount - The ID of the court to count bookings for.
  * @returns {Object} An object containing the result, data, and error.
  */
@@ -333,7 +333,7 @@ async function countAndSumBookingsByCourtID(courtID_toCount) {
 }
 
 /**
- * @brief Exported functions for booking queries.
+ * Exported functions for booking queries.
  */
 module.exports = {
   addBooking: addBooking,

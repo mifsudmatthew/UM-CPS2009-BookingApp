@@ -6,7 +6,7 @@ const stripe_queries = require("../../database/schema_functions/stripe_functions
 const server_functions = require("../server_functions"); // Importing server functions
 
 /**
- * @brief Post request for top-up button
+ * Post request for top-up button
  *
  * Creates a session and sends the user to that stripe generated session.
  * After the checkout session is done the user is sent back to the top up page
@@ -52,7 +52,7 @@ payment_router.post(
   }
 );
 /**
- * @brief Post request after returning to /topup from session (Success)
+ * Post request after returning to /topup from session (Success)
  *
  * Validates session id to check if payment was successful.
  * Makes use of database in order to hold a list of traversed payments.

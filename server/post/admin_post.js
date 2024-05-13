@@ -9,7 +9,7 @@ const bookings_queries = require("../../database/schema_functions/booking_functi
 const courts_queries = require("../../database/schema_functions/court_functions"); // Importing court functions
 
 /**
- * @brief Post request for retrieving all courts.
+ * Post request for retrieving all courts.
  *
  * This route retrieves all courts from the database.
  *
@@ -43,7 +43,7 @@ adminRouter.get("/getAllCourts", async (req, res) => {
 });
 
 /**
- * @brief Post request for obtaining all courts' statistics.
+ * Post request for obtaining all courts' statistics.
  *
  * @param None
  *
@@ -80,7 +80,7 @@ adminRouter.post("/getBasicStatistics", async (req, res) => {
 });
 
 /**
- * @brief Post request for registering a new court.
+ * Post request for registering a new court.
  *
  * @param None
  *
@@ -109,7 +109,7 @@ adminRouter.post("/registerCourt", async (req, res) => {
 });
 
 /**
- * @brief Post request for configuring a court.
+ * Post request for configuring a court.
  *
  * @param None
  *
