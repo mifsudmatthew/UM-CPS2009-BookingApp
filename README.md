@@ -11,7 +11,7 @@
             <td><a href="https://github.com/FirePhoenixBro"><img alt="Luca Vella" style="width: 100px; border-radius: 50%;" src="https://avatars.githubusercontent.com/u/104022853?v=4"/></a></td>
             <td><a href="https://github.com/lensil"><img alt="Lenise Silvio" style="width: 100px; border-radius: 50%;" src="https://avatars.githubusercontent.com/u/147991201?v=4"/></a></td>
         </tr>
-        <tr>
+        <tr style="text-align:center">
             <td> Matthew Mifsud </td>
             <td> Keith Farrugia </td>
             <td> Luca Vella </td>
