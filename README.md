@@ -99,21 +99,21 @@
       <br>
       &nbsp;&nbsp;<b>public:</b> Contains static files sent to the client.
       <br>
-      <b>src:</b> Contains all client-sided source code.
+      &nbsp;&nbsp;<b>src:</b> Contains all client-sided source code.
       <br>
-      <b>assets:</b> Contains all images used.
+      &nbsp;&nbsp;&nbsp;&nbsp;<b>assets:</b> Contains all images used.
       <br>
-      <b>components:</b> Contains a collection of UI components created.
+      &nbsp;&nbsp;&nbsp;&nbsp;<b>components:</b> Contains a collection of UI components created.
       <br>
-      <b>admin, form, home, profile, shared:</b> Each contain specific types of components.
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>admin, form, home, profile, shared:</b> Each contain specific types of components.
       <br>
-      <b>context:</b> Context providers for state management.
+      &nbsp;&nbsp;&nbsp;&nbsp;<b>context:</b> Context providers for state management.
       <br>
-      <b>pages:</b> Individual pages or routes of the application.
+      &nbsp;&nbsp;&nbsp;&nbsp;<b>pages:</b> Individual pages or routes of the application.
       <br>
-      <b>styles:</b> CSS or other styling files.
+      &nbsp;&nbsp;&nbsp;&nbsp;<b>styles:</b> CSS or other styling files.
       <br>
-      <b>utils:</b> Utility functions or helpers.
+      &nbsp;&nbsp;&nbsp;&nbsp;<b>utils:</b> Utility functions or helpers.
       <br>
       <br>
       <b>database:</b> Database-related files and folders.
