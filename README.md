@@ -21,7 +21,7 @@
 </div>
 
 
-## Terminal Commands
+## Terminal Commands (must be in root when executed)
 
 <table align="center">
     <tr>
@@ -117,6 +117,9 @@
       <b>styles:</b> CSS or other styling files.
       <br>
       <b>utils:</b> Utility functions or helpers.
+    </td>
+    <td>
+      <b>Folder Details:</b>
       <br>
       <br>
       <b>database:</b> Database-related files and folders.
@@ -124,6 +127,9 @@
       <b>schema_functions:</b> Functions related to database schema.
       <br>
       <b>schemas:</b> Database schema definitions.
+    </td>
+    <td>
+      <b>Folder Details:</b>
       <br>
       <br>
       <b>server:</b> Server-side related files and folders.
