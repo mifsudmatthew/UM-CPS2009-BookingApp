@@ -5,11 +5,12 @@
 ## Contributors
 
 <div style="margin-right: 20px; text-align: center;">
-    <a href="https://github.com/mifsudmatthew" style="margin-right: 200px;"><img alt="Matthew Mifsud" style="width: 100px; border-radius:50%;" src="https://avatars.githubusercontent.com/u/97695752?v=4"/></a>
-    <a href="https://github.com/KeithFarrugia" style="margin-right: 200px;"><img alt="Keith Farrugia" style="width: 100px; border-radius:50%;" src="https://avatars.githubusercontent.com/u/148719589?v=4"/></a>
-    <a href="https://github.com/FirePhoenixBro" style="margin-right: 200px;"><img alt="Luca Vella" style="width: 100px; border-radius:50%;" src="https://avatars.githubusercontent.com/u/104022853?v=4"/></a>
+    <a href="https://github.com/mifsudmatthew" style="display: inline-block; margin-right: 200px;"><img alt="Matthew Mifsud" style="width: 100px; border-radius:50%;" src="https://avatars.githubusercontent.com/u/97695752?v=4"/></a>
+    <a href="https://github.com/KeithFarrugia" style="display: inline-block; margin-right: 200px;"><img alt="Keith Farrugia" style="width: 100px; border-radius:50%;" src="https://avatars.githubusercontent.com/u/148719589?v=4"/></a>
+    <a href="https://github.com/FirePhoenixBro" style="display: inline-block; margin-right: 200px;"><img alt="Luca Vella" style="width: 100px; border-radius:50%;" src="https://avatars.githubusercontent.com/u/104022853?v=4"/></a>
     <a href="https://github.com/lensil"><img alt="Lenise Silvio" style="width: 100px; border-radius:50%;" src="https://avatars.githubusercontent.com/u/147991201?v=4"/></a>
 </div>
+
 
 
 
