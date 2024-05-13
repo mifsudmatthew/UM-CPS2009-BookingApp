@@ -95,22 +95,22 @@
       </ul>
     </td>
     <td>
-      <b>client:</b> Front-end related files and folders.
+      <b>client:</b> Contains all Front-end files and folders.
       <br>
       <br>
-      <b>public:</b> Contains static files accessible by the client.
+      <b>public:</b> Contains static files sent to the client.
       <br>
       <br>
-      <b>src:</b> Source code for the client-side application.
+      <b>src:</b> Contains all client-sided source code.
       <br>
       <br>
-      <b>assets:</b> Images, fonts, or other media files.
+      <b>assets:</b> Contains all images used.
       <br>
       <br>
-      <b>components:</b> Reusable UI components.
+      <b>components:</b> Contains a collection of UI components created.
       <br>
       <br>
-      <b>admin, form, home, profile, shared:</b> Specific types of components.
+      <b>admin, form, home, profile, shared:</b> Each contain specific types of components.
       <br>
       <br>
       <b>context:</b> Context providers for state management.
