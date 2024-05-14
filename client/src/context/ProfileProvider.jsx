@@ -1,7 +1,6 @@
 /**
- * ProfileContext.jsx
- * Provider that handles all functions that modify and check tokens
- * and user state
+ * @file ProfileProvider.jsx
+ * @desc A provider component that holds all functions that modify the profile context.
  */
 
 import PropTypes from "prop-types"; // Importing prop-types for typechecking

@@ -1,5 +1,6 @@
 /**
- * Register.jsx
+ * @file Register.jsx
+ * @desc Renders the register page component for the application.
  */
 
 import { useState, useMemo, useContext } from "react";

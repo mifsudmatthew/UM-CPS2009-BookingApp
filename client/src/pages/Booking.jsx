@@ -1,3 +1,8 @@
+/**
+ * @file Booking.jsx
+ * @desc A component that renders a form for booking a tennis court.
+ */
+
 import "../styles/bookingform.css";
 
 import bookingImage from "../assets/bookingform.webp";

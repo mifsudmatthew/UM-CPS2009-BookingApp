@@ -1,6 +1,6 @@
 /**
- * Courts.jsx
- * Display Possible Courts that one can book if they sign up to ServeSpot
+ * @file Courts.jsx
+ * @desc Display Possible Courts that one can book if they sign up to ServeSpot
  */
 
 import "../../styles/courts.css";

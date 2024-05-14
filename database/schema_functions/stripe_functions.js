@@ -13,15 +13,15 @@ const stripe_schema = require("../schemas/stripe_schema");
  */
 async function retrieveStripe(session_id) {
   try {
-    // -------------------- Run Query
+    // --------------------- Run Query
     stripe_found = await stripe_schema.findOne({ sessionID: session_id });
 
-    // -------------------- Validation
+    // --------------------- Validation
     if (stripe_found == null) {
       throw new Error(`No sessions found matching the ID: ${session_id}`);
     }
 
-    // -------------------- Succesfully returnig the found user
+    // --------------------- Succesfully returnig the found user
     return { result: true, data: stripe_found, error: null };
   } catch (err) {
     console.error(`retrieveStripe: ${err}`);
@@ -39,7 +39,7 @@ async function registerStripe({ session_id, email_new, amount_new }) {
   try {
     const stripe_found = await stripe_schema.findOne({ sessionID: session_id });
 
-    // ----------------------- validation of query
+    // --------------------- validation of query
     if (stripe_found != null) {
       throw new Error("Sessions already in use");
     }

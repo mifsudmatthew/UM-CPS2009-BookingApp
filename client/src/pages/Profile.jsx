@@ -1,3 +1,8 @@
+/**
+ * @file Profile.jsx
+ * @desc Renders the profile page component.
+ */
+
 import "../styles/profile.css";
 
 import { useContext } from "react";

@@ -1,5 +1,6 @@
 /**
- * Topup.jsx
+ * @file Topup.jsx
+ * @desc Renders a page to top up the user's account.
  */
 
 import { useState, useContext, useEffect } from "react";

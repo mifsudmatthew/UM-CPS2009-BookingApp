@@ -13,15 +13,15 @@ const courts_schema = require("../schemas/courts_schema");
  */
 async function retrieveCourt(courtID) {
   try {
-    // -------------------- Run Query
+    // --------------------- Run Query
     const courts_found = await courts_schema.findById(courtID);
 
-    // -------------------- Validation
+    // --------------------- Validation
     if (courts_found == null) {
       throw new Error(`No courts found matching the ID: ${courtID}`);
     }
 
-    // -------------------- Succesfully returnig the found user
+    // --------------------- Succesfully returnig the found user
     return { result: true, data: courts_found, error: null };
   } catch (err) {
     console.error(`retrieveCourt: ${err}`);

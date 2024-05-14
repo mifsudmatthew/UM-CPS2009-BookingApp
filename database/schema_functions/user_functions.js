@@ -13,17 +13,17 @@ const user_schema = require("../schemas/user_schema");
  */
 async function retrieveUser(email_toSearch) {
   try {
-    // -------------------- Run Query
+    // --------------------- Run Query
     const user_found = await user_schema.findOne({ email: email_toSearch });
 
-    // -------------------- Validation
+    // --------------------- Validation
     if (user_found == null) {
       throw new Error(
         `No user found that matches the email: ${email_toSearch}`
       );
     }
 
-    // -------------------- Succesfully returnig the found user
+    // --------------------- Succesfully returnig the found user
     return { result: true, data: user_found, error: null };
   } catch (err) {
     console.error(`retrieveUser: ${err}`);
@@ -39,15 +39,15 @@ async function retrieveUser(email_toSearch) {
  */
 async function registerUser({ email_new, password_new, name_new }) {
   try {
-    // ----------------------- Check if email is in use
+    // --------------------- Check if email is in use
     const user_found = await user_schema.findOne({ email: email_new });
 
-    // ----------------------- validation of query
+    // --------------------- validation of query
     if (user_found != null) {
       throw new Error("Email already in use");
     }
 
-    //-------------------------- Email is not in use
+    // --------------------- Email is not in use
     // Construct Schema
     const newUser = new user_schema({
       email: email_new,

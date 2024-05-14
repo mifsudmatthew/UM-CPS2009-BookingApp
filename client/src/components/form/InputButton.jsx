@@ -1,3 +1,8 @@
+/**
+ * @file InputButton.jsx
+ * @desc A component that returns a button element with the specified label, type, classname, onClick, and color props.
+ */
+
 import { useState } from "react";
 import PropTypes from "prop-types";
 
