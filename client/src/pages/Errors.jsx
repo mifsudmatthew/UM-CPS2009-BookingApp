@@ -1,6 +1,6 @@
 /**
- *  Errors.jsx
- *  This file contains the Error page component.
+ * @file Errors.jsx
+ * @desc This file defines the Error page component.
  */
 
 import { errorImage } from "../components/Icons";

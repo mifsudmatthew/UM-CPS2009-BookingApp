@@ -1,6 +1,6 @@
 /**
- * Bookings.jsx
- * Booking form to book courts
+ * @file Bookings.jsx
+ * @desc Renders a component that displays the upcoming and previous bookings in a table format.
  */
 
 import "../../styles/bookings.css";

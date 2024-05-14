@@ -1,6 +1,6 @@
 /**
- * Reset.jsx
- * This file contains the Reset page component. This allows the user to reset their password, through a PIN sent to their email.
+ * @file Reset.jsx
+ * @desc The Reset component renders a form which allows the user to reset their password, through a PIN sent to their email.
  */
 
 import { useState, useMemo, useEffect } from "react";

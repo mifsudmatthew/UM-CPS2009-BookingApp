@@ -1,5 +1,6 @@
 /**
- * AdminSidebar.jsx
+ * @file AdminSidebar.jsx
+ * @desc Admin sidebar component.
  */
 
 import { useContext } from "react";

@@ -1,3 +1,8 @@
+/**
+ * @file InputBox.jsx
+ * @desc A component that returns an input element with the specified id, label, classname, type, placeholder, value, disabled, onChange, and required props.
+ */
+
 import PropTypes from "prop-types";
 
 // The InputBox component is a component that returns an input element with the specified id, label, classname, type, placeholder, value, disabled, onChange, and required props.
