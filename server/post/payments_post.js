@@ -114,7 +114,7 @@ payment_router.post("/success", sf.authenticateToken, async (req, res) => {
 
       return res.status(200).json({
         result: true,
-        data: { accessToken: accessToken },
+        data: accessToken,
         error: null,
       });
       // ------------------ Payment Not Successfull
