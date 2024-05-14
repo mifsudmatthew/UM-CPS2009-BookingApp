@@ -170,16 +170,14 @@ apiRouter.post("/reset", async (req, res) => {
   const response = await sf.sendPinByMail(email);
 
   // Response failure
-  if (!response.result) {
+  if (!response) {
     return res
       .status(500)
-      .json({ result: false, data: null, error: response.error });
+      .json({ result: false, data: null, error: "Cannot send email to user" });
   }
 
   // Response success.
-  return res
-    .status(200)
-    .json({ result: true, data: response.data, error: null });
+  return res.status(200).json({ result: true, data: null, error: null });
 });
 
 /**
@@ -213,7 +211,7 @@ apiRouter.post("/resetpassword", async (req, res) => {
   if (matchedIndex != -1) {
     // Set a new password to the account of the given email, after encrypting it.
     const response = await user_queries.resetPassword(
-      currentUserEmail,
+      userEmail,
       hashedPassword
     );
 
