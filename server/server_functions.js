@@ -92,7 +92,7 @@ async function sendPinByMail(user_email) {
   console.log("Email sent:", sentMessage.response);
 
   // Pushing the pin and corresponding email to 'accountPins' array
-  addPinEntry(app_email, generated_pin);
+  addPinEntry(user_email, generated_pin);
 
   // Sending a response on success
   return true;
