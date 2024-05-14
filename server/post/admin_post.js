@@ -77,11 +77,13 @@ adminRouter.post(
         });
       }
 
+      const bookingCount = bookingCountResponse.data;
+
       // Store the statistics in a variable
       const courtInfo = {
         name: court.court_name,
-        bookings: bookingCount.data.count,
-        money: bookingCount.data.totalCost,
+        bookings: bookingCount.count,
+        money: bookingCount.totalCost,
       };
 
       // Push the statistics to the array
