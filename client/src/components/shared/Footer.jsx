@@ -1,6 +1,5 @@
 /**
- * @file Footer.jsx
- * @desc A component that renders the footer of the website.
+ * Footer.jsx
  */
 
 import "../../styles/footer.css";
@@ -60,17 +59,9 @@ function Footer() {
       </div>
       <div>
         <div className="footer-heading">Contact Us</div>
-<<<<<<< HEAD
-        <h6>Email: servespot@servspot.com</h6>
-        <br />
-        <h6>Telephone: 123456789</h6>
-        <br />
-        <h6>Address: Malta, Malta, MLT123</h6>
-=======
         <div>Email: servespot@servspot.com</div>
         <div>Telephone: 123456789</div>
         <div>Address: Malta, Malta, MLT123</div>
->>>>>>> bf9d728 (Footer.jsx [Chg]: minor change in footer contact details)
       </div>
     </footer>
   );
