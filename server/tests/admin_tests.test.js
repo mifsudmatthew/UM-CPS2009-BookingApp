@@ -11,6 +11,11 @@ jest.mock("../../database/schema_functions/court_functions", () => ({
   registerCourt: jest.fn(),
 }));
 
+jest.mock("../server_functions", () => ({
+  generateAccessToken: jest.fn(),
+  authenticateToken: jest.fn(),
+}));
+
 /**
  * Test case for the registerCourt function
  */
@@ -38,6 +43,14 @@ describe("Register Court Post", () => {
     require("../../database/schema_functions/court_functions").registerCourt.mockResolvedValue(
       { result: true, data: null, error: null }
     );
+
+    // Mock the behaviour of generateAccessToken method
+    require("../server_functions").generateAccessToken.mockResolvedValue(
+      "testing token data"
+    );
+
+    // Mock the behavior of authenticateToken method
+    require("../server_functions").authenticateToken.mockResolvedValue(true);
 
     // Call the registerCourt function
     const result = await request(test_app)
