@@ -103,7 +103,7 @@ adminRouter.post(
  * - 200: Successful court registration
  * - 500: Failed to register court
  */
-adminRouter.post("/registerCourt", sf.authenticateToken, async (req, res) => {
+adminRouter.post("/registerCourt", async (req, res) => {
   // Attempt to register a new court with the given information
   const response = await courts_queries.registerCourt({
     name_new: req.body.courtName,
