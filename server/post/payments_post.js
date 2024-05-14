@@ -48,7 +48,7 @@ payment_router.post("/topup", sf.authenticateToken, async (req, res) => {
 
     // ------------------ Send user to session
     return res.status(200).json({
-      result: false,
+      result: true,
       data: session.url,
       error: null,
     });
