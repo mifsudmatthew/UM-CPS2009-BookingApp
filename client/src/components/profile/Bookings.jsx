@@ -12,8 +12,7 @@ import { XOctagon } from "react-bootstrap-icons";
 import ProfileContext from "../../context/ProfileContext";
 import NotificationContext from "../../context/NotificationContext";
 
-import { Post } from "../../utils/ApiFunctions";
-import { getUpdatedToken } from "../../utils/ApiFunctions";
+import { Post, Get } from "../../utils/ApiFunctions";
 
 /**
  * Renders the Bookings component.
@@ -42,27 +41,31 @@ const Bookings = () => {
       const name = user.name; // Get the user's name
       const email = user.email; // Get the user's email
       const user_details = { name, email }; // Create an object with the user's details
-      try {
-        // Send a POST request to the server to get the booked courts
-        const response = await Post("/api/getFutureBookings", user_details);
-        console.log(response);
-        // Set the booked courts in the state variable
-        setCourts(response);
+      // Send a POST request to the server to get the booked courts
+      let response = await Post("/api/getFutureBookings", user_details);
 
-        // Send a POST request to the server to get the booked courts
-        const response2 = await Post(
-          "/api/getFutureSecondaryBookings",
-          user_details
-        );
-        console.log(response2);
-
-        // Set the booked courts in the state variable
-        setSecCourts(response2);
-      } catch (error) {
-        // Log an error if the request fails
-        console.error("Error fetching booked courts: ", error);
+      // Log an error if the request fails
+      if (!response.result) {
+        console.error("Error fetching booked courts: ", response.error);
+        return;
       }
+
+      // Set the booked courts in the state variable
+      setCourts(response.data);
+
+      // Send a POST request to the server to get the booked courts
+      response = await Post("/api/getFutureSecondaryBookings", user_details);
+
+      // Log an error if the request fails
+      if (!response.result) {
+        console.error("Error fetching booked courts: ", response.error);
+        return;
+      }
+
+      // Set the booked courts in the state variable
+      setSecCourts(response.data);
     };
+
     fetchBookedCourts(); // Call the fetchBookedCourts function
   }, [user]);
 
@@ -72,28 +75,29 @@ const Bookings = () => {
    * @returns {Promise<void>} - A Promise that resolves when the booking is successfully cancelled.
    */
   const cancelBooking = async (id, price) => {
-    try {
-      // Send a POST request to the server to cancel the booking
-      const response = await Post("/api/cancelBooking", {
-        booking_id: id,
-        price: price,
-      });
+    // Send a POST request to the server to cancel the booking
+    const response = await Post("/api/cancelBooking", {
+      booking_id: id,
+      price: price,
+    });
 
-      // Display a success message if the booking is successfully cancelled
-      if (response.result == true) {
-        storeNotification("Court Successfully Cancelled!"); // Store a notification in local storage
-        toast.success("Court Successfully Cancelled!"); // Display a success toast
-        updateToken(await getUpdatedToken()); // Update the access token
-        // Remove the cancelled booking from the list of courts
-        setCourts((prevCourts) =>
-          prevCourts.filter((court) => court.id !== id)
-        );
-      } else {
-        toast.error("Court Failed to Delete");
-      }
-    } catch (error) {
-      console.error("Error cancelling booking: ", error);
+    if (!response.result) {
+      console.error("Error cancelling booking: ", response.error);
+      toast.error("Court Failed to Delete");
+      return;
     }
+
+    // Display a success message if the booking is successfully cancelled
+    // Display a success toast
+    toast.success("Court Successfully Cancelled!");
+    // Store a notification in local storage
+    storeNotification("Court Successfully Cancelled!");
+
+    // Update the access token
+    const token = await Get("/api/token");
+    updateToken(token.data);
+    // Remove the cancelled booking from the list of courts
+    setCourts((prevCourts) => prevCourts.filter((court) => court.id !== id));
   };
 
   return (
@@ -138,8 +142,7 @@ const Bookings = () => {
                       {/* Calculate the time difference, if more than 24 hours allow cancellation */}
                       {diffInHours > 24 ? (
                         <button
-                          onClick={() => cancelBooking(court.id, court.price)}
-                        >
+                          onClick={() => cancelBooking(court.id, court.price)}>
                           <XOctagon />
                         </button>
                       ) : null}

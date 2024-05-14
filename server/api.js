@@ -7,7 +7,6 @@ const express = require("express");
 const apiRouter = express.Router();
 
 // Authentication
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 // Obtaining the database schema functions for user
@@ -24,44 +23,15 @@ apiRouter.use((req, _res, next) => {
 
 /**
  * Route checks that the attached token header is valid.
- *
  * @category Back-end
- *
  * @param None
- *
  * @return
  * - 200: When token Valid
  * - 400: No authorization field attached
  * - 403: No token is attached to field OR Token supplied is invalid
  */
-apiRouter.post("/authenticate", sf.authenticateToken, (req, res) => {
-  res.status(200).json({ message: "Ok" }).end();
-});
-
-// To refresh the token
-// NOT USED
-apiRouter.post("/refresh", (req, res) => {
-  const refreshToken = req.body.refreshToken;
-
-  if (!refreshToken) {
-    // Check if refresh token is sent in request
-    return res.status(401).json({ error: "No refresh token attached" });
-  }
-
-  // Verify refreshToken
-  jwt.verify(refreshToken, process.env.JWT_REFRESH, (err, user) => {
-    if (err) {
-      // When error occurs
-      return res.sendStatus(403).json({ error: "Invalid refresh token" });
-    }
-
-    // Generate the two new tokens
-    const accessToken = sf.generateAccessToken(user);
-    const newRefreshToken = sf.generateRefreshToken(user);
-
-    // Send tokens back
-    res.json({ accessToken: accessToken, refreshToken: newRefreshToken });
-  });
+apiRouter.post("/authenticate", sf.authenticateToken, (_req, res) => {
+  return res.status(200).json({ result: true, data: null, error: null });
 });
 
 /**
@@ -74,58 +44,55 @@ apiRouter.post("/refresh", (req, res) => {
  * - 500: Failed Login
  */
 apiRouter.post("/login", async (req, res) => {
-  const email = req.body.email; // Obtaining the email inputted by the user.
-  const password = req.body.password; // Obtaining the password inputted by the user.
+  // Obtaining the email inputted by the user.
+  const email = req.body.email;
+  // Obtaining the password inputted by the user.
+  const password = req.body.password;
+  // Retrieving user data with a matching email from the database.
+  let response = await user_queries.retrieveUser(email);
+  let passwordMatch = false;
 
-  try {
-    // Retrieving user data with a matching email from the database.
-    const dbUser = await user_queries.retrieveUser(email);
-
-    // Check if email exists
-    if (!dbUser.result) {
-      // Email no exist
-      return res
-        .status(400)
-        .json({ result: false, data: {}, error: "Email not in use" });
-    }
-
-    // If email exists, check if password matches the hashed password in the database
-    if (await bcrypt.compare(password, dbUser.data.password)) {
-      // Store user data in a variable
-      const user = {
-        id: dbUser.data._id,
-        email: dbUser.data.email,
-        name: dbUser.data.name,
-        balance: dbUser.data.balance,
-        admin: dbUser.data.admin,
-      };
-
-      // Generate access token with the user data
-      const accessToken = await sf.generateAccessToken(user);
-
-      // NOT USED
-      // const refreshToken = sf.generateRefreshToken(user);
-
-      // Send user data and tokens back
-      res.json({
-        result: true,
-        data: {
-          accessToken: accessToken,
-          // NOT USED
-          // refreshToken: refreshToken,
-        },
-        error: "",
-      });
-    } else {
-      return res
-        .status(400)
-        .json({ result: false, data: {}, error: "Passwords do not match" });
-    }
-  } catch (err) {
+  // Check if email exists
+  if (!response.result) {
+    // Email no exist
     return res
-      .status(500)
-      .json({ result: false, data: {}, error: `Failed to login user: ${err}` });
+      .status(400)
+      .json({ result: false, data: null, error: response.error });
   }
+
+  const user = response.data;
+
+  // If email exists, check if password matches the hashed password in the database
+  try {
+    passwordMatch = await bcrypt.compare(password, user.password);
+  } catch (err) {
+    return res.status(500).json({
+      result: false,
+      data: null,
+      error: `Error in bcrypt: ${err}`,
+    });
+  }
+
+  if (!passwordMatch) {
+    return res
+      .status(400)
+      .json({ result: false, data: null, error: "Passwords do not match" });
+  }
+
+  // Store user data in a variable
+  const userData = {
+    id: user._id,
+    email: user.email,
+    name: user.name,
+    balance: user.balance,
+    admin: user.admin,
+  };
+
+  // Generate access token with the user data
+  const accessToken = await sf.generateAccessToken(userData);
+
+  // Send user data and tokens back
+  return res.status(200).json({ result: true, data: accessToken, error: null });
 });
 
 /**
@@ -141,33 +108,51 @@ apiRouter.post("/register", async (req, res) => {
   const name = req.body.name; // Obtaining the name inputted by the user.
   const email = req.body.email; // Obtaining the email inputted by the user.
   const password = req.body.password; // Obtaining the password inputted by the user.
+  let hashedPassword = "";
 
-  try {
-    const dbUser = await user_queries.retrieveUser(email); // Retrieving user data with a matching email from the database.
+  let response = await user_queries.retrieveUser(email); // Retrieving user data with a matching email from the database.
 
-    // Check if email exists
-    if (dbUser.result) {
-      // Email no exist
-      return res.status(400).json({ error: "Email already in use" });
-    }
-
-    // If email does not exist, hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    /* No need to check result of registerUser as it throws error now */
-
-    // Register user in the database
-    await user_queries.registerUser({
-      name_new: name,
-      email_new: email,
-      password_new: hashedPassword,
-    });
-
-    // Return success
-    return res.status(200).json({ message: "User successfully registered" });
-  } catch (err) {
-    return res.status(500).json({ error: `Failed to register user: ${err}` });
+  // Check if email exists
+  if (response.result) {
+    // Email exist
+    return res
+      .status(400)
+      .json({ result: false, data: null, error: response.error });
   }
+
+  // If email does not exist, hash the password
+  try {
+    hashedPassword = await bcrypt.hash(password, 10);
+  } catch (err) {
+    return res.status(500).json({
+      result: false,
+      data: null,
+      error: `Error in bcrypt: ${err}`,
+    });
+  }
+
+  // Register user in the database
+  response = await user_queries.registerUser({
+    name_new: name,
+    email_new: email,
+    password_new: hashedPassword,
+  });
+
+  // Return Failure
+  if (!response.result) {
+    return res.status(400).json({
+      result: false,
+      data: null,
+      error: `Failed to register user: ${response.error}`,
+    });
+  }
+
+  // Return success
+  return res.status(200).json({
+    result: true,
+    data: null,
+    error: null,
+  });
 });
 
 /**
@@ -179,15 +164,22 @@ apiRouter.post("/register", async (req, res) => {
  * - 500: On Failure
  */
 apiRouter.post("/reset", async (req, res) => {
-  try {
-    // Attempting to send an email
-    let result = await sf.sendPinByMail(req.body.email);
-    // If result is obtained, response success.
-    res.status(200).json(result);
-  } catch (error) {
-    // Response failure
-    res.status(500).json({ message: "Error sending email" });
+  const email = req.body.email;
+
+  // Attempting to send an email
+  const response = await sf.sendPinByMail(email);
+
+  // Response failure
+  if (!response.result) {
+    return res
+      .status(500)
+      .json({ result: false, data: null, error: response.error });
   }
+
+  // Response success.
+  return res
+    .status(200)
+    .json({ result: true, data: response.data, error: null });
 });
 
 /**
@@ -199,25 +191,40 @@ apiRouter.post("/reset", async (req, res) => {
  * - 400: Reset Failure
  */
 apiRouter.post("/resetpassword", async (req, res) => {
+  const userPin = req.body.pin;
+  const userEmail = req.body.email;
+  const userPassword = req.body.password;
+  let hashedPassword = "";
+
+  try {
+    hashedPassword = await bcrypt.hash(userPassword, 10);
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ result: false, data: null, error: `bcrypt: ${err}` });
+  }
+
   // Obtain the index of the element that matches the same pin and email, otherwise return -1
   let matchedIndex = sf.accountPins.findIndex(
-    (entry) => entry.pin === req.body.pin && entry.email === req.body.email
+    (entry) => entry.pin === userPin && entry.email === userEmail
   );
 
   // If entry was found
   if (matchedIndex != -1) {
     // Set a new password to the account of the given email, after encrypting it.
-    console.log(
-      await user_queries.resetPassword(
-        currentUserEmail,
-        await bcrypt.hash(req.body.password, 10)
-      )
+    const response = await user_queries.resetPassword(
+      currentUserEmail,
+      hashedPassword
     );
+
     // Success Response
-    return res.status(200).json({ message: "Success" });
+    if (response.result) {
+      return res.status(200).json({ result: true, data: null, error: null });
+    }
   }
+
   // Failure Response
-  res.status(400).json({ message: "Fail" });
+  return res.status(400).json({ result: false, data: null, error: null });
 });
 
 /**
@@ -226,23 +233,41 @@ apiRouter.post("/resetpassword", async (req, res) => {
  * @param None
  * @return
  * - 200: Password Change Success
- * - 500: Password Change Failure
+ * - 400: Password Change Failure
  */
 apiRouter.post("/changepassword", sf.authenticateToken, async (req, res) => {
+  const email = req.user.email;
+  const password = req.body.password;
+  let hashedPassword = "";
+
   try {
-    // Attempt to  a new password to the account of the given email, after encrypting it.
-    console.log(
-      await user_queries.resetPassword(
-        req.user.email,
-        await bcrypt.hash(req.body.password, 10)
-      )
-    );
-    // Response Success
-    res.status(200).json({ message: "Password Changed!" });
-  } catch (error) {
-    // Response Fail
-    res.status(500).json({ message: "Password Change Failed!" });
+    hashedPassword = await bcrypt.hash(password, 10);
+  } catch (err) {
+    return res.status(500).json({
+      result: false,
+      data: null,
+      error: `bcrypt: ${err}`,
+    });
   }
+
+  // Attempt to  a new password to the account of the given email, after encrypting it.
+  const response = await user_queries.resetPassword(email, hashedPassword);
+
+  if (!response.result) {
+    // Response Fail
+    return res.status(400).json({
+      result: false,
+      data: null,
+      error: null,
+    });
+  }
+
+  // Response Success
+  return res.status(200).json({
+    result: true,
+    data: null,
+    error: null,
+  });
 });
 
 /**
@@ -254,35 +279,51 @@ apiRouter.post("/changepassword", sf.authenticateToken, async (req, res) => {
  * - 500: Details Change Failure
  */
 apiRouter.post("/changedetails", sf.authenticateToken, async (req, res) => {
-  try {
-    // Attempt to change the details of the user
-    const response = await user_queries.changeDetails(
-      req.user.email,
-      req.body.name,
-      req.body.email
-    );
-    console.log(response);
+  // Attempt to change the details of the user
+  const oldEmail = req.user.email;
+  const name = req.body.name;
+  const newEmail = req.body.email;
 
-    // Generate a new access token
-    const accessToken = sf.generateAccessToken(response.data);
+  const response = await user_queries.changeDetails(oldEmail, name, newEmail);
 
-    // Response Success
-    res.status(200).json({
-      message: "Details Changed!",
-      data: { accessToken, ...response.data },
+  console.log(response);
+
+  // Response Fail
+  if (!response.result) {
+    return res.status(500).json({
+      result: false,
+      data: null,
+      error: `Details Change Failed! ${response.error}`,
     });
-  } catch (error) {
-    // Response Fail
-    res.status(500).json({ message: "Details Change Failed!" });
   }
+
+  // Generate a new access token
+  const accessToken = sf.generateAccessToken(response.data);
+
+  // Response Success
+  return res.status(200).json({
+    result: true,
+    data: { accessToken, ...response.data },
+    error: null,
+  });
 });
 
 apiRouter.get("/token", sf.authenticateToken, async (req, res) => {
-  const response = await sf.getUpdatedToken(req.user.email);
+  const email = req.user.email;
+  const response = await sf.getUpdatedToken(email);
 
-  if (!response.result) return res.status(400).json({ error: response.error });
+  // Response Success
+  if (response.result)
+    return res.status(200).json({
+      result: true,
+      data: response.data,
+      error: null,
+    });
 
-  res.status(200).json({ accesstoken: response.data.accesstoken });
+  // Response Fail
+  return res
+    .status(400)
+    .json({ result: false, data: null, error: response.error });
 });
 
 module.exports = apiRouter;

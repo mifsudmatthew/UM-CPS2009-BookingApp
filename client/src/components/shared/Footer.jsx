@@ -59,11 +59,11 @@ function Footer() {
       </div>
       <div>
         <div className="footer-heading">Contact Us</div>
-        <h8>Email: servespot@servspot.com</h8>
+        <h6>Email: servespot@servspot.com</h6>
         <br />
-        <h8>Telephone: 123456789</h8>
+        <h6>Telephone: 123456789</h6>
         <br />
-        <h8>Address: Malta, Malta, MLT123</h8>
+        <h6>Address: Malta, Malta, MLT123</h6>
       </div>
     </footer>
   );

@@ -75,6 +75,6 @@ mongoose.connection.on("error", (err) => {
  * Exportation of current Mongoose instance
  */
 
-await connectToDatabase();
+connectToDatabase();
 
 module.exports = mongoose;

@@ -1,6 +1,7 @@
 /**
  * ReloadPrompt.jsx
- *  Service worker reload prompt component. Taken from
+ * Service worker reload prompt component. Taken from
+ * Based off of code from https://github.com/vite-pwa/vite-plugin-pwa/blob/main/examples/react-router/src/ReloadPrompt.tsx
  */
 
 import "./styles/ReloadPrompt.css";

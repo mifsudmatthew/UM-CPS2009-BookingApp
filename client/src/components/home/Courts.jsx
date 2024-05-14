@@ -32,19 +32,17 @@ const Courts = () => {
   useEffect(() => {
     // Fetch data from the server when the component mounts
     const fetchData = async () => {
-      try {
-        // Send a POST request to the server to get all the courts data
-        const response = await Post("/api/getAllCourts");
-        console.log(response);
-        // If the request fails, throw an error
-        if (!response.result) {
-          throw new Error("Failed to fetch courts data");
-        }
-        // Set the courts data to the response data
-        setCourtsData(response.data);
-      } catch (error) {
-        console.error(error);
+      // Send a POST request to the server to get all the courts data
+      const response = await Post("/api/getAllCourts");
+
+      // If the request fails, throw an error
+      if (!response.result) {
+        console.error("Failed to fetch courts data", response.error);
+        return;
       }
+
+      // Set the courts data to the response data
+      setCourtsData(response.data);
     };
 
     fetchData(); // Call the fetchData function

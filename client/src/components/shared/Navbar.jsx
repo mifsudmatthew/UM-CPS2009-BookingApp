@@ -121,18 +121,15 @@ function Navbar() {
                 className="hover-grow"
                 onClick={() => {
                   setNotificationOpen(!notificationOpen);
-                }}
-              >
+                }}>
                 {notificationOpen ? (
                   <X
                     className="bell-icon menu-icon-img"
-                    style={{ marginTop: "10px" }}
-                  ></X>
+                    style={{ marginTop: "10px" }}></X>
                 ) : (
                   <Bell
                     className="bell-icon bell-icon-img"
-                    style={{ marginTop: "15px" }}
-                  ></Bell>
+                    style={{ marginTop: "15px" }}></Bell>
                 )}
               </div>
             </div>
@@ -145,8 +142,7 @@ function Navbar() {
           ref={menuRef}
           onClick={() => {
             setOpen(!open);
-          }}
-        >
+          }}>
           <div className="hover-grow menu-icon menu-icon-img">
             {open ? <X></X> : <List></List>}
           </div>
@@ -156,8 +152,7 @@ function Navbar() {
         <div
           className={`notification-menu ${
             notificationOpen ? "active" : "inactive"
-          }`}
-        >
+          }`}>
           <ul className="notificationList">
             {notifications.map((notification, index) => (
               <li className="dropdownItem" key={index}>

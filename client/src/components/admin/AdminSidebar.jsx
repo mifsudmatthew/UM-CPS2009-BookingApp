@@ -37,7 +37,6 @@ export const AdminSidebar = () => {
           <li>
             <NavLink to="/admin/statistics">Statistics</NavLink>
           </li>
-
           <li>
             <NavLink to="/admin/updatecourts">Update Courts</NavLink>
           </li>
@@ -45,12 +44,12 @@ export const AdminSidebar = () => {
             <NavLink to="/admin/addnewcourt">Add New Court</NavLink>
           </li>
           <li>
+            {/* Log out button */}
             <InputButton
               onClick={logOut}
               label="Log Out"
               classname={"logoutBtn"}
             />
-            {/* Log out button */}
           </li>
         </ul>
       </nav>

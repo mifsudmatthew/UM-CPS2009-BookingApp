@@ -3,6 +3,8 @@
  * Left bar that holds links to all profile
  */
 
+import { defaultProfilePic } from "../Icons";
+
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -11,8 +13,6 @@ import ProfileContext from "../../context/ProfileContext";
 import NotificationContext from "../../context/NotificationContext";
 
 import InputButton from "../form//InputButton";
-
-import { defaultProfilePic } from "../Icons";
 
 /**
  * Renders the profile sidebar component.

@@ -9,11 +9,11 @@ import { toast } from "react-toastify";
 
 import NotificationContext from "../context/NotificationContext";
 
-import { Post } from "../utils/ApiFunctions";
-
 import Form from "../components/form/Form";
 import InputBox from "../components/form/InputBox";
 import InputButton from "../components/form/InputButton";
+
+import { Post } from "../utils/ApiFunctions";
 
 /**
  * Renders the Change Password page.
@@ -29,37 +29,42 @@ function ChangePW() {
 
   // Check if the password and confirm password fields are not empty and match, when either of them changes
   const canChangePassword = useMemo(() => {
-    // Use useMemo to memoize the value
-    return (
-      password != "" && confirmPassword != "" && password === confirmPassword // Check if the password and confirm password fields are not empty and match
-    );
+    // Check if the password and confirm password fields are not empty and match
+    return password === confirmPassword;
   }, [password, confirmPassword]);
 
   // Function to handle the change password form submission
   const handleChangePassword = async (event) => {
     event.preventDefault(); // Prevent the default form submission behaviour
+
     // Check if the password and confirm password fields are empty
     if (!password.trim() || !confirmPassword.trim()) {
-      toast.error("Please fill all fields."); // Display error toast if any field is empty
+      // Display error toast if any field is empty
+      toast.error("Please fill all fields.");
       return;
     }
 
     // Check if the passwords do not match
     if (!canChangePassword) {
-      toast.error("Passwords do not match."); // Display error toast if passwords do not match
+      toast.error("Passwords do not match.");
       return;
     }
 
-    try {
-      const response = await Post("/api/changepassword", { password }); // Attempt to send a POST request to change the password
-      toast.success("Password change successful! Redirecting to profile."); // Display success toast if the password is changed successfully
-      console.log("Password change successful:", response);
-      storeNotification("Password changed successfully!"); // Store a notification in local storage
-      navigate("/profile", { replace: true }); // Redirect to the profile page
-    } catch (error) {
-      toast.error("An error occurred while changing password!"); // Display error toast if an error occurs
-      console.error("Change password error:", error);
+    // Attempt to send a POST request to change the password
+    const response = await Post("/api/changepassword", { password });
+    if (!response.result) {
+      console.error("Change password error:", response.error);
+      // Display error toast if an error occurs
+      toast.error("An error occurred while changing password!");
     }
+
+    console.log("Password change successful");
+    // Display success toast if the password is changed successfully
+    toast.success("Password change successful! Redirecting to profile.");
+    // Store a notification in local storage
+    storeNotification("Password changed successfully!");
+    // Redirect to the profile page
+    navigate("/profile", { replace: true });
   };
 
   return (

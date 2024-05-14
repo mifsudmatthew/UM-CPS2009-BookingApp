@@ -7,11 +7,12 @@ import { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { Post } from "../utils/ApiFunctions";
-
 import Form from "../components/form/Form";
 import InputBox from "../components/form/InputBox";
 import InputButton from "../components/form/InputButton";
+
+import { Post } from "../utils/ApiFunctions";
+import { checkEmail } from "../utils/EmailTest";
 
 /**
  * Reset component for resetting password.
@@ -26,27 +27,29 @@ export default function Reset() {
   const [pin, setPin] = useState(""); // Creating a state variable for the pin
   const [EmailPostSuccess, setEmailPostSuccess] = useState(false); // Creating a state variable for whether the email was sent successfully
 
-  // Using useMemo to memoize whether passwords match, preventing unnecessary checks when other fields change.
+  // Using useMemo to memoize certain conditions, preventing unnecessary checks when other fields change.
+
+  // Return if password and confirm password match
   const passwordMatch = useMemo(() => {
-    return password === confirmPassword; // Return if password and confirm password match
+    return password === confirmPassword;
   }, [password, confirmPassword]);
 
-  // Using useMemo to memoize whether the pin is valid, preventing unnecessary checks when other fields change.
+  // Return whether the pin is 4 digits
   const pinValid = useMemo(() => {
-    return pin.length === 4; // Return whether the pin is 4 digits
+    return pin.length === 4;
   }, [pin]);
 
-  // Using useMemo to memoize whether the email is valid, preventing unnecessary checks when other fields change.
+  // Simple regex for basic email validation
   const isEmailValid = useMemo(() => {
-    // Simple regex for basic email validation
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    return checkEmail(email);
   }, [email]);
 
   // Trigger when state variable changes
   useEffect(() => {
     // Show a success toast if the email was sent successfully
     if (EmailPostSuccess) {
-      toast.success("E-mail sent successfully! Please check your E-mail."); // Display success toast if the email is sent successfully
+      // Display success toast if the email is sent successfully
+      toast.success("E-mail sent successfully! Please check your E-mail.");
       setEmailPostSuccess(false); // Reset the state variable
     }
   }, [EmailPostSuccess]);
@@ -57,19 +60,21 @@ export default function Reset() {
     if (email.length === 0) {
       toast.error("Error! Please enter an email address.");
       return;
-    } else if (!isEmailValid) {
-      // Check if email is valid
+    }
+
+    // Check if email is valid
+    if (!isEmailValid) {
       toast.error("Error! Please enter a valid email address.");
       return;
     }
 
-    try {
-      // Attempt to send a POST request to request a pin.
-      await Post("/api/reset", { email: email });
+    // Attempt to send a POST request to request a pin.
+    const response = await Post("/api/reset", { email: email });
+    if (response.result) {
       setEmailPostSuccess(true); // Set the EmailPostSuccess variable to true
-    } catch (error) {
+    } else {
       toast.error("Error! Could not send reset E-mail.");
-      console.error(error);
+      console.error(response.error);
     }
   };
 
@@ -105,21 +110,20 @@ export default function Reset() {
       return;
     }
 
-    try {
-      // Attempt to send a POST request to the server with the reset password data
-      await Post("/api/resetpassword", { email, password, pin });
-
-      // Display a success toast if the password is changed successfully
-      toast.success("Password changed successfully!");
-
-      setTimeout(() => {
-        navigate("/", { replace: true }); // Redirect to the home page after 2 seconds
-      }, 2000);
-    } catch (error) {
+    // Attempt to send a POST request to the server with the reset password data
+    const response = await Post("/api/resetpassword", { email, password, pin });
+    if (!response.result) {
       // Log an error if the request fails
       toast.error("Error! Could not reset password.");
-      console.error(error);
+      console.error(response.error);
+      return;
     }
+
+    // Display a success toast if the password is changed successfully
+    toast.success("Password changed successfully!");
+
+    // Redirect to the home page after 2 seconds
+    setTimeout(() => navigate("/", { replace: true }), 2000);
   };
 
   return (

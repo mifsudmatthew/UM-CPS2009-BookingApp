@@ -23,9 +23,13 @@ const ProfileProvider = ({ children }) => {
 
   // Function to update the accessToken in localStorage, state and user state.
   const updateToken = (accessToken) => {
-    localStorage.setItem("accessToken", JSON.stringify(accessToken)); // Store the accessToken in localStorage
-    setAccessToken(accessToken); // Update the accessToken state
-    setUser(accessToken ? jwtDecode(accessToken) : {}); // Update the user state
+    if (accessToken != undefined && accessToken != "" && accessToken != null) {
+      localStorage.setItem("accessToken", JSON.stringify(accessToken)); // Store the accessToken in localStorage
+      setAccessToken(accessToken); // Update the accessToken state
+      setUser(accessToken ? jwtDecode(accessToken) : {}); // Update the user state
+    } else {
+      logout();
+    }
   };
 
   // Function to update the user state
