@@ -45,35 +45,30 @@ function Topup() {
    */
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent the default form submission behavior
-    try {
-      // Check if the amount is less than 20 or empty
-      if ((amount >= 0 && amount < 20) || amount == "" || amount == null) {
-        toast.error("Error! Please enter an amount of at least €20.");
-        return;
-      } else if (isNaN(amount)) {
-        // Check if the amount is not a number
-        toast.error("Error! Input is not a number, please enter a number.");
-        return;
-      } else if (amount < 0) {
-        // Check if the amount is negative
-        toast.error("Error! Please enter a positive number.");
-        return;
-      }
 
-      console.log("Amount: ", amount);
-
-      // Send a POST request to "/api/topup" with the amount
-      const data = await Post("/api/topup", { amount: amount });
-      console.log(data);
-
-      // Redirect the user to the URL returned in the response
-      if (data.url) {
-        window.location.href = data.url;
-      }
-    } catch (error) {
-      // Log an error if the request fails
-      console.error(`Error in top-up: ${error}`);
+    // Check if the amount is less than 20 or empty
+    if ((amount >= 0 && amount < 20) || amount == "" || amount == null) {
+      toast.error("Error! Please enter an amount of at least €20.");
+      return;
+    } else if (isNaN(amount)) {
+      // Check if the amount is not a number
+      toast.error("Error! Input is not a number, please enter a number.");
+      return;
+    } else if (amount < 0) {
+      // Check if the amount is negative
+      toast.error("Error! Please enter a positive number.");
+      return;
     }
+
+    // Send a POST request to "/api/topup" with the amount
+    const response = await Post("/api/topup", { amount: amount });
+    if (!response.result) {
+      console.error(`Error in top-up: ${response.error}`);
+      return;
+    }
+
+    // Redirect the user to the URL returned in the response
+    window.location.href = response.data;
   };
 
   /**
@@ -82,32 +77,30 @@ function Topup() {
    */
   useEffect(() => {
     const handleSuccess = async () => {
-      try {
-        // Send a POST request to "/api/success" with the session_id
-        const response = await Post("/api/success", {
-          session_id: session_id,
-        });
+      // Send a POST request to "/api/success" with the session_id
+      const response = await Post("/api/success", {
+        session_id: session_id,
+      });
 
-        if (!response.result) {
-          throw new Error(response.error);
-        }
-
-        if (!response.data.accessToken) {
-          throw new Error("Token that was retured is invalid");
-        }
-
-        // Update the access token if it is present in the response
-        updateToken(response.data.accessToken);
-
-        // Display success toast if the payment was successful
-        storeNotification(`Top Up of ${amount} Successful!`);
-        toast.success("Top Up Successful!");
-      } catch (error) {
+      if (!response.result) {
         storeNotification(`Top Up of ${amount} Failed!`);
-        toast.success("Top Up Failed!");
+        toast.error("Top Up Failed!");
         // Log an error if the request fails
-        console.error(`Error in topup success: ${error}`);
+        console.error(`Error in topup success: ${response.error}`);
+        return;
       }
+
+      if (!response.data) {
+        storeNotification(`Top Up of ${amount} Failed!`);
+        console.error("Token that was retured is invalid");
+        return;
+      }
+
+      // Update the access token if it is present in the response
+      updateToken(response.data);
+      // Display success toast if the payment was successful
+      storeNotification(`Top Up of ${amount} Successful!`);
+      toast.success("Top Up Successful!");
     };
 
     if (session_id) {

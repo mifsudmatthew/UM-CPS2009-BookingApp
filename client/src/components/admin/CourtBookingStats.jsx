@@ -29,28 +29,30 @@ function CourtBookingStats() {
     // Fetch court bookings from the API
     const fetchCourtBookings = async () => {
       // Try to fetch court bookings
-      try {
-        // Make a POST request to the server to get the basic statistics
-        const response = await Post("/api/getBasicStatistics");
+      // Make a POST request to the server to get the basic statistics
+      const response = await Post("/api/getBasicStatistics");
 
-        // Update the court statistics state variable with the response data
-        setCourtStats(response.data);
-
-        // Map the court names and profits from the response data
-        const names = response.data.map((court) => court.name);
-
-        // Update the court names state variable with the mapped names
-        setCourtNames(names);
-
-        // Map the court profits from the response data
-        const profit = response.data.map((court) => court.money);
-
-        // Update the court profits state variable with the mapped profits
-        setCourtProfits(profit);
-      } catch (error) {
-        console.error(`Error fetching courts: ${error}`);
+      if (!response.result) {
+        console.error(`Error fetching courts: ${response.error}`);
+        return;
       }
+
+      // Update the court statistics state variable with the response data
+      setCourtStats(response.data);
+
+      // Map the court names and profits from the response data
+      const names = response.data.map((court) => court.name);
+
+      // Update the court names state variable with the mapped names
+      setCourtNames(names);
+
+      // Map the court profits from the response data
+      const profit = response.data.map((court) => court.money);
+
+      // Update the court profits state variable with the mapped profits
+      setCourtProfits(profit);
     };
+
     fetchCourtBookings(); // Call the fetchCourtBookings function
   }, []);
 
@@ -169,8 +171,7 @@ function CourtBookingStats() {
                 <div
                   className={`accordion-body ${
                     court.isOpen ? "open" : "close"
-                  }`}
-                >
+                  }`}>
                   <table>
                     <thead>
                       <tr>

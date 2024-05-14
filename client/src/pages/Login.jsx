@@ -11,14 +11,12 @@ import { toast } from "react-toastify";
 import ProfileContext from "../context/ProfileContext";
 import NotificationContext from "../context/NotificationContext";
 
-import { Post } from "../utils/ApiFunctions";
-
 import Form from "../components/form/Form";
 import InputBox from "../components/form/InputBox";
 import InputButton from "../components/form/InputButton";
 
-// Regular expression for email validation
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+import { Post } from "../utils/ApiFunctions";
+import { checkEmail } from "../utils/EmailTest";
 
 /**
  * Renders the login page.
@@ -44,45 +42,37 @@ function Login() {
     }
 
     // Check if the email is valid
-    if (!emailRegex.test(email)) {
+    if (!checkEmail(email)) {
       toast.error("Invalid email format detected.");
       return;
     }
 
-    try {
-      // Attempt to send a POST request to login with the email and password
-      const response = await Post("/api/login", { email, password });
-
-      if (!response.result) {
-        throw new Error(response.error);
-      }
-
-      updateToken(response.data.accessToken); // Update the access token.
-
-      // Check if the user is an admin
-      if (user.admin) {
-        toast.success(
-          "Login successful! Admin account, redirecting to home page"
-        ); // Display a success toast if the login is successful
-        setTimeout(() => {
-          navigate("/", { replace: true }); // Redirect to the admin home page after 2 seconds
-        }, 2000);
-        return;
-      }
-
-      // Display a success toast if the login is successful
-      toast.success("Login successful! Redirecting to home.");
-
-      // Store a notification in local storage
-      storeNotification("Login successful!");
-
-      setTimeout(() => {
-        navigate("/", { replace: true }); // Redirect to the home page after 2 seconds
-      }, 2000);
-    } catch (error) {
-      console.error(`Error in: ${error}`);
+    // Attempt to send a POST request to login with the email and password
+    const response = await Post("/api/login", { email, password });
+    if (!response.result) {
+      console.error(`Error in: ${response.error}`);
       toast.error("Login failed. Please check your credentials and try again.");
+      return;
     }
+
+    updateToken(response.data); // Update the access token.
+
+    // Check if the user is an admin
+    if (user.admin) {
+      toast.success(
+        "Login successful! Admin account, redirecting to home page"
+      ); // Display a success toast if the login is successful
+      // Redirect to the admin home page after 2 seconds
+      setTimeout(() => navigate("/", { replace: true }), 2000);
+      return;
+    }
+
+    // Display a success toast if the login is successful
+    toast.success("Login successful! Redirecting to home.");
+    // Store a notification in local storage
+    storeNotification("Login successful!");
+    // Redirect to the home page after 2 seconds
+    setTimeout(() => navigate("/", { replace: true }), 2000);
   };
 
   return (

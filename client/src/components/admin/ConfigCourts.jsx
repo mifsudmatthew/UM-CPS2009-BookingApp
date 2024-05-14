@@ -25,14 +25,15 @@ function ConfigCourts() {
   // Fetch all courts from the API when there is a change in the courts state variable
   useEffect(() => {
     const fetchCourts = async () => {
-      try {
-        // Fetch all courts from the API
-        const response = await Get("/api/getAllCourts");
-        // Update the courts state variable with the response data
-        setCourts(response.data);
-      } catch (error) {
-        console.error(`Error fetching courts: ${error}`);
+      // Fetch all courts from the API
+      const response = await Get("/api/getAllCourts");
+      if (!response.result) {
+        console.error(`Error fetching courts: ${response.error}`);
+        return;
       }
+
+      // Update the courts state variable with the response data
+      setCourts(response.data);
     };
 
     fetchCourts(); // Call the fetchCourts function
@@ -50,12 +51,16 @@ function ConfigCourts() {
     if (!price || !name || !courtId) {
       toast.error("Please fill all fields.");
       return;
-    } else if (isNaN(price)) {
-      // Check if the price is a number
+    }
+
+    // Check if the price is a number
+    if (isNaN(price)) {
       toast.error("Error! Input is not a number, please enter a number.");
       return;
-    } else if (price < 0) {
-      // Check if the price is a negative number
+    }
+
+    // Check if the price is a negative number
+    if (price < 0) {
       toast.error("Error! Please enter a positive number.");
       return;
     }
@@ -65,37 +70,37 @@ function ConfigCourts() {
 
     // Check if the court name and price are the same as the selected court
     if (name === selectedCourt.court_name && price === selectedCourt.price) {
-      toast.error("No changes detected."); // Display an error message if there are no changes
+      // Display an error message if there are no changes
+      toast.error("No changes detected.");
       return;
     }
 
-    try {
-      // Try to update the court
-      const response = await Post("/api/configCourts", {
-        courtId,
-        price,
-        name,
-      });
+    // Try to update the court
+    const response = await Post("/api/configCourts", {
+      courtId,
+      price,
+      name,
+    });
 
-      // Update the courts state variable with the updated court
-      const newCourts = courts.map((court) => {
-        return court._id === response.data._id ? response.data : court;
-      });
-
-      // Update the courts state variable with the new list of courts
-      setCourts(newCourts);
-
-      // Display a success toast message
-      toast.success("Court updated successfully!");
-
-      // Clear input fields
-      setName("");
-      setPrice("");
-      setCourtId("");
-    } catch (error) {
-      // Log an error if the request fails
-      console.error("Error submitting booking: ", error);
+    // Log an error if the request fails
+    if (!response.result) {
+      console.error("Error submitting booking: ", response.error);
+      return;
     }
+
+    // Update the courts state variable with the updated court
+    const newCourts = courts.map((court) => {
+      return court._id === response.data._id ? response.data : court;
+    });
+
+    // Update the courts state variable with the new list of courts
+    setCourts(newCourts);
+    // Display a success toast message
+    toast.success("Court updated successfully!");
+    // Clear input fields
+    setName("");
+    setPrice("");
+    setCourtId("");
   };
 
   /**
@@ -121,8 +126,7 @@ function ConfigCourts() {
         <select
           className="inputBox"
           value={courtId}
-          onChange={handleCourtChange}
-        >
+          onChange={handleCourtChange}>
           {/* Display a list of courts fetched from the API in the dropdown */}
           <option value="">Select a court</option>
           {courts.map((court) => (

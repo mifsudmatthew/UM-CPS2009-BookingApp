@@ -3,13 +3,15 @@ import "../styles/bookingform.css";
 import bookingImage from "../assets/bookingform.webp";
 
 import { useState, useEffect, useContext } from "react";
-import { toast } from "react-toastify";
 import { useNavigate, Navigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import ProfileContext from "../context/ProfileContext";
 import NotificationContext from "../context/NotificationContext";
 
-import { Post, getUpdatedToken } from "../utils/ApiFunctions";
+import { Post, Get } from "../utils/ApiFunctions";
+import { checkEmail } from "../utils/EmailTest";
+
 /**
  * Renders a form for booking a tennis court.
  * @category Front-end
@@ -17,44 +19,46 @@ import { Post, getUpdatedToken } from "../utils/ApiFunctions";
  */
 function Booking() {
   const navigate = useNavigate(); // Get the navigate function from the useNavigate hook
+
+  // Check if the user is an admin based on accessToken
+  // Get the user, accessToken, and updateToken function from the ProfileContext.
+  const { user, accessToken, updateToken } = useContext(ProfileContext);
+  // Get the storeNotification function from the NotificationContext.
+  const { storeNotification } = useContext(NotificationContext);
+
   // State variables
-  const [date, setDate] = useState(""); // State variable to store the selected date
-  const [hour, setHour] = useState(""); // State variable to store the selected hour
-  const [court, setCourt] = useState(""); // State variable to store the selected court
-  const [courts, setCourts] = useState([]); // State variable to store the available courts
+  const [date, setDate] = useState(""); // Selected date
+  const [hour, setHour] = useState(""); // Selected hour
+  const [court, setCourt] = useState(""); // Selected court
+  const [courts, setCourts] = useState([]); // All available courts
+
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [buttonColor, setButtonColor] = useState(null); // Add state to store button color
   const [buttonCursor, setButtonCursor] = useState("pointer"); // Add state to store button cursor
-  const [players, setPlayers] = useState([]); // State variable to store the players to split the cost with
-  const [playerCount, setPlayerCount] = useState(0); // State variable to store the number of players
-  // Check if the user is an admin based on accessToken
-  const { user, accessToken, updateToken } = useContext(ProfileContext); // Get the user, accessToken, and updateToken function from the ProfileContext.
-  const { storeNotification } = useContext(NotificationContext); // Get the storeNotification function from the NotificationContext.
+
+  const [players, setPlayers] = useState([]); // Players to split the cost with
+  const [playerCount, setPlayerCount] = useState(0); // Number of players
 
   // Check if court selection should be shown
   const showCourtSelection = date && hour;
-
-  // Regular expression for email validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   // Fetch available courts based on selected date and hour
   useEffect(() => {
     // Function to fetch available courts
     const fetchCourts = async () => {
-      const postData = { date, hour };
-      try {
-        // Send a POST request to the server with the selected date and hour
-        const response = await Post("/api/getAvailableCourts", postData);
-        console.log(response);
-        setCourts(response);
-      } catch (error) {
-        // Log an error if the request fails
-        console.error("Error fetching courts: ", error);
+      // Send a POST request to the server with the selected date and hour
+      const response = await Post("/api/getAvailableCourts", { date, hour });
+      // Log an error if the request fails
+      if (!response.result) {
+        console.error("Error fetching courts: ", response.error);
+        return;
       }
+
+      setCourts(response.data);
     };
 
+    // Fetch courts only if date and hour are selected
     if (date && hour) {
-      // Fetch courts only if date and hour are selected
       fetchCourts();
     }
   }, [date, hour]);
@@ -70,6 +74,7 @@ function Booking() {
    */
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent the default form submission behavior
+
     setIsButtonDisabled(true); // Disable the button when the form is submitted
     setButtonCursor("not-allowed"); // Change cursor to not-allowed
     setButtonColor("#CCCCCC"); // Change button color to visually indicate disabled state
@@ -87,58 +92,59 @@ function Booking() {
       return;
     }
 
+    // Check if player emails are valid
     let uniqueEmails = []; // Array to store unique emails
 
-    // Check if player emails are valid
+    // Loop through the players array
     for (let i = 0; i < players.length; i++) {
-      // Loop through the players array
-      if (
-        (!players[i] || !players[i].trim()) && // Check if the player email is empty
-        players.length > 0 // Check if there are players
-      ) {
+      // Check if the player email is empty and
+      // Check if there are players
+      if ((!players[i] || !players[i].trim()) && players.length > 0) {
         toast.error(`Please fill all fields`);
         return;
-      } else if (!emailRegex.test(players[i])) {
-        // Check if the player email is valid
+      }
+
+      // Check if the player email is valid
+      if (!checkEmail(players[i])) {
         toast.error(`Invalid email format detected: ${players[i]}`);
         return;
-      } else if (players[i] === user.email) {
-        // Check if the player email is the same as the user's email
+      }
+
+      // Check if the player email is the same as the user's email
+      if (players[i] === user.email) {
         toast.error(`You cannot add yourself as a player`);
         return;
-      } else if (uniqueEmails.includes(players[i])) {
-        // Check if the player email is already added
+      }
+
+      // Check if the player email is already added
+      if (uniqueEmails.includes(players[i])) {
         toast.error(`Duplicate player email detected: ${players[i]}`);
         return;
-      } else {
-        uniqueEmails.push(players[i]); // Add email to uniqueEmails array
       }
-    }
 
-    const booking = { date, hour, court, players }; // Create a booking object with the date, hour, court, and players
+      // Add email to uniqueEmails array
+      uniqueEmails.push(players[i]);
+    }
 
     // Call the Post function with the URL and data
-    try {
-      // Send a POST request to the server with the booking data
-      const response = await Post("/api/booking", booking);
-
-      // Display a success or error message based on the response
-      if (response.result !== true) {
-        toast.error(response.error);
-      } else {
-        toast.success(
-          "Court successfully booked! Redirecting to bookings page."
-        );
-        storeNotification("Court successfully booked!"); // Store a notification in the context
-        updateToken(getUpdatedToken()); // Update the access token
-        setTimeout(() => {
-          navigate("/profile/bookings", { replace: true }); // Redirect to the bookings page after 2 seconds
-        }, 2000);
-      }
-    } catch (error) {
+    // Send a POST request to the server with the booking data
+    const response = await Post("/api/booking", { date, hour, court, players });
+    if (!response.result) {
       // Log an error if the request fails
-      console.error("Error submitting booking: ", error);
+      console.error("Error submitting booking: ", response.error);
+      toast.error(response.error);
+      return;
     }
+
+    // Display a success or error message based on the response
+    toast.success("Court successfully booked! Redirecting to bookings page.");
+    // Store a notification in the context
+    storeNotification("Court successfully booked!");
+    // Update the access token
+    const token = await Get("/api/token");
+    updateToken(token.data);
+    // Redirect to the bookings page after 2 seconds
+    setTimeout(() => navigate("/profile/bookings", { replace: true }), 2000);
   };
 
   // Function to add another player to the booking
@@ -239,15 +245,13 @@ function Booking() {
                 <button
                   type="button"
                   className="button_add"
-                  onClick={addAnotherPlayer}
-                >
+                  onClick={addAnotherPlayer}>
                   +
                 </button>
                 <button
                   type="button"
                   className="button_sub"
-                  onClick={removePlayer}
-                >
+                  onClick={removePlayer}>
                   -
                 </button>
               </div>
@@ -278,8 +282,7 @@ function Booking() {
               style={{
                 backgroundColor: buttonColor,
                 cursor: buttonCursor, // Apply dynamic cursor style
-              }}
-            >
+              }}>
               Book
             </button>
           </div>

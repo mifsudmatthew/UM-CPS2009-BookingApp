@@ -14,9 +14,7 @@ import InputBox from "../form/InputBox";
 import InputButton from "../form/InputButton";
 
 import { Post } from "../../utils/ApiFunctions";
-
-// Regular expression for email validation
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+import { checkEmail } from "../../utils/EmailTest";
 
 /**
  * Renders the component for the user to change their account details.
@@ -38,33 +36,33 @@ const AccountDetails = () => {
     event.preventDefault(); // Prevent the default form submission
 
     // Check if the email is valid
-    if (!emailRegex.test(email)) {
+    if (!checkEmail(email)) {
       toast.error("Invalid email format detected.");
       return;
     }
+
     // Check if user made no changes
     if (name === user.name && email === user.email) {
       toast.error("No changes detected.");
       return;
     }
-    try {
-      // Send a POST request to the server to update the user's details
-      const response = await Post("/api/changedetails", { name, email });
+    // Send a POST request to the server to update the user's details
+    const response = await Post("/api/changedetails", { name, email });
 
-      // Extract the access token and user data from the response
-      const { accessToken } = response.data;
-
-      updateToken(accessToken); // Update the access token
-
-      storeNotification("Details Change Successful!"); // Store a notification in the context
-      toast.success("Change Successful!"); // Display a success toast
-      setTimeout(() => {
-        navigate("/profile", { replace: true }); // Redirect to the profile page after 2 seconds
-      }, 2000);
-    } catch (error) {
-      console.error(`Error in: ${error}`);
+    if (!response.result) {
+      console.error(`Error in: ${response.error}`);
       toast.error("Change failed!");
+      return;
     }
+
+    // Extract the access token and user data from the response
+    updateToken(response.data); // Update the access token
+    // Store a notification in the context
+    storeNotification("Details Change Successful!");
+    // Display a success toast
+    toast.success("Change Successful!");
+    // Redirect to the profile page after 2 seconds
+    setTimeout(() => navigate("/profile", { replace: true }), 2000);
   };
 
   return (

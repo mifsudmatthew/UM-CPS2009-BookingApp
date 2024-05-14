@@ -6,13 +6,14 @@ import { useState, useMemo, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { Post } from "../utils/ApiFunctions";
+import NotificationContext from "../context/NotificationContext";
+
 import Form from "../components/form/Form";
 import InputBox from "../components/form/InputBox";
 import InputButton from "../components/form/InputButton";
 
-import NotificationContext from "../context/NotificationContext";
-
+import { checkEmail } from "../utils/EmailTest";
+import { Post } from "../utils/ApiFunctions";
 /**
  * Renders the Register page component.
  * @category Front-end
@@ -27,18 +28,17 @@ function Register() {
   const [confirmEmail, setConfirmEmail] = useState(""); // State variable for confirm email input
   const { storeNotification } = useContext(NotificationContext);
 
-  // Using useMemo to memoize whether emails match, preventing unnecessary checks when other fields change
+  // Using useMemo to memoize certain conditions, preventing unnecessary checks when other fields change.
+
+  // Return if email and confirm email match
   const emailMatch = useMemo(() => {
-    return email === confirmEmail; // Return if email and confirm email match
+    return email === confirmEmail;
   }, [email, confirmEmail]);
 
-  // Using useMemo to memoize whether passwords match, preventing unnecessary checks when other fields change.
+  // Return if password and confirm password match
   const passwordMatch = useMemo(() => {
-    return password === confirmPassword; // Return if password and confirm password match
+    return password === confirmPassword;
   }, [password, confirmPassword]);
-
-  // Regular expression for email validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   // Function to handle the form submission
   const handleSubmit = async (event) => {
@@ -52,7 +52,7 @@ function Register() {
     }
 
     // Checks if the email is in a valid format
-    if (!emailRegex.test(email)) {
+    if (!checkEmail(email)) {
       // Displays an error toast if the email is not in a valid format
       toast.error("Invalid email format detected.");
       return;
@@ -72,25 +72,22 @@ function Register() {
       return;
     }
 
-    try {
-      // Attempt to send a POST request to "/api/register" with the data
-      await Post("/api/register", { email, password, name });
-
-      // Displays a success toast message
-      toast.success("Sign up successful! Redirecting to login.");
-
-      storeNotification("Sign up successful!"); // Stores a notification in local storage
-
-      // Redirects to the login page after 2 seconds
-      setTimeout(() => {
-        navigate("/login", { replace: true });
-      }, 2000);
-    } catch (err) {
+    // Attempt to send a POST request to "/api/register" with the data
+    const response = await Post("/api/register", { email, password, name });
+    if (!response.result) {
       // Displays an error toast if an account with the same email already exists
       toast.error("Account with the same E-mail already exists.");
       // Logs the error to the console
-      console.error(err);
+      console.error(response.error);
+      return;
     }
+
+    // Displays a success toast message
+    toast.success("Sign up successful! Redirecting to login.");
+    // Stores a notification in local storage
+    storeNotification("Sign up successful!");
+    // Redirects to the login page after 2 seconds
+    setTimeout(() => navigate("/login", { replace: true }), 2000);
   };
 
   return (

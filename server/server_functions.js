@@ -42,13 +42,9 @@ function getRandomPin() {
 
 /**
  * Function to add an entry to the accountPins array with a 5 minute timer
- *
  * @category Back-end
- *
  * @param {String} email The email of the user
- *
  * @param {String} pin The pin generated
- *
  * @return None
  */
 function addPinEntry(email, pin) {
@@ -76,11 +72,8 @@ function addPinEntry(email, pin) {
 
 /**
  * Function to send an email to user requesting a password reset.
- *
  * @category Back-end
- *
  * @param {String} user_email The email of the user requesting to send pin to email.
- *
  * @return {Object} A message indicating the success of the email sent
  */
 async function sendPinByMail(user_email) {
@@ -102,27 +95,24 @@ async function sendPinByMail(user_email) {
   addPinEntry(app_email, generated_pin);
 
   // Sending a response on success
-  return { message: "Email sent successfully" };
+  return true;
 }
 
 /**
  * Function to send a confirmation to the user that the payment was successful.
- *
  * @category Back-end
- *
  * @param {String} user_email The email of the user topping up their account.
- *
  * @param {Number} amount The amount topped up by the user.
- *
  * @return {Object} A message indicating the success of the email sent
  */
 async function sendPaymentSuccessMail(user_email, amount) {
-  user_data = await user_queries.retrieveUser(user_email); // Obtaining data associated with the email inputted.
-
+  const response = await user_queries.retrieveUser(user_email); // Obtaining data associated with the email inputted.
   // Check if user data is not retrieved
-  if (!user_data.result) {
-    return { message: "Failed to retreive email" };
+  if (!response.result) {
+    return false;
   }
+
+  const user_data = response.data;
 
   // Variable storing all email details.
   const emailDetails = {
@@ -130,7 +120,7 @@ async function sendPaymentSuccessMail(user_email, amount) {
     to: user_email, // Email of the user requesting a reset.
     subject: `Successful Account Top-Up: €${amount} Added`, // Subject of email.
     // Email body using details from the user's data retrieved.
-    text: `Dear ${user_data.data.name},\n\nWe're pleased to inform you that your recent request to top up your ServeSpot account has been successfully processed.\n\nHere are the details of your transaction:\n\n Amount: ${amount}\n\nNew Balance: €${user_data.data.balance}\n\nYour account is now ready to use with the updated balance. We ensure that our platform is continuously updated to provide you with the best possible experience.\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`,
+    text: `Dear ${user_data.name},\n\nWe're pleased to inform you that your recent request to top up your ServeSpot account has been successfully processed.\n\nHere are the details of your transaction:\n\n Amount: ${amount}\n\nNew Balance: €${user_data.balance}\n\nYour account is now ready to use with the updated balance. We ensure that our platform is continuously updated to provide you with the best possible experience.\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`,
   };
 
   // Sending the email with the details created.
@@ -138,33 +128,28 @@ async function sendPaymentSuccessMail(user_email, amount) {
   console.log("Email sent:", sentMessage.response);
 
   // Sending a response on success
-  return { message: "Email sent successfully" };
+  return true;
 }
 
 /**
  * Function to send a confirmation to the user that the booking was successful.
- *
  * @category Back-end
- *
  * @param {String} user_email The email of the user booking the court.
- *
  * @param {String} court Name of court booked by the user.
- *
  * @param {String} date Date of the booking.
- *
  * @param {String} hour Hour of the booking.
- *
  * @param {Number} price Price of the booking.
- *
  * @return {Object} A message indicating the success of the email sent
  */
 async function sendBookingSuccessMail(user_email, court, date, hour, price) {
-  user_data = await user_queries.retrieveUser(user_email); // Obtaining data associated with the email inputted.
+  const response = await user_queries.retrieveUser(user_email); // Obtaining data associated with the email inputted.
 
   // Check if user data is not retrieved
-  if (!user_data.result) {
-    return { message: "Failed to retreive email" };
+  if (!response.result) {
+    return false;
   }
+
+  const user_data = response.data;
 
   // Variable storing all email details.
   const emailDetails = {
@@ -172,7 +157,7 @@ async function sendBookingSuccessMail(user_email, court, date, hour, price) {
     to: user_email, // Email of the user requesting a reset.
     subject: `Successful Booking for ${court}`, // Subject of email.
     // Email body using details from the user's data retrieved.
-    text: `Dear ${user_data.data.name},\n\nWe're pleased to inform you that your recent booking request has been successful.\n\nHere are the details of your booking:\n\nCourt: ${court}\n\nDate: ${date}\n\nTime: ${hour}:00\n\nPrice paid: €${price}\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`,
+    text: `Dear ${user_data.name},\n\nWe're pleased to inform you that your recent booking request has been successful.\n\nHere are the details of your booking:\n\nCourt: ${court}\n\nDate: ${date}\n\nTime: ${hour}:00\n\nPrice paid: €${price}\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`,
   };
 
   // Sending the email with the details created.
@@ -180,24 +165,17 @@ async function sendBookingSuccessMail(user_email, court, date, hour, price) {
   console.log("Email sent:", sentMessage.response);
 
   // Sending a response on success
-  return { message: "Email sent successfully" };
+  return true;
 }
 
 /**
  * Function to send a confirmation to the user that the booking was cancelled.
- *
  * @category Back-end
- *
  * @param {String} user_email The email of the user cancelling the booking.
- *
  * @param {String} court Name of court booked by the user.
- *
  * @param {String} date Date of the booking.
- *
  * @param {String} hour Hour of the booking.
- *
  * @param {Number} price Price of the booking.
- *
  * @return {Object} A message indicating the success of the email sent
  */
 async function sendCancellationSuccessMail(
@@ -207,12 +185,14 @@ async function sendCancellationSuccessMail(
   hour,
   price
 ) {
-  user_data = await user_queries.retrieveUser(user_email); // Obtaining data associated with the email inputted.
+  const response = await user_queries.retrieveUser(user_email); // Obtaining data associated with the email inputted.
 
   // Check if user data is not retrieved
-  if (!user_data.result) {
-    return { message: "Failed to retreive email" };
+  if (!response.result) {
+    return false;
   }
+
+  const user_data = response.data;
 
   // Variable storing all email details.
   const emailDetails = {
@@ -220,7 +200,7 @@ async function sendCancellationSuccessMail(
     to: user_email, // This should be changed to email of the user requesting a reset.
     subject: `Successful Cancellation for ${court}`, // Subject of email.
     // Email body using details from the user's data retrieved.
-    text: `Dear ${user_data.data.name},\n\nWe would like to inform you that the following booking has been cancelled:\n\nCourt: ${court}\n\nDate: ${date}\n\nTime: ${hour}:00\n\nAmount refunded: €${price}\n\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`,
+    text: `Dear ${user_data.name},\n\nWe would like to inform you that the following booking has been cancelled:\n\nCourt: ${court}\n\nDate: ${date}\n\nTime: ${hour}:00\n\nAmount refunded: €${price}\n\n\nThank you for choosing ServeSpot. We look forward to serving you again!\n\nBest Regards,\nServeSpot`,
   };
 
   // Sending the email with the details created.
@@ -228,20 +208,15 @@ async function sendCancellationSuccessMail(
   console.log("Email sent:", sentMessage.response);
 
   // Sending a response on success
-  return { message: "Email sent successfully" };
+  return true;
 }
 
 /**
  * Function to validate the user's token.
- *
  * @category Back-end
- *
  * @param {Object} req The request object.
- *
  * @param {Object} res The response object.
- *
  * @param {Object} next The next object.
- *
  * @return {Object} Error message on failure.
  */
 function authenticateToken(req, res, next) {
@@ -250,7 +225,9 @@ function authenticateToken(req, res, next) {
 
   // Check if header is exists and starts with 'Bearer '
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(400).json({ error: "No authorization attached" });
+    return res
+      .status(400)
+      .json({ result: false, data: null, error: "No authorization attached" });
   }
 
   // When token exists
@@ -258,12 +235,19 @@ function authenticateToken(req, res, next) {
 
   if (!token) {
     // When token is blank
-    return res.status(403).json({ error: "Unauthorized: No token supplied" });
+    return res.status(403).json({
+      result: false,
+      data: null,
+      error: "Unauthorized: No token supplied",
+    });
   }
 
   // Verifying the token with the secret key
   jwt.verify(token, process.env.JWT_ACCESS, (err, decoded) => {
-    if (err) return res.status(403).json({ error: `Token is invalid ${err}` });
+    if (err)
+      return res
+        .status(403)
+        .json({ result: false, data: null, error: `Token is invalid ${err}` });
     req.user = decoded;
     next();
   });
@@ -271,51 +255,51 @@ function authenticateToken(req, res, next) {
 
 /**
  * Function to return a new token for the user based on the email.
- *
  * @category Back-end
- *
  * @param {String} email The email of the user
- *
  * @return {Object} JSON containing the new token and result of the operation
  */
 async function getUpdatedToken(email) {
   // Check if email is not supplied
-  if (email == undefined || email == null)
-    return { result: false, data: {}, error: "Email not supplied" };
-
-  try {
-    const user = await user_queries.retrieveUser(email); // Retrieve user data from the database
-
-    // Check if user exists
-    if (!user.result) return { result: false, data: {}, error: user.error };
-
-    // Create a new payload with the user's data
-    const newPayload = {
-      id: user.data._id,
-      email: user.data.email,
-      name: user.data.name,
-      balance: user.data.balance,
-      admin: user.data.admin,
-    };
-
-    // Generate a new token with the new payload
-    const newToken = generateAccessToken(newPayload);
-
-    return { result: true, data: { accesstoken: newToken }, error: null };
-  } catch (error) {
-    console.log("----------------------------------");
-    console.log(error);
-    return { result: false, data: {}, error: error };
+  if (email == undefined || email == null) {
+    throw new Error("Email not supplied");
   }
+
+  // Retrieve user data from the database
+  const response = await user_queries.retrieveUser(email);
+
+  // Check if user exists
+  if (!response.result) {
+    console.log("----------------------------------");
+    console.log(response.error);
+    return { result: false, data: null, error: response.error };
+  }
+
+  // Create a new payload with the user's data
+  const user = response.data;
+  const newPayload = {
+    id: user._id,
+    email: user.email,
+    name: user.name,
+    balance: user.balance,
+    admin: user.admin,
+  };
+
+  // Generate a new token with the new payload
+  let newToken = "";
+  try {
+    newToken = generateAccessToken(newPayload);
+  } catch (err) {
+    return { result: false, data: null, error: "Failed to sign data with key" };
+  }
+
+  return { result: true, data: newToken, error: null };
 }
 
 /**
  * Function to generate a new access token.
- *
  * @category Back-end
- *
  * @param {Object} payload The payload to be used to generate the token
- *
  * @return {String} The generated access token
  */
 function generateAccessToken(payload) {
@@ -331,5 +315,4 @@ module.exports = {
   authenticateToken,
   getUpdatedToken,
   generateAccessToken,
-  generateRefreshToken,
 };
