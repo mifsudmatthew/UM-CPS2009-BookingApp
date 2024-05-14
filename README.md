@@ -35,7 +35,7 @@
     </td>
     </tr>
     <tr>
-    <td>Build Front End and Start server</td>
+    <td>Build Front End and Start Server</td>
     <td>
     npm run start_build
     </td>
@@ -44,6 +44,12 @@
     <td>Run Tests and Obtain Coverage</td>
     <td>
     npm run test
+    </td>
+    </tr>
+    <tr>
+    <td>Generate Documentation</td>
+    <td>
+    npm run docs
     </td>
     </tr>
 </table>
