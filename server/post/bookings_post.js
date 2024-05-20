@@ -368,7 +368,7 @@ bookingRouter.post("/cancelBooking", sf.authenticateToken, async (req, res) => {
     });
   }
 
-  const courtName = response.data;
+  const courtName = response.data.court_name;
 
   // Formatting time to send in email in 24-hour format
   if (courtTime < 10) {
