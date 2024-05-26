@@ -301,7 +301,7 @@ apiRouter.post("/changedetails", sf.authenticateToken, async (req, res) => {
   // Response Success
   return res.status(200).json({
     result: true,
-    data: { accessToken, ...response.data },
+    data: accessToken,
     error: null,
   });
 });
