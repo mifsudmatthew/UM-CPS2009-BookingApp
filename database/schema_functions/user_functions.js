@@ -18,9 +18,8 @@ async function retrieveUser(email_toSearch) {
 
     // --------------------- Validation
     if (user_found == null) {
-      throw new Error(
-        `No user found that matches the email: ${email_toSearch}`
-      );
+      return { result: false, data: null, error: `No user found that matches the email: ${email_toSearch}` };
+      
     }
 
     // --------------------- Succesfully returnig the found user
@@ -30,6 +29,32 @@ async function retrieveUser(email_toSearch) {
     return { result: false, data: null, error: `${err}` };
   }
 }
+
+/**
+ * Retrieve a user by object ID.
+ * @category Database
+ * @param {string} id_toSearch - The Object ID of the user to retrieve.
+ * @returns {Object} An object containing the result, data, and error.
+ */
+async function retrieveUserById(id_toSearch) {
+  try {
+    // --------------------- Run Query
+    const user_found = await user_schema.findById(id_toSearch);
+
+    // --------------------- Validation
+    if (user_found == null) {
+      return { result: false, data: null, error: `No user found that matches the ID: ${id_toSearch}` };
+    }
+
+    // --------------------- Successfully returning the found user
+    return { result: true, data: user_found, error: null };
+  } catch (err) {
+    console.error(`retrieveUserById: ${err}`);
+    return { result: false, data: null, error: `${err}` };
+  }
+}
+
+
 
 /**
  * Register a new user.
@@ -44,7 +69,7 @@ async function registerUser({ email_new, password_new, name_new }) {
 
     // --------------------- validation of query
     if (user_found != null) {
-      throw new Error("Email already in use");
+      return { result: false, data: null, error: "Email already in use" };
     }
 
     // --------------------- Email is not in use
@@ -80,9 +105,7 @@ async function validateLogin(email_toSearch, password_toSearch) {
 
     // --------------------- (Validation of Query) No user Found
     if (user_found == null) {
-      throw new Error(
-        `No user found that matches the email: ${email_toSearch}`
-      );
+      return { result: false, data: null, error: `No user found that matches the email: ${email_toSearch}` };
     }
 
     // --------------------- User Found (returning stuff)
@@ -118,9 +141,7 @@ async function resetPassword(email_toSearch, password_toReset) {
 
     // --------------------- No user Found (Cannot reset password)
     if (user_updated == null) {
-      throw new Error(
-        `No user found that matches the email: ${email_toSearch}`
-      );
+      return { result: false, data: null, error: `No user found that matches the email: ${email_toSearch}` };
     }
 
     // --------------------- User Found (returning stuff)
@@ -156,9 +177,7 @@ async function updateUserBalance(email_toSearch, amount_toAdd) {
 
     // --------------------- No user Found (Cannot update Balance)
     if (user_updated == null) {
-      throw new Error(
-        `No user found that matches the email: ${email_toSearch}`
-      );
+      return { result: false, data: null, error: `No user found that matches the email: ${email_toSearch}` };
     }
 
     // --------------------- User Found (returning stuff)
@@ -215,9 +234,7 @@ async function changeDetails(email_toSearch, name_toReset, email_toReset) {
 
     // If no user found
     if (!details_updated) {
-      throw new Error(
-        `Possibly no user found that matches the email: ${email_toSearch}`
-      );
+      return { result: false, data: null, error: `No user found that matches the email: ${email_toSearch}` };
     }
 
     return {
@@ -242,6 +259,7 @@ async function changeDetails(email_toSearch, name_toReset, email_toReset) {
  */
 module.exports = {
   retrieveUser: retrieveUser,
+  retrieveUserById: retrieveUserById,
   registerUser: registerUser,
   validateLogin: validateLogin,
   resetPassword: resetPassword,

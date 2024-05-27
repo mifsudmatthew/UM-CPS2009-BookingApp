@@ -204,18 +204,21 @@ bookingRouter.post("/booking", sf.authenticateToken, async (req, res) => {
       []
     );
 
-    sf.sendBookingSuccessMail(
-      // Send booking success email
-      email,
-      court.data.court_name,
-      req.body.date,
-      req.body.hour,
-      court.data.price.toFixed(2)
-    );
-
     if (response.result == true) {
       // If booking was successful
       user_queries.updateUserBalance(email, -court.data.price); // Update user balance
+      sf.sendBookingSuccessMail(
+        // Send booking success email
+        email,
+        court.data.court_name,
+        req.body.date,
+        req.body.hour,
+        court.data.price.toFixed(2)
+      );
+    }else{
+      return res
+      .status(400)
+      .json({ result: false, data: null, error: response.error });
     }
 
     // Return response
@@ -413,10 +416,15 @@ bookingRouter.post("/cancelBooking", sf.authenticateToken, async (req, res) => {
     // Loop through secondary users
     for (const sec_user of secondaryUsers) {
       // Update secondary user balance
-      response = await user_queries.updateUserBalance(
-        sec_user.email,
-        split_cost
-      );
+      user_found = await user_queries.retrieveUserById(sec_user);
+      
+      if(user_found.result){
+        response = await user_queries.updateUserBalance(
+          user_found.data.email,
+          split_cost
+        );
+      }
+      
 
       // Send cancellation success email
       sf.sendCancellationSuccessMail(
@@ -424,7 +432,7 @@ bookingRouter.post("/cancelBooking", sf.authenticateToken, async (req, res) => {
         courtName,
         formattedDate,
         courtTime,
-        split_cost.toFixed(2)
+        parseFloat(split_cost).toFixed(2)
       );
     }
   }
@@ -438,7 +446,7 @@ bookingRouter.post("/cancelBooking", sf.authenticateToken, async (req, res) => {
     courtName,
     formattedDate,
     courtTime,
-    split_cost.toFixed(2)
+    parseFloat(split_cost).toFixed(2)
   );
 
   // Return success
