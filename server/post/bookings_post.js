@@ -162,6 +162,10 @@ bookingRouter.post("/booking", sf.authenticateToken, async (req, res) => {
           });
         }
       }
+    } else {
+      return res
+        .status(400)
+        .json({ result: false, data: null, error: response.error });
     }
     // If booking was successful
     sf.sendBookingSuccessMail(
@@ -174,7 +178,7 @@ bookingRouter.post("/booking", sf.authenticateToken, async (req, res) => {
     );
     return res
       .status(200)
-      .json({ response: true, data: response.data, error: null });
+      .json({ result: true, data: response.data, error: null });
 
     // ----------------------------------------------- Single User Invalid
   } else if (user.data.balance < court.data.price) {
@@ -403,11 +407,11 @@ bookingRouter.post("/cancelBooking", sf.authenticateToken, async (req, res) => {
 
   // If there are secondary users
   if (secondaryUsers.length > 0) {
-    split_cost = // Calculate split cost
-      (bookingDetails.cost / (secondaryUsers.length + 1)).toFixed(2);
+    // Calculate split cost
+    split_cost = (bookingDetails.cost / (secondaryUsers.length + 1)).toFixed(2);
 
     // Loop through secondary users
-    for (const sec_user of secondary_users) {
+    for (const sec_user of secondaryUsers) {
       // Update secondary user balance
       response = await user_queries.updateUserBalance(
         sec_user.email,
